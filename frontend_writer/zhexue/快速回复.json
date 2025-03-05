@@ -1,0 +1,128 @@
+<html>
+<head>
+<style>
+.response-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(26, 26, 26, 0.95);
+  border-top: 1px solid #c19b76;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.response-button {
+  background: rgba(193, 155, 118, 0.1);
+  border: 1px solid rgba(193, 155, 118, 0.3);
+  color: #e0e0e0;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "华文楷体", "楷体", serif;
+  position: relative;
+}
+
+.response-button:hover {
+  background: rgba(193, 155, 118, 0.2);
+  transform: translateY(-2px);
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.response-button:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(-5px);
+}
+
+@media (max-width: 768px) {
+  .response-bar {
+    flex-wrap: wrap;
+    padding: 5px;
+  }
+
+  .response-button {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="response-bar">
+  <button class="response-button" onclick="respond('诘问')">
+    诘问
+    <span class="tooltip">根据对话内容提出疑问，寻求更深入的解释或论证</span>
+  </button>
+  <button class="response-button" onclick="respond('抗议')">
+    抗议
+    <span class="tooltip">根据对话内容表示反对或不赞同</span>
+  </button>
+  <button class="response-button" onclick="respond('求助')">
+    求助
+    <span class="tooltip">表示对相关知识不熟悉需要帮助</span>
+  </button>
+  <button class="response-button" onclick="respond('质疑前提')">
+    质疑前提
+    <span class="tooltip">挑战论证的前提假设，指出其可能存在的问题</span>
+  </button>
+  <button class="response-button" onclick="respond('离开房间')">
+    离开房间
+    <span class="tooltip">跟随机其他对话者讨论</span>
+  </button>
+  <button class="response-button" onclick="respond('继续聆听')">
+    继续聆听
+    <span class="tooltip">保持倾听的姿态</span>
+  </button>
+</div>
+
+<script>
+function respond(type) {
+  let message = '';
+  switch(type) {
+    case '诘问':
+      message = "对不起，我对您刚才说的有些疑惑。您能否进一步解释一下这个观点的论证过程？我很想理解其中的逻辑关系。";
+      break;
+    case '抗议':
+      message = "恕我直言，我不太认同这个观点。虽然您的论述很有见地，但是我认为这种观点可能忽视了一些重要的考量...";
+      break;
+    case '求助':
+      message = "您刚才提到的这个概念对我来说比较陌生。能否请您用更通俗的语言解释一下，或者举一个具体的例子？";
+      break;
+    case '质疑前提':
+      message = "这个论证很有意思，但我想请问：我们是否应该重新审视一下论证的前提？这些假设是否经得起推敲？";
+      break;
+    case '离开房间':
+      message = "这个话题确实很有意思。不过我注意到隔壁似乎也在讨论一个相关的问题，我想过去听听他们的看法。";
+      break;
+    case '继续聆听':
+      message = "（保持安静，专注地聆听对话，时而点头表示理解）";
+      break;
+  }
+
+  // 发送消息并触发AI回复
+  triggerSlash(`/send ${message}`);
+  triggerSlash('/trigger');
+}
+</script>
+</body>
+</html>

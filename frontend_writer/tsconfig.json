@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "types": [
+      "jquery",
+      "jqueryui",
+      "lodash",
+      "yamljs",
+      "file-saver"
+    ],
+    "target": "ESNext",
+    "module": "ESNext",
+    "outDir": "build",
+    "moduleDetection": "auto",
+    "moduleResolution": "node10",
+    "allowUmdGlobalAccess": true,
+    "allowSyntheticDefaultImports": true,
+    "strictBindCallApply": true,
+    "allowJs": true,
+    "checkJs": false,
+    "sourceMap": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "exclude": [
+    "**/node_modules/**",
+    "**/build/**"
+  ]
+}

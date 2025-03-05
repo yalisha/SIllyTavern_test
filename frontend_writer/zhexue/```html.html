@@ -1,0 +1,151 @@
+```html
+<html>
+<head>
+<style>
+.status-container {
+  background: rgba(20, 20, 20, 0.95);
+  border-radius: 8px;
+  padding: 15px;
+  color: #e0e0e0;
+  font-family: "Microsoft YaHei", sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.info-section {
+  margin-bottom: 15px;
+  padding: 10px;
+  background: rgba(40, 44, 52, 0.5);
+  border-radius: 6px;
+}
+
+.section-title {
+  color: #3498db;
+  font-size: 1em;
+  margin-bottom: 8px;
+}
+
+.character-card {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 15px;
+  padding: 12px;
+  background: rgba(44, 62, 80, 0.7);
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.character-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid #3498db;
+}
+
+.status-bar {
+  height: 4px;
+  background: #2c3e50;
+  border-radius: 2px;
+  margin: 5px 0;
+}
+
+.status-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.favor-bar { background: #2ecc71; }
+.evil-bar { background: #e74c3c; }
+
+.evil-hint {
+  font-style: italic;
+  color: #e74c3c;
+  animation: fadeInOut 2s ease infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .character-card {
+    grid-template-columns: 1fr;
+  }
+
+  .character-avatar {
+    margin: 0 auto;
+  }
+}
+</style>
+</head>
+<body>
+<div class="status-container">
+  <div class="info-section">
+    <div class="section-title">基本信息</div>
+    『$1』
+  </div>
+
+  <div class="info-section">
+    <div class="section-title">可以去的地点</div>
+    $2
+  </div>
+
+  <div class="info-section">
+    <div class="section-title">邪恶指引</div>
+    <div class="evil-hint">$3</div>
+  </div>
+
+  <div class="info-section">
+    <div class="section-title">近期事务</div>
+    $4
+  </div>
+
+  <div class="character-card">
+    <div class="character-avatar" style="background-image: url('https://files.catbox.moe/3zdxww.png')"></div>
+    <div class="character-info">
+      <h3>远坂凛</h3>
+      <div>
+        <small>好感度: $5%</small>
+        <div class="status-bar">
+          <div class="status-fill favor-bar" style="width: $5%"></div>
+        </div>
+      </div>
+      <div>
+        <small>恶堕度: $6%</small>
+        <div class="status-bar">
+          <div class="status-fill evil-bar" style="width: $6%"></div>
+        </div>
+      </div>
+      <div>当前服装: $7</div>
+      <div>傲娇度: $8</div>
+    </div>
+  </div>
+
+  <div class="character-card">
+    <div class="character-avatar" style="background-image: url('https://files.catbox.moe/5478vu.png')"></div>
+    <div class="character-info">
+      <h3>间桐樱</h3>
+      <div>
+        <small>好感度: $9%</small>
+        <div class="status-bar">
+          <div class="status-fill favor-bar" style="width: $9%"></div>
+        </div>
+      </div>
+      <div>
+        <small>恶堕度: $10%</small>
+        <div class="status-bar">
+          <div class="status-fill evil-bar" style="width: $10%"></div>
+        </div>
+      </div>
+      <div>当前服装: $11</div>
+      <div>黑化度: $12</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+```

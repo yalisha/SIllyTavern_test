@@ -1,0 +1,453 @@
+<html>
+
+<head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: "华文楷体", "楷体", serif;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+      color: #e0e0e0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .title-section {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .main-title {
+      font-size: 2.5rem;
+      margin: 0;
+      background: linear-gradient(120deg, #c19b76 0%, #e2c9a6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      color: #9f8170;
+    }
+
+    .content-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .philosophers-section,
+    .topics-section {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      color: #c19b76;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid rgba(193, 155, 118, 0.3);
+      padding-bottom: 0.5rem;
+    }
+
+    .philosopher-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+
+    .philosopher-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(193, 155, 118, 0.2);
+      border-radius: 8px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .philosopher-card:hover {
+      background: rgba(193, 155, 118, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .philosopher-card.selected {
+      background: rgba(193, 155, 118, 0.2);
+      border-color: #c19b76;
+    }
+
+    .philosopher-card:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent);
+      transition: 0.5s;
+    }
+
+    .philosopher-card:hover:before {
+      left: 100%;
+    }
+
+    .topic-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .topic-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(193, 155, 118, 0.2);
+      border-radius: 8px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .topic-item:hover {
+      background: rgba(193, 155, 118, 0.1);
+    }
+
+    .topic-item.selected {
+      background: rgba(193, 155, 118, 0.2);
+      border-color: #c19b76;
+    }
+
+    .topic-item:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent);
+      transition: 0.5s;
+    }
+
+    .topic-item:hover:before {
+      left: 100%;
+    }
+
+    .custom-topic {
+      margin-top: 1rem;
+    }
+
+    .input-section {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .input-field {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(193, 155, 118, 0.2);
+      border-radius: 5px;
+      padding: 0.8rem;
+      color: #e0e0e0;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: #c19b76;
+      box-shadow: 0 0 5px rgba(193, 155, 118, 0.3);
+    }
+
+    .start-button {
+      background: linear-gradient(120deg, #c19b76 0%, #9f8170 100%);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .start-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .start-button:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent);
+      transition: 0.5s;
+    }
+
+    .start-button:hover:before {
+      left: 100%;
+    }
+
+    .error-message {
+      color: #ff6b6b;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .error-message.show {
+      display: block;
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      .content-section {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        padding: 1rem;
+      }
+
+      .main-title {
+        font-size: 2rem;
+      }
+
+      .philosopher-card,
+      .topic-item {
+        padding: 0.8rem;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .loading {
+      position: relative;
+      pointer-events: none;
+    }
+
+    .loading:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 24px;
+      height: 24px;
+      margin: -12px 0 0 -12px;
+      border: 2px solid #c19b76;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="title-section fade-in">
+      <h1 class="main-title">真理、意义与价值</h1>
+      <p class="subtitle">星问无言，心问无垠，真理何处？求索何深？</p>
+    </div>
+
+    <div class="content-section">
+      <div class="philosophers-section fade-in" style="animation-delay: 0.2s">
+        <h2 class="section-title">选择两位对话者</h2>
+        <div class="philosopher-grid" id="philosopherGrid"></div>
+      </div>
+
+      <div class="topics-section fade-in" style="animation-delay: 0.4s">
+        <h2 class="section-title">选择讨论议题</h2>
+        <div class="topic-list" id="topicList"></div>
+        <div class="custom-topic">
+          <input type="text" class="input-field" id="customTopic" placeholder="或者输入自定义议题...">
+        </div>
+      </div>
+    </div>
+
+    <div class="input-section fade-in" style="animation-delay: 0.6s">
+      <input type="text" class="input-field" id="userName" placeholder="你的名字">
+      <textarea class="input-field" id="userIntro" rows="3" placeholder="简单介绍一下你自己..."></textarea>
+      <button class="start-button" id="startButton">开始对话</button>
+      <p class="error-message" id="errorMessage"></p>
+    </div>
+  </div>
+
+  <script>
+    const philosophers = [
+      "孔子", "庄子", "苏格拉底", "柏拉图", "亚里士多德",
+      "奥古斯丁", "托马斯·阿奎那", "康德", "马克思", "尼采"
+    ];
+
+    const topics = [
+      "本体论辩题：上帝是否存在？",
+      "自由意志辩题：我们是否拥有自由意志？",
+      "心身问题辩题：心灵与身体的关系是什么？",
+      "电车难题辩题：如何做出道德选择？",
+      "正义的辩题：什么是正义？",
+      "存在主义辩题：人生的意义是什么？",
+      "政治哲学辩题：最好的政府形式是什么？",
+      "应用伦理学辩题：生命伦理的边界在哪里？",
+      "美学辩题：什么是美？"
+    ];
+
+    let selectedPhilosophers = [];
+    let selectedTopic = null;
+
+    function initializeUI() {
+      const philosopherGrid = document.getElementById('philosopherGrid');
+      const topicList = document.getElementById('topicList');
+
+      philosophers.forEach(philosopher => {
+        const card = document.createElement('div');
+        card.className = 'philosopher-card fade-in';
+        card.textContent = philosopher;
+        card.onclick = () => togglePhilosopher(card, philosopher);
+        philosopherGrid.appendChild(card);
+      });
+
+      topics.forEach((topic, index) => {
+        const item = document.createElement('div');
+        item.className = 'topic-item fade-in';
+        item.style.animationDelay = `${0.1 * index}s`;
+        item.textContent = topic;
+        item.onclick = () => selectTopic(item, topic);
+        topicList.appendChild(item);
+      });
+
+      document.getElementById('startButton').onclick = startDiscussion;
+    }
+
+    function togglePhilosopher(card, philosopher) {
+      if (card.classList.contains('selected')) {
+        card.classList.remove('selected');
+        selectedPhilosophers = selectedPhilosophers.filter(p => p !== philosopher);
+      } else if (selectedPhilosophers.length < 2) {
+        card.classList.add('selected');
+        selectedPhilosophers.push(philosopher);
+      }
+    }
+
+    function selectTopic(item, topic) {
+      document.querySelectorAll('.topic-item').forEach(i => i.classList.remove('selected'));
+      item.classList.add('selected');
+      selectedTopic = topic;
+      document.getElementById('customTopic').value = '';
+    }
+
+    function startDiscussion() {
+      const userName = document.getElementById('userName').value.trim();
+      const userIntro = document.getElementById('userIntro').value.trim();
+      const customTopic = document.getElementById('customTopic').value.trim();
+      const button = document.getElementById('startButton');
+
+      if (!validateInput(userName, userIntro)) return;
+
+      button.classList.add('loading');
+      button.disabled = true;
+
+      const discussionData = {
+        userName: userName,
+        userIntro: userIntro,
+        philosophers: selectedPhilosophers,
+        topic: customTopic || selectedTopic
+      };
+
+      // 储存数据到变量
+      triggerSlash(`/setvar key=discussionData ${JSON.stringify(discussionData)}`);
+
+      // 构建初始对话文本并发送
+      let initialMessage = `我是${userName}。${userIntro}\n\n`;
+      initialMessage += `今天想请教${selectedPhilosophers.join('和')}两位先生关于`;
+      initialMessage += `${customTopic || selectedTopic}的看法。`;
+
+      setTimeout(() => {
+        triggerSlash(`/send ${initialMessage}`);
+        triggerSlash('/trigger');
+
+        // 重置UI状态
+        button.classList.remove('loading');
+        button.disabled = false;
+      }, 1000);
+    }
+
+    function validateInput(userName, userIntro) {
+      if (!userName) {
+        showError('请输入你的名字');
+        return false;
+      }
+
+      if (!userIntro) {
+        showError('请简单介绍一下你自己');
+        return false;
+      }
+
+      if (selectedPhilosophers.length !== 2 && !document.getElementById('customTopic').value.trim() && !selectedTopic) {
+        showError('请选择两位哲学家和一个议题，或输入自定义议题');
+        return false;
+      }
+
+      return true;
+    }
+
+    function showError(message) {
+      const errorMessage = document.getElementById('errorMessage');
+      errorMessage.textContent = message;
+      errorMessage.classList.add('show');
+      setTimeout(() => {
+        errorMessage.classList.remove('show');
+      }, 3000);
+    }
+
+    window.onload = initializeUI;
+  </script>
+</body>
+
+</html>
