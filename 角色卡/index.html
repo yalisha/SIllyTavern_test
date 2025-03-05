@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>与远坂凛大小姐同居的日子</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+        #gameContainer {
+            width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #000;
+        }
+        #textDisplay {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .rinImage {
+            width: 200px;
+            float: left;
+            margin-right: 20px;
+        }
+        .clear {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <h1>与远坂凛大小姐同居的日子</h1>
+    <div id="gameContainer">
+        <img src="https://img.moegirl.org.cn/common/thumb/b/b7/%E8%BF%9C%E5%9D%82%E5%87%9B.jpg/220px-%E8%BF%9C%E5%9D%82%E5%87%9B.jpg" alt="远坂凛" class="rinImage">
+        <div id="textDisplay">
+            <p>这是一个与远坂凛大小姐同居的文字冒险游戏。</p>
+            <p>你将扮演一位幸运的少年，与远坂凛大小姐住在同一屋檐下。</p>
+            <p>每天都会发生各种有趣的事情，你需要做出选择来影响故事的发展。</p>
+        </div>
+        <div class="clear"></div>
+        <div id="options">
+            <button onclick="chooseOption('option1')">选项一</button>
+            <button onclick="chooseOption('option2')">选项二</button>
+            <button onclick="chooseOption('option3')">选项三</button>
+        </div>
+    </div>
+    <script>
+        function chooseOption(option) {
+            // 这里应该调用酒馆前端插件的 API 来处理选项
+            // 例如：tavern.choose(option);
+            alert('你选择了 ' + option);
+        }
+    </script>
+</body>
+</html>
