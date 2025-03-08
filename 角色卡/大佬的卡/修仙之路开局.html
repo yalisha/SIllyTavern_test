@@ -1,0 +1,5202 @@
+```
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <title>修仙开局选择</title>
+  <style>
+    @import url('https://static.zeoseven.com/zsft/235/main/result.css');
+
+    :root {
+      --global-font: "chengrongguangke";
+      --panel-bg: rgba(255, 255, 255, 0.85);
+      --primary-color: #4CAF50;
+      --hover-color: #45a049;
+      --accent-color: #2196F3;
+      --error-color: #f44336;
+      --success-color: #4CAF50;
+      --warning-color: #FFC107;
+      --disabled-color: #9E9E9E;
+      --text-primary: #2c3e50;
+      --text-secondary: #34495e;
+      --text-tertiary: #455a64;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%234CAF50" stroke-width="2"><path d="M12 2L2 12l10 10 10-10L12 2z"/></svg>') 12 12, auto;
+      height: 800PX;
+      background: url('https://pub-0f03753252fb439e966a538d805f20ef.r2.dev/docs/1734444679152.gif') no-repeat center center fixed;
+      background-size: cover;
+      font-family: var(--global-font);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .creation-container {
+      width: 90%;
+      max-width: 1400px;
+      background: var(--panel-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 20px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    /* 主标题样式 */
+    .creation-header {
+      text-align: center;
+      padding: 20px 0;
+      margin-bottom: 30px;
+      border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .creation-header h1 {
+      font-size: 2.8em;
+      color: var(--text-primary);
+      margin: 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .creation-header p {
+      font-size: 1.4em;
+      color: var(--text-secondary);
+      margin: 10px 0 0;
+    }
+
+    /* 步骤指示器样式 */
+    .steps-indicator {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      padding: 20px 0;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      margin: 0 20px;
+      opacity: 0.5;
+      transition: all 0.3s ease;
+    }
+
+    .step-item.active {
+      opacity: 1;
+    }
+
+    .step-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      font-weight: bold;
+    }
+
+    .step-text {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    /* 分节标题样式 */
+    .section-title {
+      text-align: left;
+      padding: 15px 25px;
+      margin: 25px 0;
+      font-size: 1.8em;
+      color: var(--text-primary);
+      border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 10px;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 时代选择面板样式 */
+    .era-selection {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      margin: 20px 0;
+    }
+
+    .era-card {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 15px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .era-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .era-card.selected {
+      border: 2px solid var(--primary-color);
+      background: rgba(76, 175, 80, 0.1);
+    }
+
+    .era-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .era-name {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .era-tag {
+      padding: 5px 15px;
+      border-radius: 15px;
+      background: rgba(76, 175, 80, 0.2);
+      color: var(--primary-color);
+      font-size: 0.9em;
+      font-weight: bold;
+    }
+
+    .era-description {
+      font-size: 1.1em;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 10px 0;
+    }
+
+    .era-features {
+      margin: 15px 0;
+    }
+
+    .era-feature {
+      font-size: 1em;
+      color: var(--text-tertiary);
+      padding: 8px 12px;
+      margin: 5px 0;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 6px;
+    }
+
+    .era-background {
+      font-size: 0.95em;
+      color: var(--text-tertiary);
+      font-style: italic;
+      margin-top: 15px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 6px;
+    }
+
+    /* 难度选择面板样式 */
+    .difficulty-selection {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      margin: 20px 0;
+    }
+
+    .difficulty-card {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 15px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .difficulty-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .difficulty-card.selected {
+      border: 2px solid var(--primary-color);
+      background: rgba(76, 175, 80, 0.1);
+    }
+
+    .difficulty-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .difficulty-name {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .points-value {
+      font-size: 1.2em;
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+
+    .difficulty-description {
+      font-size: 1.1em;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 10px 0;
+    }
+
+    .difficulty-feature {
+      font-size: 1em;
+      color: var(--text-tertiary);
+      padding: 8px 12px;
+      margin: 5px 0;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 6px;
+    }
+
+    /* 属性选择面板样式 */
+    .attributes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      margin: 20px 0;
+    }
+
+    .attribute-card {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    .attribute-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .attribute-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .attribute-value {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .decrease-btn,
+    .increase-btn {
+      width: 30px;
+      height: 30px;
+      border: none;
+      border-radius: 50%;
+      background: var(--primary-color);
+      color: white;
+      cursor: pointer;
+      font-size: 1.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .decrease-btn:hover,
+    .increase-btn:hover {
+      background: var(--hover-color);
+    }
+
+    .decrease-btn:disabled,
+    .increase-btn:disabled {
+      background: var(--disabled-color);
+      cursor: not-allowed;
+    }
+
+    .attribute-description {
+      font-size: 0.9em;
+      color: var(--text-secondary);
+      margin-top: 10px;
+    }
+
+    .value {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: var(--text-primary);
+      min-width: 30px;
+      text-align: center;
+    }
+
+    /* 导航按钮样式 */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      border-top: 2px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-btn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: var(--global-font);
+    }
+
+    .prev-btn {
+      background: linear-gradient(135deg, #757575, #616161);
+      color: white;
+    }
+
+    .next-btn {
+      background: linear-gradient(135deg, var(--primary-color), var(--hover-color));
+      color: white;
+    }
+
+    .nav-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* 经历选择面板样式 */
+    .experiences-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      margin: 20px 0;
+    }
+
+    .experience-card {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 15px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .experience-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .experience-card.selected {
+      border: 2px solid var(--primary-color);
+      background: rgba(76, 175, 80, 0.1);
+    }
+
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .experience-name {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .experience-cost {
+      font-size: 1.1em;
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+
+    .experience-bonus {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .bonus-item {
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 0.9em;
+      font-weight: bold;
+    }
+
+    .bonus-item.positive {
+      background: rgba(76, 175, 80, 0.2);
+      color: var(--success-color);
+    }
+
+    .bonus-item.negative {
+      background: rgba(244, 67, 54, 0.2);
+      color: var(--error-color);
+    }
+
+    /* 世界选择面板样式 */
+    .worlds-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      margin: 20px 0;
+    }
+
+    .world-card {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 15px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .world-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .world-card.selected {
+      border: 2px solid var(--primary-color);
+      background: rgba(76, 175, 80, 0.1);
+    }
+
+    .world-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .world-name {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .world-rank {
+      padding: 5px 15px;
+      border-radius: 15px;
+      font-size: 0.9em;
+      font-weight: bold;
+    }
+
+    .world-rank.SS {
+      background: rgba(33, 150, 243, 0.2);
+      color: var(--accent-color);
+    }
+
+    .world-rank.S {
+      background: rgba(33, 150, 243, 0.2);
+      color: var(--accent-color);
+    }
+
+    .world-rank.A {
+      background: rgba(76, 175, 80, 0.2);
+      color: var(--primary-color);
+    }
+
+    /* 添加SSS级世界的样式 */
+    .world-rank.SSS {
+      background: linear-gradient(135deg, rgba(255, 0, 0, 0.2), rgba(255, 0, 0, 0.4));
+      color: #ff0000;
+      font-weight: bold;
+      text-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+      border: 1px solid rgba(255, 0, 0, 0.3);
+      animation: sss-pulse 2s infinite;
+    }
+
+    @keyframes sss-pulse {
+      0% {
+        box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+      }
+
+      50% {
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+      }
+
+      100% {
+        box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+      }
+    }
+
+    /* B-D级世界的样式 */
+    .world-rank.B {
+      background: rgba(156, 39, 176, 0.2);
+      /* 紫色背景 */
+      color: #9c27b0;
+      /* 紫色文字 */
+    }
+
+    .world-rank.C {
+      background: rgba(63, 81, 181, 0.2);
+      /* 靛蓝色背景 */
+      color: #3f51b5;
+      /* 靛蓝色文字 */
+    }
+
+    .world-rank.D {
+      background: rgba(96, 125, 139, 0.2);
+      /* 蓝灰色背景 */
+      color: #607d8b;
+      /* 蓝灰色文字 */
+    }
+
+    .world-info {
+      margin: 10px 0;
+      font-size: 1.1em;
+    }
+
+    .world-info-label {
+      font-weight: bold;
+      color: var(--text-primary);
+      margin-right: 10px;
+    }
+
+    .world-features {
+      margin: 15px 0;
+    }
+
+    .world-feature {
+      font-size: 1em;
+      color: var(--text-tertiary);
+      padding: 8px 12px;
+      margin: 5px 0;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 6px;
+    }
+
+    .world-description {
+      font-size: 1.1em;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 10px 0;
+    }
+
+    .world-cultivation-path {
+      margin-top: 15px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 6px;
+    }
+
+    .path-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: var(--text-primary);
+    }
+
+    .path-content {
+      color: var(--text-tertiary);
+      font-style: italic;
+    }
+
+    .world-background {
+      font-size: 0.95em;
+      color: var(--text-tertiary);
+      font-style: italic;
+      margin-top: 15px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 6px;
+    }
+
+    /*    选择面板样式 */
+    .origins-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      margin: 20px 0;
+    }
+
+    .origin-card {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 15px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .origin-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .origin-card.selected {
+      border: 2px solid var(--primary-color);
+      background: rgba(76, 175, 80, 0.1);
+    }
+
+    /* 属性总览样式 */
+    .attributes-summary {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .summary-item {
+      background: rgba(255, 255, 255, 0.5);
+      padding: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .summary-name {
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .summary-value {
+      font-weight: bold;
+    }
+
+    .summary-value.positive {
+      color: var(--success-color);
+    }
+
+    .summary-value.negative {
+      color: var(--error-color);
+    }
+
+    /* 创建结果显示样式 */
+    .creation-summary {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .creation-summary h2 {
+      text-align: center;
+      color: var(--primary-color);
+      margin-bottom: 30px;
+    }
+
+    .summary-section {
+      margin-bottom: 25px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 10px;
+    }
+
+    .summary-section h3 {
+      color: var(--text-primary);
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .summary-section p {
+      margin: 8px 0;
+      font-size: 1.1em;
+      color: var(--text-secondary);
+    }
+
+    .origin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .origin-name {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .origin-cost {
+      font-size: 1.1em;
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+
+    .origin-content {
+      margin-top: 10px;
+    }
+
+    .origin-feature {
+      font-size: 1em;
+      color: var(--text-tertiary);
+      padding: 8px 12px;
+      margin: 5px 0;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 6px;
+    }
+
+    .origin-bonus {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .fame-value {
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .fame-value.positive {
+      background: rgba(76, 175, 80, 0.2);
+      color: var(--success-color);
+    }
+
+    .fame-value.negative {
+      background: rgba(244, 67, 54, 0.2);
+      color: var(--error-color);
+    }
+
+    .start-game-btn {
+      padding: 15px 40px;
+      font-size: 1.2em;
+      background: linear-gradient(135deg, var(--primary-color), var(--hover-color));
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+
+    .start-game-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    @media screen and (max-width: 1024px) {
+      .creation-container {
+        width: 95%;
+        padding: 20px;
+      }
+
+      .era-selection,
+      .worlds-grid,
+      .origins-grid,
+      .experiences-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .attributes-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .summary-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .creation-header h1 {
+        font-size: 2.2em;
+      }
+
+      .section-title {
+        font-size: 1.5em;
+      }
+    }
+
+    /* 在现有的 style 标签内添加以下媒体查询代码 */
+
+    /* 平板设备 - 屏幕宽度小于 1024px */
+    @media screen and (max-width: 1024px) {
+      .creation-container {
+        width: 95%;
+        padding: 20px;
+        max-height: 95vh;
+      }
+
+      .creation-header h1 {
+        font-size: 2.2em;
+      }
+
+      .creation-header p {
+        font-size: 1.2em;
+      }
+
+      .era-selection,
+      .difficulty-selection {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .attributes-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .step-item {
+        margin: 0 10px;
+      }
+
+      .section-title {
+        font-size: 1.5em;
+        padding: 12px 20px;
+      }
+    }
+
+    /* 手机设备 - 屏幕宽度小于 768px */
+    @media screen and (max-width: 768px) {
+      body {
+        height: auto;
+        min-height: 100vh;
+      }
+
+      .creation-container {
+        width: 100%;
+        padding: 15px;
+        border-radius: 0;
+        max-height: none;
+      }
+
+      .creation-header h1 {
+        font-size: 1.8em;
+      }
+
+      .steps-indicator {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        padding: 15px 0;
+      }
+
+      .step-item {
+        margin: 5px;
+      }
+
+      .attributes-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .attribute-card {
+        padding: 15px;
+      }
+
+      .nav-buttons {
+        padding: 15px;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        width: 100%;
+        padding: 10px;
+      }
+
+      .era-card,
+      .difficulty-card {
+        padding: 15px;
+      }
+
+      .era-header,
+      .difficulty-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .era-tag {
+        align-self: flex-start;
+      }
+    }
+
+    /* 小型手机设备 - 屏幕宽度小于 5000px */
+    @media screen and (max-width: 5000px) {
+      .creation-header h1 {
+        font-size: 1.5em;
+      }
+
+      .creation-header p {
+        font-size: 1em;
+      }
+
+      .step-number {
+        width: 25px;
+        height: 25px;
+        font-size: 0.9em;
+      }
+
+      .step-text {
+        font-size: 0.9em;
+      }
+
+      .section-title {
+        font-size: 1.2em;
+        padding: 10px 15px;
+      }
+
+      .era-name,
+      .difficulty-name {
+        font-size: 1.2em;
+      }
+
+      .era-description,
+      .difficulty-description {
+        font-size: 0.9em;
+      }
+
+      .era-feature,
+      .difficulty-feature {
+        font-size: 0.85em;
+        padding: 6px 10px;
+      }
+
+      .attribute-name {
+        font-size: 1em;
+      }
+
+      .attribute-description {
+        font-size: 0.85em;
+      }
+
+      .decrease-btn,
+      .increase-btn {
+        width: 25px;
+        height: 25px;
+      }
+    }
+
+    /* 处理横屏模式 */
+    @media screen and (max-height: 600px) and (orientation: landscape) {
+      .creation-container {
+        max-height: none;
+        height: auto;
+      }
+
+      .steps-indicator {
+        padding: 10px 0;
+      }
+
+      .creation-header {
+        padding: 10px 0;
+        margin-bottom: 15px;
+      }
+
+      .section-title {
+        margin: 15px 0;
+      }
+
+      .nav-buttons {
+        position: static;
+        padding: 10px;
+      }
+    }
+
+    /* 优化触摸设备交互 */
+    @media (hover: none) and (pointer: coarse) {
+
+      .era-card,
+      .difficulty-card {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .decrease-btn,
+      .increase-btn,
+      .nav-btn {
+        min-height: 44px;
+        min-width: 44px;
+      }
+
+      .era-card:hover,
+      .difficulty-card:hover {
+        transform: none;
+      }
+
+      .nav-btn:hover {
+        transform: none;
+      }
+
+      /* 加点击区域 */
+      .attribute-value {
+        gap: 15px;
+      }
+
+      /* 优化滚动条 */
+      ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    /* 创建总结页面的响应式样式 */
+    @media screen and (max-width: 768px) {
+      .creation-summary {
+        padding: 15px;
+      }
+
+      .summary-section {
+        margin-bottom: 20px;
+      }
+
+      .summary-section h3 {
+        font-size: 1.2em;
+      }
+
+      .experience-summary {
+        padding: 10px;
+      }
+
+      .experience-name {
+        font-size: 1em;
+      }
+
+      .experience-desc {
+        font-size: 0.9em;
+      }
+
+      .start-game-btn {
+        width: 100%;
+        margin-top: 20px;
+      }
+    }
+
+    /* 性别选择样式 */
+    .gender-selection {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      margin: 20px 0;
+    }
+
+    .gender-card {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 15px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .gender-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .gender-card.selected {
+      border: 2px solid var(--primary-color);
+      background: rgba(76, 175, 80, 0.1);
+    }
+
+    /* 种族选择样式 */
+    .race-selection {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      margin: 20px 0;
+    }
+
+    .race-card {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 15px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .race-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .race-card.selected {
+      border: 2px solid var(--primary-color);
+      background: rgba(76, 175, 80, 0.1);
+    }
+
+    /* 响应式布局 */
+    @media screen and (max-width: 1024px) {
+      .gender-selection {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .race-selection {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+
+      .gender-selection,
+      .race-selection {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* 添加相应的CSS样式 */
+    .experience-cost.positive {
+      color: var(--success-color);
+      font-weight: bold;
+    }
+
+    /* 在CSS中添加新的样式 */
+    .starts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      margin: 20px 0;
+    }
+
+    .start-card {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 15px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .start-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .start-card.selected {
+      border: 2px solid var(--primary-color);
+      background: rgba(76, 175, 80, 0.1);
+    }
+
+    .start-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .start-name {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .start-bonus {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .start-feature {
+      font-size: 0.9em;
+      color: var(--text-tertiary);
+      padding: 8px 12px;
+      margin: 5px 0;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 6px;
+    }
+
+    .start-background {
+      font-size: 0.95em;
+      color: var(--text-tertiary);
+      font-style: italic;
+      margin-top: 15px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 6px;
+    }
+
+    /* 在现有的CSS中添加以下样式 */
+    .yao-type-input {
+      margin: 15px 0;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+    }
+
+    .yao-type-input label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+      font-weight: bold;
+    }
+
+    .yao-type-field {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.8);
+      font-family: var(--global-font);
+      font-size: 1em;
+      color: var(--text-primary);
+    }
+
+    .yao-type-field:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    }
+
+    /* 在CSS部分添加以下样式 */
+    .custom-input {
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+
+    .custom-world-field,
+    .custom-start-field,
+    .attribute-input {
+      margin-bottom: 15px;
+    }
+
+    .custom-input-field {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.8);
+      margin-top: 5px;
+    }
+
+    textarea.custom-input-field {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .attribute-adjustments {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+    }
+
+    .attribute-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .attribute-value-input {
+      width: 80px;
+      padding: 5px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 768px) {
+      .attribute-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .experience-card.no-hover:hover,
+    .start-card.no-hover:hover {
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .experience-card.selected.no-hover,
+    .start-card.selected.no-hover {
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .start-details {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .start-header {
+      border-bottom: 2px solid var(--primary-color);
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+    }
+
+    .start-name {
+      color: var(--primary-color);
+      font-size: 1.5em;
+      margin: 0;
+    }
+
+    .start-content {
+      display: grid;
+      gap: 20px;
+    }
+
+    .start-content h4 {
+      color: var(--text-secondary);
+      margin: 0 0 10px 0;
+      font-size: 1.2em;
+    }
+
+    .start-features ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .start-features li {
+      padding: 5px 0;
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .start-features li:before {
+      content: "•";
+      color: var(--primary-color);
+      position: absolute;
+      left: 0;
+    }
+
+    .bonus-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .bonus-item {
+      padding: 5px 10px;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .bonus-item.positive {
+      background: rgba(76, 175, 80, 0.1);
+      color: var(--success-color);
+    }
+
+    .bonus-item.negative {
+      background: rgba(244, 67, 54, 0.1);
+      color: var(--error-color);
+    }
+
+    /* 添加自定义信息显示的样式 */
+    .custom-info-section {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .custom-info-section h3 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    .custom-info-section p {
+      margin: 5px 0;
+    }
+
+    .custom-info-section ul {
+      list-style-type: none;
+      padding-left: 20px;
+    }
+
+    .custom-info-section ul li {
+      position: relative;
+      padding: 3px 0;
+    }
+
+    .custom-info-section ul li:before {
+      content: "•";
+      color: var(--primary-color);
+      position: absolute;
+      left: -15px;
+    }
+
+    /* 添加新的样式 */
+    .attributes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .attribute-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+    }
+
+    .attribute-name {
+      font-weight: bold;
+      cursor: help;
+    }
+
+    .attribute-value {
+      font-family: monospace;
+    }
+
+    .attribute-value.positive {
+      color: var(--success-color);
+    }
+
+    .attribute-value.negative {
+      color: var(--error-color);
+    }
+
+    .custom-info-section strong {
+      color: var(--primary-color);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="creation-container">
+    <div class="creation-header">
+      <h1>修仙之路</h1>
+      <p>选择你的命运之途</p>
+    </div>
+
+    <div class="steps-indicator">
+      <div class="step-item active">
+        <div class="step-number">1</div>
+        <div class="step-text">时代与难度</div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">2</div>
+        <div class="step-text">属性与经历</div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">3</div>
+        <div class="step-text">性别与种族</div>
+      </div>
+      <div class="step-item">
+        <div class="step-number">4</div>
+        <div class="step-text">世界选择</div>
+      </div>
+    </div>
+
+    <div class="creation-content">
+      <!-- 内容将通过JavaScript动态生成 -->
+    </div>
+
+    <div class="nav-buttons">
+      <button class="nav-btn prev-btn" disabled>返回</button>
+      <button class="nav-btn next-btn">下一步</button>
+    </div>
+  </div>
+
+  <script>
+    // 游戏数据配置
+    const CONFIG = {
+      MAX_ATTR_VALUE: 10,
+      // 基础属性定义
+      ATTRIBUTES: {
+        // 核心属性
+        heart: { name: '心性', description: '决定修炼速度和心境修为' },
+        bone: { name: '根骨', description: '影响修炼资质和体魄强度' },
+        wisdom: { name: '悟性', description: '影响功法领悟和道法参悟' },
+        luck: { name: '气运', description: '影响机缘获取和危机规避' },
+        power: { name: '法力', description: '决定法术威力和真元强度' },
+
+        // 特殊属性
+        martialArt: { name: '功法资质', description: '影响功法修炼资格和速度' },
+        fame: { name: '声望', description: '影响声望和，可以为负数，正数代表正道声望，负数代表魔道声望' },
+        charm: { name: '魅力', description: '影响人际关系，声望获取' },
+        lifespan: { name: '寿元', description: '影响生命长度' },
+
+        // 技艺属性
+        forging: { name: '炼器资质', description: '影响法器炼制能力' },
+        alchemy: { name: '炼丹资质', description: '影响丹药炼制能力' },
+
+        // 武学属性
+        palmArt: { name: '掌法资质', description: '影响掌法修炼速度' },
+        fingerArt: { name: '指法资质', description: '影响指法修炼速度' },
+        fistArt: { name: '拳法资质', description: '影响拳法修炼速度' },
+        swordArt: { name: '剑法资质', description: '影响剑法修炼速度' },
+        spearArt: { name: '枪法资质', description: '影响枪法修炼速度' },
+        bladeArt: { name: '刀法资质', description: '影响刀法修炼速度' }
+      },
+
+      ERAS: {
+        yinyang: {
+          id: 'yinyang',
+          name: '阴阳纪',
+          description: '荒古结束，诞生了第一位证道永恒，超脱此方宇宙的道祖。',
+          features: [
+            '道祖传承机会+20%',
+            '悟道速度+30%',
+            '大道感悟+10%',
+            '遭遇上古大能概率+15%'
+          ],
+          background: '道祖刚刚证道永恒,诸天万界尚未完全稳定，是寻求大道机缘的最佳时期。'
+        },
+        ancient: {
+          id: 'ancient',
+          name: '中古',
+          description: '各个道祖大战频发，争夺成道机缘。危险与机遇并存。',
+          features: [
+            '战斗经验获取+40%',
+            '遭遇危险概率+50%',
+            '获得大能传承机会+30%',
+            '道法感悟+20%'
+          ],
+          background: '道祖之间的争斗达到顶峰，整个宇宙都在动荡。'
+        },
+        vermilion: {
+          id: 'vermilion',
+          name: '朱雀纪',
+          description: '中古大战结束，机缘与危险兼具的时代。',
+          features: [
+            '综合修炼速度+20%',
+            '机缘获取+25%',
+            '基础资源获取+30%',
+            '突破难度-10%'
+          ],
+          background: '大战结束后的黄金时代，百废待兴，机会处处。'
+        },
+        taiji: {
+          id: 'taiji',
+          name: '末劫纪',
+          description: '末法时代，整个宇宙即将毁灭轮回前，灵气复苏，是为最后一次成道之机。',
+          features: [
+            '灵气亲和度+40%',
+            '终末类大道感悟+30%',
+            '逆天改命机会+20%',
+            '获得秘境传承几率+25%'
+          ],
+          background: '整个宇宙陷入毁灭的倒计时，注定要从太极复归无极，物质回归元气，反而带来了前所未有的机遇。'
+        },
+        // 在ERAS对象的最后添加自定义时代选项
+        customEra: {
+          id: 'customEra',
+          name: '自定义时代',
+          description: '玩家可以自行填写时代内容。',
+          features: [],
+          background: ''
+        }
+      },
+      DIFFICULTIES: {
+        normal: {
+          id: 'normal',
+          name: '泯然众人',
+          points: 30,
+          description: '普通的修仙者，资质平平，全靠自己打拼。',
+          features: [
+            '起始资源较少',
+            '体验平凡修士的人生'
+          ]
+        },
+        talented: {
+          id: 'talented',
+          name: '天之骄子',
+          points: 60,
+          description: '天赋异禀，受天道眷顾的修仙者。',
+          features: [
+            '起始资源适中',
+            '请合理分配点数'
+          ]
+        },
+        protagonist: {
+          id: 'protagonist',
+          name: '爽文主角',
+          points: 140,
+          description: '天命之子，注定要在修仙界掀起波澜。',
+          features: [
+            '起始资源丰富',
+            '大采购，开始！'
+          ]
+        }
+      },
+
+      ORIGINS: {
+        mortalBorn: {
+          id: 'mortalBorn',
+          name: '凡人出身',
+          cost: 0,
+          description: '普通凡人家庭出身，无权无势，但也无拘无束。',
+          features: [
+            '起步艰难，但潜力无限',
+            '较容易获得机缘眷顾',
+            '无门派束缚，可自由发展'
+          ],
+          bonus: {
+            luck: 3
+          }
+        },
+        sectDisciple: {
+          id: 'sectDisciple',
+          name: '散仙儿女',
+          cost: 12,
+          description: '出身于游走世间的散仙家庭，从小接受修炼教导。',
+          features: [
+            '基础较为扎实',
+            '有父母庇护',
+            '开局有一定起始资源'
+          ],
+          bonus: {
+            wisdom: 3,
+            power: 2,
+            martialArt: 2
+          }
+        },
+        royalBlood: {
+          id: 'royalBlood',
+          name: '修行世家',
+          cost: 20,
+          description: '家族世代修行，拥有凡人难以企及的修行资源',
+          features: [
+            '起始资源丰富',
+            '肩负家族使命',
+            '基础扎实'
+          ],
+          bonus: {
+            power: 4,
+            bone: 4,
+            charm: 4,
+            fame: 3
+          }
+        },
+        humanSaint: {
+          id: 'humanSaint',
+          name: '奇迹圣体',
+          cost: 35,
+          description: '亿万分之一的造物奇迹，各方面都达到极高水准。',
+          features: [
+            '全方位超凡',
+            '体质完美',
+            '潜力无限'
+          ],
+          bonus: {
+            power: 5,
+            wisdom: 5,
+            luck: 5,
+            bone: 5,
+            heart: 5,
+            charm: 5,
+            lifespan: 40
+          }
+        },
+        destinyChild: {
+          id: 'destinyChild',
+          name: '天命之子',
+          cost: 25,
+          description: '天命所钟，气运加身。',
+          features: [
+            '气运非凡',
+            '魅力超群',
+            '天命所归'
+          ],
+          bonus: {
+            luck: 8,
+            charm: 5,
+            wisdom: 5,
+            fame: 3
+          }
+        },
+        heroicLegacy: {
+          id: 'heroicLegacy',
+          name: '英雄传承',
+          cost: 20,
+          description: '灵魂继承了古代英雄的意志。',
+          bonus: {
+            bone: 5,
+            wisdom: 3,
+            fame: 30
+          },
+          features: [
+            '开场正面声望很高',
+            '根骨优秀',
+            '英雄气概'
+          ],
+          background: '继承了上古英雄的意志，天生正气凛然。'
+        },
+        ancientBloodline: {
+          id: 'ancientBloodline',
+          name: '古圣血脉',
+          cost: 25,
+          description: '体内流淌着远古强者的血脉。',
+          features: [
+            '血脉强大',
+            '寿元绵长',
+            '功法亲和'
+          ],
+          bonus: {
+            power: 4,
+            bone: 4,
+            lifespan: 20,
+            martialArt: 2
+          }
+        }
+      },
+
+      EXPERIENCES: {
+        martialArtist: {
+          id: 'martialArtist',
+          name: '舞刀弄枪',
+          cost: 5,
+          description: '自小习武，对武技有独特的领悟。',
+          features: [
+            '武技资质优秀',
+            '对武学有天然亲和'
+          ],
+          bonus: {
+            martialArt: 3,
+            bone: 2,
+            wisdom: -2
+          }
+        },
+        alchemyGenius: {
+          id: 'alchemyGenius',
+          name: '丹道天才',
+          cost: 8,
+          description: '在丹道方面展现出惊人的天赋。',
+          features: [
+            '炼丹天赋绝佳',
+            '对丹道有独特理解'
+          ],
+          bonus: {
+            alchemy: 5,
+            wisdom: 2,
+            luck: 1
+          }
+        },
+        swordManiac: {
+          id: 'swordManiac',
+          name: '剑痴',
+          cost: 8,
+          description: '一心向剑，剑道天赋惊人。',
+          features: [
+            '剑道天赋卓绝',
+            '对剑法有独特理解'
+          ],
+          bonus: {
+            swordArt: 7,
+            wisdom: 2,
+            power: 2
+          }
+        },
+        cursedFate: {
+          id: 'cursedFate',
+          name: '诅咒之身',
+          cost: 0,
+          description: '背负诅咒，但因此获得特殊能力。',
+          features: [
+            '力量强大',
+            '诅咒缠身',
+            '寿元受损'
+          ],
+          bonus: {
+            power: 4,
+            luck: -5,
+            lifespan: -20,
+            charm: -3
+          }
+        },
+        martialProdigy: {
+          id: 'martialProdigy',
+          name: '战斗天才',
+          cost: 12,
+          description: '武道与法术皆有天赋，是难得的武法双修奇才。',
+          features: [
+            '武学天赋出众',
+            '法力浑厚',
+            '双修潜力'
+          ],
+          bonus: {
+            martialArt: 5,
+            power: 4,
+            wisdom: 2
+          }
+        },
+        manyEnemies: {
+          id: 'manyEnemies',
+          name: '四面树敌',
+          cost: 0,
+          description: '仇家众多，但在不断的生死危机中获得成长。',
+          features: [
+            '敌人众多',
+            '实力增长快',
+            '机缘不断'
+          ],
+          bonus: {
+            power: 4,
+            luck: 3,
+            charm: -4,
+            fame: -3
+          }
+        },
+        alchemyMaster: {
+          id: 'alchemyMaster',
+          name: '丹道宗师',
+          cost: 15,
+          description: '炼丹造诣极高，对丹道有着超凡的理解。',
+          features: [
+            '丹道天赋绝顶',
+            '对药理精通',
+            '财运亨通'
+          ],
+          bonus: {
+            alchemy: 7,
+            wisdom: 3,
+            luck: 2,
+            fame: 2
+          }
+        },
+        hiddenGenius: {
+          id: 'hiddenGenius',
+          name: '大隐隐于世',
+          cost: 10,
+          description: '天赋绝佳却甘于平凡，低调行事暗中修行。',
+          features: [
+            '悟性超群',
+            '心性稳固',
+            '难觅踪迹'
+          ],
+          bonus: {
+            wisdom: 5,
+            heart: 3,
+            fame: -2,
+            luck: 2
+          }
+        },
+        destinyBearer: {
+          id: 'destinyBearer',
+          name: '命运之子',
+          cost: 20,
+          description: '背负着特殊的使命，冥冥中受天道眷顾。',
+          features: [
+            '气运非凡',
+            '天命加身',
+            '因果缠身'
+          ],
+          bonus: {
+            luck: 6,
+            power: 3,
+            wisdom: 2,
+            heart: 2,
+            lifespan: -10
+          }
+        },
+        scholarFamily: {
+          id: 'scholarFamily',
+          name: '书香门第',
+          cost: 8,
+          description: '世代读书人家，培养出极高的悟性。',
+          features: [
+            '悟性极高',
+            '知识渊博'
+          ],
+          bonus: {
+            wisdom: 4,
+            martialArt: -2,
+            charm: 2
+          }
+        },
+        heavenlyJealousy: {
+          id: 'heavenlyJealousy',
+          name: '天妒英才',
+          cost: 10,
+          description: '惊才绝艳，却遭天妒',
+          features: [
+            '悟性绝顶',
+            '寿元受损',
+            '气运不佳'
+          ],
+          bonus: {
+            wisdom: 9,
+            lifespan: -10,
+            luck: -3
+          }
+        },
+        forgemaster: {
+          id: 'forgemaster',
+          name: '炼器奇才',
+          cost: 8,
+          description: '对炼器一道有着非凡天赋。',
+          features: [
+            '炼器天赋出众',
+            '对法器有独特理解'
+          ],
+          bonus: {
+            forging: 5,
+            power: 2,
+            wisdom: 2
+          }
+        },
+        demonicHeart: {
+          id: 'demonicHeart',
+          name: '魔性之心',
+          cost: 5,
+          description: '天生邪性，不拘一格。',
+          features: [
+            '魔道声望提升',
+            '威慑力强'
+          ],
+          bonus: {
+            fame: -5,
+            power: 3,
+            charm: 3
+          }
+        },
+        righteousHeart: {
+          id: 'righteousHeart',
+          name: '侠义之心',
+          cost: 5,
+          description: '天生正义感强烈，乐于助人。',
+          features: [
+            '正道声望提升',
+            '人缘良好'
+          ],
+          bonus: {
+            fame: 5,
+            charm: 2
+          }
+        },
+        cursedBlood: {
+          id: 'cursedBlood',
+          name: '诅咒之血',
+          cost: -10, // 负数表示获得点数
+          description: '体内流淌着被诅咒的血脉，时常会遭受诅咒反噬。',
+          features: [
+            '每次突破都有30%概率遭受反噬',
+            '寿元降低',
+            '其他修士会本能地感到不适'
+          ],
+          bonus: {
+            lifespan: -10,
+            charm: -3,
+            luck: -3,
+            heart: -2
+          }
+        },
+        karmaDebt: {
+          id: 'karmaDebt',
+          name: '业力缠身',
+          cost: -8,
+          description: '前世作恶太多，导致今生背负深重业力。',
+          features: [
+            '修炼速度降低30%',
+            '难以获得机缘',
+            '容易遭遇危险'
+          ],
+          bonus: {
+            luck: -5,
+            heart: -2,
+            fame: -5
+          }
+        },
+        brokenMeridians: {
+          id: 'brokenMeridians',
+          name: '经脉受损',
+          cost: -6,
+          description: '经脉严重受损，修炼事倍功半。',
+          features: [
+            '修炼速度降低50%',
+            '突破更加困难',
+            '容易走火入魔'
+          ],
+          bonus: {
+            bone: -3,
+            power: -2,
+            heart: -1
+          }
+        },
+        soulDefect: {
+          id: 'soulDefect',
+          name: '残缺魂魄',
+          cost: -12,
+          description: '魂魄不全，修行举步维艰。',
+          features: [
+            '无法修炼需要完整魂魄的功法',
+            '容易被邪祟侵扰',
+            '神识虚弱'
+          ],
+          bonus: {
+            wisdom: -4,
+            power: -2,
+            luck: -2,
+            heart: -2
+          }
+        },
+        heavenlyEnemy: {
+          id: 'heavenlyEnemy',
+          name: '天道之敌',
+          cost: -15,
+          description: '不知为何被天道标记为敌，时常遭受天谴。',
+          features: [
+            '每隔一段时间必定遭受天谴',
+            '无法参悟天道法则',
+            '其他修士会本能地排斥'
+          ],
+          bonus: {
+            luck: -6,
+            wisdom: -3,
+            charm: -3,
+            fame: -8
+          }
+        },
+        demonizedBody: {
+          id: 'demonizedBody',
+          name: '魔化之体',
+          cost: -8,
+          description: '体内潜藏着难以控制的魔性。',
+          features: [
+            '容易陷入魔性爆发',
+            '难以修炼正统功法',
+            '正道修士会主动与你为敌'
+          ],
+          bonus: {
+            heart: -4,
+            fame: -10,
+            power: 2, // 唯一的好处是力量略有提升
+            charm: -2
+          }
+        },
+        ancestralSin: {
+          id: 'ancestralSin',
+          name: '祖辈罪业',
+          cost: -10,
+          description: '承担着祖辈犯下的滔天大罪，备受歧视。',
+          features: [
+            '世家大族会主动针对',
+            '难以加入大型宗门',
+            '机缘被压制'
+          ],
+          bonus: {
+            luck: -4,
+            charm: -3,
+            fame: -6,
+            heart: -2
+          }
+        },
+        chaosBody: {
+          id: 'chaosBody',
+          name: '混沌之体',
+          cost: -20,
+          description: '体内混沌之力失控，随时可能爆体而亡。',
+          features: [
+            '寿元极度缩短',
+            '修炼时极易走火入魔',
+            '体内混沌之力会伤害亲近之人'
+          ],
+          bonus: {
+            lifespan: -15,
+            power: -3,
+            heart: -3,
+            charm: -5,
+            bone: -3
+          }
+        },
+        fatedDoom: {
+          id: 'fatedDoom',
+          name: '命中注定之劫',
+          cost: -15,
+          description: '命中注定将面临无法避免的大劫。',
+          features: [
+            '容易遭遇致命危机',
+            '渡劫难度提升100%',
+          ],
+          bonus: {
+            luck: -8,
+            heart: -2,
+            wisdom: -2
+          }
+        },
+        soulBond: {
+          id: 'soulBond',
+          name: '魂契之苦',
+          cost: -12,
+          description: '与一个强大邪物订立了无法解除的魂契。',
+          features: [
+            '被迫听从邪物的部分命令',
+            '正道功法修炼效率降低',
+            '时常遭受噩梦侵扰'
+          ],
+          bonus: {
+            heart: -4,
+            wisdom: -2,
+            fame: -7,
+            luck: -3
+          }
+        },
+        childhoodTrauma: {
+          id: 'childhoodTrauma',
+          name: '童年阴影',
+          cost: -5,
+          description: '幼年经历过一些不愉快的事情，导致性格有些阴郁。',
+          features: [
+            '与人交往时容易紧张',
+            '对陌生人保持警惕',
+            '情绪偶尔会失控'
+          ],
+          bonus: {
+            heart: -2,
+            charm: -1,
+            luck: -1
+          }
+        },
+        lostLove: {
+          id: 'lostLove',
+          name: '情伤之痛',
+          cost: -3,
+          description: '曾经失去过重要的人，内心留下了难以愈合的伤痕。',
+          features: [
+            '对感情比较淡漠',
+            '不轻易相信他人',
+            '独来独往'
+          ],
+          bonus: {
+            heart: -1,
+            charm: -2
+          }
+        },
+        poorFamily: {
+          id: 'poorFamily',
+          name: '寒门出身',
+          cost: -2,
+          description: '出身贫寒，缺乏修炼资源。',
+          features: [
+            '起步资源较少',
+            '人脉关系较弱',
+            '修炼进度较慢'
+          ],
+          bonus: {
+            luck: -1,
+            charm: -1
+          }
+        },
+        weakBody: {
+          id: 'weakBody',
+          name: '体弱多病',
+          cost: -3,
+          description: '天生体质较弱，需要更多时间调养。',
+          features: [
+            '修炼体系功法较慢',
+            '突破时较为痛苦',
+            '需要定期服用丹药'
+          ],
+          bonus: {
+            bone: -2,
+            power: -1
+          }
+        },
+        socialAnxiety: {
+          id: 'socialAnxiety',
+          name: '社交恐惧',
+          cost: -3,
+          description: '不擅长与人交往，容易紧张。',
+          features: [
+            '难以加入大型门派',
+            '不适合参加群体活动',
+            '独自修炼效率更高'
+          ],
+          bonus: {
+            charm: -2,
+            wisdom: 1 // 独处多所以悟性略高
+          }
+        },
+        stubbornPersonality: {
+          id: 'stubbornPersonality',
+          name: '倔强性格',
+          cost: -2,
+          description: '性格固执，不愿意接受他人建议。',
+          features: [
+            '难以得到前辈指点',
+            '不擅长团队合作',
+            '修炼方向容易走偏'
+          ],
+          bonus: {
+            wisdom: -1,
+            heart: -1
+          }
+        },
+        badReputation: {
+          id: 'badReputation',
+          name: '名声不佳',
+          cost: -3,
+          description: '因为一些误会，在修仙界留下了不好的名声。',
+          features: [
+            '初次见面印象较差',
+            '难以获得信任',
+            '容易遭人排挤'
+          ],
+          bonus: {
+            fame: -3,
+            charm: -1
+          }
+        },
+        unluckyAura: {
+          id: 'unluckyAura',
+          name: '衰运缠身',
+          cost: -4,
+          description: '运气不太好，经常错过机缘。',
+          features: [
+            '寻找机缘较难',
+            '容易遇到小麻烦',
+            '宝物获取概率降低'
+          ],
+          bonus: {
+            luck: -3,
+            fame: -1
+          }
+        },
+        emotionalInstability: {
+          id: 'emotionalInstability',
+          name: '情绪失控',
+          cost: -3,
+          description: '情绪容易波动，影响修炼状态。',
+          features: [
+            '修炼时容易走火入魔',
+            '难以保持平静心态',
+            '容易冲动行事'
+          ],
+          bonus: {
+            heart: -2,
+            wisdom: -1
+          }
+        },
+        slowLearner: {
+          id: 'slowLearner',
+          name: '资质平庸',
+          cost: -3,
+          description: '学习能力较差，需要更多时间理解功法。',
+          features: [
+            '功法领悟较慢',
+            '突破瓶颈较难',
+            '修炼进度缓慢'
+          ],
+          bonus: {
+            wisdom: -2,
+            bone: -1
+          }
+        },
+        fistMaster: {
+          id: 'fistMaster',
+          name: '拳道宗师',
+          cost: 10,
+          description: '天生拳法奇佳，对拳法有着超凡的领悟。',
+          features: [
+            '拳法资质极高',
+            '体魄强健',
+            '战斗直觉敏锐'
+          ],
+          bonus: {
+            fistArt: 6,
+            bone: 3,
+            power: 2,
+            martialArt: 2
+          }
+        },
+        fingerArtist: {
+          id: 'fingerArtist',
+          name: '指法大师',
+          cost: 10,
+          description: '手指灵活异常，对指法有独特感悟。',
+          features: [
+            '指法资质极高',
+            '手指灵敏度超群',
+            '适合修炼点穴类功法'
+          ],
+          bonus: {
+            fingerArt: 6,
+            wisdom: 2,
+            power: 2,
+            martialArt: 2
+          }
+        },
+        palmMaster: {
+          id: 'palmMaster',
+          name: '掌法奇才',
+          cost: 10,
+          description: '掌力浑厚，对掌法有天然亲和。',
+          features: [
+            '掌法资质极高',
+            '内力浑厚',
+            '易悟掌法真意'
+          ],
+          bonus: {
+            palmArt: 6,
+            power: 3,
+            bone: 2,
+            martialArt: 2
+          }
+        },
+        alchemyProdigy: {
+          id: 'alchemyProdigy',
+          name: '丹道神童',
+          cost: 15,
+          description: '自幼便能辨识药材，对丹道有着惊人的天赋。',
+          features: [
+            '炼丹天赋绝顶',
+            '对药理有特殊感知',
+            '能预知丹药品质'
+          ],
+          bonus: {
+            alchemy: 8,
+            wisdom: 4,
+            luck: 2,
+            fame: 3
+          }
+        },
+        poisonMaster: {
+          id: 'poisonMaster',
+          name: '毒道大师',
+          cost: 8,
+          description: '精通各类毒理，能炼制奇毒。',
+          features: [
+            '毒药炼制效果加成',
+            '免疫大部分毒素',
+            '名声较差'
+          ],
+          bonus: {
+            alchemy: 4,
+            wisdom: 2,
+            fame: -5,
+            luck: 1
+          }
+        },
+        transmigrator: {
+          id: 'transmigrator',
+          name: '穿越者',
+          cost: 20,
+          description: '来自现代地球的穿越者，拥有独特的见识和思维方式。由于经历过两个世界，对大道的理解有着独特视角。',
+          features: [
+            '具备现代科学思维',
+            '对修真界常识有着不同的理解角度',
+            '能够融合现代知识与修真体系',
+            '具有超强的适应能力',
+            '容易引起天道注意'
+          ],
+          bonus: {
+            wisdom: 6,        // 现代知识带来的智慧加成
+            luck: 4,          // 身为主角的幸运加成
+            heart: 3,         // 两世为人的心性加成
+            charm: 2,         // 独特气质带来的魅力
+            fame: -2,         // 格格不入导致的声望略降
+            lifespan: -10     // 转世带来的寿元损耗
+          }
+        },
+        // 在经历部分添加一个空白选项
+        customExperience: {
+          id: 'customExperience',
+          name: '自定义经历',
+          cost: 0,
+          description: '玩家可以自行填写经历内容。',
+          features: [],
+          bonus: {}
+        }
+      },
+
+      WORLDS: {
+        honghuang: {
+          id: 'honghuang',
+          name: '洪荒宇宙',
+          rank: 'SSS',
+          tradition: '万事皆虚万事皆允',
+          inheritance: '三千大道的圆满宇宙',
+          maxCultivator: '鸿钧道祖(永恒大成)',
+          description: '三千混沌魔神陨落之地，道祖讲道之所，三清证道之处。洪荒宇宙是诸天万界中最为古老、等级最高的宇宙之一。',
+          features: [
+            '先天灵气浓度达到极致，修炼速度+200%',
+            '可以参悟先天大道，但难度极高',
+            '随时可能遭遇混沌魔神、先天神魔等强大存在',
+            '机缘与杀劫并存，动辄灭世量劫',
+            '三千大道皆可修炼，但每一条路都充满凶险',
+            '世界意志极其强大，违逆者将遭受天谴'
+          ],
+          background: '在混沌初开之时，盘古开天辟地，化身万物。三千混沌魔神在开天之战中陨落，其精血与真灵化作无尽造化。鸿钧道祖立下天地规则，确立三清、西方二圣等各方势力。这里有最完整的修炼体系，但也充满了数不尽的杀劫。',
+          cultivationPath: '可选择加入阐教、截教、人教等各大圣人道统\n参悟先天大道需要极高的悟性\n建议先寻求基础功法，稳固根基\n切勿轻易招惹先天神魔\n量劫降临时需要选择合适的立场'
+        },
+        xiyou: {
+          id: 'xiyou',
+          name: '西游宇宙',
+          rank: 'SSS',
+          tradition: '佛道双修',
+          inheritance: '三千大道的圆满宇宙',
+          maxCultivator: '如来佛祖(造化圆满)',
+          description: '大唐盛世，取经之路，妖魔横行，佛法昌盛。这是一个充满机缘的世界，但也处处充满磨难与考验。',
+          features: [
+            '功德加持，修炼事半功倍',
+            '妖族修炼难度降低50%',
+            '佛法修炼速度+100%',
+            '随时可能遭遇天庭或佛门的劫难考验',
+            '可以通过降妖除魔获取功德',
+            '世界意志偏向佛门，但也容纳其他修行体系'
+          ],
+          background: '这是西游记的世界，天庭高居九重天，统御万界。佛门势力在西方不断扩张，与道教形成微妙的平衡。妖魔横行人间，但也不乏得道高人。世界充满了机缘，但每一步都是考验。',
+          cultivationPath: '可选择加入天庭、佛门、散修等不同阵营\n建议通过降妖除魔积累功德\n注意在佛道之间保持平衡\n可以选择投靠各方势力，但需谨慎\n建议先打好根基，再考虑大的机缘'
+        },
+        jiuyou: {
+          id: 'jiuyou',
+          name: '九幽大世界',
+          rank: 'SS',
+          tradition: '道佛兼具',
+          inheritance: '先天生死大道',
+          maxCultivator: '生死道祖(先天大道金仙)',
+          description: '生死轮回之地，道法自然，大道气息浓厚。',
+          features: [
+            '道法威力+50%',
+            '生死大道亲和度+100%',
+            '获得生死轮回体质',
+            '拥有九层世界，每层世界有不同的运转法则'
+          ],
+          background: '九幽大世界是生死轮回之地，蕴含完整的生死大道。世界等级极高，但环境险恶。',
+          cultivationPath: '以道法为根基，参悟生死大道，最终或可依附生死道祖，成为九幽的帝君之一。'
+        },
+        mandala: {
+          id: 'mandala',
+          name: '曼陀罗大世界',
+          rank: 'SS',
+          tradition: '佛道同修',
+          inheritance: '先天涅槃大道',
+          maxCultivator: '未来庄严佛祖(先天大道金仙)',
+          description: '佛光普照三千界，众生平等，愿力浩荡。',
+          features: [
+            '世界律法要求众生向善，违背者将受到世界意志压制',
+            '佛门气运鼎盛，修行佛法事半功倍',
+            '寺庙遍布，香火愿力充沛',
+            '有菩提妙树庇护，世界灵气充沛且纯净'
+          ],
+          background: '未来庄严佛祖道场所在，佛法昌盛，众生向善。整个世界都在佛法的影响下，形成了独特的修行环境。',
+          cultivationPath: '以佛法为根基，参悟涅槃大道，可拜入各大佛门宗派，追求解脱。'
+        },
+        xuanxiao: {
+          id: 'xuanxiao',
+          name: '玄霄大世界',
+          rank: 'S',
+          tradition: '道门为主，兼容百家',
+          inheritance: '先天宇之大道',
+          maxCultivator: '玄霄道君(半步金仙)',
+          description: '空间变幻莫测，世界构造独特。',
+          features: [
+            '世界各处都有空间裂缝，穿梭空间较为容易',
+            '三霄宫为世界主宰，统领诸多道统',
+            '修行者需注重空间法则感悟',
+            '世界构造复杂，贸易发达，各个城市、宗门均设有通往诸天万界的传送阵'
+          ],
+          background: '三霄宫道统所在，以空间法则闻名。世界中遍布空间裂缝，形成独特的修行环境。',
+          cultivationPath: '可拜入三霄宫或其他道统，以空间法则为基，追求大道。'
+        },
+        zizai: {
+          id: 'zizai',
+          name: '自在大世界',
+          rank: 'S',
+          tradition: '诸道统皆有传承，佛、魔、道、武、神道错综复杂',
+          inheritance: '后天化身大道',
+          maxCultivator: '自在佛祖(后天大道金仙)',
+          description: '混沌、混乱的大世界，每个道统都十分擅长改换人格，控制他人，或是伪造身份。',
+          features: [
+            '包含多个世界，既有类似于现代地球的科技世界，也有佛道昌盛和道法昌盛的世界',
+            '重视在诸多外相中明心见性，各家法门皆可伪造人格，制造分身等，因此更难明晰真如',
+            '各家功法易于传播和修习',
+            '化身之法源远流长，传承完整'
+          ],
+          background: '自在佛祖道场所在，是一方旺盛发展的混沌之地。此界众生勾心斗角，一人千面。',
+          cultivationPath: '可拜入诸多宗派，以斗争为主，参悟化身之道。'
+        },
+        shenhuang: {
+          id: 'shenhuang',
+          name: '神皇大世界',
+          rank: 'A',
+          tradition: '神道传承',
+          inheritance: '后天奴役之道',
+          maxCultivator: '神皇(半步金仙)',
+          description: '神庭林立，香火鼎盛，神道昌盛。',
+          features: [
+            '世界以神庭为尊，凡人供奉神灵',
+            '重视香火愿力，神道气运浓厚',
+            '各方神庭割据，互相争夺信徒',
+            '神道功法完整，传承久远'
+          ],
+          background: '这是一个神道昌盛的世界，神庭林立，香火不断。神灵与凡人形成独特的共生关系。',
+          cultivationPath: '可拜入神庭或自立神位，通过收集香火愿力提升实力。'
+        },
+        qingyun: {
+          id: 'qingyun',
+          name: '独胜大世界',
+          rank: 'A',
+          tradition: '魔道独尊',
+          inheritance: '后天掠夺大道',
+          maxCultivator: '孔方魔君(半步金仙)',
+          description: '魔气冲霄，强者为尊，弱肉强食。',
+          features: [
+            '不讲道理，只讲实力',
+            '善良会受到无情的欺诈和挤压',
+            '各大魔道宗门割据一方',
+            '资源争夺激烈，机缘与危机并存'
+          ],
+          background: '魔道圣地，是孔方魔君的道场所在。世界规则崇尚强者，弱者难以生存。',
+          cultivationPath: '可加入魔道宗门，或独自修行，追求力量至上。'
+        },
+        wuxia: {
+          id: 'wuxia',
+          name: '武略大世界',
+          rank: 'B',
+          tradition: '武道传承',
+          inheritance: '后天锋锐大道',
+          maxCultivator: '苍行(天仙，约等于道门二劫天君)',
+          description: '武道昌盛，英雄辈出，武林纷争不断。',
+          features: [
+            '世界以武为尊，重视实战',
+            '各大武林门派林立，各有绝学',
+            '讲究武德，以武会友',
+            '机缘多在险境，历练艰难'
+          ],
+          background: '这是一个以武为尊的世界，武林门派林立，武道传承完整。江湖纷争不断，但也孕育了无数英雄豪杰。',
+          cultivationPath: '可拜入武林门派或自行习武，通过实战提升，追求武道极致。'
+        },
+        nongxiang: {
+          id: 'nongxiang',
+          name: '谷丰大世界',
+          rank: 'C',
+          tradition: '农家传承',
+          inheritance: '后天枯荣大道',
+          maxCultivator: '许桑之(神农，约等于道门二劫阳神真人)',
+          description: '五谷丰登，草木繁盛，天地灵气充沛。',
+          features: [
+            '世界以农为本，重视生机培育',
+            '灵田遍布，适合种植灵药',
+            '农家传承完整，圣地立',
+            '崇尚和平，排斥征伐'
+          ],
+          background: '这是一个以农为本的世界，大地肥沃，灵气充沛。农家传承源远流长，形成了独特的修行体系。但由于二劫阳神已经接触到物质变换之道，农家已无前路，因此已经几十万年无人突破阳神境界。',
+          cultivationPath: '可拜入农家圣地，通过培育灵植、感悟生机来提升修为。'
+        },
+        rujia: {
+          id: 'rujia',
+          name: '礼乐大世界',
+          rank: 'B',
+          tradition: '儒道传承',
+          inheritance: '后天礼乐大道',
+          maxCultivator: '孔明德(当代儒圣，约等于道门一劫天君)',
+          description: '礼乐昌盛，人文鼎盛，天人合一。圣人之道代代相传，以礼化人。',
+          features: [
+            '以礼乐教化为本，重视人文修养',
+            '天人感应显著，圣人意志能影响天象',
+            '五经六艺皆可成道，书院遍布天下',
+            '以德服人，重视教化而非征伐'
+          ],
+          background: '这是一个儒家理想的大同世界，以礼乐教化为根本。通过对五经六艺的参悟，可以达到天人合一的境界。历代圣人都在追求"内圣外王"的至高境界。',
+          cultivationPath: '拜入各大书院，通过研习经典、修身性来提升修为。'
+        },
+        fajia: {
+          id: 'fajia',
+          name: '法行大世界',
+          rank: 'C',
+          tradition: '法家铁律传承',
+          inheritance: '后天刑罚大道',
+          maxCultivator: '刑不吝(法祖，约等于道门三劫阳神真人)',
+          description: '法令森严，赏罚分明。天地万物皆有定法，违法者受天谴。',
+          features: [
+            '以法为教，奉行赏罚分明',
+            '天地规则显化为法则之力',
+            '重法制，轻仁义，以法驭下',
+            '崇尚实用，排斥虚文'
+          ],
+          background: '这是一个以法为尊的世界，天地间存在着森严的法则。修行者通过参悟法则之力来提升修为，但过于严苛的法则也限制了世界的发展。',
+          cultivationPath: '可拜入法家宗门，通过参悟法则、执行律法来提升修为。'
+        },
+        xianjie: {
+          id: 'xianjie',
+          name: '白鹿大世界',
+          rank: 'D',
+          tradition: '杂糅百家',
+          inheritance: '没有明确道统',
+          maxCultivator: '云中子(元神真人，约等于道门元神真人的极度劣化版)',
+          description: '此界修士追求长生不老，但修行体系残缺，导致修士性格深陷功法影响，且已无前路。',
+          features: [
+            '修行体系杂乱，缺乏系统性',
+            '佛、道、神、武皆有，但功法设计有缺陷，与正宗道统相比差距很大',
+            '修士普遍寿元不长，需要不断寻找延寿之法',
+            '资源争夺激烈，门派林立'
+          ],
+          background: '这是一个缺乏完整传承的世界，也是绝大多数大世界的常态。由于修行体系的不完整，修士们虽然能够获得强大的力量，但功法缺陷极大，且前路已断。最高法门均为以外道方法成就元神,要数万年至数十万年才会有天劫,然而外道元神无法再进一步，成就天人。',
+          cultivationPath: '可拜入各派学习，但需要自己摸索真正的长生之道。'
+        },
+        modernEarth: {
+          id: 'modernEarth',
+          name: '灵绝大世界·道绝天·现实地球',
+          rank: 'D',
+          tradition: '百家争鸣',
+          inheritance: '科技与修真共存',
+          maxCultivator: '龙虎山老天师（壮魂期修士）',
+          description: '灵气刚刚复苏的现代地球，科技与修真的碰撞才刚刚开始。世界屏障异常坚固，千年内不会被外部势力攻破，是一个适合稳扎稳打的修行世界。',
+          features: [
+            '灵气浓度极低但正在稳步提升',
+            '科技力量与修真力量共存',
+            '世界屏障异常坚固',
+            '适合长期发展',
+            '没有顶尖强者的压制'
+          ],
+          background: '二十一世纪初期，地球灵气开始复苏，一些隐世修士纷纷出山，与现代科技文明发生碰撞。然而即使是最强者，也不过是修道刚入门的境界，因此几乎相当于全人类都在同一起跑线上。各国政府开始关注超自然现象，修真与科技的融合时代即将来临。',
+          cultivationPath: '可以选择传统修真之路，但需要更多时间积累\n 可以尝试科技辅助修行的新路子，但是上限较低\n适合稳健发展，不用担心被高手碾压.'
+        },
+        huanxi: {
+          id: 'huanxi',
+          name: '欢喜大世界',
+          rank: 'A',
+          tradition: '佛魔道武并存',
+          inheritance: '后天情欲大道',
+          maxCultivator: '欢喜大自在佛（半步金仙）',
+          description: '一个充满争议的大世界，这里的修士可以同时修炼佛法、魔功、道法和武学，但核心都是参悟情欲之道。道门有合欢宗，佛门有欢喜密教，武修也有快活门，世界意志偏向包容。',
+          features: [
+            '四道同修皆可大成',
+            '情欲之力浓郁',
+            '世界意志极度包容',
+            '机缘与劫难并存',
+          ],
+          background: '欢喜大自在佛乃是佛门中的正道，但修持此法门极其容易堕入魔道，因此被佛门视为异端。欢喜大自在佛便是沿此道修行，虽未能证得金仙，却也达到了半步金仙的境界，成为此界主宰。此界修士多以情入道，以欲证真，虽备受争议，却自成一体。',
+          cultivationPath: '可选择佛、魔、道、武任意体系修行\n 需要正视并参悟情欲之力\n 不可刻意压制七情六欲\n 最适合随心而行之人'
+        },
+        mojing: {
+          id: 'mojing',
+          name: '枢墨大世界',
+          rank: 'C',
+          tradition: '墨家机关道统',
+          inheritance: '后天机关大道',
+          maxCultivator: '墨如霜(当世巨子，约等于道门三劫阳神真人)',
+          description: '机关城林立，处处皆是造物奇迹。',
+          features: [
+            '世界以机关造物为尊，以庞大和精巧为美，拥有多个巨型机关城市、星舰',
+            '崇尚眼见为实的科学，拒绝玄之又玄的形而上学',
+            '到处都是科学研究的学习机构，稷下学宫为最高统治机关',
+            '公输家被墨家压下一头，但双方各有所长'
+          ],
+          background: '墨家与公输家的天下，以机关造物为根本。整个大世界在机关道统的影响下运转。',
+          cultivationPath: '可拜入墨家或公输家，研习机关之道，追求造物之极致。'
+        },
+        // 在世界部分添加一个空白选项
+        customWorld: {
+          id: 'customWorld',
+          name: '自定义世界',
+          rank: '',
+          tradition: '',
+          inheritance: '',
+          maxCultivator: '',
+          description: '玩家可以自行填写世界内容。',
+          features: [],
+          background: '',
+          cultivationPath: ''
+        }
+      },
+
+      GENDERS: {
+        male: {
+          id: 'male',
+          name: '男性',
+          description: '阳刚之气充盈，适合修炼阳属性功法',
+          features: [
+            '阳属性功法修炼速度+10%',
+            '体魄强度略高',
+            '更容易获得男性修士的认可'
+          ]
+        },
+        female: {
+          id: 'female',
+          name: '女性',
+          description: '阴柔之气充盈，适合修炼阴属性功法',
+          features: [
+            '阴属性功法修炼速度+10%',
+            '魅力略高',
+            '更容易获得女性修士的认可'
+          ]
+        },
+        futa: {
+          id: 'futa',
+          name: '扶她',
+          description: '阴阳调和，适合修炼阴阳双修功法',
+          features: [
+            '阴阳双修功法修炼速度+5%',
+            '特殊体质带来优势',
+            '较难被常人理解'
+          ]
+        },
+        femboy: {
+          id: 'femboy',
+          name: '男生女相',
+          description: '外表阴柔，内蕴阳刚，适合修炼变化之道',
+          features: [
+            '变化类功法修炼速度+10%',
+            '魅力略高',
+            '容易被误解'
+          ]
+        }
+      },
+
+      RACES: {
+        human: {
+          id: 'human',
+          name: '人族',
+          description: '万族之长，适应性最强，同时也是天生最适合修行各类功法的种族',
+          features: [
+            '所有属性均衡',
+            '学习能力+10%',
+            '没有明显短板'
+          ],
+          bonus: {
+            wisdom: 1,
+            luck: 1,
+            bone: 1,
+            power: 1,
+            heart: 1,
+            charm: 1
+          }
+        },
+        dragon: {
+          id: 'dragon',
+          name: '真龙血脉',
+          description: '体内流淌着真龙血脉，天生强大',
+          features: [
+            '力量属性极高，但是本性贪婪傲慢，心性较差',
+            '寿命漫长，但是修道进度十分缓慢',
+            '天生威严，容易获得他人尊重'
+          ],
+          bonus: {
+            power: 10,
+            wisdom: -5,
+            lifespan: 1000,
+            charm: 2,
+            heart: -7
+          }
+        },
+        phoenix: {
+          id: 'phoenix',
+          name: '凤凰血脉',
+          description: '体内流淌着凤凰血脉，天生强大',
+          features: [
+            '五行之道尤其是火行亲合度极高',
+            '寿命漫长，但是修道进度十分缓慢',
+            '天生高贵，容易获得他人尊重'
+          ],
+          bonus: {
+            wisdom: -5,
+            lifespan: 1000,
+            charm: 2,
+            luck: 2,
+            power: 2,
+            heart: -1
+          }
+        },
+        demon: {
+          id: 'demon',
+          name: '邪魔',
+          description: '天生邪异，往往是在九幽、血海等阴暗污秽之地诞生',
+          features: [
+            '力量属性极高',
+            '心性较差',
+            '容易陷入暴走'
+          ],
+          bonus: {
+            power: 4,
+            bone: 1,
+            heart: -2,
+            lifespan: 100,
+            fame: -10
+          }
+        },
+        yaoguai: {
+          id: 'yaoguai',
+          name: '妖怪',
+          description: '万物有灵，妖怪是天地间除了人族之外的生灵，获得灵智后的统称',
+          features: [
+            '悟性极高',
+            '寿命较长',
+            '各方面属性都较为均衡'
+          ],
+          bonus: {
+            wisdom: 2,
+            lifespan: 50,
+            power: -1,
+            bone: 1,
+            heart: -1,
+            charm: 1
+          }
+        },
+        celestial: {
+          id: 'celestial',
+          name: '古人族',
+          description: '古人族。第一位证道永恒的道祖正是人族，确立了人族乃万界之尊。天生亲近天道，悟性极高',
+          features: [
+            '悟性极高',
+            '受天妒，寿元较短',
+            '各方面属性都较为优秀'
+          ],
+          bonus: {
+            wisdom: 4,
+            lifespan: -25,
+            power: 2,
+            bone: 2,
+            heart: 2,
+            charm: 2,
+            luck: -2
+          }
+        },
+        ghost: {
+          id: 'ghost',
+          name: '鬼魂',
+          description: '介于虚实之间，天生适合修习神道',
+          features: [
+            '天生拥有隐藏能力',
+            '寿元较短，突破元神境界前，依赖香火愿力来维持存在',
+            '对于现实的影响较弱，修习五行、造物类功法效果较差'
+          ],
+          bonus: {
+            luck: 3,
+            wisdom: 3,
+            bone: -2,
+            lifespan: -25,
+            heart: 2,
+          }
+        },
+        // 在RACES对象的最后添加自定义种族选项
+        customRace: {
+          id: 'customRace',
+          name: '自定义种族',
+          description: '玩家可以自行填写种族内容。',
+          features: [],
+          bonus: {}
+        }
+      },
+
+      STARTS: {
+        ancestralBlessing: {
+          id: 'ancestralBlessing',
+          name: '祖宗显灵',
+          description: '无意中在老宅里找到了一本«天星修真全册»，这本书除了你以外的人都看不见书上的字。',
+          features: [
+            '获得«天星修真全册»',
+            '书中记载了关于修炼的一切',
+            '只有你能看到书上的内容',
+            '有挂！'
+          ],
+          background: '你打开翻了几页，发现似乎是一本类似于山海经的图书，讲述的是一些修仙界的功法，丹方以及炼器图册，直到有一天你发现除了你以外的都看不见书上的字，你知道你的人生开始变得不同了。',
+          bonus: {
+            heart: -3,
+            bone: 0,
+            wisdom: 5,
+            luck: 5,
+            power: 0,
+            charm: 0
+          }
+        },
+        sectLeaderDescendant: {
+          id: 'sectLeaderDescendant',
+          name: '宗主后代',
+          description: '你是一个大型修仙宗门的宗主之子，从小便享受着优渥的修炼资源。',
+          features: [
+            '出生便有上等灵根',
+            '拥有宗门庇护',
+            '可以获得顶级功法',
+            '有大量修炼资源'
+          ],
+          background: '身为宗主之子，你从小便接受着最好的培养。宗门上下对你期望甚高，但同时也带来了不小的压力。你需要在宗门政治和修炼之间找到平衡。',
+          bonus: {
+            heart: 2,
+            bone: 3,
+            wisdom: 2,
+            luck: 1,
+            power: 3,
+            charm: 2,
+            lifespan: 20
+          }
+        },
+        huangliangDream: {
+          id: 'huangliangDream',
+          name: '黄粱多梦',
+          description: '仙道何其难！在这个被瘟疫改变的修仙界中，你拥有了一件特殊的异宝，能够将真实的人生转为一场黄粱梦，重回穿越之时！',
+          features: [
+            '拥有重生异宝',
+            '保留前世记忆',
+            '每次重生都能获得新的领悟',
+            '在绝望中寻找希望',
+            '百世轮回只为求道'
+          ],
+          background: '在这个仙凡永隔的世界，你虽有雄心万丈，却只能于凡尘中打滚。但你拥有了一件特殊的异宝，能够在临终之时将真实的人生转为黄粱一梦，重回穿越之时。第二世权倾天下却未见仙踪，第三世殚精竭虑却抵不过仙人一剑...你，一介凡人，百世不悔，但求长生！',
+          bonus: {
+            heart: 5,
+            bone: 1,
+            wisdom: 4,
+            luck: -2,
+            power: 2,
+            charm: 1,
+            lifespan: -10
+          }
+        },
+        mysteriousInheritance: {
+          id: 'mysteriousInheritance',
+          name: '神秘传承',
+          description: '在一次意外中，你获得了一枚来历不明的玉简，里面似乎封印着一位远古大能的传承。',
+          features: [
+            '获得神秘玉简一枚',
+            '玉简中蕴含远古大能的传承',
+            '解封需要特定条件',
+            '可能会引来他人觊觎'
+          ],
+          background: '那是一个平常的夜晚，一颗流星划过天际，坠落在你家的后院。等你跑去查看时，只在坑中发现了一枚温润如玉的玉简，上面刻着神秘的符文，似乎在等待着什么人来解开它的秘密。',
+          bonus: {
+            heart: 2,
+            bone: 0,
+            wisdom: 3,
+            luck: 3,
+            power: -2,
+            charm: 1
+          }
+        },
+        reincarnatedImmortal: {
+          id: 'reincarnatedImmortal',
+          name: '仙人转世',
+          description: '你是一位陨落的仙人转世，虽然失去了修为，但保留了一些本能和记忆碎片。',
+          features: [
+            '拥有前世的零星记忆',
+            '对修炼有着本能的亲和',
+            '容易引起大能注意',
+            '可能会遇到前世的因果'
+          ],
+          background: '你从小就与众不同，经常能在梦中看到一些奇异的景象：仙宫琼楼、丹炉药鼎、飞剑遁光...直到某一天，你在修炼时突然觉醒了前世的一些记忆，原来你曾是一位陨落的仙人。',
+          bonus: {
+            heart: 3,
+            bone: 2,
+            wisdom: 4,
+            luck: -2,
+            power: 0,
+            charm: 2,
+            lifespan: 20
+          }
+        },
+        villageDestroyed: {
+          id: 'villageDestroyed',
+          name: '魔灾余孤',
+          description: '村庄被魔道修士屠戮一空，你是唯一的幸存者。',
+          features: [
+            '获得对魔道的刻骨仇恨',
+            '起始获得一件保命法器（村中长辈留下）',
+            '对正道功法亲和度+20%',
+            '起始声望+5'
+          ],
+          background: '不久之前，血色的月光下，魔修肆意屠戮。当你从昏迷中醒来，入目皆是焦土与白骨，你发誓要为村中亲朋好友报仇。',
+          bonus: {
+            heart: 2,
+            power: 1,
+            fame: 5
+          }
+        },
+        sectRecruitment: {
+          id: 'sectRecruitment',
+          name: '赴考少年',
+          description: '正准备参加该洲陆顶级宗门的收徒大典。',
+          features: [
+            '获得参加顶级宗门考核的机会',
+            '起始声望+2'
+          ],
+          background: '百年一次的招收弟子大会即将开始，这是你改变命运的最好机会。',
+          bonus: {
+            wisdom: 1,
+            luck: 1,
+            fame: 2
+          }
+        },
+        outerDisciple: {
+          id: 'outerDisciple',
+          name: '外门弟子',
+          description: '已是二流宗门的外门弟子，但默默无闻。',
+          features: [
+            '起始就有修仙者身份',
+            '掌握基础功法',
+            '有稳定的修炼资源获取渠道',
+            '起始声望+3'
+          ],
+          background: '已经成为了外门弟子，但你一直默默无闻，或许是时候寻找新的机缘了。',
+          bonus: {
+            martialArt: 2,
+            fame: 3
+          }
+        },
+        cityStruggle: {
+          id: 'cityStruggle',
+          name: '凡间寻道',
+          description: '身处繁华的凡间，渴望修行却无门可入。',
+          features: [
+            '对人间社会了如指掌',
+            '起始获得一定资源',
+            '适应能力较强',
+          ],
+          background: '在凡俗世间，你意外觉醒了力量，却找不到任何修行的门路。',
+          bonus: {
+            wisdom: 2,
+            charm: 1,
+            fame: -1
+          }
+        },
+        ancientTomb: {
+          id: 'ancientTomb',
+          name: '古墓机缘',
+          description: '意外发现一座上古大能的墓穴。',
+          features: [
+            '获得一位上古大能的传承机会',
+            '起始获得一些古代功法残篇',
+            '可能会惹上一些麻烦',
+            '起始声望-1'
+          ],
+          background: '在一次偶然的机会下，你发现了一座上古大能的墓穴，里面似乎蕴含着惊人的机缘。',
+          bonus: {
+            luck: 2,
+            wisdom: 1,
+            fame: -1
+          }
+        },
+        wanderingMaster: {
+          id: 'wanderingMaster',
+          name: '游方遇师',
+          description: '被一位神秘的游方修士看中，收为记名弟子。',
+          features: [
+            '获得神秘师父的指导',
+            '起始获得一些独特的修炼资源',
+            '未知的机遇与挑战',
+            '起始声望+1'
+          ],
+          background: '那位神秘的游方修士似乎来历不凡，却性格古怪，时常消失不见。',
+          bonus: {
+            wisdom: 1,
+            luck: 2,
+            fame: 1
+          }
+        },
+        marketApprentice: {
+          id: 'marketApprentice',
+          name: '市集学徒',
+          description: '在修真市集做学徒，接触到各种修真资源。',
+          features: [
+            '对各类修真物品较为了解',
+            '有稳定的收入来源',
+            '容易结识各路修士',
+            '起始声望+1'
+          ],
+          background: '在这个修真市集中，你每天都能接触到各种神奇的物品，也许有朝一日能找到适合自己的修行之路。',
+          bonus: {
+            charm: 2,
+            luck: 1,
+            fame: 1
+          }
+        },
+        // 在开局部分添加一个空白选项
+        customStart: {
+          id: 'customStart',
+          name: '自定义开局',
+          description: '玩家可以自行填写开局内容。',
+          features: [],
+          bonus: {}
+        },
+        sectMaster: {
+          id: 'sectMaster',
+          name: '宗门之主',
+          description: '在偏僻的弱小地区建立新宗门，从零开始打造属于自己的修真圣地！',
+          features: [
+            '可以自由命名宗门',
+            '获得开创宗门的基础资源',
+            '拥有建立宗门的基础功法',
+            '在偏僻地区有一定影响力',
+            '可以招收弟子'
+          ],
+          background: '你决定在这偏僻的山区开创属于自己的宗门。虽然起步艰难，但你坚信，终有一日，这里将成为修真界的一方圣地！',
+          bonus: {
+            heart: 3,
+            wisdom: 2,
+            charm: 3,
+            power: 1,
+            luck: -2,
+            fame: 5
+          },
+          customInput: {
+            type: 'text',
+            label: '宗门名称',
+            placeholder: '请输入您要创建的宗门名称'
+          }
+        },
+        furnace: {
+          id: 'furnace',
+          name: '炉鼎',
+          description: '你天生就是完美的炉鼎之体，这是福是祸？（炉鼎，常指供男修士采阴补阳的女修。 女修成为炉鼎后，由于阴阳不调和，修为往往无法精进，甚至可能最终被吸干修为。）',
+          features: [
+            '完美的炉鼎体质',
+            '修炼速度翻倍',
+            '容易引来觊觎',
+            '随时可能被抓去当炉鼎'
+          ],
+          background: '天生的完美炉鼎之体，这究竟是上天的恩赐还是诅咒？你需要小心翼翼地隐藏自己的体质，否则随时可能被有心人发现并抓去当炉鼎。',
+          bonus: {
+            bone: 5,
+            power: 3,
+            wisdom: 2,
+            luck: -3,
+            charm: 3,
+            lifespan: 50
+          }
+        },
+        soulTransferredDemonLord: {
+          id: 'soulTransferredDemonLord',
+          name: '魂穿魔君',
+          description: '你，平平无奇的神魂期修士，灵魂穿越到了此界最恶名昭著的魔道宗门的掌门身上，可是你没能继承身体主人的实力。面对虎视眈眈的弟子们和正道大能，你将如何稳定他们？',
+          features: [
+            '继承三劫真君的记忆',
+            '当前境界跌落到神魂期',
+            '统领着一群阳神真人弟子',
+            '正道虎视眈眈',
+            '弟子们蠢蠢欲动'
+          ],
+          background: '当你清醒过来的时候，发现自己的灵魂穿越到了此界最恶名昭著的魔道宗门的掌门身上。你的五名弟子全都是恶贯满盈的魔女和魔头，人均阳神真人。他们自小被你利用、折磨和调教，全都恨透了你，却畏惧你的境界和残酷。这具身体的主人，原本是诸天万界都排得上号的三劫真君，然而灵魂穿越过来的你却发现，一起穿越过来的除了灵魂，还有你弱小的境界-神魂期。',
+          bonus: {
+            wisdom: 5,
+            heart: 3,
+            power: -5,
+            luck: -3,
+            charm: 2,
+            fame: -20
+          }
+        },
+        terribleMisfortune: {
+          id: 'terribleMisfortune',
+          name: '倒了大霉',
+          description: '你莫名其妙背上了一个杀人大锅，正道人士视你为仇敌，魔道中人却对你颇为欣赏。',
+          features: [
+            '受到正道某个门派追杀',
+            '受到魔道尊敬',
+            '可以把愤怒转化为法力',
+            '获得特殊的修炼方式'
+          ],
+          background: '你走在路上，突然天上掉下来一个死透的修真者，过了不过一瞬间，很快一群人将你围住，他们面露凶光，眼中带着憎恨，为首的人说到"是你杀了我们大师兄！"从此你的人生彻底改变。',
+          bonus: {
+            power: 3,
+            luck: -5,
+            heart: 2,
+            fame: -10,
+            wisdom: 2
+          }
+        },
+        demonLordReborn: {
+          id: 'demonLordReborn',
+          name: '魔头重生',
+          description: '身为阳神三劫的大魔头，你在被正道围攻至死后，回到了一千年前的养魂期。',
+          features: [
+            '保留前世的记忆和经验',
+            '知晓未来的各种机缘',
+            '了解各个宗门的秘密',
+            '可以提前布局',
+            '需要小心隐藏身份'
+          ],
+          background: '阳神三劫的大魔头，也就是你，被正道围攻至死，回过神来，你回到了一千年前，那时你才刚刚进入养魂。带着千年的记忆，掌握了许多机缘的你，能否重活一世？',
+          bonus: {
+            wisdom: 5,
+            heart: 3,
+            power: 2,
+            luck: 2,
+            charm: 1,
+            fame: -5
+          }
+        }
+      }
+    };
+
+    // 游戏状态管理
+    const gameState = {
+      currentStep: 1,
+      selectedEra: null,
+      selectedDifficulty: null,
+      availablePoints: 0,
+      attributes: {
+        // 可分配属性
+        bone: 0,
+        wisdom: 0,
+        luck: 0,
+        power: 0,
+        heart: 0,
+        charm: 0,
+
+        // 衍生属性
+        martialArt: 0,
+        fame: 0,
+        lifespan: 0,
+        forging: 0,
+        alchemy: 0,
+        palmArt: 0,
+        fingerArt: 0,
+        fistArt: 0,
+        swordArt: 0,
+        spearArt: 0,
+        bladeArt: 0
+      },
+      selectedOrigin: null,
+      selectedExperiences: [],
+      selectedWorld: null,
+      selectedGender: null,
+      selectedRace: null,
+      selectedStart: null,
+      yaoType: null,
+
+      calculateUsedPoints() {
+        const attrPoints = ['bone', 'wisdom', 'luck', 'power', 'heart', 'charm']
+          .reduce((sum, attr) => sum + this.attributes[attr], 0);
+
+        const originCost = this.selectedOrigin ? CONFIG.ORIGINS[this.selectedOrigin].cost : 0;
+
+        const expPoints = this.selectedExperiences
+          .reduce((sum, expId) => sum + CONFIG.EXPERIENCES[expId].cost, 0);
+
+        return attrPoints + originCost + expPoints;
+      },
+
+      calculateFinalAttributeValue(attr) {
+        let value = this.attributes[attr] || 0;
+
+        // 计算出身加成
+        if (this.selectedOrigin) {
+          const origin = CONFIG.ORIGINS[this.selectedOrigin];
+          if (origin.bonus && origin.bonus[attr]) {
+            value += origin.bonus[attr];
+          }
+        }
+
+        // 计算经历加成
+        this.selectedExperiences.forEach(expId => {
+          const exp = CONFIG.EXPERIENCES[expId];
+          if (exp.bonus && exp.bonus[attr]) {
+            value += exp.bonus[attr];
+          }
+          // 添加自定义经历的属性计算
+          if (expId === 'customExperience' && this.customExpAttributes && this.customExpAttributes[attr]) {
+            value += this.customExpAttributes[attr];
+          }
+        });
+
+        // 计算种族加成
+        if (this.selectedRace) {
+          if (this.selectedRace === 'customRace' && this.customRaceAttributes) {
+            // 处理自定义种族的属性加成
+            if (this.customRaceAttributes[attr]) {
+              value += this.customRaceAttributes[attr];
+            }
+          } else {
+            const race = CONFIG.RACES[this.selectedRace];
+            if (race.bonus && race.bonus[attr]) {
+              value += race.bonus[attr];
+            }
+          }
+        }
+
+        // 计算开局加成
+        if (this.selectedStart) {
+          const start = CONFIG.STARTS[this.selectedStart];
+          if (start.bonus && start.bonus[attr]) {
+            value += start.bonus[attr];
+          }
+          // 添加自定义开局的属性计算
+          if (this.selectedStart === 'customStart' && this.customStartAttributes && this.customStartAttributes[attr]) {
+            value += this.customStartAttributes[attr];
+          }
+        }
+
+        return value;
+      }
+    };
+    // UI管理器
+    const UI = {
+      elements: {
+        content: document.querySelector('.creation-content'),
+        prevBtn: document.querySelector('.prev-btn'),
+        nextBtn: document.querySelector('.next-btn'),
+        steps: document.querySelectorAll('.step-item')
+      },
+
+      initialize() {
+        this.showCurrentStep();
+        this.bindNavigationEvents();
+        console.log('UI initialized');
+      },
+
+      // 在showCurrentStep方法中，将滚动代码移到最前面
+      showCurrentStep() {
+        // 1. 首先执行滚动
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+
+        // 2. 更新步骤指示器
+        this.elements.steps.forEach((step, index) => {
+          step.classList.toggle('active', index + 1 === gameState.currentStep);
+        });
+
+        // 3. 根据当前步骤显示相应内容
+        switch (gameState.currentStep) {
+          case 1:
+            this.showEraAndDifficultySelection();
+            break;
+          case 2:
+            this.showAttributeAndExperienceSelection();
+            break;
+          case 3:
+            this.showGenderAndRaceSelection();
+            break;
+          case 4:
+            this.showWorldSelection();
+            break;
+          case 5:
+            this.showStartSelection();
+            break;
+        }
+
+        // 4. 更新导航按钮
+        this.updateNavigationButtons();
+      },
+
+      showEraAndDifficultySelection() {
+        const html = `
+            <div class="section-title">选择时代</div>
+            <div class="era-selection">
+                ${Object.entries(CONFIG.ERAS).map(([id, era]) => `
+                    <div class="era-card ${gameState.selectedEra === id ? 'selected' : ''}" 
+                         data-era-id="${id}">
+                        <div class="era-header">
+                            <span class="era-name">${era.name}</span>
+                            <span class="era-tag">史诗时代</span>
+                        </div>
+                        <div class="era-content">
+                            <p class="era-description">${era.description}</p>
+                            <div class="era-features">
+                                ${era.features.map(feature => `
+                                    <div class="era-feature">• ${feature}</div>
+                                `).join('')}
+                            </div>
+                            <div class="era-background">${era.background}</div>
+                            ${id === 'customEra' && gameState.selectedEra === 'customEra' ? `
+                                <div class="custom-input">
+                                    <div class="custom-era-field">
+                                        <label for="customEraName">时代名称:</label>
+                                        <input type="text" id="customEraName" class="custom-input-field" value="${gameState.customEraName || ''}" placeholder="请输入时代名称">
+                                    </div>
+                                    <div class="custom-era-field">
+                                        <label for="customEraDescription">时代描述:</label>
+                                        <textarea id="customEraDescription" class="custom-input-field" placeholder="请输入时代描述">${gameState.customEraDescription || ''}</textarea>
+                                    </div>
+                                    <div class="custom-era-field">
+                                        <label for="customEraFeatures">时代特点 (用逗号分隔):</label>
+                                        <input type="text" id="customEraFeatures" class="custom-input-field" value="${gameState.customEraFeatures || ''}" placeholder="请输入时代特点">
+                                    </div>
+                                    <div class="custom-era-field">
+                                        <label for="customEraBackground">时代背景:</label>
+                                        <textarea id="customEraBackground" class="custom-input-field" placeholder="请输入时代背景">${gameState.customEraBackground || ''}</textarea>
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div class="section-title">选择难度</div>
+            <div class="difficulty-selection">
+                ${Object.entries(CONFIG.DIFFICULTIES).map(([id, diff]) => `
+                    <div class="difficulty-card ${gameState.selectedDifficulty === id ? 'selected' : ''}"
+                         data-difficulty-id="${id}">
+                        <div class="difficulty-header">
+                            <span class="difficulty-name">${diff.name}</span>
+                            <span class="points-value">${diff.points}点</span>
+                        </div>
+                        <div class="difficulty-content">
+                            <p class="difficulty-description">${diff.description}</p>
+                            <div class="difficulty-features">
+                                ${diff.features.map(feature => `
+                                    <div class="difficulty-feature">• ${feature}</div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        this.elements.content.innerHTML = html;
+        this.bindEraAndDifficultyEvents();
+      },
+
+      showAttributeAndExperienceSelection() {
+        const html = `
+            <div class="section-title">分配属性点数 (剩余点数: ${gameState.availablePoints - gameState.calculateUsedPoints()})</div>
+            <div class="attributes-grid">
+                ${['bone', 'wisdom', 'luck', 'power', 'heart', 'charm'].map(id => `
+                    <div class="attribute-card">
+                        <div class="attribute-header">
+                            <span class="attribute-name">${CONFIG.ATTRIBUTES[id].name}</span>
+                            <div class="attribute-value">
+                                <button class="decrease-btn" data-attribute="${id}">-</button>
+                                <span class="value">${gameState.calculateFinalAttributeValue(id)}</span>
+                                <button class="increase-btn" data-attribute="${id}">+</button>
+                            </div>
+                        </div>
+                        <div class="attribute-description">${CONFIG.ATTRIBUTES[id].description}</div>
+                    </div>
+                `).join('')}
+            </div>
+    
+            <div class="section-title">选择出身</div>
+            <div class="origins-grid">
+                ${Object.entries(CONFIG.ORIGINS).map(([id, origin]) => `
+                    <div class="origin-card ${gameState.selectedOrigin === id ? 'selected' : ''}"
+                         data-origin-id="${id}">
+                        <div class="origin-header">
+                            <span class="origin-name">${origin.name}</span>
+                            <span class="origin-cost">${origin.cost > 0 ? `消耗 ${origin.cost} 点` : '免费'}</span>
+                        </div>
+                        <div class="origin-content">
+                            <p class="origin-description">${origin.description}</p>
+                            <div class="origin-bonus">
+                                ${Object.entries(origin.bonus).map(([attr, value]) => `
+                                    <div class="bonus-item ${value > 0 ? 'positive' : 'negative'}">
+                                        ${CONFIG.ATTRIBUTES[attr].name} ${value > 0 ? '+' : ''}${value}
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="origin-features">
+                                ${origin.features.map(feature => `
+                                    <div class="origin-feature">• ${feature}</div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+    
+            <div class="section-title">选择经历</div>
+            <div class="experiences-grid">
+                ${Object.entries(CONFIG.EXPERIENCES).map(([id, exp]) => `
+                    <div class="experience-card ${gameState.selectedExperiences.includes(id) ? 'selected' : ''}"
+                         data-experience-id="${id}">
+                        <div class="experience-header">
+                            <span class="experience-name">${exp.name}</span>
+                            <span class="experience-cost ${exp.cost < 0 ? 'positive' : ''}">${exp.cost > 0 ? `消耗 ${exp.cost} 点` : `获得 ${Math.abs(exp.cost)} 点`}</span>
+                        </div>
+                        <div class="experience-content">
+                            <p class="experience-description">${exp.description}</p>
+                            <div class="experience-bonus">
+                                ${Object.entries(exp.bonus).map(([attr, value]) => `
+                                    <div class="bonus-item ${value > 0 ? 'positive' : 'negative'}">
+                                        ${CONFIG.ATTRIBUTES[attr].name} ${value > 0 ? '+' : ''}${value}
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="experience-features">
+                                ${exp.features.map(feature => `
+                                    <div class="experience-feature">• ${feature}</div>
+                                `).join('')}
+                            </div>
+                            ${id === 'customExperience' && gameState.selectedExperiences.includes('customExperience') ? `
+                                <div class="custom-input">
+                                    <label for="customExperienceName">经历名称:</label>
+                                    <input type="text" id="customExperienceName" class="custom-input-field" value="${gameState.customExperienceName || ''}" placeholder="请输入经历名称">
+                                    <label for="customExperienceDescription">经历描述:</label>
+                                    <textarea id="customExperienceDescription" class="custom-input-field" placeholder="请输入经历描述">${gameState.customExperienceDescription || ''}</textarea>
+                                    <label for="customExperienceFeatures">经历特征 (用逗号分隔):</label>
+                                    <input type="text" id="customExperienceFeatures" class="custom-input-field" value="${gameState.customExperienceFeatures || ''}" placeholder="请输入经历特征">
+                                    <div class="attribute-adjustments">
+                                        <h4>属性调整</h4>
+                                        <div class="attribute-grid">
+                                            <div class="attribute-input">
+                                                <label for="customExp_heart">心性:</label>
+                                                <input type="number" id="customExp_heart" class="attribute-value-input" value="${gameState.customExpAttributes?.heart || 0}" min="-10" max="10">
+                                            </div>
+                                            <div class="attribute-input">
+                                                <label for="customExp_bone">根骨:</label>
+                                                <input type="number" id="customExp_bone" class="attribute-value-input" value="${gameState.customExpAttributes?.bone || 0}" min="-10" max="10">
+                                            </div>
+                                            <div class="attribute-input">
+                                                <label for="customExp_wisdom">悟性:</label>
+                                                <input type="number" id="customExp_wisdom" class="attribute-value-input" value="${gameState.customExpAttributes?.wisdom || 0}" min="-10" max="10">
+                                            </div>
+                                            <div class="attribute-input">
+                                                <label for="customExp_luck">气运:</label>
+                                                <input type="number" id="customExp_luck" class="attribute-value-input" value="${gameState.customExpAttributes?.luck || 0}" min="-10" max="10">
+                                            </div>
+                                            <div class="attribute-input">
+                                                <label for="customExp_power">法力:</label>
+                                                <input type="number" id="customExp_power" class="attribute-value-input" value="${gameState.customExpAttributes?.power || 0}" min="-10" max="10">
+                                            </div>
+                                            <div class="attribute-input">
+                                                <label for="customExp_charm">魅力:</label>
+                                                <input type="number" id="customExp_charm" class="attribute-value-input" value="${gameState.customExpAttributes?.charm || 0}" min="-10" max="10">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+    
+            <div class="section-title">属性总览</div>
+            <div class="attributes-summary">
+                <div class="summary-grid">
+                    ${Object.entries(CONFIG.ATTRIBUTES).map(([id, attr]) => `
+                        <div class="summary-item">
+                            <span class="summary-name">${attr.name}</span>
+                            <span class="summary-value ${gameState.calculateFinalAttributeValue(id) > 0 ? 'positive' : gameState.calculateFinalAttributeValue(id) < 0 ? 'negative' : ''}">${gameState.calculateFinalAttributeValue(id)}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+
+        this.elements.content.innerHTML = html;
+        this.bindAttributeEvents();
+        this.bindOriginEvents();
+        this.bindExperienceEvents();
+
+        // 添加自定义经历输入监听
+        const customExperienceNameInput = this.elements.content.querySelector('#customExperienceName');
+        if (customExperienceNameInput) {
+          customExperienceNameInput.addEventListener('click', (e) => e.stopPropagation());
+          customExperienceNameInput.addEventListener('input', (e) => {
+            gameState.customExperienceName = e.target.value.trim();
+          });
+        }
+        const customExperienceDescriptionInput = this.elements.content.querySelector('#customExperienceDescription');
+        if (customExperienceDescriptionInput) {
+          customExperienceDescriptionInput.addEventListener('click', (e) => e.stopPropagation());
+          customExperienceDescriptionInput.addEventListener('input', (e) => {
+            gameState.customExperienceDescription = e.target.value.trim();
+          });
+        }
+        const customExperienceFeaturesInput = this.elements.content.querySelector('#customExperienceFeatures');
+        if (customExperienceFeaturesInput) {
+          customExperienceFeaturesInput.addEventListener('click', (e) => e.stopPropagation());
+          customExperienceFeaturesInput.addEventListener('input', (e) => {
+            gameState.customExperienceFeatures = e.target.value.trim();
+          });
+        }
+        const customExperienceAttributesInput = this.elements.content.querySelector('#customExperienceAttributes');
+        if (customExperienceAttributesInput) {
+          customExperienceAttributesInput.addEventListener('click', (e) => e.stopPropagation());
+          customExperienceAttributesInput.addEventListener('input', (e) => {
+            gameState.customExperienceAttributes = e.target.value.trim();
+          });
+        }
+      },
+
+      showGenderAndRaceSelection() {
+        const html = `
+            <div class="section-title">选择性别</div>
+            <div class="gender-selection">
+                ${Object.entries(CONFIG.GENDERS).map(([id, gender]) => `
+                    <div class="gender-card ${gameState.selectedGender === id ? 'selected' : ''}" 
+                         data-gender-id="${id}">
+                        <div class="gender-header">
+                            <span class="gender-name">${gender.name}</span>
+                        </div>
+                        <div class="gender-content">
+                            <p class="gender-description">${gender.description}</p>
+                            <div class="gender-features">
+                                ${gender.features.map(feature => `
+                                    <div class="gender-feature">• ${feature}</div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+
+            <div class="section-title">选择种族</div>
+            <div class="race-selection">
+                ${Object.entries(CONFIG.RACES).map(([id, race]) => `
+                    <div class="race-card ${gameState.selectedRace === id ? 'selected' : ''}" 
+                         data-race-id="${id}">
+                        <div class="race-header">
+                            <span class="race-name">${race.name}</span>
+                        </div>
+                        <div class="race-content">
+                            <p class="race-description">${race.description}</p>
+                            ${id === 'yaoguai' && gameState.selectedRace === 'yaoguai' ? `
+                                <div class="yao-type-input">
+                                    <label for="yaoType">请输入具体妖怪类型:</label>
+                                    <input type="text" 
+                                           id="yaoType" 
+                                           class="yao-type-field" 
+                                           value="${gameState.yaoType || ''}" 
+                                           placeholder="例如：狐妖、蛇妖等"
+                                           onclick="event.stopPropagation();"
+                                           onkeydown="event.stopPropagation();">
+                                </div>
+                            ` : ''}
+                            ${id === 'customRace' && gameState.selectedRace === 'customRace' ? `
+                                <div class="custom-input">
+                                    <div class="custom-race-field">
+                                        <label for="customRaceName">种族名称:</label>
+                                        <input type="text" id="customRaceName" class="custom-input-field" value="${gameState.customRaceName || ''}" placeholder="请输入种族名称">
+                                    </div>
+                                    <div class="custom-race-field">
+                                        <label for="customRaceDescription">种族描述:</label>
+                                        <textarea id="customRaceDescription" class="custom-input-field" placeholder="请输入种族描述">${gameState.customRaceDescription || ''}</textarea>
+                                    </div>
+                                    <div class="custom-race-field">
+                                        <label for="customRaceFeatures">种族特征 (用逗号分隔):</label>
+                                        <input type="text" id="customRaceFeatures" class="custom-input-field" value="${gameState.customRaceFeatures || ''}" placeholder="请输入种族特征">
+                                    </div>
+                                    <div class="attribute-adjustments">
+                                        <h4>属性调整</h4>
+                                        <div class="attribute-grid">
+                                            <div class="attribute-input">
+                                                <label for="customRace_heart">心性:</label>
+                                                <input type="number" id="customRace_heart" class="attribute-value-input" value="${gameState.customRaceAttributes?.heart || 0}" min="-10" max="10">
+                                            </div>
+                                            <div class="attribute-input">
+                                                <label for="customRace_bone">根骨:</label>
+                                                <input type="number" id="customRace_bone" class="attribute-value-input" value="${gameState.customRaceAttributes?.bone || 0}" min="-10" max="10">
+                                            </div>
+                                            <div class="attribute-input">
+                                                <label for="customRace_wisdom">悟性:</label>
+                                                <input type="number" id="customRace_wisdom" class="attribute-value-input" value="${gameState.customRaceAttributes?.wisdom || 0}" min="-10" max="10">
+                                            </div>
+                                            <div class="attribute-input">
+                                                <label for="customRace_luck">气运:</label>
+                                                <input type="number" id="customRace_luck" class="attribute-value-input" value="${gameState.customRaceAttributes?.luck || 0}" min="-10" max="10">
+                                            </div>
+                                            <div class="attribute-input">
+                                                <label for="customRace_power">法力:</label>
+                                                <input type="number" id="customRace_power" class="attribute-value-input" value="${gameState.customRaceAttributes?.power || 0}" min="-10" max="10">
+                                            </div>
+                                            <div class="attribute-input">
+                                                <label for="customRace_charm">魅力:</label>
+                                                <input type="number" id="customRace_charm" class="attribute-value-input" value="${gameState.customRaceAttributes?.charm || 0}" min="-10" max="10">
+                                            </div>
+                                            <div class="attribute-input">
+                                                <label for="customRace_lifespan">寿元:</label>
+                                                <input type="number" id="customRace_lifespan" class="attribute-value-input" value="${gameState.customRaceAttributes?.lifespan || 0}" min="-1000" max="1000">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                            <div class="race-bonus">
+                                ${Object.entries(race.bonus || {}).map(([attr, value]) => `
+                                    <div class="bonus-item ${value > 0 ? 'positive' : 'negative'}">
+                                        ${CONFIG.ATTRIBUTES[attr].name} ${value > 0 ? '+' : ''}${value}
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="race-features">
+                                ${race.features.map(feature => `
+                                    <div class="race-feature">• ${feature}</div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        this.elements.content.innerHTML = html;
+        this.bindGenderAndRaceEvents();
+      },
+
+      showWorldSelection() {
+        const html = `
+            <div class="section-title">选择大世界</div>
+            <div class="worlds-grid">
+                ${Object.entries(CONFIG.WORLDS).map(([id, world]) => `
+                    <div class="world-card ${gameState.selectedWorld === id ? 'selected' : ''}"
+                         data-world-id="${id}">
+                        <div class="world-header">
+                            <span class="world-name">${world.name}</span>
+                            <span class="world-rank ${world.rank}">${world.rank}级</span>
+                        </div>
+                        <div class="world-content">
+                            <div class="world-info">
+                                <span class="world-info-label">传承体系:</span>
+                                <span>${world.tradition}</span>
+                            </div>
+                            <div class="world-info">
+                                <span class="world-info-label">特殊传承:</span>
+                                <span>${world.inheritance}</span>
+                            </div>
+                            <div class="world-info">
+                                <span class="world-info-label">最强者:</span>
+                                <span>${world.maxCultivator}</span>
+                            </div>
+                            <div class="world-features">
+                                ${world.features.map(feature => `
+                                    <div class="world-feature">• ${feature}</div>
+                                `).join('')}
+                            </div>
+                            <div class="world-description">${world.description}</div>
+                            <div class="world-cultivation-path">
+                                <div class="path-title">修炼之路</div>
+                                <div class="path-content">${world.cultivationPath}</div>
+                            </div>
+                            <div class="world-background">${world.background}</div>
+                            ${id === 'customWorld' && gameState.selectedWorld === 'customWorld' ? `
+                                <div class="custom-input">
+                                    <div class="custom-world-field">
+                                        <label for="customWorldName">世界名称:</label>
+                                        <input type="text" id="customWorldName" class="custom-input-field" value="${gameState.customWorldName || ''}" placeholder="请输入世界名称">
+                                    </div>
+                                    <div class="custom-world-field">
+                                        <label for="customWorldRank">世界等级:</label>
+                                        <input type="text" id="customWorldRank" class="custom-input-field" value="${gameState.customWorldRank || ''}" placeholder="请输入世界等级(SS/S/A/B/C/D)">
+                                    </div>
+                                    <div class="custom-world-field">
+                                        <label for="customWorldTradition">传承体系:</label>
+                                        <input type="text" id="customWorldTradition" class="custom-input-field" value="${gameState.customWorldTradition || ''}" placeholder="请输入传承体系">
+                                    </div>
+                                    <div class="custom-world-field">
+                                        <label for="customWorldInheritance">特殊传承:</label>
+                                        <input type="text" id="customWorldInheritance" class="custom-input-field" value="${gameState.customWorldInheritance || ''}" placeholder="请输入特殊传承">
+                                    </div>
+                                    <div class="custom-world-field">
+                                        <label for="customWorldMaxCultivator">最强者:</label>
+                                        <input type="text" id="customWorldMaxCultivator" class="custom-input-field" value="${gameState.customWorldMaxCultivator || ''}" placeholder="请输入最强者信息">
+                                    </div>
+                                    <div class="custom-world-field">
+                                        <label for="customWorldDescription">世界描述:</label>
+                                        <textarea id="customWorldDescription" class="custom-input-field" placeholder="请输入世界描述">${gameState.customWorldDescription || ''}</textarea>
+                                    </div>
+                                    <div class="custom-world-field">
+                                        <label for="customWorldFeatures">世界特点 (用逗号分隔):</label>
+                                        <input type="text" id="customWorldFeatures" class="custom-input-field" value="${gameState.customWorldFeatures || ''}" placeholder="请输入世界特点">
+                                    </div>
+                                    <div class="custom-world-field">
+                                        <label for="customWorldBackground">世界背景:</label>
+                                        <textarea id="customWorldBackground" class="custom-input-field" placeholder="请输入世界背景">${gameState.customWorldBackground || ''}</textarea>
+                                    </div>
+                                    <div class="custom-world-field">
+                                        <label for="customWorldCultivationPath">修行建议:</label>
+                                        <textarea id="customWorldCultivationPath" class="custom-input-field" placeholder="请输入修行建议">${gameState.customWorldCultivationPath || ''}</textarea>
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        this.elements.content.innerHTML = html;
+        this.bindWorldEvents();
+
+        // 添加自定义世界输入监听
+        const customWorldInput = this.elements.content.querySelector('#customWorldInput');
+        if (customWorldInput) {
+          customWorldInput.addEventListener('input', (e) => {
+            gameState.customWorldContent = e.target.value.trim();
+          });
+        }
+      },
+
+      showStartSelection() {
+        const html = `
+            <div class="section-title">选择开局</div>
+            <div class="starts-grid">
+                ${Object.entries(CONFIG.STARTS).map(([id, start]) => `
+                    <div class="start-card ${gameState.selectedStart === id ? 'selected' : ''}"
+                         data-start-id="${id}">
+                        <div class="start-header">
+                            <span class="start-name">${start.name}</span>
+                        </div>
+                        <div class="start-content">
+                            <p class="start-description">${start.description}</p>
+                            <div class="start-bonus">
+                                ${Object.entries(start.bonus || {}).map(([attr, value]) => `
+                                    <div class="bonus-item ${value > 0 ? 'positive' : 'negative'}">
+                                        ${CONFIG.ATTRIBUTES[attr].name} ${value > 0 ? '+' : ''}${value}
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="start-features">
+                                ${start.features.map(feature => `
+                                    <div class="start-feature">• ${feature}</div>
+                                `).join('')}
+                            </div>
+                            <div class="start-background">${start.background}</div>
+                            ${id === 'customStart' && gameState.selectedStart === 'customStart' ? `
+                                <div class="custom-input">
+                                    <div class="custom-start-field">
+                                        <label for="customStartName">开局名称:</label>
+                                        <input type="text" id="customStartName" class="custom-input-field" value="${gameState.customStartName || ''}" placeholder="请输入开局名称">
+                                    </div>
+                                    <div class="custom-start-field">
+                                        <label for="customStartDescription">开局描述:</label>
+                                        <textarea id="customStartDescription" class="custom-input-field" placeholder="请输入开局描述">${gameState.customStartDescription || ''}</textarea>
+                                    </div>
+                                    <div class="custom-start-field">
+                                        <label for="customStartFeatures">开局特征 (用逗号分隔):</label>
+                                        <input type="text" id="customStartFeatures" class="custom-input-field" value="${gameState.customStartFeatures || ''}" placeholder="请输入开局特征">
+                                    </div>
+                                    <div class="custom-start-field">
+                                        <label for="customStartBackground">开局背景:</label>
+                                        <textarea id="customStartBackground" class="custom-input-field" placeholder="请输入开局背景">${gameState.customStartBackground || ''}</textarea>
+                                    </div>
+                                    <div class="attribute-adjustments">
+                                        <h4>属性调整</h4>
+                                        <div class="attribute-grid">
+                                            <div class="attribute-input">
+                                                <label for="customStart_heart">心性:</label>
+                                                <input type="number" id="customStart_heart" class="attribute-value-input" value="${gameState.customStartAttributes?.heart || 0}" min="-10" max="10">
+                                            </div>
+                                            <div class="attribute-input">
+                                                <label for="customStart_bone">根骨:</label>
+                                                <input type="number" id="customStart_bone" class="attribute-value-input" value="${gameState.customStartAttributes?.bone || 0}" min="-10" max="10">
+                                            </div>
+                                            <div class="attribute-input">
+                                                <label for="customStart_wisdom">悟性:</label>
+                                                <input type="number" id="customStart_wisdom" class="attribute-value-input" value="${gameState.customStartAttributes?.wisdom || 0}" min="-10" max="10">
+                                            </div>
+                                            <div class="attribute-input">
+                                                <label for="customStart_luck">气运:</label>
+                                                <input type="number" id="customStart_luck" class="attribute-value-input" value="${gameState.customStartAttributes?.luck || 0}" min="-10" max="10">
+                                            </div>
+                                            <div class="attribute-input">
+                                                <label for="customStart_power">法力:</label>
+                                                <input type="number" id="customStart_power" class="attribute-value-input" value="${gameState.customStartAttributes?.power || 0}" min="-10" max="10">
+                                            </div>
+                                            <div class="attribute-input">
+                                                <label for="customStart_charm">魅力:</label>
+                                                <input type="number" id="customStart_charm" class="attribute-value-input" value="${gameState.customStartAttributes?.charm || 0}" min="-10" max="10">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        this.elements.content.innerHTML = html;
+        this.bindStartEvents();
+
+        // 添加自定义开局输入监听
+        const customStartNameInput = this.elements.content.querySelector('#customStartName');
+        if (customStartNameInput) {
+          customStartNameInput.addEventListener('click', (e) => e.stopPropagation());
+          customStartNameInput.addEventListener('input', (e) => {
+            gameState.customStartName = e.target.value.trim();
+          });
+        }
+        const customStartDescriptionInput = this.elements.content.querySelector('#customStartDescription');
+        if (customStartDescriptionInput) {
+          customStartDescriptionInput.addEventListener('click', (e) => e.stopPropagation());
+          customStartDescriptionInput.addEventListener('input', (e) => {
+            gameState.customStartDescription = e.target.value.trim();
+          });
+        }
+        const customStartFeaturesInput = this.elements.content.querySelector('#customStartFeatures');
+        if (customStartFeaturesInput) {
+          customStartFeaturesInput.addEventListener('click', (e) => e.stopPropagation());
+          customStartFeaturesInput.addEventListener('input', (e) => {
+            gameState.customStartFeatures = e.target.value.trim();
+          });
+        }
+      },
+
+      bindEraAndDifficultyEvents() {
+        this.elements.content.querySelectorAll('.era-card').forEach(card => {
+          card.addEventListener('click', (e) => {
+            if (e.target.closest('.custom-input')) return;
+            const eraId = card.dataset.eraId;
+            gameState.selectedEra = eraId;
+            this.showCurrentStep();
+          });
+        });
+
+        // 为自定义时代的输入框添加事件监听
+        const customInputs = {
+          'customEraName': 'customEraName',
+          'customEraDescription': 'customEraDescription',
+          'customEraFeatures': 'customEraFeatures',
+          'customEraBackground': 'customEraBackground'
+        };
+
+        Object.entries(customInputs).forEach(([id, stateKey]) => {
+          const input = document.getElementById(id);
+          if (input) {
+            input.addEventListener('click', (e) => {
+              e.stopPropagation();
+            });
+            input.addEventListener('input', (e) => {
+              gameState[stateKey] = e.target.value.trim();
+            });
+          }
+        });
+
+        this.elements.content.querySelectorAll('.difficulty-card').forEach(card => {
+          card.addEventListener('click', () => {
+            const difficultyId = card.dataset.difficultyId;
+            gameState.selectedDifficulty = difficultyId;
+            gameState.availablePoints = CONFIG.DIFFICULTIES[difficultyId].points;
+            this.showCurrentStep();
+          });
+        });
+      },
+
+      bindAttributeEvents() {
+        this.elements.content.querySelectorAll('.decrease-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const attrId = btn.dataset.attribute;
+            if (gameState.attributes[attrId] > 0) {
+              gameState.attributes[attrId]--;
+              this.showAttributeAndExperienceSelection();
+            }
+          });
+        });
+
+        this.elements.content.querySelectorAll('.increase-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const attrId = btn.dataset.attribute;
+            const usedPoints = gameState.calculateUsedPoints();
+            if (gameState.attributes[attrId] < CONFIG.MAX_ATTR_VALUE &&
+              usedPoints < gameState.availablePoints) {
+              gameState.attributes[attrId]++;
+              this.showAttributeAndExperienceSelection();
+            }
+          });
+        });
+      },
+
+      bindOriginEvents() {
+        this.elements.content.querySelectorAll('.origin-card').forEach(card => {
+          card.addEventListener('click', () => {
+            const originId = card.dataset.originId;
+            const origin = CONFIG.ORIGINS[originId];
+
+            const currentUsedPoints = gameState.calculateUsedPoints();
+            const pointsAfterSelection = currentUsedPoints -
+              (gameState.selectedOrigin ? CONFIG.ORIGINS[gameState.selectedOrigin].cost : 0) +
+              origin.cost;
+
+            if (pointsAfterSelection <= gameState.availablePoints) {
+              gameState.selectedOrigin = originId;
+            } else {
+              alert('剩余点数不足以选择该出身！');
+            }
+
+            this.showAttributeAndExperienceSelection();
+            this.updateNavigationButtons();
+          });
+        });
+      },
+
+      bindExperienceEvents() {
+        this.elements.content.querySelectorAll('.experience-card').forEach(card => {
+          card.addEventListener('click', (e) => {
+            if (e.target.closest('.custom-input') || e.target.closest('.attribute-adjustments')) {
+              return;
+            }
+            const expId = card.dataset.experienceId;
+            const experience = CONFIG.EXPERIENCES[expId];
+
+            if (gameState.selectedExperiences.includes(expId)) {
+              gameState.selectedExperiences = gameState.selectedExperiences.filter(id => id !== expId);
+            } else {
+              const usedPoints = gameState.calculateUsedPoints();
+              const totalPointsAfterSelection = usedPoints + experience.cost;
+
+              if (totalPointsAfterSelection <= gameState.availablePoints) {
+                gameState.selectedExperiences.push(expId);
+              } else {
+                alert('剩余点数不足以选择该经历！');
+              }
+            }
+
+            this.showAttributeAndExperienceSelection();
+            this.updateNavigationButtons();
+          });
+
+          // 当鼠标进入输入框区域时禁用卡片悬停效果
+          const customInput = card.querySelector('.custom-input');
+          if (customInput) {
+            customInput.addEventListener('mouseenter', () => {
+              card.classList.add('no-hover');
+            });
+            customInput.addEventListener('mouseleave', () => {
+              card.classList.remove('no-hover');
+            });
+          }
+        });
+
+        // 为自定义经历的属性调整添加事件监听
+        ['heart', 'bone', 'wisdom', 'luck', 'power', 'charm'].forEach(attr => {
+          const input = document.getElementById(`customExp_${attr}`);
+          if (input) {
+            input.addEventListener('click', (e) => {
+              e.stopPropagation();
+            });
+            input.addEventListener('input', (e) => {
+              e.stopPropagation();
+              if (!gameState.customExpAttributes) {
+                gameState.customExpAttributes = {};
+              }
+              gameState.customExpAttributes[attr] = parseInt(e.target.value) || 0;
+
+              // 更新属性总览，但不重新渲染整个页面
+              this.updateAttributeSummaryInPlace();
+            });
+          }
+        });
+      },
+
+      bindWorldEvents() {
+        this.elements.content.querySelectorAll('.world-card').forEach(card => {
+          card.addEventListener('click', (e) => {
+            if (e.target.closest('.custom-input')) return;
+            const worldId = card.dataset.worldId;
+            gameState.selectedWorld = worldId;
+            this.showWorldSelection();
+            this.updateNavigationButtons();
+          });
+        });
+
+        // 为自定义世界的输入框添加事件监听
+        const customInputs = {
+          'customWorldName': 'customWorldName',
+          'customWorldRank': 'customWorldRank',
+          'customWorldTradition': 'customWorldTradition',
+          'customWorldInheritance': 'customWorldInheritance',
+          'customWorldMaxCultivator': 'customWorldMaxCultivator',
+          'customWorldDescription': 'customWorldDescription',
+          'customWorldFeatures': 'customWorldFeatures',
+          'customWorldBackground': 'customWorldBackground',
+          'customWorldCultivationPath': 'customWorldCultivationPath'
+        };
+
+        Object.entries(customInputs).forEach(([id, stateKey]) => {
+          const input = document.getElementById(id);
+          if (input) {
+            input.addEventListener('click', (e) => {
+              e.stopPropagation();
+              e.preventDefault();
+            });
+            input.addEventListener('input', (e) => {
+              e.stopPropagation();
+              gameState[stateKey] = e.target.value.trim();
+            });
+          }
+        });
+      },
+
+      bindGenderAndRaceEvents() {
+        this.elements.content.querySelectorAll('.gender-card').forEach(card => {
+          card.addEventListener('click', () => {
+            const genderId = card.dataset.genderId;
+            gameState.selectedGender = genderId;
+            this.showGenderAndRaceSelection();
+            this.updateNavigationButtons();
+          });
+        });
+
+        this.elements.content.querySelectorAll('.race-card').forEach(card => {
+          card.addEventListener('click', (e) => {
+            // 如果点击的是输入框，则不触发种族选择
+            if (e.target.closest('.custom-input')) {
+              return;
+            }
+
+            const raceId = card.dataset.raceId;
+            // 保存当前的自定义种族信息
+            if (gameState.selectedRace === 'customRace') {
+              gameState.customRaceInfo = {
+                name: document.getElementById('customRaceName')?.value || '',
+                description: document.getElementById('customRaceDescription')?.value || '',
+                features: document.getElementById('customRaceFeatures')?.value || '',
+                attributes: { ...gameState.customRaceAttributes }
+              };
+            }
+
+            gameState.selectedRace = raceId;
+
+            // 如果之前选择的不是妖怪，切换到妖怪时重置yaoType
+            if (raceId === 'yaoguai' && gameState.selectedRace !== 'yaoguai') {
+              gameState.yaoType = null;
+            }
+
+            this.showGenderAndRaceSelection();
+
+            // 恢复自定义种族信息
+            if (raceId === 'customRace' && gameState.customRaceInfo) {
+              document.getElementById('customRaceName').value = gameState.customRaceInfo.name;
+              document.getElementById('customRaceDescription').value = gameState.customRaceInfo.description;
+              document.getElementById('customRaceFeatures').value = gameState.customRaceInfo.features;
+              gameState.customRaceAttributes = { ...gameState.customRaceInfo.attributes };
+
+              // 更新属性输入框的值
+              Object.entries(gameState.customRaceAttributes || {}).forEach(([attr, value]) => {
+                const input = document.getElementById(`customRace_${attr}`);
+                if (input) {
+                  input.value = value;
+                }
+              });
+            }
+
+            this.updateNavigationButtons();
+          });
+        });
+
+        // 添加自定义种族输入框的事件监听
+        ['customRaceName', 'customRaceDescription', 'customRaceFeatures'].forEach(id => {
+          const input = document.getElementById(id);
+          if (input) {
+            input.addEventListener('click', (e) => e.stopPropagation());
+            input.addEventListener('input', (e) => {
+              e.stopPropagation();
+              const field = id.replace('customRace', '').toLowerCase();
+              if (!gameState.customRaceInfo) {
+                gameState.customRaceInfo = {};
+              }
+              gameState.customRaceInfo[field] = e.target.value.trim();
+            });
+          }
+        });
+
+        // 添加自定义种族属性输入框的事件监听
+        ['heart', 'bone', 'wisdom', 'luck', 'power', 'charm', 'lifespan'].forEach(attr => {
+          const input = document.getElementById(`customRace_${attr}`);
+          if (input) {
+            input.addEventListener('click', (e) => e.stopPropagation());
+            input.addEventListener('input', (e) => {
+              e.stopPropagation();
+              if (!gameState.customRaceAttributes) {
+                gameState.customRaceAttributes = {};
+              }
+              gameState.customRaceAttributes[attr] = parseInt(e.target.value) || 0;
+              if (!gameState.customRaceInfo) {
+                gameState.customRaceInfo = {};
+              }
+              if (!gameState.customRaceInfo.attributes) {
+                gameState.customRaceInfo.attributes = {};
+              }
+              gameState.customRaceInfo.attributes[attr] = parseInt(e.target.value) || 0;
+            });
+          }
+        });
+
+        // 添加妖怪类型输入框的事件监听
+        const yaoTypeInput = document.getElementById('yaoType');
+        if (yaoTypeInput) {
+          yaoTypeInput.addEventListener('input', (e) => {
+            e.stopPropagation();
+            gameState.yaoType = e.target.value.trim();
+          });
+        }
+      },
+
+      bindStartEvents() {
+        this.elements.content.querySelectorAll('.start-card').forEach(card => {
+          card.addEventListener('click', (e) => {
+            if (e.target.closest('.custom-input') || e.target.closest('.attribute-adjustments')) {
+              return;
+            }
+            const startId = card.dataset.startId;
+            gameState.selectedStart = startId;
+
+            if (startId === 'customStart' && !gameState.customStartAttributes) {
+              gameState.customStartAttributes = {
+                heart: 0,
+                bone: 0,
+                wisdom: 0,
+                luck: 0,
+                power: 0,
+                charm: 0
+              };
+            }
+
+            this.showStartSelection();
+            this.updateNavigationButtons();
+          });
+
+          // 当鼠标进入输入框区域时禁用卡片悬停效果
+          const customInput = card.querySelector('.custom-input');
+          if (customInput) {
+            customInput.addEventListener('mouseenter', () => {
+              card.classList.add('no-hover');
+            });
+            customInput.addEventListener('mouseleave', () => {
+              card.classList.remove('no-hover');
+            });
+          }
+        });
+
+        // 为自定义开局的属性调整添加事件监听
+        ['heart', 'bone', 'wisdom', 'luck', 'power', 'charm'].forEach(attr => {
+          const input = document.getElementById(`customStart_${attr}`);
+          if (input) {
+            input.addEventListener('click', (e) => {
+              e.stopPropagation();
+            });
+            input.addEventListener('input', (e) => {
+              e.stopPropagation();
+              if (!gameState.customStartAttributes) {
+                gameState.customStartAttributes = {
+                  heart: 0,
+                  bone: 0,
+                  wisdom: 0,
+                  luck: 0,
+                  power: 0,
+                  charm: 0
+                };
+              }
+              gameState.customStartAttributes[attr] = parseInt(e.target.value) || 0;
+
+              // 更新属性总览，但不重新渲染整个页面
+              this.updateAttributeSummaryInPlace();
+            });
+          }
+        });
+      },
+
+      updateNavigationButtons() {
+        this.elements.prevBtn.disabled = gameState.currentStep === 1;
+        this.elements.nextBtn.disabled = !this.validateCurrentStep();
+        this.elements.nextBtn.textContent = gameState.currentStep === 5 ? '完成创建' : '下一步';
+      },
+
+      validateCurrentStep() {
+        switch (gameState.currentStep) {
+          case 1:
+            return gameState.selectedEra && gameState.selectedDifficulty;
+          case 2:
+            const usedPoints = gameState.calculateUsedPoints();
+            return usedPoints > 0 &&
+              usedPoints <= gameState.availablePoints &&
+              gameState.selectedOrigin !== null;
+          case 3:
+            if (gameState.selectedGender === null || gameState.selectedRace === null) {
+              return false;
+            }
+            // 如果选择了妖族，必须输入具体类型
+            if (gameState.selectedRace === 'yaoguai' && (!gameState.yaoType || gameState.yaoType.trim() === '')) {
+              return false;
+            }
+            return true;
+          case 4:
+            return gameState.selectedWorld !== null;
+          case 5:
+            return gameState.selectedStart !== null;
+          default:
+            return false;
+        }
+      },
+
+      bindNavigationEvents() {
+        this.elements.prevBtn.addEventListener('click', () => {
+          if (gameState.currentStep > 1) {
+            gameState.currentStep--;
+            // 使用Promise确保DOM更新后再滚动
+            Promise.resolve().then(() => {
+              this.showCurrentStep();
+              window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+              });
+            });
+          }
+        });
+
+        this.elements.nextBtn.addEventListener('click', () => {
+          if (this.validateCurrentStep()) {
+            if (gameState.currentStep < 5) {
+              gameState.currentStep++;
+              // 使用Promise确保DOM更新后再滚动
+              Promise.resolve().then(() => {
+                this.showCurrentStep();
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth'
+                });
+              });
+            } else {
+              this.finishCreation();
+            }
+          }
+        });
+      },
+
+      finishCreation() {
+        const result = {
+          era: gameState.selectedEra,
+          difficulty: gameState.selectedDifficulty,
+          origin: gameState.selectedOrigin,
+          gender: gameState.selectedGender,
+          race: gameState.selectedRace,
+          start: gameState.selectedStart,
+          attributes: {
+            base: {
+              bone: gameState.attributes.bone,
+              wisdom: gameState.attributes.wisdom,
+              luck: gameState.attributes.luck,
+              power: gameState.attributes.power,
+              heart: gameState.attributes.heart,
+              charm: gameState.attributes.charm
+            },
+            final: Object.keys(CONFIG.ATTRIBUTES).reduce((acc, attr) => {
+              acc[attr] = gameState.calculateFinalAttributeValue(attr);
+              return acc;
+            }, {})
+          },
+          experiences: gameState.selectedExperiences,
+          world: gameState.selectedWorld,
+          // 添加自定义内容
+          customContent: {
+            experience: gameState.selectedExperiences.includes('customExperience') ? {
+              name: gameState.customExperienceName || '自定义经历',
+              description: gameState.customExperienceDescription || '',
+              features: gameState.customExperienceFeatures ? gameState.customExperienceFeatures.split(',').map(f => f.trim()) : []
+            } : null,
+            world: gameState.selectedWorld === 'customWorld' ? {
+              name: gameState.customWorldName || '自定义世界',
+              rank: gameState.customWorldRank || '',
+              tradition: gameState.customWorldTradition || '',
+              inheritance: gameState.customWorldInheritance || '',
+              maxCultivator: gameState.customWorldMaxCultivator || '',
+              description: gameState.customWorldDescription || '',
+              features: gameState.customWorldFeatures ? gameState.customWorldFeatures.split(',').map(f => f.trim()) : [],
+              background: gameState.customWorldBackground || '',
+              cultivationPath: gameState.customWorldCultivationPath || ''
+            } : null,
+            start: gameState.selectedStart === 'customStart' ? {
+              name: gameState.customStartName || '自定义开局',
+              description: gameState.customStartDescription || '',
+              features: gameState.customStartFeatures ? gameState.customStartFeatures.split(',').map(f => f.trim()) : [],
+              background: gameState.customStartBackground || '',
+              bonus: gameState.customStartAttributes || {}
+            } : null
+          }
+        };
+
+        console.log('Character creation completed:', result);
+
+        const fameValue = result.attributes.final.fame;
+        const fameDisplay = fameValue >= 0 ?
+          `正道声望: ${fameValue}` :
+          `魔道声望: ${Math.abs(fameValue)}`;
+
+        // 获取正确的经历、世界和开局信息
+        const getExperienceInfo = (expId) => {
+          if (expId === 'customExperience' && result.customContent.experience) {
+            return {
+              name: gameState.customExperienceName || '自定义经历',
+              description: gameState.customExperienceDescription || '',
+              features: gameState.customExperienceFeatures ? gameState.customExperienceFeatures.split(',').map(f => f.trim()) : []
+            };
+          }
+          return CONFIG.EXPERIENCES[expId];
+        };
+
+        const getWorldInfo = () => {
+          if (result.world === 'customWorld') {
+            return {
+              name: gameState.customWorldName || '自定义世界',
+              rank: gameState.customWorldRank || '',
+              tradition: gameState.customWorldTradition || '',
+              inheritance: gameState.customWorldInheritance || '',
+              maxCultivator: gameState.customWorldMaxCultivator || '',
+              description: gameState.customWorldDescription || '',
+              features: gameState.customWorldFeatures ? gameState.customWorldFeatures.split(',').map(f => f.trim()) : [],
+              background: gameState.customWorldBackground || '',
+              cultivationPath: gameState.customWorldCultivationPath || ''
+            };
+          }
+          return CONFIG.WORLDS[result.world];
+        };
+
+        const getStartInfo = () => {
+          if (gameState.selectedStart === 'customStart') {
+            startInfo = {
+              name: gameState.customStartName || '自定义开局',
+              description: gameState.customStartDescription || '',
+              features: gameState.customStartFeatures ? gameState.customStartFeatures.split(',').map(f => f.trim()) : [],
+              background: gameState.customStartBackground || '',
+              bonus: gameState.customStartAttributes || {}
+            };
+          }
+          return CONFIG.STARTS[result.start];
+        };
+
+        const worldInfo = getWorldInfo();
+        const startInfo = getStartInfo();
+
+        const summaryHtml = `
+            <div class="creation-summary">
+                <h2>角色创建完成</h2>
+                <div class="summary-section">
+                    <h3>基本信息</h3>
+                    <p>时代：${CONFIG.ERAS[result.era].name}</p>
+                    <p>难度：${CONFIG.DIFFICULTIES[result.difficulty].name}</p>
+                    <p>性别：${CONFIG.GENDERS[result.gender].name}</p>
+                    <p>种族：${CONFIG.RACES[result.race].name}</p>
+                    <p>出身：${CONFIG.ORIGINS[result.origin].name}</p>
+                    <p>世界：${worldInfo.name}</p>
+                    <p>开局：${startInfo.name}</p>
+                    <p>开局背景: ${startInfo.background}</p>
+                    <p>开局特点: ${startInfo.features}</p>
+                </div>
+                <div class="summary-section">
+                    <h3>核心属性</h3>
+                    ${['heart', 'bone', 'wisdom', 'luck', 'power', 'charm'].map(attr => `
+                        <p>${CONFIG.ATTRIBUTES[attr].name}: ${result.attributes.final[attr]}</p>
+                    `).join('')}
+                    <p class="fame-value ${fameValue >= 0 ? 'positive' : 'negative'}">
+                        ${fameDisplay}
+                    </p>
+                </div>
+                <div class="summary-section">
+                    <h3>技艺属性</h3>
+                    ${['martialArt', 'forging', 'alchemy'].map(attr => `
+                        <p>${CONFIG.ATTRIBUTES[attr].name}: ${result.attributes.final[attr]}</p>
+                    `).join('')}
+                </div>
+                <div class="summary-section">
+                    <h3>武学资质</h3>
+                    ${['palmArt', 'fingerArt', 'fistArt', 'swordArt', 'spearArt', 'bladeArt'].map(attr => `
+                        <p>${CONFIG.ATTRIBUTES[attr].name}: ${result.attributes.final[attr]}</p>
+                    `).join('')}
+                </div>
+                <div class="summary-section">
+                    <h3>其他属性</h3>
+                    <p>${CONFIG.ATTRIBUTES.lifespan.name}: ${result.attributes.final.lifespan}</p>
+                </div>
+                <div class="summary-section">
+                    <h3>选择的经历</h3>
+                    ${result.experiences.map(exp => {
+          const experience = getExperienceInfo(exp);
+          return `
+                            <div class="experience-summary">
+                                <p class="experience-name">${experience.name}</p>
+                                <p class="experience-desc">${experience.description}</p>
+                                ${experience.features && experience.features.length > 0 ? `
+                                    <div class="experience-features">
+                                        ${experience.features.map(feature => `
+                                            <p class="experience-feature">• ${feature}</p>
+                                        `).join('')}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+        }).join('')}
+                </div>
+                <div class="summary-section">
+                    <h3>世界信息</h3>
+                    <p class="world-name">${worldInfo.name} ${worldInfo.rank ? `(${worldInfo.rank}级)` : ''}</p>
+                    <p class="world-tradition">传承体系: ${worldInfo.tradition}</p>
+                    <p class="world-inheritance">特殊传承: ${worldInfo.inheritance}</p>
+                    <p class="world-cultivator">最强者: ${worldInfo.maxCultivator}</p>
+                    <p class="world-description">简介: ${worldInfo.description}</p>
+                    ${worldInfo.features && worldInfo.features.length > 0 ? `
+                        <div class="world-features">
+                            <p>世界特点:</p>
+                            ${worldInfo.features.map(feature => `
+                                <p>• ${feature}</p>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                    <p class="world-background">背景: ${worldInfo.background}</p>
+                    <p class="world-cultivation">修行建议: ${worldInfo.cultivationPath}</p>
+                </div>
+                <div class="summary-section">
+                    <h3>开局信息</h3>
+                    <p class="start-name">开局: ${startInfo.name}</p>
+                    <p class="start-background">背景: ${startInfo.background}</p>
+                    <p class="start-description">描述: ${startInfo.description}</p>
+                    ${startInfo.features && startInfo.features.length > 0 ? `
+                        <div class="start-features">
+                            <p>特点:</p>
+                            ${startInfo.features.map(feature => `
+                                <p>• ${feature}</p>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+                <div class="nav-buttons" style="margin-top: 20px; text-align: center;">
+                    <button class="nav-btn start-game-btn" style="background: linear-gradient(135deg, #4CAF50, #45a049);">开始游戏</button>
+                </div>
+            </div>
+        `;
+
+        this.elements.content.innerHTML = summaryHtml;
+
+        const startGameBtn = this.elements.content.querySelector('.start-game-btn');
+        if (startGameBtn) {
+          startGameBtn.addEventListener('click', () => {
+            this.startGame(result);
+          });
+        }
+      },
+
+      startGame(characterData) {
+        const difficulty = CONFIG.DIFFICULTIES[characterData.difficulty];
+        const era = CONFIG.ERAS[characterData.era];
+        const world = characterData.world === 'customWorld' ? {
+          name: gameState.customWorldName || '自定义世界',
+          rank: gameState.customWorldRank || '',
+          tradition: gameState.customWorldTradition || '',
+          inheritance: gameState.customWorldInheritance || '',
+          maxCultivator: gameState.customWorldMaxCultivator || '',
+          description: gameState.customWorldDescription || '',
+          features: gameState.customWorldFeatures ? gameState.customWorldFeatures.split(',').map(f => f.trim()) : [],
+          background: gameState.customWorldBackground || '',
+          cultivationPath: gameState.customWorldCultivationPath || ''
+        } : CONFIG.WORLDS[characterData.world];
+        const origin = CONFIG.ORIGINS[characterData.origin];
+        const start = characterData.start === 'customStart' ? {
+          name: gameState.customStartName || '自定义开局',
+          description: gameState.customStartDescription || '',
+          features: gameState.customStartFeatures ? gameState.customStartFeatures.split(',').map(f => f.trim()) : [],
+          background: gameState.customStartBackground || '',
+          bonus: gameState.customStartAttributes || {}
+        } : CONFIG.STARTS[characterData.start];
+
+        // 设置所有变量的命令序列
+        let commands = [];
+
+        // 设置核心属性
+        const coreAttributes = ['heart', 'bone', 'wisdom', 'luck', 'power', 'charm'];
+        coreAttributes.forEach(attr => {
+          commands.push(`/setvar key=${attr} ${characterData.attributes.final[attr]}`);
+        });
+
+        // 设置技艺属性
+        const craftAttributes = ['martialArt', 'forging', 'alchemy'];
+        craftAttributes.forEach(attr => {
+          commands.push(`/setvar key=${attr} ${characterData.attributes.final[attr]}`);
+        });
+
+        // 设置武学资质
+        const martialAttributes = ['palmArt', 'fingerArt', 'fistArt', 'swordArt', 'spearArt', 'bladeArt'];
+        martialAttributes.forEach(attr => {
+          commands.push(`/setvar key=${attr} ${characterData.attributes.final[attr]}`);
+        });
+
+
+        commands.push(`/setvar key=lifespan ${characterData.attributes.final.lifespan}`);
+        commands.push(`/setvar key=fame ${characterData.attributes.final.fame}`);
+
+        // 设置时代
+        commands.push(`/setvar key=era ${era.name}`);
+
+        // 设置出身
+        commands.push(`/setvar key=origin ${origin.name}`);
+
+        // 设置经历
+        characterData.experiences.forEach((exp, index) => {
+          const experience = exp === 'customExperience' ? {
+            name: gameState.customExperienceName || '自定义经历',
+            description: gameState.customExperienceDescription || '',
+            features: gameState.customExperienceFeatures ? gameState.customExperienceFeatures.split(',').map(f => f.trim()) : []
+          } : CONFIG.EXPERIENCES[exp];
+          commands.push(`/setvar key=experience${index + 1} ${experience.name}`);
+        });
+        commands.push(`/setvar key=experienceCount ${characterData.experiences.length}`);
+
+        // 设置选择的世界
+        commands.push(`/setvar key=world ${world.name}`);
+        commands.push(`/setvar key=worldRank ${world.rank}`);
+
+        // 添加性别和种族相关的命令
+        commands.push(`/setvar key=gender ${CONFIG.GENDERS[characterData.gender].name}`);
+        commands.push(`/setvar key=race ${CONFIG.RACES[characterData.race].name}`);
+
+        // 添加开局相关的命令
+        commands.push(`/setvar key=start ${start.name}`);
+
+        // 添加种族相关命令
+        commands.push(`/setvar key=race ${CONFIG.RACES[characterData.race].name}`);
+        if (characterData.race === 'yaoguai') {
+          commands.push(`/setvar key=yaoType ${gameState.yaoType}`);
+        }
+
+        // 准备输出消息
+        let outputMessage = `{{user}}选择了${difficulty.name}（${difficulty.description}）难度`;
+
+        // 处理时代信息
+        if (characterData.era === 'customEra') {
+          const customEraName = gameState.customEraName || '自定义时代';
+          outputMessage += `，将在${customEraName}开始修仙之旅。\n\n`;
+          outputMessage += `所处时代：${customEraName}\n`;
+          outputMessage += `时代描述：${gameState.customEraDescription || ''}\n`;
+          outputMessage += '时代特点：\n';
+          if (gameState.customEraFeatures) {
+            gameState.customEraFeatures.split(',').forEach(feature => {
+              outputMessage += `- ${feature.trim()}\n`;
+            });
+          }
+          outputMessage += `时代背景：${gameState.customEraBackground || ''}\n\n`;
+        } else {
+          outputMessage += `，将在${era.name}的${world.name}开始我的修仙之旅。\n\n`;
+          outputMessage += `所处时代：${era.name}\n`;
+          outputMessage += `时代描述：${era.description}\n`;
+          outputMessage += '时代特点：\n';
+          era.features.forEach(feature => {
+            outputMessage += `- ${feature}\n`;
+          });
+          outputMessage += `时代背景：${era.background}\n\n`;
+        }
+
+        outputMessage += `性别：${CONFIG.GENDERS[characterData.gender].name}\n`;
+        outputMessage += `玩家角色描述：{{persona}}\n`;
+        outputMessage += `玩家姓名：{{user}}\n`;
+
+        // 处理种族信息（只输出一次）
+        if (characterData.race === 'customRace' && gameState.customRaceInfo) {
+          outputMessage += `种族：${gameState.customRaceInfo.name || '自定义种族'}\n`;
+          outputMessage += `种族描述：${gameState.customRaceInfo.description || ''}\n`;
+          outputMessage += '种族特点：\n';
+          if (gameState.customRaceInfo.features) {
+            gameState.customRaceInfo.features.split(',').forEach(feature => {
+              outputMessage += `- ${feature.trim()}\n`;
+            });
+          }
+        } else {
+          outputMessage += `种族：${CONFIG.RACES[characterData.race].name}${characterData.race === 'yaoguai' ? `(${gameState.yaoType})` : ''}\n`;
+          outputMessage += `种族描述：${CONFIG.RACES[characterData.race].description}\n`;
+          outputMessage += '种族特点：\n';
+          CONFIG.RACES[characterData.race].features.forEach(feature => {
+            outputMessage += `- ${feature}\n`;
+          });
+        }
+        outputMessage += '\n';
+        outputMessage += `我的出身：\n- ${origin.name}（${origin.features.join('，')}）\n`;
+        outputMessage += `${origin.description}\n\n`;
+        outputMessage += '我的各项属性如下：\n';
+        Object.entries(characterData.attributes.final).forEach(([key, value]) => {
+          outputMessage += `${CONFIG.ATTRIBUTES[key].name}：${value}\n`;
+        });
+        outputMessage += '\n我的经历：\n';
+        characterData.experiences.forEach(exp => {
+          const experience = exp === 'customExperience' ? {
+            name: gameState.customExperienceName || '自定义经历',
+            description: gameState.customExperienceDescription || '',
+            features: gameState.customExperienceFeatures ? gameState.customExperienceFeatures.split(',').map(f => f.trim()) : []
+          } : CONFIG.EXPERIENCES[exp];
+          outputMessage += `- ${experience.name}\n`;
+          outputMessage += `${experience.description}\n`;
+          if (experience.features && experience.features.length > 0) {
+            experience.features.forEach(feature => {
+              outputMessage += `  • ${feature}\n`;
+            });
+          }
+        });
+        outputMessage += `\n选择世界：${world.name}（${world.rank}级）\n`;
+        outputMessage += `传承体系：${world.tradition}\n`;
+        outputMessage += `特殊传承：${world.inheritance}\n`;
+        outputMessage += `最强者：${world.maxCultivator}\n`;
+        outputMessage += `大世界简介：${world.description}\n`;
+        outputMessage += '该大世界世界观：\n';
+        world.features.forEach(feature => {
+          outputMessage += `- ${feature}\n`;
+        });
+        outputMessage += `世界背景：${world.background}\n`;
+        outputMessage += `修行推荐：${world.cultivationPath}\n`;
+        outputMessage += `开局：${start.name}\n`;
+        outputMessage += `开局背景：${start.background}\n`;
+        outputMessage += `开局描述：${start.description}\n`;
+        outputMessage += '开局特点：\n';
+        start.features.forEach(feature => {
+          outputMessage += `- ${feature}\n`;
+        });
+
+
+        // 准备条目内容
+        let entryContent = {
+          "基本信息": {
+            "性别": CONFIG.GENDERS[characterData.gender].name,
+            "种族": CONFIG.RACES[characterData.race].name,
+            "时代": era.name,
+            "难度": difficulty.name,
+            "出身": origin.name,
+            "开局": start.name,
+            "开局背景": start.background,
+            "开局特点": start.features
+          },
+          "核心属性": characterData.attributes.base,
+          "最终属性": characterData.attributes.final,
+          "经历": characterData.experiences.map(exp => {
+            const experience = exp === 'customExperience' ? {
+              name: gameState.customExperienceName || '自定义经历',
+              description: gameState.customExperienceDescription || '',
+              features: gameState.customExperienceFeatures ? gameState.customExperienceFeatures.split(',').map(f => f.trim()) : []
+            } : CONFIG.EXPERIENCES[exp];
+            return {
+              "名称": experience.name,
+              "描述": experience.description,
+              "特点": experience.features
+            };
+          }),
+          "所选世界": {
+            "名称": world.name,
+            "等级": world.rank,
+            "传承": world.tradition,
+            "特殊传承": world.inheritance,
+            "最强者": world.maxCultivator,
+            "简介": world.description,
+            "特点": world.features,
+            "背景": world.background,
+            "修行建议": world.cultivationPath
+          }
+        };
+
+        // 将所有命令连接起来
+        commands.push(`/setentryfield file=1xianxia uid=10 field=content ${JSON.stringify(entryContent)}`);
+
+        // 设置constant为始终启用
+        commands.push(`/setentryfield file=1xianxia uid=10 field=constant 1`);
+
+        // 设置position为聊天记录中
+        commands.push(`/setentryfield file=1xianxia uid=10 field=position 4`);
+
+        // 设置role为System
+        commands.push(`/setentryfield file=1xianxia uid=10 field=role 0`);
+        commands.push(`/setvar key=userage 16`);
+        commands.push(`/addvar key=lifespan 60`);
+
+        // 发送消息和触发器保持不变
+        commands.push(`/send ${outputMessage}`);
+        commands.push('/trigger');
+
+        // 执行所有命令
+        triggerSlash(commands.join('|'));
+      },
+
+      async executeCommand(command) {
+        try {
+          console.log('Executing command:', command);
+
+          const response = await fetch('/api/command', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              command,
+              timestamp: Date.now() // 添加时间戳避免缓存
+            })
+          });
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP ${response.status}: ${errorText}`);
+          }
+
+          const result = await response.text();
+          console.log('Command result:', result);
+          return result;
+        } catch (error) {
+          console.error(`Error executing command ${command}:`, error);
+          throw new Error(`命令执行失败: ${error.message}`);
+        }
+      },
+
+      // 添加新方法用于原地更新属性总览
+      updateAttributeSummaryInPlace() {
+        const summaryElement = document.getElementById('attributeSummary');
+        if (!summaryElement) return;
+
+        let summaryHTML = '<div class="attribute-summary">';
+
+        // 添加自定义种族信息显示
+        if (gameState.selectedRace === 'customRace' && gameState.customRaceInfo) {
+          summaryHTML += `
+                <div class="custom-info-section">
+                    <h3>自定义种族信息</h3>
+                    <p><strong>种族名称：</strong>${gameState.customRaceInfo.name || '未命名'}</p>
+                    <p><strong>种族描述：</strong>${gameState.customRaceInfo.description || '无描述'}</p>`;
+
+          if (gameState.customRaceInfo.features) {
+            summaryHTML += '<p><strong>种族特点：</strong></p><ul>';
+            gameState.customRaceInfo.features.split(',').forEach(feature => {
+              if (feature.trim()) {
+                summaryHTML += `<li>${feature.trim()}</li>`;
+              }
+            });
+            summaryHTML += '</ul>';
+          }
+
+          if (gameState.customRaceInfo.attributes) {
+            summaryHTML += '<p><strong>种族属性加成：</strong></p><ul>';
+            Object.entries(gameState.customRaceInfo.attributes).forEach(([attr, value]) => {
+              if (value !== 0) {
+                summaryHTML += `<li>${CONFIG.ATTRIBUTES[attr].name}: ${value > 0 ? '+' : ''}${value}</li>`;
+              }
+            });
+            summaryHTML += '</ul>';
+          }
+          summaryHTML += '</div>';
+        }
+
+        // 添加自定义时代信息显示
+        if (gameState.selectedEra === 'customEra') {
+          summaryHTML += `
+                <div class="custom-info-section">
+                    <h3>自定义时代信息</h3>
+                    <p><strong>时代名称：</strong>${gameState.customEraName || '未命名'}</p>
+                    <p><strong>时代描述：</strong>${gameState.customEraDescription || '无描述'}</p>`;
+
+          if (gameState.customEraFeatures) {
+            summaryHTML += '<p><strong>时代特点：</strong></p><ul>';
+            gameState.customEraFeatures.split(',').forEach(feature => {
+              if (feature.trim()) {
+                summaryHTML += `<li>${feature.trim()}</li>`;
+              }
+            });
+            summaryHTML += '</ul>';
+          }
+
+          summaryHTML += `<p><strong>时代背景：</strong>${gameState.customEraBackground || '无背景'}</p>
+                </div>`;
+        }
+
+        // 显示最终属性值
+        const finalAttributes = this.calculateAttributes();
+        summaryHTML += `
+            <div class="attributes-section">
+                <h3>当前属性</h3>
+                <div class="attributes-grid">`;
+
+        Object.entries(finalAttributes).forEach(([key, value]) => {
+          const attributeInfo = CONFIG.ATTRIBUTES[key];
+          if (attributeInfo) {
+            summaryHTML += `
+                    <div class="attribute-item">
+                        <span class="attribute-name" title="${attributeInfo.description}">${attributeInfo.name}</span>
+                        <span class="attribute-value ${value > 0 ? 'positive' : value < 0 ? 'negative' : ''}">${value}</span>
+                    </div>`;
+          }
+        });
+
+        summaryHTML += '</div></div></div>';
+        summaryElement.innerHTML = summaryHTML;
+      },
+
+      showFinalSummary() {
+        const selectedStart = CONFIG.STARTS[gameState.selectedStart];
+        const selectedRace = CONFIG.RACES[gameState.selectedRace];
+        const selectedEra = CONFIG.ERAS[gameState.selectedEra];
+        const html = `
+            <div class="final-summary">
+                <div class="section-title">最终属性总览</div>
+                <div class="summary-grid">
+                    ${Object.entries(CONFIG.ATTRIBUTES).map(([id, attr]) => {
+          const value = gameState.calculateFinalAttributeValue(id);
+          return `
+                            <div class="summary-item">
+                                <span class="summary-name">${attr.name}</span>
+                                <span class="summary-value ${value > 0 ? 'positive' : value < 0 ? 'negative' : ''}">${value}</span>
+                            </div>
+                        `;
+        }).join('')}
+                </div>
+
+                <div class="section-title">时代详情</div>
+                <div class="era-details detail-section">
+                    <div class="detail-header">
+                        <h3 class="detail-name">${selectedEra.name}</h3>
+                    </div>
+                    <div class="detail-content">
+                        <div class="detail-description">
+                            <h4>时代描述</h4>
+                            <p>${selectedEra.description}</p>
+                        </div>
+                        <div class="detail-features">
+                            <h4>时代特征</h4>
+                            <ul>
+                                ${selectedEra.features.map(feature => `
+                                    <li>${feature}</li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        <div class="detail-background">
+                            <h4>时代背景</h4>
+                            <p>${selectedEra.background}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-title">种族详情</div>
+                <div class="race-details detail-section">
+                    <div class="detail-header">
+                        <h3 class="detail-name">${selectedRace.name}${gameState.yaoType ? ` - ${gameState.yaoType}` : ''}</h3>
+                    </div>
+                    <div class="detail-content">
+                        <div class="detail-description">
+                            <h4>种族描述</h4>
+                            <p>${selectedRace.description}</p>
+                        </div>
+                        <div class="detail-features">
+                            <h4>种族特征</h4>
+                            <ul>
+                                ${selectedRace.features.map(feature => `
+                                    <li>${feature}</li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        <div class="race-bonus">
+                            <h4>种族属性加成</h4>
+                            <div class="bonus-grid">
+                                ${Object.entries(selectedRace.bonus || {}).map(([attr, value]) => `
+                                    <div class="bonus-item ${value > 0 ? 'positive' : 'negative'}">
+                                        ${CONFIG.ATTRIBUTES[attr].name} ${value > 0 ? '+' : ''}${value}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-title">开局详情</div>
+                <div class="start-details detail-section">
+                    <div class="detail-header">
+                        <h3 class="detail-name">${selectedStart.name}</h3>
+                    </div>
+                    <div class="detail-content">
+                        <div class="detail-description">
+                            <h4>开局描述</h4>
+                            <p>${selectedStart.description}</p>
+                        </div>
+                        <div class="detail-features">
+                            <h4>开局特征</h4>
+                            <ul>
+                                ${selectedStart.features.map(feature => `
+                                    <li>${feature}</li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        <div class="detail-background">
+                            <h4>开局背景</h4>
+                            <p>${selectedStart.background}</p>
+                        </div>
+                        <div class="start-bonus">
+                            <h4>开局属性加成</h4>
+                            <div class="bonus-grid">
+                                ${Object.entries(selectedStart.bonus || {}).map(([attr, value]) => `
+                                    <div class="bonus-item ${value > 0 ? 'positive' : 'negative'}">
+                                        ${CONFIG.ATTRIBUTES[attr].name} ${value > 0 ? '+' : ''}${value}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        this.elements.content.innerHTML = html;
+
+        // 添加新样式
+        const styles = `
+            .detail-section {
+                background: rgba(255, 255, 255, 0.9);
+                border-radius: 10px;
+                padding: 20px;
+                margin-top: 20px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .detail-header {
+                border-bottom: 2px solid var(--primary-color);
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+            }
+
+            .detail-name {
+                color: var(--primary-color);
+                font-size: 1.5em;
+                margin: 0;
+            }
+
+            .detail-content {
+                display: grid;
+                gap: 20px;
+            }
+
+            .detail-content h4 {
+                color: var(--text-secondary);
+                margin: 0 0 10px 0;
+                font-size: 1.2em;
+            }
+
+            .detail-features ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .detail-features li {
+                padding: 5px 0;
+                position: relative;
+                padding-left: 20px;
+            }
+
+            .detail-features li:before {
+                content: "•";
+                color: var(--primary-color);
+                position: absolute;
+                left: 0;
+            }
+
+            .section-title {
+                font-size: 1.8em;
+                color: var(--text-primary);
+                text-align: center;
+                margin: 30px 0 20px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid var(--primary-color);
+            }
+        `;
+
+        const styleElement = document.createElement('style');
+        styleElement.textContent = styles;
+        document.head.appendChild(styleElement);
+      },
+
+      // 添加相应的样式
+      addStyles() {
+        const styles = `
+            .start-details {
+                background: rgba(255, 255, 255, 0.9);
+                border-radius: 10px;
+                padding: 20px;
+                margin-top: 20px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .start-header {
+                border-bottom: 2px solid var(--primary-color);
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+            }
+
+            .start-name {
+                color: var(--primary-color);
+                font-size: 1.5em;
+                margin: 0;
+            }
+
+            .start-content {
+                display: grid;
+                gap: 20px;
+            }
+
+            .start-content h4 {
+                color: var(--text-secondary);
+                margin: 0 0 10px 0;
+                font-size: 1.2em;
+            }
+
+            .start-features ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .start-features li {
+                padding: 5px 0;
+                position: relative;
+                padding-left: 20px;
+            }
+
+            .start-features li:before {
+                content: "•";
+                color: var(--primary-color);
+                position: absolute;
+                left: 0;
+            }
+
+            .bonus-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 10px;
+            }
+
+            .bonus-item {
+                padding: 5px 10px;
+                border-radius: 5px;
+                text-align: center;
+            }
+
+            .bonus-item.positive {
+                background: rgba(76, 175, 80, 0.1);
+                color: var(--success-color);
+            }
+
+            .bonus-item.negative {
+                background: rgba(244, 67, 54, 0.1);
+                color: var(--error-color);
+            }
+        `;
+
+        const styleElement = document.createElement('style');
+        styleElement.textContent = styles;
+        document.head.appendChild(styleElement);
+      }
+    };
+
+
+    // 初始化应用
+    document.addEventListener('DOMContentLoaded', () => {
+      UI.initialize();
+    });
+  </script>
+</body>
+
+</html>
+```

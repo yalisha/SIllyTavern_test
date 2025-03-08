@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../frontend_writer 2"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "SIllyTavern_test"
+	}
+}
