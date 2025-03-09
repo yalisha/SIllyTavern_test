@@ -425,27 +425,6 @@
       background-color: #0078d7;
       margin-right: 10px;
     }
-
-    /* 女性角色分类标签样式 */
-    .female-category-tabs {
-      background-color: #333333;
-      border-bottom: 1px solid #505050;
-      margin-bottom: 15px;
-    }
-
-    .female-category-tabs .tab {
-      padding: 8px 15px;
-      font-size: 13px;
-    }
-
-    .female-category-content {
-      display: none;
-      margin-bottom: 15px;
-    }
-
-    .female-category-content.active {
-      display: block;
-    }
   </style>
 </head>
 
@@ -477,12 +456,6 @@
           <div class="gender-icon" style="background-color:#e81123;">♀</div>
           <div class="gender-title">女性</div>
         </div>
-      </div>
-
-      <div style="text-align:center; margin-top:20px;">
-        <button class="random" onclick="oneClickRandom('random')">完全随机</button>
-        <button class="random" style="background-color:#0078d7;" onclick="oneClickRandom('male')">主角男性随机</button>
-        <button class="random" style="background-color:#e81123;" onclick="oneClickRandom('female')">主角女性随机</button>
       </div>
 
       <button class="next-step" id="next-to-stage2" disabled>下一步</button>
@@ -558,52 +531,9 @@
         </div>
 
         <div class="tab-content" id="interaction-tab-1">
-          <!-- 女性角色分类标签 -->
-          <div class="tabs female-category-tabs">
-            <div class="tab active" onclick="switchFemaleCategory(0)">普通角色</div>
-            <div class="tab" onclick="switchFemaleCategory(1)">特殊身份</div>
-            <div class="tab" onclick="switchFemaleCategory(2)">职业角色</div>
-            <div class="tab" onclick="switchFemaleCategory(3)">情境角色</div>
-            <div class="tab" onclick="switchFemaleCategory(4)">Fate系列</div>
-            <div class="tab" onclick="switchFemaleCategory(5)">其他作品</div>
+          <div class="multi-select-container" id="female-interactions">
+            <!-- 女性角色选项将由JS动态生成 -->
           </div>
-
-          <div class="female-category-content active" id="female-category-0">
-            <div class="multi-select-container" id="female-ordinary">
-              <!-- 普通角色选项将由JS动态生成 -->
-            </div>
-          </div>
-
-          <div class="female-category-content" id="female-category-1">
-            <div class="multi-select-container" id="female-special">
-              <!-- 特殊身份选项将由JS动态生成 -->
-            </div>
-          </div>
-
-          <div class="female-category-content" id="female-category-2">
-            <div class="multi-select-container" id="female-professional">
-              <!-- 职业角色选项将由JS动态生成 -->
-            </div>
-          </div>
-
-          <div class="female-category-content" id="female-category-3">
-            <div class="multi-select-container" id="female-situational">
-              <!-- 情境角色选项将由JS动态生成 -->
-            </div>
-          </div>
-
-          <div class="female-category-content" id="female-category-4">
-            <div class="multi-select-container" id="female-fate">
-              <!-- Fate系列角色选项将由JS动态生成 -->
-            </div>
-          </div>
-
-          <div class="female-category-content" id="female-category-5">
-            <div class="multi-select-container" id="female-other">
-              <!-- 其他作品角色选项将由JS动态生成 -->
-            </div>
-          </div>
-
           <button class="random" onclick="randomSelectInteractions('female')">随机选择</button>
         </div>
 
@@ -645,7 +575,7 @@
     <!-- 第四阶段：世界元素设置 -->
     <div class="stage" id="stage4">
       <h2>世界元素设置</h2>
-      <p style="text-align:center;">选择或自定义你的主题、服装、行为和玩法元素（现在支持多选）</p>
+      <p style="text-align:center;">选择或自定义你的主题、服装、行为和玩法元素</p>
 
       <div class="tab-container">
         <div class="tabs">
@@ -656,10 +586,10 @@
         </div>
 
         <div class="tab-content active" id="elements-tab-0">
-          <div class="multi-select-container" id="theme-options">
+          <div class="options-grid" id="theme-options">
             <!-- 主题选项将由JS动态生成 -->
           </div>
-          <button class="random" onclick="randomSelectMultipleElements('theme')">随机选择</button>
+          <button class="random" onclick="randomSelectElement('theme')">随机选择</button>
           <div class="custom-controls">
             <div class="custom-field">
               <label>自定义主题</label>
@@ -673,10 +603,10 @@
         </div>
 
         <div class="tab-content" id="elements-tab-1">
-          <div class="multi-select-container" id="costume-options">
+          <div class="options-grid" id="costume-options">
             <!-- 服装选项将由JS动态生成 -->
           </div>
-          <button class="random" onclick="randomSelectMultipleElements('costume')">随机选择</button>
+          <button class="random" onclick="randomSelectElement('costume')">随机选择</button>
           <div class="custom-controls">
             <div class="custom-field">
               <label>自定义服装</label>
@@ -690,10 +620,10 @@
         </div>
 
         <div class="tab-content" id="elements-tab-2">
-          <div class="multi-select-container" id="behavior-options">
+          <div class="options-grid" id="behavior-options">
             <!-- 行为选项将由JS动态生成 -->
           </div>
-          <button class="random" onclick="randomSelectMultipleElements('behavior')">随机选择</button>
+          <button class="random" onclick="randomSelectElement('behavior')">随机选择</button>
           <div class="custom-controls">
             <div class="custom-field">
               <label>自定义行为</label>
@@ -707,10 +637,10 @@
         </div>
 
         <div class="tab-content" id="elements-tab-3">
-          <div class="multi-select-container" id="play-options">
+          <div class="options-grid" id="play-options">
             <!-- 玩法选项将由JS动态生成 -->
           </div>
-          <button class="random" onclick="randomSelectMultipleElements('play')">随机选择</button>
+          <button class="random" onclick="randomSelectElement('play')">随机选择</button>
           <div class="custom-controls">
             <div class="custom-field">
               <label>自定义玩法</label>
@@ -799,139 +729,26 @@
         playerGender: '',
         protagonist: { name: '', desc: '', isCustom: false },
         interactions: [],
-        theme: [], // 改为数组以支持多选
-        costume: [], // 改为数组以支持多选
-        behavior: [], // 改为数组以支持多选
-        play: [] // 改为数组以支持多选
+        theme: { name: '', desc: '', isCustom: false },
+        costume: { name: '', desc: '', isCustom: false },
+        behavior: { name: '', desc: '', isCustom: false },
+        play: { name: '', desc: '', isCustom: false }
       };
 
       // 由JSON提供的选项数据
       const optionsData = {
-        "主题": [
-          "恋爱喜剧", "出轨", "强姦", "乱伦", "温泉", "女同性恋",
-          "企业", "相亲", "催眠", "洗澡", "其他动物", "虐恋",
-          "性爱", "学校作品", "安眠", "M男", "脱粪", "植物群",
-          "乳头舔", "调教", "运输", "制作/専門", "冒险", "机器人",
-          "科幻小说", "SM", "汽车性爱", "学院作品",
-          "企划", "乱闘", "運動", "其他植物", "肉系",
-          "幻视", "男同性恋", "实录", "浪漫喜剧",
-          "女同性爱", "3D", "人妻",
-          "奇幻", "恐怖", "历史", "超自然", "末世",
-          "虚拟现实", "侦探", "医疗", "美食", "穿越",
-          "战争", "田园", "悬疑", "职场", "童话"
-        ],
+        "主题": ["恋爱喜剧", "出轨", "强姦", "乱伦", "温泉", "女同性恋", "企业", "相亲", "催眠", "洗澡", "其他动物", "虐恋", "性爱", "学校作品", "安眠", "M男", "脱粪", "植物群", "乳头舔", "调教", "运输", "制作/専門", "冒险", "机器人", "深海真実", "科幻小说", "SM", "汽车性爱", "学院作品", "企划", "乱闘", "疑惑", "運動", "其他植物", "肉系", "幻视", "矛盾", "男同性恋", "实录", "浪漫喜剧", "原文", "女同性爱", "3D", "流量", "人妻"],
 
-        "男性角色": [
-          "男性强奸犯", "男性教师", "男性老板", "男性冒险者", "男性学长", "男性学弟",
-          "男性医生", "男性警察", "男性程序员", "男性运动员", "男性厨师", "男性士兵",
-          "男性科学家", "男性艺术家", "男性侦探", "男性司机", "男性商人", "男性摄影师",
-        ],
+        "男性角色": ["正太控", "猎奇", "有真的", "男同性恋", "韩国", "形像楽団", "友達", "亚洲", "暗黑系", "被外国人", "射精欲求", "运动", "经验", "告白", "牛乳亲父", "白人", "侄兒", "他們家", "垂死朋友", "老夫妻", "老先生", "拉克颜", "兵士", "豪士"],
 
-        // 女性角色按类别重新组织
-        "女性角色": {
-          "普通角色": [
-            "女性学生", "女性护士", "女性秘书", "女性主妇",
-            "女性教师", "女性医生", "女性警察", "女性记者",
-            "女性设计师", "女性律师", "女性厨师", "女性运动员",
-            "女性歌手", "女性演员", "女性作家", "女性程序员",
-            "女性飞行员", "女性科学家", "女性侦探", "女性老板",
-            "女大学生", "女医生", "女秘书", "女教师", "女检查官",
-            "女编辑", "女服务生", "女邻居", "女伴侣", "女家教"
-          ],
-          "特殊身份": [
-            "人妻", "美少女", "姐姐", "母亲", "女儿", "姐妹",
-            "孙女", "公主", "女王", "大小姐", "千金小姐", "寡妇",
-            "继母", "儿时朋友", "邻家女孩", "妈妈的朋友", "蕾丝小姐",
-            "痴女", "巨乳", "偶像", "明星脸", "年轻女郎"
-          ],
-          "职业角色": [
-            "女战士", "女忍者", "女剣士", "女角色扮演者", "女演员",
-            "女优/名人", "女主播", "OL", "女主人", "修女",
-            "女警官", "女护士", "女飞行员", "女冒险者", "女魔法师"
-          ],
-          "情境角色": [
-            "暴露女", "全裸女", "湿身女", "户外露出女", "诱惑女",
-            "已婚少妇", "白天出轨女", "性转换女性", "黑丝女", "辣妹"
-          ],
-          "Fate系列": [
-            "伊什塔尔", "艾蕾", "黑贞德", "远坂凛", "间桐樱",
-            "阿尔托莉雅(lancer)", "白贞德", "爱尔奎特·布伦史塔德",
-            "沙条爱歌", "布伦希尔德", "梅莉", "玛丽",
-            "埃列什基伽勒(Beast)", "太空伊什塔尔", "阿斯塔蒂",
-            "迦摩", "皇女", "阿尔托莉雅", "提亚马特", "杜尔迦",
-            "帕尔瓦蒂", "阿尔托莉雅(alter)", "斯卡哈"
-          ],
-          "其他作品": [
-            "符玄", "云璃", "灵砂", "久远寺有珠", "阮梅",
-            "花火", "黑天鹅", "布洛妮娅", "希儿", "伊莉雅",
-            "美游", "虞美人", "蒂法", "爱丽丝", "摩根",
-            "苍崎青子", "苍崎橙子", "尼托克丽丝", "卡莲",
-            "两仪式", "葛饰北斋", "韩菱纱", "阿奴", "李忆如",
-            "林月如", "柳梦璃", "龙葵", "唐雪见", "赵灵儿", "慕容紫英"
-          ]
-        },
+        "女性角色": ["痴女", "美胸", "巨乳", "白天出轨", "诱惑", "像偶像的", "魔界系", "飛行性感的", "暴露", "集体", "全裸", "望镜高潮", "性转换女性化", "黑丝配", "超高潮", "湿身", "再中女生", "美少女", "已婚诗女", "姐姐", "各種類業", "母亲", "姐妹", "孙女", "女教師", "亲家", "女大学生", "偶像", "明星脸", "大小姐", "剣士", "角色扮演者", "寡軍女郎", "家教", "人妻演员", "女医生", "女秘书", "老問女", "女主人", "其他學生", "隔壁女孩", "蕾丝小姐", "女检查官", "護士", "服务生", "伴侣", "童星小姐", "女儿", "年轻女郎", "公主", "飞机场", "亚洲女演员", "邻居", "媽媽的朋友", "女王", "女優/名人", "姐妹", "女演员", "OL", "女主人", "儿时朋友", "千金小姐", "姐姐", "公主", "澡堂", "女教师", "女战士", "家門娘", "辣妹", "女忍者", "修女", "兼职职业女", "女大学生", "女主妇", "女厚生", "其他学生", "脱妓演员", "懒惰女郎", "娼婦", "警官", "新聞", "秘書", "人妻", "美少女", "義母/继母", "女编辑", "女輪", "戶外露出", "少妻"],
 
-        "服装": [
-          // 眼镜与配饰
-          "眼镜", "猫耳", "身体链", "高跟鞋", "袜子", "绑腿",
-          "墨镜", "发带", "手链", "皮靴", "耳环", "项圈",
+        "服装": ["眼镜", "角色扮演", "内衣", "制服", "水手服", "泳装", "和服", "围裙", "连裤袜", "女僕", "运动鞋", "女战士", "制服外套", "絲襪連褲襪", "女忍者", "身体链", "OL", "猫耳", "学校泳装", "迷你裙", "浴衣", "紧身衣", "连衣裙", "娃娃", "福利彩色扮演", "女僕人派", "泳装模特", "空中小姐", "宪兵", "女祭司", "动漫人物", "迷你裙警察", "COSPLAY制服", "高跟鞋", "袜子", "校服", "水手套装", "绑腿", "螺旋紧身衣", "紧身", "迷你裙", "内衣", "日本衣服和浴衣", "猫耳女"],
 
-          // 角色扮演
-          "角色扮演", "COSPLAY制服", "女僕", "女战士", "女忍者",
-          "OL", "泳装模特", "空中小姐", "宪兵", "女祭司", "动漫人物",
-          "迷你裙警察", "福利彩色扮演", "女僕人派",
-          "魔法少女", "海盗", "护士", "吸血鬼", "精灵", "巫女",
-          "赛车女郎", "啦啦队员", "蒸汽朋克",
+        "行为": ["乳交", "中出", "多P", "69", "圣母", "上位", "自慰", "颜射", "潮吹", "口交", "接吻", "红門·肛交", "手指插入", "手淫", "深喉", "足交", "按摩", "舌吻", "母乳", "亲吻", "亲父", "飲尿", "骑乘位", "排便", "食事", "剃毛", "二穴一同入", "两男两女", "两男一女", "打屁股", "约会", "不穿内褲", "不穿胸罩", "侵入", "增加/健身", "白眼失神", "搔癢", "红門", "晚餐", "玩具", "禁欲", "灌肠", "潮射", "轮姦", "拘束", "吞嚥", "酒飲", "捆绑/束缚", "差動", "骚手", "鞭责", "打手槍", "喷射/精液", "指导", "按摩棒", "集體噴射", "放尿", "跳蛋", "SM"],
 
-          // 常规服装
-          "内衣", "制服", "水手服", "泳装", "和服", "围裙",
-          "连裤袜", "运动鞋", "制服外套", "絲襪連褲襪", "学校泳装",
-          "迷你裙", "浴衣", "紧身衣", "连衣裙", "校服", "水手套装",
-          "螺旋紧身衣", "紧身", "日本衣服和浴衣", "娃娃",
-          "旗袍", "牛仔裤", "风衣", "毛衣", "晚礼服", "汉服",
-          "皮衣", "吊带裙", "衬衫", "运动服", "和服", "巫女服",
-          "芭蕾舞蹈服", "全裸"
-        ],
-
-        "行为": [
-          // 性交类
-          "乳交", "中出", "多P", "69", "上位", "口交", "肛交",
-          "手指插入", "手淫", "深喉", "足交", "骑乘位", "二穴一同入",
-          "一男两女", "两男一女", "按摩", "侵入", "按摩棒", "跳蛋", "SM",
-          "后入", "侧卧位", "双人共浴", "舔弄", "爱抚", "摩擦",
-
-          // 体液相关
-          "潮吹", "颜射", "飲尿", "放尿", "喷射/精液", "集體噴射",
-          "吞精", "流汗", "分泌物", "润滑", "吐舌",
-
-          // 亲密行为
-          "接吻", "舌吻", "亲吻", "约会",
-          "拥抱", "牵手", "抚摸", "耳语", "依偎", "共眠",
-
-          // 特殊状态
-          "自慰", "母乳", "剃毛", "打屁股", "不穿内褲",
-          "不穿胸罩", "白眼失神", "禁欲", "灌肠", "潮射", "轮姦",
-          "拘束", "吞嚥", "捆绑/束缚", "鞭责", "打手槍", "玩具",
-          "蒙眼", "滴蜡", "角色扮演性爱", "露出", "偷窥", "挑逗",
-          "假阳具", "呻吟", "挠痒", "捆绑游戏"
-        ],
-
-        "玩法": [
-          // 主要玩法
-          "凌辱", "波霸", "捆绑", "監禁", "玩具", "SM", "户外",
-          "乳液", "羞辱", "女僕按摩棒", "拘束", "调教", "立刻口交",
-          "脱粪", "监禁", "被单", "插入異物", "灌腸", "露出", "汽車性愛",
-          "滴蜡", "角色扮演", "电击", "冰块刺激", "羽毛挑逗", "皮鞭",
-          "按摩油", "真空束缚", "多人游戏", "情景模拟",
-
-          // 特殊玩法
-          "催眠", "乳汁喷溅", "乳头", "自慰", "妊娠插入",
-          "窒息玩法", "温度游戏", "食物玩法", "镜面性爱", "虚拟现实",
-          "遥控玩具", "感官剥夺", "绳艺", "悬吊", "舔耳",
-          "双人瑜伽", "水下性爱", "纹身玩法", "声音刺激", "盲折游戏"
-        ],
+        "玩法": ["凌辱", "波霸", "捆绑", "監禁", "玩具", "SM", "户外", "乳液", "羞辱", "女僕按摩棒", "拘束", "调教", "立刻口交", "脱粪", "监禁", "被单", "插入異物", "灌腸", "露出", "汽車性愛", "催眠", "落語", "臭屎", "妹汁", "子宫颈", "骚婆", "暗黑", "睡眠波", "乳汁喷溅", "乳头", "足球", "辅助自助", "木塞交叠", "個器具", "自慰", "妊娠插入"]
       };
-
       // 初始化页面
       document.addEventListener('DOMContentLoaded', function () {
         // 初始化选项列表
@@ -957,66 +774,54 @@
       function initializeOptions() {
         // 主题选项
         const themeOptions = document.getElementById('theme-options');
-        themeOptions.innerHTML = ''; // 清空容器
         optionsData.主题.forEach((theme, index) => {
-          const item = document.createElement('div');
-          item.className = 'multi-select-item';
-          item.innerHTML = `
-            <input type="checkbox" id="theme-option-${index}" value="${theme}">
-            <label for="theme-option-${index}">${theme}</label>
-          `;
-          item.querySelector('input').addEventListener('change', function () {
-            updateMultiSelections('theme');
-          });
-          themeOptions.appendChild(item);
+          const option = document.createElement('div');
+          option.className = 'option-item';
+          option.textContent = theme;
+          option.setAttribute('data-value', theme);
+          option.onclick = function () {
+            selectElement('theme', theme);
+          };
+          themeOptions.appendChild(option);
         });
 
         // 服装选项
         const costumeOptions = document.getElementById('costume-options');
-        costumeOptions.innerHTML = ''; // 清空容器
         optionsData.服装.forEach((costume, index) => {
-          const item = document.createElement('div');
-          item.className = 'multi-select-item';
-          item.innerHTML = `
-            <input type="checkbox" id="costume-option-${index}" value="${costume}">
-            <label for="costume-option-${index}">${costume}</label>
-          `;
-          item.querySelector('input').addEventListener('change', function () {
-            updateMultiSelections('costume');
-          });
-          costumeOptions.appendChild(item);
+          const option = document.createElement('div');
+          option.className = 'option-item';
+          option.textContent = costume;
+          option.setAttribute('data-value', costume);
+          option.onclick = function () {
+            selectElement('costume', costume);
+          };
+          costumeOptions.appendChild(option);
         });
 
         // 行为选项
         const behaviorOptions = document.getElementById('behavior-options');
-        behaviorOptions.innerHTML = ''; // 清空容器
         optionsData.行为.forEach((behavior, index) => {
-          const item = document.createElement('div');
-          item.className = 'multi-select-item';
-          item.innerHTML = `
-            <input type="checkbox" id="behavior-option-${index}" value="${behavior}">
-            <label for="behavior-option-${index}">${behavior}</label>
-          `;
-          item.querySelector('input').addEventListener('change', function () {
-            updateMultiSelections('behavior');
-          });
-          behaviorOptions.appendChild(item);
+          const option = document.createElement('div');
+          option.className = 'option-item';
+          option.textContent = behavior;
+          option.setAttribute('data-value', behavior);
+          option.onclick = function () {
+            selectElement('behavior', behavior);
+          };
+          behaviorOptions.appendChild(option);
         });
 
         // 玩法选项
         const playOptions = document.getElementById('play-options');
-        playOptions.innerHTML = ''; // 清空容器
         optionsData.玩法.forEach((play, index) => {
-          const item = document.createElement('div');
-          item.className = 'multi-select-item';
-          item.innerHTML = `
-            <input type="checkbox" id="play-option-${index}" value="${play}">
-            <label for="play-option-${index}">${play}</label>
-          `;
-          item.querySelector('input').addEventListener('change', function () {
-            updateMultiSelections('play');
-          });
-          playOptions.appendChild(item);
+          const option = document.createElement('div');
+          option.className = 'option-item';
+          option.textContent = play;
+          option.setAttribute('data-value', play);
+          option.onclick = function () {
+            selectElement('play', play);
+          };
+          playOptions.appendChild(option);
         });
       }
 
@@ -1039,18 +844,9 @@
         const grid = document.getElementById('protagonists-grid');
         grid.innerHTML = '';
 
-        let characterList = [];
-
-        if (worldData.playerGender === 'male') {
-          // 男性角色列表直接使用
-          characterList = optionsData.男性角色;
-        } else {
-          // 女性角色需要从各个分类中收集
-          // 将所有女性角色类别合并为一个扁平数组
-          Object.values(optionsData.女性角色).forEach(category => {
-            characterList = characterList.concat(category);
-          });
-        }
+        const characterList = worldData.playerGender === 'male'
+          ? optionsData.男性角色
+          : optionsData.女性角色;
 
         characterList.forEach(character => {
           const option = document.createElement('div');
@@ -1083,66 +879,22 @@
           maleContainer.appendChild(item);
         });
 
-        // 女性角色 - 按类别填充
-        populateFemaleCharacters();
-      }
+        // 女性角色
+        const femaleContainer = document.getElementById('female-interactions');
+        femaleContainer.innerHTML = '';
+        optionsData.女性角色.forEach((character, index) => {
+          // 排除已选为主角的角色
+          if (worldData.playerGender === 'female' && worldData.protagonist.name === character) return;
 
-      // 填充女性角色选项
-      function populateFemaleCharacters() {
-        // 清空所有容器
-        document.getElementById('female-ordinary').innerHTML = '';
-        document.getElementById('female-special').innerHTML = '';
-        document.getElementById('female-professional').innerHTML = '';
-        document.getElementById('female-situational').innerHTML = '';
-        document.getElementById('female-fate').innerHTML = '';
-        document.getElementById('female-other').innerHTML = '';
-
-        // 获取女性角色类别
-        const femaleCategories = [
-          { container: 'female-ordinary', characters: optionsData.女性角色.普通角色 },
-          { container: 'female-special', characters: optionsData.女性角色.特殊身份 },
-          { container: 'female-professional', characters: optionsData.女性角色.职业角色 },
-          { container: 'female-situational', characters: optionsData.女性角色.情境角色 },
-          { container: 'female-fate', characters: optionsData.女性角色.Fate系列 },
-          { container: 'female-other', characters: optionsData.女性角色.其他作品 }
-        ];
-
-        // 为每个类别填充角色
-        let globalIndex = 0;
-        femaleCategories.forEach((category, categoryIndex) => {
-          const container = document.getElementById(category.container);
-          category.characters.forEach((character, index) => {
-            // 排除已选为主角的角色
-            if (worldData.playerGender === 'female' && worldData.protagonist.name === character) return;
-
-            const item = document.createElement('div');
-            item.className = 'multi-select-item';
-            item.innerHTML = `
-              <input type="checkbox" id="female-char-${globalIndex}" value="${character}">
-              <label for="female-char-${globalIndex}">${character}</label>
-            `;
-            item.querySelector('input').addEventListener('change', updateInteractions);
-            container.appendChild(item);
-            globalIndex++;
-          });
+          const item = document.createElement('div');
+          item.className = 'multi-select-item';
+          item.innerHTML = `
+          <input type="checkbox" id="female-char-${index}" value="${character}">
+          <label for="female-char-${index}">${character}</label>
+        `;
+          item.querySelector('input').addEventListener('change', updateInteractions);
+          femaleContainer.appendChild(item);
         });
-      }
-
-      // 切换女性角色分类标签
-      function switchFemaleCategory(categoryIndex) {
-        // 隐藏所有分类内容
-        document.querySelectorAll('.female-category-content').forEach(content => {
-          content.classList.remove('active');
-        });
-
-        // 取消所有标签的活跃状态
-        document.querySelectorAll('.female-category-tabs .tab').forEach(tab => {
-          tab.classList.remove('active');
-        });
-
-        // 激活选中的标签和内容
-        document.getElementById(`female-category-${categoryIndex}`).classList.add('active');
-        document.querySelectorAll('.female-category-tabs .tab')[categoryIndex].classList.add('active');
       }
 
       // 更新互动对象选择
@@ -1158,8 +910,8 @@
           });
         });
 
-        // 收集所有选中的女性角色 (所有类别)
-        document.querySelectorAll('[id^="female-"] input:checked').forEach(input => {
+        // 收集所有选中的女性角色
+        document.querySelectorAll('#female-interactions input:checked').forEach(input => {
           worldData.interactions.push({
             name: input.value,
             gender: 'female',
@@ -1255,17 +1007,9 @@
 
       // 随机选择主角
       function randomSelectProtagonist() {
-        let characterList;
-
-        if (worldData.playerGender === 'male') {
-          characterList = optionsData.男性角色;
-        } else {
-          // 女性角色需要从各个分类中收集
-          characterList = [];
-          Object.values(optionsData.女性角色).forEach(category => {
-            characterList = characterList.concat(category);
-          });
-        }
+        const characterList = worldData.playerGender === 'male'
+          ? optionsData.男性角色
+          : optionsData.女性角色;
 
         const randomIndex = Math.floor(Math.random() * characterList.length);
         selectProtagonist(characterList[randomIndex]);
@@ -1273,122 +1017,25 @@
 
       // 随机选择互动对象
       function randomSelectInteractions(gender) {
-        if (gender === 'male') {
-          // 取消选中所有男性角色，因为我们只想选择女性角色
-          document.querySelectorAll(`#male-interactions input`).forEach(input => {
-            input.checked = false;
-          });
-        } else if (gender === 'female') {
-          // 构建完整的女性角色列表
-          let allFemaleCharacters = [];
-          Object.values(optionsData.女性角色).forEach(category => {
-            allFemaleCharacters = allFemaleCharacters.concat(category);
-          });
+        const characterList = gender === 'male' ? optionsData.男性角色 : optionsData.女性角色;
+        const count = Math.floor(Math.random() * 3) + 1; // 随机选择1-3个
 
-          const count = Math.floor(Math.random() * 3) + 1; // 随机选择1-3个
+        // 清除当前该性别的选择
+        document.querySelectorAll(`#${gender}-interactions input`).forEach(input => {
+          input.checked = false;
+        });
 
-          // 清除所有当前女性角色的选择
-          document.querySelectorAll(`[id^="female-"] input`).forEach(input => {
-            input.checked = false;
-          });
+        // 随机选择新的
+        const shuffled = [...characterList].sort(() => 0.5 - Math.random());
+        const selectedCharacters = shuffled.slice(0, count);
 
-          // 随机选择新的
-          const shuffled = [...allFemaleCharacters].sort(() => 0.5 - Math.random());
-          const selectedCharacters = shuffled.slice(0, count);
-
-          for (const character of selectedCharacters) {
-            const input = document.querySelector(`[id^="female-"] input[value="${character}"]`);
-            if (input) input.checked = true;
-          }
+        for (const character of selectedCharacters) {
+          const input = document.querySelector(`#${gender}-interactions input[value="${character}"]`);
+          if (input) input.checked = true;
         }
 
         // 更新互动列表
         updateInteractions();
-      }
-
-      // 更新多选元素
-      function updateMultiSelections(type) {
-        worldData[type] = [];
-
-        // 收集所有选中的选项
-        document.querySelectorAll(`#${type}-options input:checked`).forEach(input => {
-          worldData[type].push({
-            name: input.value,
-            desc: '',
-            isCustom: false
-          });
-        });
-
-        // 更新显示
-        const selectedText = worldData[type].length > 0
-          ? worldData[type].map(item => item.name).join(', ')
-          : '未选择';
-        document.getElementById(`selected-${type}`).textContent = selectedText;
-      }
-
-      // 随机选择多个元素
-      function randomSelectMultipleElements(type) {
-        // 首先取消所有选择
-        document.querySelectorAll(`#${type}-options input`).forEach(input => {
-          input.checked = false;
-        });
-
-        // 获取对应类型的选项列表
-        let optionsList;
-        switch (type) {
-          case 'theme': optionsList = optionsData.主题; break;
-          case 'costume': optionsList = optionsData.服装; break;
-          case 'behavior': optionsList = optionsData.行为; break;
-          case 'play': optionsList = optionsData.玩法; break;
-        }
-
-        // 随机选择1-3个选项
-        const count = Math.floor(Math.random() * 3) + 1;
-        const shuffled = [...optionsList].sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(0, count);
-
-        // 选中这些选项
-        selected.forEach(value => {
-          const input = document.querySelector(`#${type}-options input[value="${value}"]`);
-          if (input) input.checked = true;
-        });
-
-        // 更新选择
-        updateMultiSelections(type);
-      }
-
-      // 一键随机所有选项并直接跳到第五阶段
-      function oneClickRandom(genderOption) {
-        // 1. 选择性别
-        let randomGender;
-        if (genderOption === 'random') {
-          randomGender = Math.random() > 0.5 ? 'male' : 'female';
-        } else {
-          randomGender = genderOption; // 'male' 或 'female'
-        }
-        selectGender(randomGender);
-
-        // 2. 随机选择主角
-        randomSelectProtagonist();
-
-        // 3. 随机选择互动对象 (先确保已经填充了互动对象选项)
-        goToStage(3); // 临时去第三阶段以确保列表已填充
-        populateInteractionOptions();
-        // 只选择女性角色作为互动对象
-        randomSelectInteractions('female');
-
-        // 4. 确保第四阶段的选项初始化
-        goToStage(4);
-
-        // 5. 随机选择世界元素
-        randomSelectMultipleElements('theme');
-        randomSelectMultipleElements('costume');
-        randomSelectMultipleElements('behavior');
-        randomSelectMultipleElements('play');
-
-        // 6. 最后直接跳到第五阶段
-        goToStage(5);
-        updateSummary();
       }
 
       // 选择世界元素
@@ -1435,6 +1082,20 @@
         // 清空输入框
         nameInput.value = '';
         descInput.value = '';
+      }
+
+      // 随机选择元素
+      function randomSelectElement(type) {
+        let list;
+        switch (type) {
+          case 'theme': list = optionsData.主题; break;
+          case 'costume': list = optionsData.服装; break;
+          case 'behavior': list = optionsData.行为; break;
+          case 'play': list = optionsData.玩法; break;
+        }
+
+        const randomIndex = Math.floor(Math.random() * list.length);
+        selectElement(type, list[randomIndex]);
       }
 
       // 切换标签页
@@ -1543,22 +1204,21 @@
           worldData.interactions.map(i => i.isCustom ? `${i.name}（${i.desc}）` : i.name).join('、') :
           '无';
 
-        // 多选元素处理
-        const themeInfo = worldData.theme.length > 0 ?
-          worldData.theme.map(i => i.isCustom ? `${i.name}（${i.desc}）` : i.name).join('、') :
-          '未选择';
+        const themeInfo = worldData.theme.isCustom ?
+          `${worldData.theme.name}（${worldData.theme.desc}）` :
+          worldData.theme.name;
 
-        const costumeInfo = worldData.costume.length > 0 ?
-          worldData.costume.map(i => i.isCustom ? `${i.name}（${i.desc}）` : i.name).join('、') :
-          '未选择';
+        const costumeInfo = worldData.costume.isCustom ?
+          `${worldData.costume.name}（${worldData.costume.desc}）` :
+          worldData.costume.name;
 
-        const behaviorInfo = worldData.behavior.length > 0 ?
-          worldData.behavior.map(i => i.isCustom ? `${i.name}（${i.desc}）` : i.name).join('、') :
-          '未选择';
+        const behaviorInfo = worldData.behavior.isCustom ?
+          `${worldData.behavior.name}（${worldData.behavior.desc}）` :
+          worldData.behavior.name;
 
-        const playInfo = worldData.play.length > 0 ?
-          worldData.play.map(i => i.isCustom ? `${i.name}（${i.desc}）` : i.name).join('、') :
-          '未选择';
+        const playInfo = worldData.play.isCustom ?
+          `${worldData.play.name}（${worldData.play.desc}）` :
+          worldData.play.name;
 
         // 性别描述
         const genderDesc = worldData.playerGender === 'male' ? '男性' : '女性';
@@ -1574,23 +1234,15 @@
 
       // 生成世界描述
       function generateWorldDescription(gender, protagonist, interactions, theme, costume, behavior, play) {
-        // 获取第一个主题用于基本描述
-        const primaryTheme = theme.split('、')[0];
-
         // 创建基本描述
         let descriptions = [
-          `这是一个以${primaryTheme}为主题的幻想世界，你将作为一个${gender}角色${protagonist}进入这个充满诱惑与欲望的空间。`,
-          `进入${primaryTheme}的奇妙世界，你将扮演${gender}角色${protagonist}，在这个世界里探索最深层的欲望。`,
-          `欢迎来到${primaryTheme}的禁忌领域，作为${gender}角色${protagonist}，你将体验前所未有的刺激与快感。`,
-          `这是一个由${primaryTheme}构建的幻想乐园，你作为${gender}角色${protagonist}将在此释放你最隐秘的渴望。`
+          `这是一个以${theme}为主题的幻想世界，你将作为一个${gender}角色${protagonist}进入这个充满诱惑与欲望的空间。`,
+          `进入${theme}的奇妙世界，你将扮演${gender}角色${protagonist}，在这个世界里探索最深层的欲望。`,
+          `欢迎来到${theme}的禁忌领域，作为${gender}角色${protagonist}，你将体验前所未有的刺激与快感。`,
+          `这是一个由${theme}构建的幻想乐园，你作为${gender}角色${protagonist}将在此释放你最隐秘的渴望。`
         ];
 
         let baseDesc = descriptions[Math.floor(Math.random() * descriptions.length)];
-
-        // 如果选择了多个主题，添加主题描述
-        if (theme.includes('、')) {
-          baseDesc += ` 世界的氛围融合了${theme}等多种元素，创造出独特的体验空间。`;
-        }
 
         // 添加互动对象描述
         let interactionDescs = [
@@ -1603,43 +1255,37 @@
         let interactionDesc = interactions === '无' ? '' : interactionDescs[Math.floor(Math.random() * interactionDescs.length)];
 
         // 添加服装描述
-        let costumeDesc = '';
-        if (costume !== '未选择') {
-          let costumeDescs = [
-            `这个世界里的角色会穿着各种服装，如${costume}，这些装扮不仅展示了魅力，还能激发最原始的欲望。`,
-            `精心设计的${costume}等服装将包裹着身体，若隐若现地透露着诱人的曲线。`,
-            `${costume}等服装的触感与视觉效果将为体验增添一层神秘与刺激。`,
-            `不同的场合会看到${costume}等装扮，每一种都充满诱惑，引得他人无法挪开视线。`
-          ];
-          costumeDesc = costumeDescs[Math.floor(Math.random() * costumeDescs.length)];
-        }
+        let costumeDescs = [
+          `你将穿着${costume}，这种装扮不仅展示了你的魅力，还能激发他人最原始的欲望。`,
+          `精心设计的${costume}将包裹着你的身体，若隐若现地透露着诱人的曲线。`,
+          `${costume}的触感与视觉效果将为你的体验增添一层神秘与刺激。`,
+          `穿上${costume}，你的每一个动作都将充满诱惑，引得他人无法挪开视线。`
+        ];
+
+        let costumeDesc = costumeDescs[Math.floor(Math.random() * costumeDescs.length)];
 
         // 添加行为描述
-        let behaviorDesc = '';
-        if (behavior !== '未选择') {
-          let behaviorDescs = [
-            `在这个世界中，${behavior}等行为将成为探索欲望的主要方式，带给你前所未有的快感。`,
-            `${behavior}等特殊体验将让你沉浸在极致的感官刺激之中，无法自拔。`,
-            `通过${behavior}等互动，你将发现自己身体的新可能，体验到前所未有的高潮。`,
-            `${behavior}等行为将成为你在这个世界中的主要互动方式，每一次都是独特的体验。`
-          ];
-          behaviorDesc = behaviorDescs[Math.floor(Math.random() * behaviorDescs.length)];
-        }
+        let behaviorDescs = [
+          `在这个世界中，${behavior}将成为你探索欲望的主要方式，带给你前所未有的快感。`,
+          `${behavior}的特殊体验将让你沉浸在极致的感官刺激之中，无法自拔。`,
+          `通过${behavior}，你将发现自己身体的新可能，体验到前所未有的高潮。`,
+          `${behavior}将成为你在这个世界中的主要互动方式，每一次都是独特的体验。`
+        ];
+
+        let behaviorDesc = behaviorDescs[Math.floor(Math.random() * behaviorDescs.length)];
 
         // 添加玩法描述
-        let playDesc = '';
-        if (play !== '未选择') {
-          let playDescs = [
-            `世界的规则围绕${play}等玩法展开，这些独特的互动方式将带给你极致的身心愉悦。`,
-            `${play}等特殊规则将让你体验到禁忌的刺激，探索欲望的新边界。`,
-            `在${play}等玩法框架下，你将发现自己隐藏的欲望，体验前所未有的快感。`,
-            `${play}等多种玩法将引导你探索自己未知的一面，在快感中不断突破自我。`
-          ];
-          playDesc = playDescs[Math.floor(Math.random() * playDescs.length)];
-        }
+        let playDescs = [
+          `世界的规则围绕${play}展开，这种独特的玩法将带给你极致的身心愉悦。`,
+          `${play}的特殊规则将让你体验到禁忌的刺激，探索欲望的新边界。`,
+          `在${play}的框架下，你将发现自己隐藏的欲望，体验前所未有的快感。`,
+          `${play}将引导你探索自己未知的一面，在快感中不断突破自我。`
+        ];
+
+        let playDesc = playDescs[Math.floor(Math.random() * playDescs.length)];
 
         // 组合所有描述
-        let finalDesc = `${baseDesc} ${interactionDesc} ${costumeDesc} ${behaviorDesc} ${playDesc}\n\这个世界没有普通社会的道德约束，只有欲望的释放与满足。在这里，你可以尽情探索自己的幻想，体验各种刺激与快感。每一次互动都将带给你新的惊喜与体验，让你沉醉其中，欲罢不能。`;
+        let finalDesc = `${baseDesc} ${interactionDesc} ${costumeDesc} ${behaviorDesc} ${playDesc}\n\n这个世界没有普通社会的道德约束，只有欲望的释放与满足。在这里，你可以尽情探索自己的幻想，体验各种刺激与快感。每一次互动都将带给你新的惊喜与体验，让你沉醉其中，欲罢不能。`;
 
         return finalDesc;
       }
@@ -1662,49 +1308,37 @@
         ];
         const scene = scenes[Math.floor(Math.random() * scenes.length)];
 
-        // 从多选列表中随机选择一个元素用于剧情
-        const randomTheme = theme.split('、')[Math.floor(Math.random() * theme.split('、').length)];
-        const randomCostume = costume !== '未选择'
-          ? costume.split('、')[Math.floor(Math.random() * costume.split('、').length)]
-          : '神秘服装';
-        const randomBehavior = behavior !== '未选择'
-          ? behavior.split('、')[Math.floor(Math.random() * behavior.split('、').length)]
-          : '亲密互动';
-        const randomPlay = play !== '未选择'
-          ? play.split('、')[Math.floor(Math.random() * play.split('、').length)]
-          : '探索游戏';
-
         // 创建开场
         const openings = [
-          `在这个以${randomTheme}为主题的世界里，身为${mainCharacter}的你正穿着${randomCostume}，在${scene}中遇见了${otherCharacters}。`,
-          `${mainCharacter}的你刚刚换上了诱人的${randomCostume}，正在${scene}中等待着什么，这时${otherCharacters}出现在你面前。`,
-          `穿着${randomCostume}的你在${scene}中漫步，突然感受到一道灼热的目光，那是${otherCharacters}正在注视着你。`,
-          `身着${randomCostume}的${mainCharacter}不知怎么来到了${scene}，${otherCharacters}的出现让情况变得更加复杂而刺激。`
+          `在这个以${theme}为主题的世界里，身为${mainCharacter}的你正穿着${costume}，在${scene}中遇见了${otherCharacters}。`,
+          `${mainCharacter}的你刚刚换上了诱人的${costume}，正在${scene}中等待着什么，这时${otherCharacters}出现在你面前。`,
+          `穿着${costume}的你在${scene}中漫步，突然感受到一道灼热的目光，那是${otherCharacters}正在注视着你。`,
+          `身着${costume}的${mainCharacter}不知怎么来到了${scene}，${otherCharacters}的出现让情况变得更加复杂而刺激。`
         ];
         const opening = openings[Math.floor(Math.random() * openings.length)];
 
         // 创建中段
         const middles = [
-          `随着气氛逐渐升温，你们开始尝试${randomBehavior}，空气中弥漫着难以抵抗的欲望气息。`,
-          `在一番交流后，${otherCharacters}提议尝试${randomBehavior}，你发现自己无法拒绝这样的诱惑。`,
-          `你主动提出想要体验${randomBehavior}，${otherCharacters}的眼中闪过一丝惊讶，随后是浓烈的欲望。`,
-          `当${otherCharacters}的手轻抚过你的身体时，你明白接下来将发生的${randomBehavior}会让你无法自拔。`
+          `随着气氛逐渐升温，你们开始尝试${behavior}，空气中弥漫着难以抵抗的欲望气息。`,
+          `在一番交流后，${otherCharacters}提议尝试${behavior}，你发现自己无法拒绝这样的诱惑。`,
+          `你主动提出想要体验${behavior}，${otherCharacters}的眼中闪过一丝惊讶，随后是浓烈的欲望。`,
+          `当${otherCharacters}的手轻抚过你的身体时，你明白接下来将发生的${behavior}会让你无法自拔。`
         ];
         const middle = middles[Math.floor(Math.random() * middles.length)];
 
         // 创建高潮
         const climaxes = [
-          `在${randomPlay}的规则下，你们的互动变得越来越深入，每一次触碰都带来前所未有的快感。`,
-          `随着${randomPlay}的进行，你发现自己沉浸在一种前所未有的愉悦中，无法自拔。`,
-          `${randomPlay}的独特体验让你忘记了一切，只剩下身体与感官的极致享受。`,
-          `在${randomPlay}的引导下，你体验到了灵魂与肉体的双重高潮，那种感觉无法用言语形容。`
+          `在${play}的规则下，你们的互动变得越来越深入，每一次触碰都带来前所未有的快感。`,
+          `随着${play}的进行，你发现自己沉浸在一种前所未有的愉悦中，无法自拔。`,
+          `${play}的独特体验让你忘记了一切，只剩下身体与感官的极致享受。`,
+          `在${play}的引导下，你体验到了灵魂与肉体的双重高潮，那种感觉无法用言语形容。`
         ];
         const climax = climaxes[Math.floor(Math.random() * climaxes.length)];
 
         // 创建结尾
         const endings = [
           `当一切结束时，你知道这只是开始，在这个世界中还有更多未知的快感等待你去探索...",`,
-          `汗水浸湿了${randomCostume}，你躺在那里，思考着下一次会是什么样的体验...",`,
+          `汗水浸湿了${costume}，你躺在那里，思考着下一次会是什么样的体验...",`,
           `你们相视而笑，知道这只是这个奇妙世界的第一章，更多的冒险还在等待着你们...",`,
           `当你恢复意识时，你知道你已经爱上了这个世界，这里的每一次体验都让你欲罢不能..."`,
         ];
@@ -1729,8 +1363,8 @@
         const commands = [];
 
         // 格式化要发送的消息
-        let outputMessage = `${playerName}<user>到来了！\n\n`;
-        outputMessage += `<user>在这个世界的身份：${playerName}\n`;
+        let outputMessage = `${playerName}到来了！\n\n`;
+        outputMessage += `<user>在这个世界的身份/姓名：${playerName}\n`;
         if (playerDesc) outputMessage += `背景：${playerDesc}\n`;
 
         // 添加主角的性别
@@ -1741,25 +1375,17 @@
           outputMessage += `互动对象：${worldData.interactions.map(i => i.name).join('、')}\n`;
         }
 
-        // 添加主题信息 (多选)
-        if (worldData.theme.length > 0) {
-          outputMessage += `主题：${worldData.theme.map(i => i.name).join('、')}\n`;
-        }
+        // 添加主题信息
+        outputMessage += `主题：${worldData.theme.name}\n`;
 
-        // 添加服装信息 (多选)
-        if (worldData.costume.length > 0) {
-          outputMessage += `互动对象服装：${worldData.costume.map(i => i.name).join('、')}\n`;
-        }
+        // 添加服装信息
+        outputMessage += `互动对象服装：${worldData.costume.name}\n`;
 
-        // 添加行为信息 (多选)
-        if (worldData.behavior.length > 0) {
-          outputMessage += `${playerName}与互动对象的行为：${worldData.behavior.map(i => i.name).join('、')}\n`;
-        }
+        // 添加行为信息
+        outputMessage += `${playerName}与互动对象的行为：${worldData.behavior.name}\n`;
 
-        // 添加玩法信息 (多选)
-        if (worldData.play.length > 0) {
-          outputMessage += `${playerName}与互动对象的玩法：${worldData.play.map(i => i.name).join('、')}\n`;
-        }
+        // 添加玩法信息
+        outputMessage += `${playerName}与互动对象的玩法：${worldData.play.name}\n`;
 
         // 将命令添加到数组中
         commands.push(`/send ${outputMessage}`);
@@ -1772,6 +1398,8 @@
           console.log('Commands to execute:', commands.join('|'));
         }
       }
+
+
 
       // 更新汇总信息
       function updateSummary() {
@@ -1787,29 +1415,19 @@
           '未选择';
         document.getElementById('summary-interactions').textContent = interactionsInfo;
 
-        // 更新为多选格式
-        const themeInfo = worldData.theme.length > 0 ?
-          worldData.theme.map(i => i.isCustom ? `${i.name} (自定义)` : i.name).join(', ') :
-          '未选择';
-        document.getElementById('summary-theme').textContent = themeInfo;
+        document.getElementById('summary-theme').textContent = worldData.theme.isCustom ?
+          `${worldData.theme.name} (自定义)` : worldData.theme.name;
 
-        const costumeInfo = worldData.costume.length > 0 ?
-          worldData.costume.map(i => i.isCustom ? `${i.name} (自定义)` : i.name).join(', ') :
-          '未选择';
-        document.getElementById('summary-costume').textContent = costumeInfo;
+        document.getElementById('summary-costume').textContent = worldData.costume.isCustom ?
+          `${worldData.costume.name} (自定义)` : worldData.costume.name;
 
-        const behaviorInfo = worldData.behavior.length > 0 ?
-          worldData.behavior.map(i => i.isCustom ? `${i.name} (自定义)` : i.name).join(', ') :
-          '未选择';
-        document.getElementById('summary-behavior').textContent = behaviorInfo;
+        document.getElementById('summary-behavior').textContent = worldData.behavior.isCustom ?
+          `${worldData.behavior.name} (自定义)` : worldData.behavior.name;
 
-        const playInfo = worldData.play.length > 0 ?
-          worldData.play.map(i => i.isCustom ? `${i.name} (自定义)` : i.name).join(', ') :
-          '未选择';
-        document.getElementById('summary-play').textContent = playInfo;
+        document.getElementById('summary-play').textContent = worldData.play.isCustom ?
+          `${worldData.play.name} (自定义)` : worldData.play.name;
       }
     </script>
 </body>
 
 </html>
-```
