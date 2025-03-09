@@ -1,0 +1,399 @@
+/* Walk With I - 4 Setup UI Styles */
+
+@font-face {
+    font-family: 'FZCuHeiSongGB';
+    src: url('fonts/FZCuHeiSongGB.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --primary-color: #8B0000; /* Dark red */
+    --secondary-color: #4B0082; /* Indigo */
+    --background-color: #1A1A1A; /* Very dark gray */
+    --text-color: #D2B48C; /* Tan/gold */
+    --border-color: #B8860B; /* Dark goldenrod */
+    --highlight-color: #FF4500; /* Orange-red */
+    --panel-color: #2C2C2C; /* Dark gray */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'FZCuHeiSongGB', 'Times New Roman', serif;
+    background-image: url('images/dark-parchment.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.book-container {
+    width: 80%;
+    max-width: 1000px;
+    height: 80vh;
+    perspective: 1500px;
+}
+
+.book {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: transform 0.5s;
+    background-color: var(--panel-color);
+    border: 4px solid var(--border-color);
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(184, 134, 11, 0.7);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    border-bottom: 2px solid var(--border-color);
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.book-title {
+    color: var(--highlight-color);
+    font-size: 2rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px var(--highlight-color);
+    font-weight: bold;
+}
+
+.stage-indicator {
+    display: flex;
+    gap: 10px;
+}
+
+.stage-dot {
+    width: 15px;
+    height: 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+.stage-dot.active {
+    background-color: var(--highlight-color);
+    box-shadow: 0 0 8px var(--highlight-color);
+}
+
+.book-content {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+    background-image: url('images/aged-paper.jpg');
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+}
+
+.setup-stage {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.setup-stage.active {
+    display: flex;
+}
+
+.stage-title {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.option-group {
+    margin-bottom: 25px;
+}
+
+.option-title {
+    font-size: 1.3rem;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+}
+
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.option-card {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 2px solid var(--border-color);
+    border-radius: 5px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: calc(33.33% - 10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.option-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(184, 134, 11, 0.5);
+    border-color: var(--highlight-color);
+}
+
+.option-card.selected {
+    border-color: var(--highlight-color);
+    background-color: rgba(139, 0, 0, 0.2);
+    box-shadow: 0 0 15px rgba(255, 69, 0, 0.5);
+}
+
+.option-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 30px 30px 0;
+    border-color: transparent transparent transparent transparent;
+    transition: border-color 0.3s;
+}
+
+.option-card.selected::after {
+    border-color: transparent var(--highlight-color) transparent transparent;
+}
+
+.option-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.option-description {
+    font-size: 0.9rem;
+    color: #AAAAAA;
+}
+
+.multi-select .option-card::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+}
+
+.multi-select .option-card.selected::before {
+    background-color: var(--highlight-color);
+    content: '✓';
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.nav-button {
+    background-color: var(--panel-color);
+    color: var(--text-color);
+    border: 2px solid var(--border-color);
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'FZCuHeiSongGB', 'Times New Roman', serif;
+}
+
+.nav-button:hover {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--highlight-color);
+}
+
+.nav-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.summary-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-left: 3px solid var(--highlight-color);
+    border-radius: 3px;
+}
+
+.summary-label {
+    font-weight: bold;
+    color: var(--highlight-color);
+    margin-bottom: 5px;
+}
+
+.summary-value {
+    padding-left: 10px;
+}
+
+.confirm-button {
+    background-color: var(--highlight-color);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 30px auto;
+    display: block;
+    font-family: 'FZCuHeiSongGB', 'Times New Roman', serif;
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+}
+
+.confirm-button:hover {
+    background-color: var(--primary-color);
+    box-shadow: 0 0 20px rgba(139, 0, 0, 0.7);
+    transform: scale(1.05);
+}
+
+/* Styling for custom elements like faction symbols, etc. */
+.faction-symbol {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 15px;
+    display: block;
+    filter: drop-shadow(0 0 5px var(--border-color));
+}
+
+.servant-portrait {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.warship-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--highlight-color);
+}
+
+/* Aquila/Imperial iconography as background decorations */
+.imperial-icon {
+    position: absolute;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+.imperial-icon-1 {
+    top: 20px;
+    right: 20px;
+    width: 150px;
+    height: 150px;
+    background-image: url('images/aquila.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.imperial-icon-2 {
+    bottom: 20px;
+    left: 20px;
+    width: 120px;
+    height: 120px;
+    background-image: url('images/skull.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .book-container {
+        width: 95%;
+        height: 90vh;
+    }
+    
+    .book-header {
+        padding: 10px 15px;
+    }
+    
+    .book-title {
+        font-size: 1.5rem;
+    }
+    
+    .book-content {
+        padding: 15px;
+    }
+    
+    .option-card {
+        width: calc(50% - 10px);
+    }
+}
+
+@media (max-width: 480px) {
+    .option-card {
+        width: 100%;
+    }
+    
+    .navigation {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .nav-button {
+        width: 100%;
+    }
+} 

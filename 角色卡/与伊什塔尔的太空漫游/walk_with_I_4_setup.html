@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Walk With I - 4 | 角色创建</title>
+  <link rel="stylesheet" href="walk_with_I_4_setup.css">
+</head>
+
+<body>
+  <div class="book-container">
+    <div class="book">
+      <div class="book-header">
+        <h1 class="book-title">Walk With I - 4</h1>
+        <div class="stage-indicator">
+          <div class="stage-dot active" data-stage="1"></div>
+          <div class="stage-dot" data-stage="2"></div>
+          <div class="stage-dot" data-stage="3"></div>
+          <div class="stage-dot" data-stage="4"></div>
+        </div>
+      </div>
+
+      <div class="book-content">
+        <!-- Stage 1: Basic Information -->
+        <div id="stage-1" class="setup-stage active">
+          <h2 class="stage-title">基础信息</h2>
+
+          <div class="option-group">
+            <h3 class="option-title">性别</h3>
+            <div class="options">
+              <div class="option-card" data-value="male">
+                <div class="option-name">男性</div>
+                <div class="option-description">在亚空间异常中，男性通常展现出更强的精神稳定性，但契约能力较弱。</div>
+              </div>
+              <div class="option-card" data-value="female">
+                <div class="option-name">女性</div>
+                <div class="option-description">女性在亚空间异常中更容易建立灵能联系，契约能力更强，但面临更高的侵蚀风险。</div>
+              </div>
+              <div class="option-card" data-value="other">
+                <div class="option-name">其他</div>
+                <div class="option-description">基因改造或机械强化的个体，对亚空间波动有独特的感应。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="option-group">
+            <h3 class="option-title">个人特质</h3>
+            <div class="options">
+              <div class="option-card" data-value="tactician">
+                <div class="option-name">军事战术家</div>
+                <div class="option-description">精通战场分析和战略部署，在战斗中能迅速制定有效计划。</div>
+              </div>
+              <div class="option-card" data-value="psyker">
+                <div class="option-name">灵能潜质</div>
+                <div class="option-description">拥有微弱的灵能天赋，对亚空间异常敏感，但也更易受到污染。</div>
+              </div>
+              <div class="option-card" data-value="technician">
+                <div class="option-name">机械专家</div>
+                <div class="option-description">精通各种机械设备和武器系统的维护与改造。</div>
+              </div>
+              <div class="option-card" data-value="diplomat">
+                <div class="option-name">跨派系交涉</div>
+                <div class="option-description">善于在不同派系之间周旋，获取情报和资源。</div>
+              </div>
+              <div class="option-card" data-value="survivor">
+                <div class="option-name">沦陷区生还者</div>
+                <div class="option-description">在沦陷区生存过的经历让你更能抵抗亚空间侵蚀。</div>
+              </div>
+              <div class="option-card" data-value="sacrifice">
+                <div class="option-name">牺牲精神</div>
+                <div class="option-description">为胜利不惜一切代价，甚至包括自己的灵魂。在联邦中受到推崇。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="option-group">
+            <h3 class="option-title">所属势力</h3>
+            <div class="options">
+              <div class="option-card" data-value="united-nations">
+                <div class="option-name">地球联合国</div>
+                <div class="option-description">掌控核心区域，拥有先进的反物质引擎和改造技术，但科技突破陷入停滞。</div>
+              </div>
+              <div class="option-card" data-value="federation">
+                <div class="option-name">人类联邦</div>
+                <div class="option-description">防守边境地区，军事和牺牲力量强大，但过度依赖牺牲仪式。</div>
+              </div>
+              <div class="option-card" data-value="resistance">
+                <div class="option-name">人类反抗军</div>
+                <div class="option-description">分为纯粹派系和堕落派系，在混乱的环境中生存，技术混杂且部分受到扭曲。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="navigation">
+            <button class="nav-button" id="prev-1" disabled>上一步</button>
+            <button class="nav-button" id="next-1">下一步</button>
+          </div>
+        </div>
+
+        <!-- Stage 2: Faction Information -->
+        <div id="stage-2" class="setup-stage">
+          <h2 class="stage-title">势力信息</h2>
+
+          <div class="option-group">
+            <h3 class="option-title">契约从者</h3>
+            <div class="options multi-select">
+              <div class="option-card" data-value="servant-1">
+                <div class="option-name">阿尔托莉雅·潘德拉贡</div>
+                <div class="option-description">剑之骑士王，擅长近身格斗，拥有强大的防御型圣器。</div>
+              </div>
+              <div class="option-card" data-value="servant-2">
+                <div class="option-name">贞德</div>
+                <div class="option-description">圣女，拥有强大的防护能力，可以抵抗亚空间的侵蚀。</div>
+              </div>
+              <div class="option-card" data-value="servant-3">
+                <div class="option-name">吉尔伽美什</div>
+                <div class="option-description">英雄王，拥有无数珍贵武器的宝库，可以应对各种战况。</div>
+              </div>
+              <div class="option-card" data-value="servant-4">
+                <div class="option-name">卫宫</div>
+                <div class="option-description">赤色弓兵，善于远程攻击和侦察，灵活且致命。</div>
+              </div>
+              <div class="option-card" data-value="servant-5">
+                <div class="option-name">梅林</div>
+                <div class="option-description">梦魔法师，擅长幻术和支援魔法，可以干扰敌人的感知。</div>
+              </div>
+              <div class="option-card" data-value="servant-6">
+                <div class="option-name">尼禄·克劳狄乌斯</div>
+                <div class="option-description">红色皇帝，拥有强大的领导能力和魔力，适合长时间战斗。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="option-group">
+            <h3 class="option-title">所在位置</h3>
+            <div class="options">
+              <div class="option-card" data-value="core-region">
+                <div class="option-name">核心区域</div>
+                <div class="option-description">联合国的中心地带，繁荣但暗藏腐败，亚空间侵蚀率为10%。</div>
+              </div>
+              <div class="option-card" data-value="frontier-region">
+                <div class="option-name">边境地区</div>
+                <div class="option-description">联邦的主要防线，资源稀缺但军事强大，亚空间侵蚀率为35%。</div>
+              </div>
+              <div class="option-card" data-value="fallen-zone">
+                <div class="option-name">沦陷区边缘</div>
+                <div class="option-description">反抗军活动区域，混乱但信息流通，亚空间侵蚀率为60%。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="option-group">
+            <h3 class="option-title">战舰特质</h3>
+            <div class="options">
+              <div class="option-card" data-value="warship-1">
+                <div class="option-name">暗潮号 - 侦察型</div>
+                <div class="option-description">具有先进的隐形系统和侦察设备，速度快但火力较弱。</div>
+              </div>
+              <div class="option-card" data-value="warship-2">
+                <div class="option-name">暗潮号 - 战斗型</div>
+                <div class="option-description">配备了强大的武器系统，火力强大但速度较慢。</div>
+              </div>
+              <div class="option-card" data-value="warship-3">
+                <div class="option-name">暗潮号 - 平衡型</div>
+                <div class="option-description">火力、防御和速度均衡，适应性强。</div>
+              </div>
+              <div class="option-card" data-value="warship-4">
+                <div class="option-name">暗潮号 - 研究型</div>
+                <div class="option-description">配备了先进的研究设备，可以研究亚空间现象和外星技术，但战斗能力较弱。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="navigation">
+            <button class="nav-button" id="prev-2">上一步</button>
+            <button class="nav-button" id="next-2">下一步</button>
+          </div>
+        </div>
+
+        <!-- Stage 3: Initial Event -->
+        <div id="stage-3" class="setup-stage">
+          <h2 class="stage-title">开局事件</h2>
+
+          <div class="options">
+            <div class="option-card" data-value="event-1">
+              <div class="option-name">突袭外星人舰队</div>
+              <div class="option-description">接到情报，一支外星人舰队正在靠近人类防线。你的任务是率领暗潮号进行突袭，削弱他们的力量。</div>
+            </div>
+            <div class="option-card" data-value="event-2">
+              <div class="option-name">守护要塞星球</div>
+              <div class="option-description">边境的一颗要塞星球正面临外星人大规模进攻，你被派去增援防守。这颗星球上有重要的能量晶体矿藏。</div>
+            </div>
+            <div class="option-card" data-value="event-3">
+              <div class="option-name">求援沦陷区平民</div>
+              <div class="option-description">一群沦陷区平民发出了求救信号，他们声称掌握了关于外星人计划的重要情报。你的任务是救援他们并获取情报。</div>
+            </div>
+            <div class="option-card" data-value="event-4">
+              <div class="option-name">调查亚空间异常</div>
+              <div class="option-description">边境地区出现了强烈的亚空间波动，你被派去调查异常现象的源头，这可能是了解契约来源的机会。</div>
+            </div>
+            <div class="option-card" data-value="event-5">
+              <div class="option-name">护送重要科学家</div>
+              <div class="option-description">一位研究亚空间的重要科学家需要前往核心区域，但途中可能遭遇多方势力的拦截。你的任务是确保科学家安全抵达。</div>
+            </div>
+            <div class="option-card" data-value="event-6">
+              <div class="option-name">夺取外星技术</div>
+              <div class="option-description">情报显示，外星人在沦陷区边缘建立了一个研究基地，研发新型生物武器。你的任务是摧毁基地并夺取技术资料。</div>
+            </div>
+          </div>
+
+          <div class="navigation">
+            <button class="nav-button" id="prev-3">上一步</button>
+            <button class="nav-button" id="next-3">下一步</button>
+          </div>
+        </div>
+
+        <!-- Stage 4: Summary and Confirmation -->
+        <div id="stage-4" class="setup-stage">
+          <h2 class="stage-title">确认信息</h2>
+
+          <div class="summary-item">
+            <div class="summary-label">性别</div>
+            <div class="summary-value" id="summary-gender"></div>
+          </div>
+
+          <div class="summary-item">
+            <div class="summary-label">个人特质</div>
+            <div class="summary-value" id="summary-traits"></div>
+          </div>
+
+          <div class="summary-item">
+            <div class="summary-label">所属势力</div>
+            <div class="summary-value" id="summary-faction"></div>
+          </div>
+
+          <div class="summary-item">
+            <div class="summary-label">契约从者</div>
+            <div class="summary-value" id="summary-servants"></div>
+          </div>
+
+          <div class="summary-item">
+            <div class="summary-label">所在位置</div>
+            <div class="summary-value" id="summary-location"></div>
+          </div>
+
+          <div class="summary-item">
+            <div class="summary-label">战舰特质</div>
+            <div class="summary-value" id="summary-warship"></div>
+          </div>
+
+          <div class="summary-item">
+            <div class="summary-label">开局事件</div>
+            <div class="summary-value" id="summary-event"></div>
+          </div>
+
+          <button class="confirm-button" id="confirm-button">确认创建</button>
+
+          <div class="navigation">
+            <button class="nav-button" id="prev-4">上一步</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="imperial-icon imperial-icon-1"></div>
+      <div class="imperial-icon imperial-icon-2"></div>
+    </div>
+  </div>
+
+  <script>
+    // Store selected options
+    const selections = {
+      gender: '',
+      traits: '',
+      faction: '',
+      servants: [],
+      location: '',
+      warship: '',
+      event: ''
+    };
+
+    // Current stage
+    let currentStage = 1;
+
+    // DOM Elements
+    const stages = document.querySelectorAll('.setup-stage');
+    const stageDots = document.querySelectorAll('.stage-dot');
+
+    // Navigation buttons
+    const prevButtons = document.querySelectorAll('[id^="prev-"]');
+    const nextButtons = document.querySelectorAll('[id^="next-"]');
+    const confirmButton = document.getElementById('confirm-button');
+
+    // Handle stage navigation
+    function goToStage(stage) {
+      stages.forEach(s => s.classList.remove('active'));
+      stageDots.forEach(d => d.classList.remove('active'));
+
+      document.getElementById(`stage-${stage}`).classList.add('active');
+      document.querySelector(`.stage-dot[data-stage="${stage}"]`).classList.add('active');
+
+      currentStage = stage;
+    }
+
+    // Add event listeners to navigation buttons
+    prevButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const prevStage = currentStage - 1;
+        if (prevStage >= 1) {
+          goToStage(prevStage);
+        }
+      });
+    });
+
+    nextButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const nextStage = currentStage + 1;
+        if (nextStage <= 4) {
+          // Before moving to next stage, validate current stage
+          if (validateCurrentStage()) {
+            // If moving to summary stage, update summary
+            if (nextStage === 4) {
+              updateSummary();
+            }
+            goToStage(nextStage);
+          }
+        }
+      });
+    });
+
+    // Add event listeners to option cards
+    document.querySelectorAll('.option-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const value = card.getAttribute('data-value');
+        const parent = card.parentElement;
+
+        // If it's a multi-select option group
+        if (parent.classList.contains('multi-select')) {
+          card.classList.toggle('selected');
+
+          // Update selections for multi-select
+          if (parent.closest('.option-group').querySelector('.option-title').textContent.includes('契约从者')) {
+            if (card.classList.contains('selected')) {
+              if (!selections.servants.includes(value)) {
+                selections.servants.push(value);
+              }
+            } else {
+              selections.servants = selections.servants.filter(s => s !== value);
+            }
+          }
+        } else {
+          // Single select - remove selected class from siblings
+          Array.from(parent.children).forEach(sibling => {
+            sibling.classList.remove('selected');
+          });
+          card.classList.add('selected');
+
+          // Update selections based on the option group
+          const optionTitle = card.closest('.option-group')?.querySelector('.option-title')?.textContent;
+          if (optionTitle) {
+            if (optionTitle.includes('性别')) {
+              selections.gender = value;
+            } else if (optionTitle.includes('个人特质')) {
+              selections.traits = value;
+            } else if (optionTitle.includes('所属势力')) {
+              selections.faction = value;
+            } else if (optionTitle.includes('所在位置')) {
+              selections.location = value;
+            } else if (optionTitle.includes('战舰特质')) {
+              selections.warship = value;
+            }
+          } else if (card.closest('#stage-3')) {
+            // This is the event selection in stage 3
+            selections.event = value;
+          }
+        }
+      });
+    });
+
+    // Validate current stage before proceeding
+    function validateCurrentStage() {
+      // For Stage 1
+      if (currentStage === 1) {
+        if (!selections.gender) {
+          alert('请选择性别');
+          return false;
+        }
+        if (!selections.traits) {
+          alert('请选择个人特质');
+          return false;
+        }
+        if (!selections.faction) {
+          alert('请选择所属势力');
+          return false;
+        }
+        return true;
+      }
+
+      // For Stage 2
+      if (currentStage === 2) {
+        if (selections.servants.length === 0) {
+          alert('请选择至少一个契约从者');
+          return false;
+        }
+        if (!selections.location) {
+          alert('请选择所在位置');
+          return false;
+        }
+        if (!selections.warship) {
+          alert('请选择战舰特质');
+          return false;
+        }
+        return true;
+      }
+
+      // For Stage 3
+      if (currentStage === 3) {
+        if (!selections.event) {
+          alert('请选择开局事件');
+          return false;
+        }
+        return true;
+      }
+
+      return true;
+    }
+
+    // Update summary in Stage 4
+    function updateSummary() {
+      // Helper function to get the name of the selected option
+      function getOptionName(value) {
+        const option = document.querySelector(`.option-card[data-value="${value}"]`);
+        return option ? option.querySelector('.option-name').textContent : '';
+      }
+
+      // Update summary fields
+      document.getElementById('summary-gender').textContent = getOptionName(selections.gender);
+      document.getElementById('summary-traits').textContent = getOptionName(selections.traits);
+      document.getElementById('summary-faction').textContent = getOptionName(selections.faction);
+      document.getElementById('summary-servants').textContent = selections.servants.map(getOptionName).join(', ');
+      document.getElementById('summary-location').textContent = getOptionName(selections.location);
+      document.getElementById('summary-warship').textContent = getOptionName(selections.warship);
+      document.getElementById('summary-event').textContent = getOptionName(selections.event);
+    }
+
+    // Confirm button action
+    confirmButton.addEventListener('click', () => {
+      // Validate all selections
+      if (!validateCurrentStage()) {
+        return;
+      }
+
+      // Prepare data to send to the AI
+      const setupData = {
+        gender: getOptionName(selections.gender),
+        traits: getOptionName(selections.traits),
+        faction: getOptionName(selections.faction),
+        servants: selections.servants.map(getOptionName),
+        location: getOptionName(selections.location),
+        warship: getOptionName(selections.warship),
+        event: getOptionName(selections.event)
+      };
+
+      // Send message to parent window (SillyTavern)
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({
+          type: 'walk-with-i-4-setup',
+          action: 'submit',
+          setup: setupData
+        }, '*');
+      } else {
+        // For standalone testing, just alert
+        alert('角色创建完成！\n' + JSON.stringify(setupData, null, 2));
+      }
+    });
+
+    // Helper function to get option name by value
+    function getOptionName(value) {
+      const option = document.querySelector(`.option-card[data-value="${value}"]`);
+      return option ? option.querySelector('.option-name').textContent : '';
+    }
+  </script>
+</body>
+
+</html>

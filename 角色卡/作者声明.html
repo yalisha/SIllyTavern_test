@@ -1,0 +1,636 @@
+<!-- ; 防导购方案——作者水印版！
+; 优势：
+; 1.可以在你的每张卡里加上你的个人作者水印，很帅！
+; 2.导购没办法通过简单的删除greeting，或者删除局部正则来改卡，增加导购的工作量！
+; 3.帅！
+; 4.已经做好了屏幕适配，自带CC协议，一键食用！
+
+; 劣势：
+; 1.必须安装kakaa佬的前端助手，此为链接：https://discord.com/channels/1134557553011998840/1296494001406345318/1296494001406345318
+; 2.可能需要你花两分钟动动手
+; 3.如果想要实现个性化，需要进行其他的修改。
+; 4.玩卡的玩家也得安装前端助手。
+; 5.没啦！
+
+
+; 好了，接下来是简单的教程！
+; 1.打开你的卡片，然后点击拓展，点击正则，选择新建局部正则
+; 2.脚本名称随意，可以是作者水印，无所谓。查找正则表达式，填一个比较特殊的格式，可以用特殊符号包裹你的作者名。比如我是赛博星期五，那我的查找正则表达式就是【poaires】
+; 3.接下来，需要你复制下面的界面代码，粘贴到任意一个文本编辑器里（记事本，写字板，vscode，随意），然后ctrl+H，打开查找替换框,在搜索框里输入  赛博星期五   ，然后全部替换为你自己的作者名。
+; 4.继续ctrl+H，搜索框里输入 开场白  ，然后替换为你的卡片的开场白的全部内容。
+; 5.如此一来，你自己的作者水印界面就完成啦！接下来，只需要最后一步，就是将这个修改后的界面代码，包括首尾的各三个`符号，全部复制，然后粘贴到刚才那个局部正则的“替换为”里面。下面的选项里，勾选“AI输出”，“在编辑时运行”，“仅格式显示”。
+; 6.记得开启局部正则。搞定！快点看看效果吧！ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>类脑作者水印</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Montserrat:wght@300;400;700&display=swap"
+    rel="stylesheet">
+  <style>
+    @import url('https://static.zeoseven.com/zsft/364/main/result.css');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 700px;
+      background: #000;
+      font-family: 'Montserrat', "寒蝉无机体 Wide";
+      color: #fff;
+      overflow: hidden;
+      background-image: url('https://files.catbox.moe/kpvzpk.gif');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .fluid-container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg,
+          rgba(0, 0, 0, 0.8) 0%,
+          rgba(0, 0, 0, 0.6) 100%);
+      position: relative;
+    }
+
+    .title-container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .main-title {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 6rem;
+      font-weight: 700;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+      letter-spacing: 0.2em;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .main-title:hover {
+      color: rgba(255, 255, 255, 0.9);
+      -webkit-text-stroke: 0;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+
+    .subtitle {
+      font-family: "寒蝉无机体 Wide", sans-serif;
+      font-weight: normal;
+      font-size: 1.2rem;
+      letter-spacing: 1em;
+      text-transform: uppercase;
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards;
+      animation-delay: 1s;
+    }
+
+    .fluid-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      filter: blur(60px);
+      animation: fluidMove 20s infinite alternate;
+      mix-blend-mode: overlay;
+    }
+
+    .circle1 {
+      width: 400px;
+      height: 400px;
+      top: 20%;
+      left: 30%;
+      animation-delay: 0s;
+      background: rgba(100, 200, 255, 0.1);
+    }
+
+    .circle2 {
+      width: 600px;
+      height: 600px;
+      bottom: 10%;
+      right: 20%;
+      animation-delay: -5s;
+      background: rgba(255, 100, 255, 0.1);
+    }
+
+    .circle3 {
+      width: 300px;
+      height: 300px;
+      top: 40%;
+      right: 30%;
+      animation-delay: -10s;
+      background: rgba(255, 200, 100, 0.1);
+    }
+
+    .navigation {
+      position: fixed;
+      display: flex;
+      gap: 2rem;
+      padding: 2rem;
+      z-index: 3;
+    }
+
+    .nav-bottom {
+      bottom: 0;
+      left: 0;
+    }
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #fff;
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: #fff;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .copyright {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: 0.1em;
+      z-index: 3;
+    }
+
+    .copyright a {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .copyright a:hover {
+      color: #fff;
+    }
+
+    @keyframes fluidMove {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      100% {
+        transform: translate(100px, 50px) scale(1.2);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .start-button {
+      font-family: "寒蝉无机体 Wide", sans-serif;
+      font-weight: normal;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      letter-spacing: 0.2em;
+      margin-top: 1rem;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .start-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* 基础响应式设置 */
+    @media screen and (max-width: 1200px) {
+      .main-title {
+        font-size: 5rem;
+      }
+
+      .fluid-circle {
+        transform-origin: center;
+        scale: 0.8;
+      }
+    }
+
+
+    /* 手机设备 - 屏幕宽度小于 768px */
+    @media screen and (max-width: 768px) {
+      .fluid-container {
+        padding: 20px;
+      }
+
+      .main-title {
+        font-size: 2.5rem;
+        letter-spacing: 0.1em;
+        -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.8);
+      }
+
+      .subtitle {
+        font-size: 0.9rem;
+        letter-spacing: 0.5em;
+        margin-top: 1rem;
+      }
+
+      .fluid-circle {
+        filter: blur(30px);
+        transform-origin: center;
+        scale: 0.5;
+      }
+
+      .circle1 {
+        width: 200px;
+        height: 200px;
+        top: 15%;
+        left: 20%;
+      }
+
+      .circle2 {
+        width: 300px;
+        height: 300px;
+        bottom: 5%;
+        right: 10%;
+      }
+
+      .circle3 {
+        width: 150px;
+        height: 150px;
+        top: 35%;
+        right: 20%;
+      }
+
+      .navigation {
+        padding: 1rem;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .nav-link {
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        padding: 8px 16px;
+      }
+
+      .copyright {
+        position: relative;
+        bottom: auto;
+        right: auto;
+        text-align: center;
+        padding: 1rem;
+        width: 100%;
+        font-size: 0.7rem;
+      }
+
+      .start-button {
+        font-size: 0.8rem;
+        padding: 12px 24px;
+        width: 80%;
+        max-width: 300px;
+        margin: 1rem auto;
+      }
+    }
+
+    /* 在现有的 style 标签内更新或添加以下媒体查询代码 */
+
+    /* 基础响应式设置 */
+    @media screen and (max-width: 1400px) {
+      .main-title {
+        font-size: 5rem;
+      }
+
+      .subtitle {
+        font-size: 1.1rem;
+        letter-spacing: 0.8em;
+      }
+
+      .fluid-circle {
+        transform-origin: center;
+        scale: 0.9;
+      }
+    }
+
+    /* 平板设备 - 屏幕宽度小于 1024px */
+    @media screen and (max-width: 1024px) {
+      .main-title {
+        font-size: 4rem;
+        letter-spacing: 0.15em;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+        letter-spacing: 0.6em;
+        margin-top: 1.5rem;
+      }
+
+      .fluid-circle {
+        filter: blur(50px);
+        scale: 0.7;
+      }
+
+      .circle1 {
+        width: 350px;
+        height: 350px;
+      }
+
+      .circle2 {
+        width: 500px;
+        height: 500px;
+      }
+
+      .circle3 {
+        width: 250px;
+        height: 250px;
+      }
+
+      .start-button {
+        font-size: 0.85rem;
+        padding: 12px 30px;
+      }
+    }
+
+    /* 手机设备 - 屏幕宽度小于 768px */
+    @media screen and (max-width: 768px) {
+      .fluid-container {
+        padding: 20px;
+        justify-content: center;
+      }
+
+      .title-container {
+        text-align: center;
+        width: 100%;
+        padding: 0 20px;
+      }
+
+      .main-title {
+        font-size: 3rem;
+        letter-spacing: 0.1em;
+        -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.8);
+      }
+
+      .subtitle {
+        font-size: 0.9rem;
+        letter-spacing: 0.5em;
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .fluid-circle {
+        filter: blur(40px);
+        scale: 0.6;
+        opacity: 0.8;
+      }
+
+      .circle1 {
+        width: 250px;
+        height: 250px;
+        top: 15%;
+        left: 20%;
+      }
+
+      .circle2 {
+        width: 400px;
+        height: 400px;
+        bottom: 5%;
+        right: 10%;
+      }
+
+      .circle3 {
+        width: 200px;
+        height: 200px;
+        top: 35%;
+        right: 20%;
+      }
+
+      .navigation {
+        position: relative;
+        padding: 1rem;
+        justify-content: center;
+        width: 100%;
+        margin-top: 2rem;
+      }
+
+      .nav-link {
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        padding: 10px 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+      }
+
+      .nav-link::after {
+        display: none;
+      }
+
+      .copyright {
+        position: relative;
+        text-align: center;
+        padding: 1rem;
+        width: 100%;
+        font-size: 0.7rem;
+        margin-top: 1rem;
+      }
+
+      .start-button {
+        font-size: 0.8rem;
+        padding: 12px 24px;
+        width: 80%;
+        max-width: 300px;
+        margin: 1rem auto;
+        display: block;
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .start-button:hover {
+        background: rgba(255, 255, 255, 0.25);
+      }
+    }
+
+    /* 小型手机设备 - 屏幕宽度小于 480px */
+    @media screen and (max-width: 480px) {
+      .main-title {
+        font-size: 2.2rem;
+        letter-spacing: 0.05em;
+      }
+
+      .subtitle {
+        font-size: 0.8rem;
+        letter-spacing: 0.3em;
+        margin-bottom: 1rem;
+      }
+
+      .fluid-circle {
+        filter: blur(30px);
+        scale: 0.5;
+      }
+
+      .circle1 {
+        width: 200px;
+        height: 200px;
+      }
+
+      .circle2 {
+        width: 300px;
+        height: 300px;
+      }
+
+      .circle3 {
+        width: 150px;
+        height: 150px;
+      }
+
+      .start-button {
+        width: 90%;
+        font-size: 0.75rem;
+        padding: 10px 20px;
+      }
+
+      .copyright img {
+        height: 16px !important;
+      }
+    }
+
+    /* 处理横屏模式 */
+    @media screen and (max-height: 600px) and (orientation: landscape) {
+      .fluid-container {
+        padding: 1rem;
+      }
+
+      .main-title {
+        font-size: 2.5rem;
+      }
+
+      .subtitle {
+        margin: 0.5rem 0;
+        font-size: 0.8rem;
+      }
+
+      .start-button {
+        margin: 0.5rem auto;
+        padding: 8px 20px;
+      }
+
+      .fluid-circle {
+        scale: 0.4;
+      }
+
+      .navigation,
+      .copyright {
+        padding: 0.5rem;
+      }
+    }
+
+    /* 优化触摸设备交互 */
+    @media (hover: none) and (pointer: coarse) {
+
+      .start-button,
+      .nav-link {
+        -webkit-tap-highlight-color: transparent;
+        transition: transform 0.2s ease;
+      }
+
+      .start-button:active,
+      .nav-link:active {
+        transform: scale(0.98);
+      }
+
+      .main-title {
+        -webkit-tap-highlight-color: transparent;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="fluid-container">
+    <div class="fluid-circle circle1"></div>
+    <div class="fluid-circle circle2"></div>
+    <div class="fluid-circle circle3"></div>
+
+    <div class="title-container">
+      <div class="subtitle">卡片作者</div>
+      <h1 class="main-title">赛博星期五</h1>
+      <button class="start-button" onclick="startGame()">开始游戏</button>
+    </div>
+
+
+    <nav class="navigation nav-bottom">
+      <a href="https://discord.gg/nJecqe5HUx" class="nav-link" target="_blank">DISCORD</a>
+    </nav>
+
+    <div class="copyright">
+      <p xmlns:cc="http://creativecommons.org/ns#">This work by <span property="cc:attributionName">赛博星期五</span> is
+        licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank"
+          rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img
+            style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+            src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img
+            style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+            src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img
+            style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+            src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img
+            style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+            src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+    </div>
+  </div>
+  <script>
+    function startGame() {
+      setChatMessage("<start>", getCurrentMessageId());
+    }
+  </script>
+</body>
+
+</html>
+```
