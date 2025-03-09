@@ -1423,18 +1423,37 @@
           return;
         }
 
-        worldData[type] = {
+        // 确保 worldData[type] 是一个数组
+        if (!Array.isArray(worldData[type])) {
+          worldData[type] = [];
+        }
+
+        // 添加新的自定义元素到数组
+        worldData[type].push({
           name: name,
           desc: desc,
           isCustom: true
-        };
+        });
 
-        // 更新显示
-        document.getElementById(`selected-${type}`).textContent = `${name} (自定义)`;
+        // 更新显示 - 显示所有选中的元素，包括自定义元素
+        const selectedText = worldData[type].map(item => item.isCustom ? `${item.name} (自定义)` : item.name).join(', ');
+        document.getElementById(`selected-${type}`).textContent = selectedText;
 
         // 清空输入框
         nameInput.value = '';
         descInput.value = '';
+
+        // 切换回对应类型的选项卡
+        const tabIndex = {
+          'theme': 0,
+          'costume': 1,
+          'behavior': 2,
+          'play': 3
+        }[type];
+
+        if (tabIndex !== undefined) {
+          switchTab('elements-tab', tabIndex);
+        }
       }
 
       // 切换标签页
