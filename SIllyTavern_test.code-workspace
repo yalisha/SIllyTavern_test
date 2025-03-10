@@ -1,13 +1,16 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../frontend_writer 2"
-		}
-	],
-	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "SIllyTavern_test"
-	}
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "../frontend_writer 2"
+    },
+    {
+      "path": "../computerscience"
+    }
+  ],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "SIllyTavern_test"
+  }
 }

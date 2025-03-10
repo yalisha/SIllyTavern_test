@@ -1,0 +1,1057 @@
+```
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <title>魔法世界</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Times New Roman', serif;
+      background: #1a1a1a;
+      color: #b8a99a;
+}
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      height: calc(100vh - 40px);
+      /* 减去上下padding的高度 */
+      display: flex;
+      flex-direction: column;
+      min-height: 600px;
+      /* 添加最小高度 */
+}
+
+    .menu {
+      padding: 0.5rem;
+      background-color: rgba(44,
+  24,
+  16,
+  0.8);
+      position: sticky;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,
+  0,
+  0,
+  0.3);
+      backdrop-filter: blur(10px);
+      margin-bottom: 20px;
+      border: 1px solid rgba(224,
+  213,
+  199,
+  0.1);
+      z-index: 100;
+      flex-wrap: nowrap;
+      gap: 5px;
+      flex-shrink: 0;
+      /* 防止导航栏被压缩 */
+      transition: background-color 0.3s ease;
+}
+
+    .link {
+      flex: 1;
+      min-width: 50px;
+      max-width: 50px;
+      height: 50px;
+      margin: 0 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: color 0.3s ease;
+}
+
+    .link:before {
+      position: absolute;
+      z-index: -1;
+      content: "";
+      display: block;
+      border-radius: 8px;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      transform: translateX(100%);
+      transition: transform 0.2s ease-in;
+      transform-origin: center right;
+      background-color: rgba(224,
+  213,
+  199,
+  0.1);
+}
+
+    .link:hover,
+    .link:focus {
+      outline: 0;
+      width: 130px;
+}
+
+    .link:hover:before,
+    .link:focus:before,
+    .link:hover .link-title,
+    .link:focus .link-title {
+      transform: translateX(0);
+      opacity: 1;
+}
+
+    .link-icon {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+}
+
+    .link-icon svg {
+      width: 28px;
+      height: 28px;
+      transition: stroke 0.2s ease;
+}
+
+    .content-area {
+      background: rgba(44,
+  24,
+  16,
+  0.2);
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(224,
+  213,
+  199,
+  0.1);
+      box-shadow: 0 4px 15px rgba(0,
+  0,
+  0,
+  0.3);
+      margin-top: 10px;
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+      min-height: 500px;
+      /* 添加最小高度 */
+  /* 确保flex布局下可以正确滚动 */
+}
+
+    .tab-content {
+      display: none;
+}
+
+    .tab-content.active {
+      display: block;
+}
+
+    .scroll-effect {
+      border: none;
+      box-shadow: none;
+      min-height: 100%;
+}
+
+    article {
+      width: 100%;
+      line-height: 1.6;
+}
+
+    personstatus {
+      display: block;
+      width: 100%;
+      padding: 10px;
+}
+
+    academics {
+      display: block;
+      width: 100%;
+      padding: 10px;
+}
+
+    map {
+      display: block;
+      width: 100%;
+}
+
+    .content-area: :-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+}
+
+    .content-area: :-webkit-scrollbar-track {
+      background: rgba(224,
+  213,
+  199,
+  0.05);
+      border-radius: 4px;
+}
+
+    .content-area: :-webkit-scrollbar-thumb {
+      background: rgba(224,
+  213,
+  199,
+  0.2);
+      border-radius: 4px;
+}
+
+    .content-area: :-webkit-scrollbar-thumb:hover {
+      background: rgba(224,
+  213,
+  199,
+  0.3);
+}
+
+    .link.active {
+      background-color: rgba(224,
+  213,
+  199,
+  0.1);
+}
+
+    .link.active .link-title {
+      color: #c4b5a5;
+      transform: translateX(0);
+      opacity: 1;
+}
+
+    .link:hover .link-icon svg,
+    .link.active .link-icon svg {
+      stroke: #c4b5a5;
+}
+/* 添加变量信息的样式 */
+    .story-content {
+      padding: 10px;
+      white-space: pre-line;
+      line-height: 1.6;
+}
+
+    .info-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 10px;
+}
+
+    .info-value {
+      padding: 8px 12px;
+      background: rgba(44,
+  24,
+  16,
+  0.3);
+      border-radius: 4px;
+      line-height: 1.5;
+}
+
+    .info-value strong {
+      color: #c4b5a5;
+      margin-right: 0;
+}
+
+    .info-value span {
+      color: #b8a99a;
+}
+
+    .map-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+}
+
+    .map-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid rgba(224,
+  213,
+  199,
+  0.1);
+      margin-bottom: 20px;
+}
+/* 添加设置面板样式 */
+    .settings-panel {
+      padding: 20px;
+}
+
+    .settings-item {
+      margin-bottom: 20px;
+}
+
+    .settings-title {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: inherit;
+}
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+}
+
+    .slider {
+      flex: 1;
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(224,
+  213,
+  199,
+  0.1);
+      outline: none;
+}
+
+    .slider: :-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #b8a99a;
+      cursor: pointer;
+      transition: background 0.2s;
+}
+
+    .slider: :-webkit-slider-thumb:hover {
+      background: #c4b5a5;
+}
+
+    .slider-value {
+      min-width: 40px;
+      text-align: right;
+      color: inherit;
+}
+
+    .color-value {
+      min-width: 70px;
+      color: inherit;
+}
+/* 修改响应式设计 */
+    @media screen and (max-width: 768px) {
+      .container {
+        padding: 10px;
+        min-height: 750px;
+        /* 原本的500px增加到1.5倍 */
+    /* 确保min-height而不是height */
+  }
+
+      .menu {
+        padding: 0.3rem;
+        gap: 2px;
+  }
+
+      .link {
+        min-width: 40px;
+        max-width: 40px;
+  }
+
+      .link-icon {
+        width: 24px;
+        height: 24px;
+  }
+
+      .link-icon svg {
+        width: 24px;
+        height: 24px;
+  }
+
+      .content-area {
+        padding: 10px;
+        min-height: 400px;
+  }
+
+      .story-content,
+      .info-grid,
+      personstatus,
+      academics {
+        padding: 8px;
+  }
+
+      .info-value {
+        padding: 6px 10px;
+  }
+}
+
+    @media screen and (max-width: 480px) {
+      .container {
+        padding: 5px;
+        min-height: 600px;
+        /* 原本的400px增加到1.5倍 */
+    /* 确保min-height而不是height */
+  }
+
+      .menu {
+        padding: 0.2rem;
+        gap: 1px;
+  }
+
+      .link {
+        min-width: 36px;
+        max-width: 36px;
+  }
+
+      .link-icon {
+        width: 20px;
+        height: 20px;
+  }
+
+      .link-icon svg {
+        width: 20px;
+        height: 20px;
+  }
+
+      .content-area {
+        padding: 8px;
+        border-radius: 6px;
+        min-height: 300px;
+  }
+
+      .story-content,
+      .info-grid,
+      personstatus,
+      academics {
+        padding: 6px;
+  }
+
+      .info-value {
+        padding: 5px 8px;
+  }
+
+      .info-grid {
+        gap: 8px;
+  }
+}
+/* 颜色选择器容器样式 */
+    .color-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+}
+
+    .color-container input[type="color"
+] {
+      -webkit-appearance: none;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 4px;
+      padding: 0;
+      cursor: pointer;
+}
+
+    .color-container input[type="color"
+]: :-webkit-color-swatch-wrapper {
+      padding: 0;
+}
+
+    .color-container input[type="color"
+]: :-webkit-color-swatch {
+      border: none;
+      border-radius: 4px;
+}
+/* 预设配色按钮样式 */
+    .preset-colors {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 15px;
+}
+
+    .preset-btn {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px;
+      transition: all 0.3s ease;
+}
+/* 为每个预设按钮设置对应的背景色和文字色 */
+    .preset-btn:nth-child(1) {
+      background: #1a1a1a;
+      color: #b8a99a;
+}
+
+    .preset-btn:nth-child(2) {
+      background: #520808;
+      color: #A08A4B;
+}
+
+    .preset-btn:nth-child(3) {
+      background: #0E1A40;
+      color: #CD7F32;
+}
+
+    .preset-btn:nth-child(4) {
+      background: #93752e;
+      color: #2A1810;
+}
+
+    .preset-btn:nth-child(5) {
+      background: #002A2A;
+      color: #c0c0c0;
+}
+
+    .preset-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 8px rgba(0,
+  0,
+  0,
+  0.2);
+}
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="menu">
+      <div class="link" onclick="switchTab('story')">
+        <span class="link-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" fill="currentColor" viewBox="0 0 256 256">
+            <rect width="256" height="256" fill="none"></rect>
+            <path d="M224,48V208a8,8,0,0,1-8,8H72a8,8,0,0,1-8-8V48a8,8,0,0,1,8-8H216A8,8,0,0,1,224,48Z" fill="none"
+              stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+            <path d="M72,168H216" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="16" />
+            <line x1="96" y1="96" x2="192" y2="96" fill="none" stroke="currentColor" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="16" />
+          </svg>
+        </span>
+      </div>
+      <div class="link" onclick="switchTab('person')">
+        <span class="link-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" fill="currentColor" viewBox="0 0 256 256">
+            <rect width="256" height="256" fill="none"></rect>
+            <path
+              d="M147.88,196.86,82.2,131.18a8,8,0,0,1,0-11.31L148.86,53.2a8,8,0,0,1,11.31,0l65.68,65.68a8,8,0,0,1,0,11.31L159.2,196.86A8,8,0,0,1,147.88,196.86Z"
+              fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+            <line x1="48" y1="40" x2="56" y2="48" fill="none" stroke="currentColor" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="16" />
+            <line x1="40" y1="88" x2="48" y2="96" fill="none" stroke="currentColor" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="16" />
+            <line x1="88" y1="40" x2="96" y2="48" fill="none" stroke="currentColor" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="16" />
+          </svg>
+        </span>
+      </div>
+      <div class="link" onclick="switchTab('academic')">
+        <span class="link-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" fill="currentColor" viewBox="0 0 256 256">
+            <rect width="256" height="256" fill="none"></rect>
+            <path d="M200,224H56a8,8,0,0,1-8-8V40a8,8,0,0,1,8-8h96l56,56V216A8,8,0,0,1,200,224Z" fill="none"
+              stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+            <polyline points="152 32 152 88 208 88" fill="none" stroke="currentColor" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="16" />
+            <line x1="96" y1="136" x2="160" y2="136" fill="none" stroke="currentColor" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="16" />
+            <line x1="96" y1="168" x2="160" y2="168" fill="none" stroke="currentColor" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="16" />
+          </svg>
+        </span>
+      </div>
+      <div class="link" onclick="switchTab('map')">
+        <span class="link-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" fill="currentColor" viewBox="0 0 256 256">
+            <rect width="256" height="256" fill="none"></rect>
+            <path d="M216,216H40a8,8,0,0,1-8-8V48a8,8,0,0,1,8-8H216a8,8,0,0,1,8,8V208A8,8,0,0,1,216,216Z" fill="none"
+              stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+            <path d="M144,48V216" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="16" />
+            <path d="M32,96H224" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="16" />
+            <circle cx="88" cy="144" r="24" fill="none" stroke="currentColor" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="16" />
+          </svg>
+        </span>
+      </div>
+      <div class="link" onclick="switchTab('settings')">
+        <span class="link-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" fill="currentColor" viewBox="0 0 256 256">
+            <rect width="256" height="256" fill="none"></rect>
+            <circle cx="128" cy="128" r="48" fill="none" stroke="currentColor" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="16" />
+            <path
+              d="M183.7,65.1q3.8,3.5,7.2,7.2l27.3,3.9a103.2,103.2,0,0,1,10.2,24.6l-16.6,22.1s.3,6.8,0,10.2l16.6,22.1a102.2,102.2,0,0,1-10.2,24.6l-27.3,3.9s-4.7,4.9-7.2,7.2l-3.9,27.3a103.2,103.2,0,0,1-24.6,10.2l-22.1-16.6a57.9,57.9,0,0,1-10.2,0l-22.1,16.6a102.2,102.2,0,0,1-24.6-10.2l-3.9-27.3q-3.7-3.5-7.2-7.2l-27.3-3.9a103.2,103.2,0,0,1-10.2-24.6l16.6-22.1s-.3-6.8,0-10.2L27.6,100.8A102.2,102.2,0,0,1,37.8,76.2l27.3-3.9q3.5-3.7,7.2-7.2l3.9-27.3a103.2,103.2,0,0,1,24.6-10.2l22.1,16.6a57.9,57.9,0,0,1,10.2,0l22.1-16.6a102.2,102.2,0,0,1,24.6,10.2Z"
+              fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+          </svg>
+        </span>
+      </div>
+    </div>
+
+    <div class="content-area">
+      <div id="story" class="tab-content active">
+        <div class="scroll-effect">
+          <article>
+            <div class="story-content">
+              <!-- 内容由JavaScript动态生成 -->
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div id="person" class="tab-content">
+        <div class="scroll-effect">
+          <personstatus>
+            <!-- 内容由JavaScript动态生成 -->
+          </personstatus>
+        </div>
+      </div>
+
+      <div id="academic" class="tab-content">
+        <div class="scroll-effect">
+          <academics>
+            <!-- 内容由JavaScript动态生成 -->
+          </academics>
+        </div>
+      </div>
+
+      <div id="map" class="tab-content">
+        <div class="scroll-effect">
+          <map>
+            <div class="map-container">
+              <img src="https://files.catbox.moe/s472h8.jpg" alt="地图1" class="map-image">
+              <img src="https://files.catbox.moe/bbtlx1.jpg" alt="地图2" class="map-image">
+            </div>
+          </map>
+        </div>
+      </div>
+
+      <div id="settings" class="tab-content">
+        <div class="scroll-effect">
+          <div class="settings-panel">
+            <div class="settings-item">
+              <div class="settings-title">剧情文字大小</div>
+              <div class="slider-container">
+                <input type="range" min="12" max="24" value="16" class="slider" id="storyFontSize">
+                <span class="slider-value">16px</span>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-title">信息文字大小</div>
+              <div class="slider-container">
+                <input type="range" min="12" max="24" value="16" class="slider" id="infoFontSize">
+                <span class="slider-value">16px</span>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-title">页面边距</div>
+              <div class="slider-container">
+                <input type="range" min="5" max="40" value="20" class="slider" id="containerPadding">
+                <span class="slider-value">20px</span>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-title">内容边框宽度</div>
+              <div class="slider-container">
+                <input type="range" min="0" max="20" value="12" class="slider" id="contentPadding">
+                <span class="slider-value">12px</span>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-title">背景颜色</div>
+              <div class="color-container">
+                <input type="color" id="bgColor" value="#1a1a1a">
+                <span class="color-value">#1a1a1a</span>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-title">文字颜色</div>
+              <div class="color-container">
+                <input type="color" id="textColor" value="#b8a99a">
+                <span class="color-value">#b8a99a</span>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-title">预设配色</div>
+              <div class="preset-colors">
+                <button class="preset-btn" data-bg="#1a1a1a" data-text="#b8a99a">默认</button>
+                <button class="preset-btn" data-bg="#520808" data-text="#A08A4B">格兰芬多</button>
+                <button class="preset-btn" data-bg="#0E1A40" data-text="#CD7F32">拉文克劳</button>
+                <button class="preset-btn" data-bg="#93752e" data-text="#2A1810">赫奇帕奇</button>
+                <button class="preset-btn" data-bg="#002A2A" data-text="#c0c0c0">斯莱特林</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 定义游戏文本模板
+    let gameText = `<outputcontent>$1</outputcontent>`;
+
+    // 数据提取器
+    const DataExtractor = {
+      extractContent(text) {
+    // 检查是否有outputcontent标签
+        const outputContentMatch = text.match(/<outputcontent>([\s\S
+    ]*?)<\/outputcontent>/);
+        const content = outputContentMatch ? outputContentMatch[
+      1
+    ] : text;
+
+        // 匹配三个主要部分的内容
+        const articleMatch = content.match(/<article>([\s\S
+    ]*?)<\/article>/),
+        const personMatch = content.match(/<personstatus>([\s\S
+    ]*?)<\/personstatus>/),
+        const academicMatch = content.match(/<academics>([\s\S
+    ]*?)<\/academics>/),
+
+        return {
+          story: articleMatch ? articleMatch[
+        1
+      ].trim() : '',
+          person: this.extractPersonInfo(personMatch ? personMatch[
+        1
+      ] : ''),
+          academic: this.extractAcademicInfo(academicMatch ? academicMatch[
+        1
+      ] : '')
+    };
+  },
+
+      extractPersonInfo(text) {
+        const info = {};
+        const lines = text.split('\n');
+        lines.forEach(line => {
+          const [key, value
+      ] = line.split('：').map(s => s.trim());
+          if (key && value) {
+            info[key
+        ] = value;
+      }
+    });
+        return info;
+  },
+
+      extractAcademicInfo(text) {
+        const info = {};
+        const lines = text.split('\n');
+        lines.forEach(line => {
+          const [key, value
+      ] = line.split('：').map(s => s.trim());
+          if (key && value) {
+            info[key
+        ] = value;
+      }
+    });
+        return info;
+  }
+};
+
+    // UI更新器
+    const UIUpdater = {
+      updateContent(data) {
+        if (!data) return;
+        this.updateStory(data.story);
+        this.updatePersonInfo(data.person);
+        this.updateAcademicInfo(data.academic);
+  },
+
+      updateStory(content) {
+        if (!content) return;
+        document.querySelector('.story-content').innerHTML = content;
+  },
+
+      updatePersonInfo(data) {
+        if (!data) return;
+        const personStatus = document.querySelector('personstatus');
+        if (!personStatus) return;
+
+        personStatus.innerHTML = Object.entries(data)
+          .map(([key, value
+    ]) => `${key
+    }：${value
+    }`)
+          .join('\n');
+  },
+
+      updateAcademicInfo(data) {
+        if (!data) return;
+        const academics = document.querySelector('academics');
+        if (!academics) return;
+
+        academics.innerHTML = Object.entries(data)
+          .map(([key, value
+    ]) => `${key
+    }：${value
+    }`)
+          .join('\n');
+  }
+};
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+  });
+      document.querySelectorAll('.link').forEach(tab => {
+        tab.classList.remove('active');
+  });
+
+      document.getElementById(tabId).classList.add('active');
+      document.querySelector(`.link[onclick="switchTab('${tabId}')"
+  ]`).classList.add('active');
+}
+// 初始化函数
+    function initializeContent() {
+      const content = document.body.innerHTML;
+      const data = DataExtractor.extractContent(content);
+      if (data) {
+        UIUpdater.updateContent(data);
+  }
+}
+// 在页面加载时初始化
+    document.addEventListener('DOMContentLoaded', function () {
+      initializeFontSizeControls();
+      bindEventListeners();
+      initializeContent(); // 确保内容初始化函数被调用
+});
+
+    // 提供一个全局函数用于更新内容
+    window.updatePageContent = function (content) {
+      const data = DataExtractor.extractContent(content);
+      if (data) {
+        UIUpdater.updateContent(data);
+  }
+};
+
+    // 保存设置到localStorage
+    function saveSettings(key, value) {
+      try {
+        let settings = JSON.parse(localStorage.getItem('articleSettings') || '{}');
+        settings[key
+    ] = value;
+        localStorage.setItem('articleSettings', JSON.stringify(settings));
+  } catch (e) {
+        console.error('保存设置失败:', e);
+  }
+}
+// 从localStorage加载设置
+    function loadSettings() {
+      try {
+        return JSON.parse(localStorage.getItem('articleSettings') || '{}');
+  } catch (e) {
+        console.error('加载设置失败:', e);
+        return {};
+  }
+}
+// 修改初始化函数
+    function initializeFontSizeControls() {
+      const storySlider = document.getElementById('storyFontSize');
+      const infoSlider = document.getElementById('infoFontSize');
+      const paddingSlider = document.getElementById('containerPadding');
+      const contentPaddingSlider = document.getElementById('contentPadding');
+      const bgColorInput = document.getElementById('bgColor');
+      const textColorInput = document.getElementById('textColor');
+
+      // 加载保存的设置
+      const savedSettings = loadSettings();
+
+      function updateFontSize(target, size) {
+        const elements = document.querySelectorAll(target);
+        elements.forEach(el => el.style.fontSize = size + 'px');
+
+        // 更新设置面板中的标题大小提示
+        const settingsTitles = document.querySelectorAll('.settings-title');
+        settingsTitles.forEach(title => {
+          if (target === '.story-content' && title.textContent === '剧情文字大小') {
+            title.style.fontSize = size + 'px';
+      } else if (target === 'personstatus, academics' && title.textContent === '信息文字大小') {
+            title.style.fontSize = size + 'px';
+      }
+    });
+  }
+
+      function updateContainerPadding(size) {
+        const container = document.querySelector('.container');
+        container.style.padding = size + 'px';
+        // 同时更新容器高度，保持与padding同步
+        container.style.height = `calc(100vh - ${size * 2
+    }px)`;
+  }
+
+      function updateContentPadding(size) {
+        document.querySelector('.content-area').style.padding = size + 'px';
+  }
+
+      function updateBackgroundColor(color) {
+    // 更新背景色
+        document.body.style.background = color;
+        // 更新导航栏背景色，保持半透明效果
+        const rgba = hexToRgba(color,
+    0.8);
+        document.querySelector('.menu').style.backgroundColor = rgba;
+        bgColorInput.nextElementSibling.textContent = color;
+  }
+
+      function updateTextColor(color) {
+    // 更新所有相关元素的文字颜色
+        document.body.style.color = color;
+        document.querySelectorAll('.link, .settings-title, .slider-value, .color-value').forEach(el => {
+          el.style.color = color;
+    });
+        textColorInput.nextElementSibling.textContent = color;
+  }
+  // 辅助函数：将十六进制颜色转换为rgba
+      function hexToRgba(hex, alpha) {
+        const r = parseInt(hex.slice(1,
+    3),
+    16);
+        const g = parseInt(hex.slice(3,
+    5),
+    16);
+        const b = parseInt(hex.slice(5,
+    7),
+    16);
+        return `rgba(${r
+    }, ${g
+    }, ${b
+    }, ${alpha
+    })`;
+  }
+  // 应用保存的设置
+      if (savedSettings.storyFontSize) {
+        storySlider.value = savedSettings.storyFontSize;
+        updateFontSize('.story-content', savedSettings.storyFontSize);
+        storySlider.nextElementSibling.textContent = savedSettings.storyFontSize + 'px';
+  }
+
+      if (savedSettings.infoFontSize) {
+        infoSlider.value = savedSettings.infoFontSize;
+        updateFontSize('personstatus, academics', savedSettings.infoFontSize);
+        infoSlider.nextElementSibling.textContent = savedSettings.infoFontSize + 'px';
+  }
+
+      if (savedSettings.containerPadding) {
+        paddingSlider.value = savedSettings.containerPadding;
+        updateContainerPadding(savedSettings.containerPadding);
+        paddingSlider.nextElementSibling.textContent = savedSettings.containerPadding + 'px';
+  }
+
+      if (savedSettings.contentPadding) {
+        contentPaddingSlider.value = savedSettings.contentPadding;
+        updateContentPadding(savedSettings.contentPadding);
+        contentPaddingSlider.nextElementSibling.textContent = savedSettings.contentPadding + 'px';
+  }
+
+      if (savedSettings.bgColor) {
+        bgColorInput.value = savedSettings.bgColor;
+        updateBackgroundColor(savedSettings.bgColor);
+  }
+
+      if (savedSettings.textColor) {
+        textColorInput.value = savedSettings.textColor;
+        updateTextColor(savedSettings.textColor);
+  }
+  // 监听滑块变化
+      storySlider.addEventListener('input', (e) => {
+        const size = e.target.value;
+        updateFontSize('.story-content', size);
+        e.target.nextElementSibling.textContent = size + 'px';
+        saveSettings('storyFontSize', size);
+  });
+
+      infoSlider.addEventListener('input', (e) => {
+        const size = e.target.value;
+        updateFontSize('personstatus, academics', size);
+        e.target.nextElementSibling.textContent = size + 'px';
+        saveSettings('infoFontSize', size);
+  });
+
+      paddingSlider.addEventListener('input', (e) => {
+        const size = e.target.value;
+        updateContainerPadding(size);
+        e.target.nextElementSibling.textContent = size + 'px';
+        saveSettings('containerPadding', size);
+  });
+
+      contentPaddingSlider.addEventListener('input', (e) => {
+        const size = e.target.value;
+        updateContentPadding(size);
+        e.target.nextElementSibling.textContent = size + 'px';
+        saveSettings('contentPadding', size);
+  });
+
+      bgColorInput.addEventListener('input', (e) => {
+        const color = e.target.value;
+        updateBackgroundColor(color);
+        saveSettings('bgColor', color);
+  });
+
+      textColorInput.addEventListener('input', (e) => {
+        const color = e.target.value;
+        updateTextColor(color);
+        saveSettings('textColor', color);
+  });
+
+      // 添加预设配色功能
+      document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const bgColor = btn.dataset.bg;
+          const textColor = btn.dataset.text;
+
+          // 更新颜色选择器的值
+          bgColorInput.value = bgColor;
+          textColorInput.value = textColor;
+
+          // 应用颜色
+          updateBackgroundColor(bgColor);
+          updateTextColor(textColor);
+
+          // 保存设置
+          saveSettings('bgColor', bgColor);
+          saveSettings('textColor', textColor);
+    });
+  });
+}
+// 修改绑定事件监听器函数
+    function bindEventListeners() {
+      window.addEventListener('resize', () => {
+        const savedSettings = loadSettings();
+        if (savedSettings.storyFontSize) {
+          document.querySelectorAll('.story-content').forEach(el => {
+            el.style.fontSize = savedSettings.storyFontSize + 'px';
+      });
+    }
+        if (savedSettings.infoFontSize) {
+          document.querySelectorAll('personstatus, academics').forEach(el => {
+            el.style.fontSize = savedSettings.infoFontSize + 'px';
+      });
+    }
+        if (savedSettings.containerPadding) {
+          const container = document.querySelector('.container');
+          container.style.padding = savedSettings.containerPadding + 'px';
+          container.style.height = `calc(100vh - ${savedSettings.containerPadding * 2
+      }px)`;
+    }
+        if (savedSettings.contentPadding) {
+          document.querySelector('.content-area').style.padding = savedSettings.contentPadding + 'px';
+    }
+        if (savedSettings.textColor) {
+          document.body.style.color = savedSettings.textColor;
+          document.querySelectorAll('.link, .settings-title, .slider-value, .color-value').forEach(el => {
+            el.style.color = savedSettings.textColor;
+      });
+    }
+        if (savedSettings.bgColor) {
+          document.body.style.background = savedSettings.bgColor;
+          const rgba = hexToRgba(savedSettings.bgColor,
+      0.8);
+          document.querySelector('.menu').style.backgroundColor = rgba;
+    }
+  });
+}
+  </script>
+</body>
+
+</html>
+```
