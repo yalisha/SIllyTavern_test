@@ -578,12 +578,12 @@
             html += `<div class="data-item">
               <span class="data-label">${key}:</span>
               <span class="status-tag ${statusClass}">${value}</span>
-            </div>`;
+              </div>`;
           } else {
             html += `<div class="data-item">
               <span class="data-label">${key}:</span>
               <span class="data-value">${value}</span>
-            </div>`;
+              </div>`;
           }
         }
 
@@ -630,24 +630,24 @@
           if (servant['好感度']) {
             const affection = parseInt(servant['好感度']) || 0;
             html += `<div class="data-item">
-              <span class="data-label">好感度:</span>
-              <span class="data-value">${affection}</span>
-              <div class="progress-bar">
-                <div class="progress-fill" style="width: ${affection}%;"></div>
-              </div>
-            </div>`;
+                <span class="data-label">好感度:</span>
+                <span class="data-value">${affection}</span>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: ${affection}%;"></div>
+                </div>
+              </div>`;
           }
 
           // 调教度进度条
           if (servant['调教度']) {
             const training = parseInt(servant['调教度']) || 0;
             html += `<div class="data-item">
-              <span class="data-label">调教度:</span>
-              <span class="data-value">${training}</span>
-              <div class="progress-bar">
-                <div class="progress-fill" style="width: ${training}%;"></div>
-              </div>
-            </div>`;
+                <span class="data-label">调教度:</span>
+                <span class="data-value">${training}</span>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: ${training}%;"></div>
+                </div>
+              </div>`;
           }
 
           html += `</div>`;
@@ -679,13 +679,13 @@
         if (data.npcs && data.npcs.length > 0) {
           html += `<div class="data-item">
             <span class="data-label">NPC列表:</span>
-          </div>`;
+            </div>`;
 
           data.npcs.forEach(npc => {
             html += `<div class="data-item" style="margin-left: 15px;">
-              <span class="data-label">${npc.name}:</span>
-              <span class="data-value">${npc.status}</span>
-            </div>`;
+                <span class="data-label">${npc.name}:</span>
+                <span class="data-value">${npc.status}</span>
+              </div>`;
           });
         }
 
@@ -705,7 +705,7 @@
         if (data.storylines && data.storylines.length > 0) {
           html += `<div class="data-item">
             <span class="data-label">暗线剧情:</span>
-          </div>`;
+                    </div>`;
 
           data.storylines.forEach(story => {
             html += `<div class="dark-line">- ${story}</div>`;
@@ -716,7 +716,7 @@
         if (data.enemies && data.enemies.length > 0) {
           html += `<div class="data-item">
             <span class="data-label">敌对存在:</span>
-          </div>`;
+                  </div>`;
 
           data.enemies.forEach(enemy => {
             html += `<div class="dark-line">- ${enemy.value}</div>`;
