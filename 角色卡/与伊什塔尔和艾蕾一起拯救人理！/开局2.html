@@ -1,8 +1,12 @@
-```html
 <!DOCTYPE html>
 <html>
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>型月世界设定角色创建</title>
+  <!-- Add FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     /* FGO-inspired styling with box design - Flat UI version */
     body {
@@ -297,6 +301,144 @@
     input[type="radio"] {
       accent-color: #0078d7;
     }
+
+    /* 添加自定义魔术礼装对话框样式 */
+    .custom-dialog {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .dialog-content {
+      background-color: #24273a;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #363a4f;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 600px;
+      max-height: 80%;
+      overflow-y: auto;
+      color: #cad3f5;
+    }
+
+    .close-button {
+      color: #939ab7;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-button:hover {
+      color: #f5a97f;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #363a4f;
+      border-radius: 4px;
+      background-color: #1e2030;
+      color: #cad3f5;
+    }
+
+    .form-group textarea {
+      height: 80px;
+      resize: vertical;
+    }
+
+    .skill-section {
+      margin-top: 20px;
+    }
+
+    .skill-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .skill-input {
+      display: flex;
+      gap: 10px;
+    }
+
+    .skill-name {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #363a4f;
+      border-radius: 4px;
+      background-color: #1e2030;
+      color: #cad3f5;
+    }
+
+    .skill-effect {
+      flex: 2;
+      padding: 8px;
+      border: 1px solid #363a4f;
+      border-radius: 4px;
+      background-color: #1e2030;
+      color: #cad3f5;
+    }
+
+    .dialog-buttons {
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    .dialog-buttons button {
+      padding: 8px 16px;
+      margin-left: 10px;
+      background-color: #7287fd;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .dialog-buttons button:hover {
+      background-color: #8caaee;
+    }
+
+    .custom-option {
+      background-color: #363a4f;
+      border: 2px dashed #f5a97f;
+    }
+
+    .custom-option:hover {
+      background-color: #494d64;
+    }
+
+    /* Style for custom created buttons */
+    .custom-created {
+      background-color: #2d4f67;
+      border-left: 3px solid #f5a97f;
+    }
+
+    .custom-created:hover {
+      background-color: #3a6380;
+    }
+
+    .custom-created.selected {
+      background-color: #0078d7;
+      border-color: #0078d7;
+    }
   </style>
 </head>
 
@@ -439,6 +581,52 @@
               童子军服</div>
             <div class="option-button" data-value="winter_casual" onclick="selectMysticCode(this, '冬日便装')">
               冬日便装</div>
+            <!-- Custom Mystic Code Button -->
+            <div class="option-button custom-option" data-value="custom_mystic_code"
+              onclick="showCustomMysticCodeDialog()">
+              <i class="fas fa-plus"></i> 自定义魔术礼装
+            </div>
+          </div>
+
+          <!-- Custom Mystic Code Dialog -->
+          <div id="customMysticCodeDialog" class="custom-dialog">
+            <div class="dialog-content">
+              <span class="close-button" onclick="closeCustomDialog()">&times;</span>
+              <h3>创建自定义魔术礼装</h3>
+              <div class="form-group">
+                <label for="customMysticCodeName">名称:</label>
+                <input type="text" id="customMysticCodeName" placeholder="例如: 自创魔术礼装">
+              </div>
+              <div class="form-group">
+                <label for="customMysticCodeAppearance">外观描述:</label>
+                <textarea id="customMysticCodeAppearance" placeholder="描述这套魔术礼装的外观特征"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="customMysticCodeIntro">介绍:</label>
+                <textarea id="customMysticCodeIntro" placeholder="这套魔术礼装的背景介绍"></textarea>
+              </div>
+              <div class="skill-section">
+                <h4>技能 (最多3个)</h4>
+                <div class="skill-inputs">
+                  <div class="skill-input">
+                    <input type="text" placeholder="技能名称" class="skill-name">
+                    <input type="text" placeholder="技能效果" class="skill-effect">
+                  </div>
+                  <div class="skill-input">
+                    <input type="text" placeholder="技能名称" class="skill-name">
+                    <input type="text" placeholder="技能效果" class="skill-effect">
+                  </div>
+                  <div class="skill-input">
+                    <input type="text" placeholder="技能名称" class="skill-name">
+                    <input type="text" placeholder="技能效果" class="skill-effect">
+                  </div>
+                </div>
+              </div>
+              <div class="dialog-buttons">
+                <button onclick="saveCustomMysticCode()">保存</button>
+                <button onclick="closeCustomDialog()">取消</button>
+              </div>
+            </div>
           </div>
 
           <div id="mysticCodeDetails" class="mystic-code-detail">
@@ -472,6 +660,39 @@
             <div class="option-button" data-value="warflame_ignition" onclick="selectOption('specialSkill', this)">战意燃烧
             </div>
             <div class="option-button" data-value="stellar_desire" onclick="selectOption('specialSkill', this)">星欲映射
+            </div>
+            <!-- Custom Special Skill Button -->
+            <div class="option-button custom-option" data-value="custom_special_skill"
+              onclick="showCustomSpecialSkillDialog()">
+              <i class="fas fa-plus"></i> 自定义特殊技能
+            </div>
+          </div>
+
+          <!-- Custom Special Skill Dialog -->
+          <div id="customSpecialSkillDialog" class="custom-dialog">
+            <div class="dialog-content">
+              <span class="close-button" onclick="closeCustomSpecialSkillDialog()">&times;</span>
+              <h3>创建自定义特殊技能</h3>
+              <div class="form-group">
+                <label for="customSpecialSkillName">技能名称:</label>
+                <input type="text" id="customSpecialSkillName" placeholder="例如: 元素掌控">
+              </div>
+              <div class="form-group">
+                <label for="customSpecialSkillDescription">技能描述:</label>
+                <textarea id="customSpecialSkillDescription" placeholder="描述这个特殊技能的效果和特性"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="customSpecialSkillOrigin">技能来源:</label>
+                <textarea id="customSpecialSkillOrigin" placeholder="描述这个技能的起源或获得方式"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="customSpecialSkillLimit">使用限制:</label>
+                <textarea id="customSpecialSkillLimit" placeholder="描述这个技能的使用限制或副作用（如果有）"></textarea>
+              </div>
+              <div class="dialog-buttons">
+                <button onclick="saveCustomSpecialSkill()">保存</button>
+                <button onclick="closeCustomSpecialSkillDialog()">取消</button>
+              </div>
             </div>
           </div>
         </div>
@@ -933,6 +1154,11 @@
       // Store selection
       const value = element.dataset.value;
       playerData[category] = value;
+
+      // Reset custom flag if selecting a predefined option
+      if (category === 'specialSkill') {
+        playerData.isCustomSpecialSkill = false;
+      }
     }
 
     // Function to select magic strength
@@ -1551,7 +1777,23 @@
       }
 
       // Special skill
-      summary += `◆ 特殊技能：${specialSkillText[playerData.specialSkill] || '未选择'}\n`;
+      summary += `◆ 特殊技能：`;
+
+      if (playerData.isCustomSpecialSkill && playerData.customSpecialSkills && playerData.customSpecialSkills[playerData.specialSkill]) {
+        const customSkill = playerData.customSpecialSkills[playerData.specialSkill];
+        summary += `${customSkill.name}（自定义）\n`;
+        if (customSkill.description) {
+          summary += `  描述：${customSkill.description}\n`;
+        }
+        if (customSkill.origin) {
+          summary += `  来源：${customSkill.origin}\n`;
+        }
+        if (customSkill.limit) {
+          summary += `  限制：${customSkill.limit}\n`;
+        }
+      } else {
+        summary += `${specialSkillText[playerData.specialSkill] || '未选择'}\n`;
+      }
 
       // Noble Phantasm
       if (playerData.noblePhantasm === 'custom') {
@@ -1657,8 +1899,193 @@
         console.log('Command to execute:', `/send ${messageToSend}`);
       }
     }
+
+    // Functions for custom mystic code
+    function showCustomMysticCodeDialog() {
+      document.getElementById('customMysticCodeDialog').style.display = 'block';
+    }
+
+    function closeCustomDialog() {
+      document.getElementById('customMysticCodeDialog').style.display = 'none';
+    }
+
+    function saveCustomMysticCode() {
+      const name = document.getElementById('customMysticCodeName').value.trim();
+      if (!name) {
+        alert('请输入魔术礼装名称');
+        return;
+      }
+
+      const appearance = document.getElementById('customMysticCodeAppearance').value.trim();
+      const introduction = document.getElementById('customMysticCodeIntro').value.trim();
+
+      // Collect skills
+      const skillInputs = document.querySelectorAll('.skill-input');
+      const skills = [];
+
+      skillInputs.forEach(input => {
+        const skillName = input.querySelector('.skill-name').value.trim();
+        const skillEffect = input.querySelector('.skill-effect').value.trim();
+
+        if (skillName && skillEffect) {
+          skills.push({
+            "名称": skillName,
+            "效果": skillEffect
+          });
+        }
+      });
+
+      // Create custom mystic code data
+      const customCode = {
+        "appearance": appearance || "自定义魔术礼装",
+        "introduction": introduction || `${name}，由<user>自行设计的魔术礼装`,
+        "skills": skills.length > 0 ? skills : [{ "名称": "自定义技能", "效果": "效果待定" }],
+        "isCustom": true
+      };
+
+      // Add to mysticCodesData
+      mysticCodesData[name] = customCode;
+
+      // Find the correct option grid for mystic codes
+      const headers = document.querySelectorAll('.box-header');
+      let mysticCodeGrid = null;
+
+      // Find the header with text "选择魔术礼装" and then get its parent's .option-grid
+      for (const header of headers) {
+        if (header.textContent.trim() === '选择魔术礼装') {
+          // Navigate to the .option-grid inside the box-content
+          mysticCodeGrid = header.closest('.box-container').querySelector('.option-grid');
+          break;
+        }
+      }
+
+      if (!mysticCodeGrid) {
+        console.error('Could not find mystic code grid');
+        return;
+      }
+
+      // Create a new button for this custom code
+      const dataValue = 'custom_' + Date.now(); // Create unique ID
+      const newButton = document.createElement('div');
+      newButton.className = 'option-button custom-created';
+      newButton.dataset.value = dataValue;
+      newButton.textContent = name;
+      newButton.onclick = function () { selectMysticCode(this, name); };
+
+      // Insert new button before the custom option button
+      const customButton = document.querySelector('[data-value="custom_mystic_code"]');
+      mysticCodeGrid.insertBefore(newButton, customButton);
+
+      // Select the new mystic code
+      selectMysticCode(newButton, name);
+
+      // Close dialog
+      closeCustomDialog();
+
+      // Reset form
+      document.getElementById('customMysticCodeName').value = '';
+      document.getElementById('customMysticCodeAppearance').value = '';
+      document.getElementById('customMysticCodeIntro').value = '';
+      document.querySelectorAll('.skill-name, .skill-effect').forEach(input => {
+        input.value = '';
+      });
+    }
+
+    // Functions for custom special skill
+    function showCustomSpecialSkillDialog() {
+      document.getElementById('customSpecialSkillDialog').style.display = 'block';
+    }
+
+    function closeCustomSpecialSkillDialog() {
+      document.getElementById('customSpecialSkillDialog').style.display = 'none';
+    }
+
+    function saveCustomSpecialSkill() {
+      const name = document.getElementById('customSpecialSkillName').value.trim();
+      if (!name) {
+        alert('请输入技能名称');
+        return;
+      }
+
+      const description = document.getElementById('customSpecialSkillDescription').value.trim();
+      const origin = document.getElementById('customSpecialSkillOrigin').value.trim();
+      const limit = document.getElementById('customSpecialSkillLimit').value.trim();
+
+      // Create a custom skill data
+      const customSkill = {
+        name: name,
+        description: description || "自定义特殊技能",
+        origin: origin || `由<user>独特开发的技能`,
+        limit: limit || "无特殊限制",
+        isCustom: true
+      };
+
+      // Store in player data or a dedicated structure if needed
+      if (!playerData.customSpecialSkills) {
+        playerData.customSpecialSkills = {};
+      }
+
+      // Generate a unique ID for this custom skill
+      const skillId = 'custom_skill_' + Date.now();
+      playerData.customSpecialSkills[skillId] = customSkill;
+
+      // Find the option grid - using a more reliable approach
+      const headers = document.querySelectorAll('.box-header');
+      let specialSkillsGrid = null;
+
+      // Find the header with text "选择特殊技能" and then get its parent's .option-grid
+      for (const header of headers) {
+        if (header.textContent.trim() === '选择特殊技能') {
+          // Navigate to the .option-grid inside the box-content
+          specialSkillsGrid = header.closest('.box-container').querySelector('.option-grid');
+          break;
+        }
+      }
+
+      if (!specialSkillsGrid) {
+        console.error('Could not find special skills grid');
+        return;
+      }
+
+      // Create a new button for this custom skill
+      const newButton = document.createElement('div');
+      newButton.className = 'option-button custom-created';
+      newButton.dataset.value = skillId;
+      newButton.textContent = name;
+      newButton.onclick = function () {
+        selectCustomSpecialSkill(this, skillId);
+      };
+
+      // Insert new button before the custom option button
+      const customButton = document.querySelector('[data-value="custom_special_skill"]');
+      specialSkillsGrid.insertBefore(newButton, customButton);
+
+      // Select the new skill
+      selectCustomSpecialSkill(newButton, skillId);
+
+      // Close dialog
+      closeCustomSpecialSkillDialog();
+
+      // Reset form
+      document.getElementById('customSpecialSkillName').value = '';
+      document.getElementById('customSpecialSkillDescription').value = '';
+      document.getElementById('customSpecialSkillOrigin').value = '';
+      document.getElementById('customSpecialSkillLimit').value = '';
+    }
+
+    function selectCustomSpecialSkill(element, skillId) {
+      // Clear previous selections
+      const siblings = element.parentElement.querySelectorAll('.option-button');
+      siblings.forEach(sib => sib.classList.remove('selected'));
+
+      // Add selected class
+      element.classList.add('selected');
+
+      // Store selection in playerData
+      playerData.specialSkill = skillId;
+      playerData.isCustomSpecialSkill = true;
+    }
   </script>
 </body>
 
 </html>
-```
