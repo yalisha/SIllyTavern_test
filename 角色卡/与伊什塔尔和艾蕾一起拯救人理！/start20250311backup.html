@@ -123,7 +123,6 @@
       padding: 10px;
       background-color: #2a2a2a;
       border: 1px solid #444;
-      border-radius: 2px;
     }
 
     .noble-phantasm-card {
@@ -241,8 +240,8 @@
     }
 
     .skill-list {
-      list-style-type: none;
-      padding: 0;
+      list-style: none;
+      padding-left: 0;
     }
 
     .skill-list li {
@@ -439,152 +438,6 @@
       background-color: #0078d7;
       border-color: #0078d7;
     }
-
-    /* Special Skills Styles */
-    .skill-grid {
-      display: flex;
-      gap: 20px;
-    }
-
-    .skill-options {
-      flex: 1;
-      max-width: 60%;
-    }
-
-    .skill-details {
-      flex: 1;
-      background-color: #2d3142;
-      border-radius: 10px;
-      padding: 15px;
-      min-height: 200px;
-      display: none;
-    }
-
-    .skill-category {
-      font-weight: bold;
-      margin: 15px 0 10px;
-      color: #f5a97f;
-      border-bottom: 1px solid #f5a97f;
-      padding-bottom: 5px;
-    }
-
-    .skill-button {
-      background-color: #363b54;
-      border-left: 3px solid #c6a0f6;
-    }
-
-    .skill-button:hover {
-      background-color: #494d64;
-    }
-
-    .skill-button.selected {
-      background-color: #0078d7;
-      border-color: #0078d7;
-    }
-
-    .skill-detail-header {
-      font-size: 1.3em;
-      font-weight: bold;
-      color: #f5a97f;
-      margin-bottom: 10px;
-      border-bottom: 1px solid #f5a97f;
-      padding-bottom: 5px;
-    }
-
-    .skill-description {
-      color: #cad3f5;
-      margin-bottom: 15px;
-    }
-
-    .skill-abilities {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .skill-ability {
-      background-color: #363b54;
-      border-radius: 8px;
-      padding: 10px;
-      border-left: 3px solid #c6a0f6;
-    }
-
-    .skill-ability-name {
-      font-weight: bold;
-      color: #c6a0f6;
-      margin-bottom: 5px;
-    }
-
-    .skill-ability-effect {
-      color: #cad3f5;
-      margin-bottom: 5px;
-    }
-
-    .skill-ability-cooldown {
-      color: #8bd5ca;
-      font-size: 0.9em;
-    }
-
-    .skill-detail-placeholder {
-      display: flex;
-      height: 100%;
-      justify-content: center;
-      align-items: center;
-      color: #8087a2;
-      font-style: italic;
-    }
-
-    .button-group {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-
-    .back-button {
-      background-color: #5b6078;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .back-button:hover {
-      background-color: #6e738d;
-    }
-
-    /* 特殊技能相关样式 */
-    .special-skill-details {
-      margin-top: 10px;
-      padding: 10px;
-      background-color: rgba(0, 0, 0, 0.05);
-      border-radius: 5px;
-    }
-
-    .subskills-container {
-      margin-top: 15px;
-    }
-
-    .subskill-item {
-      margin-bottom: 15px;
-      padding: 10px;
-      background-color: rgba(0, 0, 0, 0.03);
-      border-radius: 5px;
-      border-left: 3px solid #6a4caf;
-    }
-
-    .subskill-item h4 {
-      margin-top: 0;
-      color: #6a4caf;
-    }
-
-    .skill-description {
-      font-style: italic;
-      margin-bottom: 15px;
-      padding: 10px;
-      background-color: rgba(106, 76, 175, 0.1);
-      border-radius: 5px;
-    }
   </style>
 </head>
 
@@ -596,14 +449,15 @@
     <div id="stage1" class="stage active">
       <h2>第一阶段：<user>基本信息</h2>
 
-      <!-- 性别选择 -->
-      <div class="selection-group">
-        <label>你的性别:</label>
-        <div class="gender-options">
-          <div class="option-button" data-value="male" onclick="selectOption('gender', this)">男性</div>
-          <div class="option-button" data-value="female" onclick="selectOption('gender', this)">女性</div>
-          <div class="option-button" data-value="nonbinary" onclick="selectOption('gender', this)">非二元性别</div>
-          <div class="option-button" data-value="futa" onclick="selectOption('gender', this)">扶她/唧娘</div>
+      <div class="box-container">
+        <div class="box-header">选择性别</div>
+        <div class="box-content">
+          <div class="option-grid">
+            <div class="option-button" data-value="male" onclick="selectOption('gender', this)">男性</div>
+            <div class="option-button" data-value="female" onclick="selectOption('gender', this)">女性</div>
+            <div class="option-button" data-value="futa" onclick="selectOption('gender', this)">扶他</div>
+            <div class="option-button" data-value="femboy" onclick="selectOption('gender', this)">男身女相</div>
+          </div>
         </div>
       </div>
 
@@ -733,118 +587,46 @@
             </div>
           </div>
 
-          <!-- Custom Mystic Code Dialog -->
-          <div id="customMysticCodeDialog" class="custom-dialog">
-            <div class="dialog-content">
-              <span class="close-button" onclick="closeCustomDialog()">&times;</span>
-              <h3>创建自定义魔术礼装</h3>
-              <div class="form-group">
-                <label for="customMysticCodeName">名称:</label>
-                <input type="text" id="customMysticCodeName" placeholder="例如: 自创魔术礼装">
-              </div>
-              <div class="form-group">
-                <label for="customMysticCodeAppearance">外观描述:</label>
-                <textarea id="customMysticCodeAppearance" placeholder="描述这套魔术礼装的外观特征"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="customMysticCodeIntro">介绍:</label>
-                <textarea id="customMysticCodeIntro" placeholder="这套魔术礼装的背景介绍"></textarea>
-              </div>
-              <div class="skill-section">
-                <h4>技能 (最多3个)</h4>
-                <div class="skill-inputs">
-                  <div class="skill-input">
-                    <input type="text" placeholder="技能名称" class="skill-name">
-                    <input type="text" placeholder="技能效果" class="skill-effect">
-                  </div>
-                  <div class="skill-input">
-                    <input type="text" placeholder="技能名称" class="skill-name">
-                    <input type="text" placeholder="技能效果" class="skill-effect">
-                  </div>
-                  <div class="skill-input">
-                    <input type="text" placeholder="技能名称" class="skill-name">
-                    <input type="text" placeholder="技能效果" class="skill-effect">
-                  </div>
-                </div>
-              </div>
-              <div class="dialog-buttons">
-                <button onclick="saveCustomMysticCode()">保存</button>
-                <button onclick="closeCustomDialog()">取消</button>
-              </div>
-            </div>
-          </div>
-
-          <div id="mysticCodeDetails" class="mystic-code-detail">
-            <!-- Details will be filled dynamically when a mystic code is selected -->
-          </div>
+          <div id="mysticCodeDetails" class="mystic-code-detail"></div>
         </div>
       </div>
 
+      <!-- 新增特殊技能选择区域 -->
       <div class="box-container">
         <div class="box-header">选择特殊技能</div>
         <div class="box-content">
           <div class="option-grid">
-            <div class="option-button" data-value="puppet" onclick="selectOption('specialSkill', this)">魔偶</div>
-            <div class="option-button" data-value="print_cage" onclick="selectOption('specialSkill', this)">印笼技能</div>
-            <div class="option-button" data-value="ares" onclick="selectOption('specialSkill', this)">战神阿瑞斯 ARES</div>
-            <div class="option-button" data-value="golden_armor" onclick="selectOption('specialSkill', this)">GOLDEN 大具足
-            </div>
-            <div class="option-button" data-value="god_bazooka" onclick="selectOption('specialSkill', this)">神之巴祖卡</div>
-            <div class="option-button" data-value="anti_beast" onclick="selectOption('specialSkill', this)">对兽魔术</div>
-            <div class="option-button" data-value="desire_resonance" onclick="selectOption('specialSkill', this)">欲望共振
-            </div>
-            <div class="option-button" data-value="emotion_circuit" onclick="selectOption('specialSkill', this)">情感回路
-            </div>
-            <div class="option-button" data-value="blade_of_dread" onclick="selectOption('specialSkill', this)">恐惧之刃
-            </div>
-            <div class="option-button" data-value="desire_engine" onclick="selectOption('specialSkill', this)">机械欲望引擎
-            </div>
-            <div class="option-button" data-value="sacred_desire_shift" onclick="selectOption('specialSkill', this)">
-              圣欲转化
-            </div>
-            <div class="option-button" data-value="warflame_ignition" onclick="selectOption('specialSkill', this)">战意燃烧
-            </div>
-            <div class="option-button" data-value="stellar_desire" onclick="selectOption('specialSkill', this)">星欲映射
-            </div>
-            <!-- Custom Special Skill Button -->
+            <div class="option-button" data-value="魔偶" onclick="selectSpecialSkill(this)">魔偶</div>
+            <div class="option-button" data-value="印笼技能" onclick="selectSpecialSkill(this)">印笼技能</div>
+            <div class="option-button" data-value="战神阿瑞斯 ARES" onclick="selectSpecialSkill(this)">战神阿瑞斯 ARES</div>
+            <div class="option-button" data-value="GOLDEN 大具足" onclick="selectSpecialSkill(this)">GOLDEN 大具足</div>
+            <div class="option-button" data-value="神之巴祖卡" onclick="selectSpecialSkill(this)">神之巴祖卡</div>
+            <div class="option-button" data-value="对兽魔术" onclick="selectSpecialSkill(this)">对兽魔术</div>
+            <div class="option-button" data-value="欲望共振" onclick="selectSpecialSkill(this)">欲望共振</div>
+            <div class="option-button" data-value="情感回路" onclick="selectSpecialSkill(this)">情感回路</div>
+            <div class="option-button" data-value="恐惧之刃" onclick="selectSpecialSkill(this)">恐惧之刃</div>
+            <div class="option-button" data-value="机械欲望引擎" onclick="selectSpecialSkill(this)">机械欲望引擎</div>
+            <div class="option-button" data-value="圣欲转化" onclick="selectSpecialSkill(this)">圣欲转化</div>
+            <div class="option-button" data-value="战意燃烧" onclick="selectSpecialSkill(this)">战意燃烧</div>
+            <div class="option-button" data-value="星欲映射" onclick="selectSpecialSkill(this)">星欲映射</div>
+            <!-- 添加新的特殊技能按钮 -->
+            <div class="option-button" data-value="大帝衣" onclick="selectSpecialSkill(this)">大帝衣</div>
+            <div class="option-button" data-value="吸引力" onclick="selectSpecialSkill(this)">吸引力</div>
+            <div class="option-button" data-value="大炮技能" onclick="selectSpecialSkill(this)">大炮技能</div>
+            <div class="option-button" data-value="希翁技能" onclick="selectSpecialSkill(this)">希翁技能</div>
+            <div class="option-button" data-value="徽章技能" onclick="selectSpecialSkill(this)">徽章技能</div>
+            <!-- 自定义特殊技能按钮 -->
             <div class="option-button custom-option" data-value="custom_special_skill"
               onclick="showCustomSpecialSkillDialog()">
               <i class="fas fa-plus"></i> 自定义特殊技能
             </div>
           </div>
-
-          <!-- Custom Special Skill Dialog -->
-          <div id="customSpecialSkillDialog" class="custom-dialog">
-            <div class="dialog-content">
-              <span class="close-button" onclick="closeCustomSpecialSkillDialog()">&times;</span>
-              <h3>创建自定义特殊技能</h3>
-              <div class="form-group">
-                <label for="customSpecialSkillName">技能名称:</label>
-                <input type="text" id="customSpecialSkillName" placeholder="例如: 元素掌控">
-              </div>
-              <div class="form-group">
-                <label for="customSpecialSkillDescription">技能描述:</label>
-                <textarea id="customSpecialSkillDescription" placeholder="描述这个特殊技能的效果和特性"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="customSpecialSkillOrigin">技能来源:</label>
-                <textarea id="customSpecialSkillOrigin" placeholder="描述这个技能的起源或获得方式"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="customSpecialSkillLimit">使用限制:</label>
-                <textarea id="customSpecialSkillLimit" placeholder="描述这个技能的使用限制或副作用（如果有）"></textarea>
-              </div>
-              <div class="dialog-buttons">
-                <button onclick="saveCustomSpecialSkill()">保存</button>
-                <button onclick="closeCustomSpecialSkillDialog()">取消</button>
-              </div>
-            </div>
-          </div>
+          <div id="specialSkillDetails" class="mystic-code-detail"></div>
         </div>
       </div>
 
       <div class="navigation">
-        <button class="nav-button" onclick="previousStage()">上一步</button>
+        <button class="nav-button" onclick="prevStage()">上一步</button>
         <button class="nav-button" onclick="nextStage()">下一步</button>
       </div>
     </div>
@@ -1137,6 +919,44 @@
     </div>
   </div>
 
+  <!-- 添加自定义特殊技能对话框 -->
+  <div id="customSpecialSkillDialog"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 1000;">
+    <div
+      style="position: relative; width: 90%; max-width: 600px; margin: 50px auto; background-color: #2a2a2a; padding: 20px; border-radius: 4px;">
+      <h3 style="margin-top: 0;">创建自定义特殊技能</h3>
+      <button onclick="closeCustomSpecialSkillDialog()"
+        style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: white; font-size: 20px; cursor: pointer;">&times;</button>
+
+      <div style="margin-bottom: 15px;">
+        <label for="customSpecialSkillName">技能名称:</label>
+        <input type="text" id="customSpecialSkillName"
+          style="width: 100%; padding: 8px; box-sizing: border-box; margin-top: 5px;">
+      </div>
+
+      <div style="margin-bottom: 15px;">
+        <label for="customSpecialSkillDescription">技能描述:</label>
+        <textarea id="customSpecialSkillDescription"
+          style="width: 100%; height: 60px; padding: 8px; box-sizing: border-box; margin-top: 5px;"></textarea>
+      </div>
+
+      <div style="margin-bottom: 15px;">
+        <label for="customSpecialSkillEffect1">技能效果1:</label>
+        <input type="text" id="customSpecialSkillEffect1"
+          style="width: 100%; padding: 8px; box-sizing: border-box; margin-top: 5px;" placeholder="如：提升全体从者攻击力30%">
+      </div>
+
+      <div style="margin-bottom: 15px;">
+        <label for="customSpecialSkillEffect2">技能效果2:</label>
+        <input type="text" id="customSpecialSkillEffect2"
+          style="width: 100%; padding: 8px; box-sizing: border-box; margin-top: 5px;" placeholder="如：赋予指定从者无敌（1次）">
+      </div>
+
+      <button onclick="saveCustomSpecialSkill()"
+        style="background-color: #0078d7; color: white; border: none; padding: 10px 20px; border-radius: 2px; cursor: pointer;">确定</button>
+    </div>
+  </div>
+
   <script>
     // 魔术礼装数据
     const mysticCodesData = {
@@ -1250,38 +1070,29 @@
       }
     };
 
-    // Player data object to store all selections
+    // 初始化玩家数据对象
     const playerData = {
+      stage: 1,
+      isPMerlin: false,
       gender: '',
       magicStrength: '',
-      mysticCode: '',
-      mysticCodeDetails: {},
-      specialSkill: '',
       playerTrait: '',
-      customPlayerTrait: {
-        name: '',
-        description: ''
-      },
+      customPlayerTrait: null,
+      mysticCodeId: '',
+      mysticCodeDetails: null,
+      specialSkill: '',
+      isCustomSpecialSkill: false,
+      customSpecialSkill: null,
       noblePhantasm: '',
-      customNoblePhantasm: {
-        name: '',
-        rank: '',
-        type: '',
-        description: ''
-      },
-      commandSeals: 3,
-      ishtarAffection: 100,
-      ishtarTraining: 100,
-      ereshAffection: 100,
-      ereshTraining: 100,
+      customNoblePhantasm: null,
       startPoint: '',
-      selectedServants: []
-    };
-
-    // 创建用于发送到SillyTavern的消息对象
-    const messageToSend = {
-      playerInfo: playerData,
-      specialSkill: null
+      selectedServants: [],
+      finalComments: '',
+      commandSeals: 3, // 初始令咒数量为3
+      ishtarAffection: 100, // 伊什塔尔初始好感度为100
+      ishtarTraining: 100, // 伊什塔尔初始调教度为100
+      ereshAffection: 100, // 艾蕾初始好感度为100
+      ereshTraining: 100  // 艾蕾初始调教度为100
     };
 
     // Current stage tracking
@@ -1295,56 +1106,21 @@
 
     // Function to select gender option
     function selectOption(category, element) {
-      console.log("选择选项:", category, element.dataset.value);
+      // Clear previous selections in the same category
+      const siblings = element.parentElement.querySelectorAll('.option-button');
+      siblings.forEach(sib => sib.classList.remove('selected'));
 
-      // 移除其他按钮的active类
-      const buttons = document.querySelectorAll(`.${category}-options .option-button`);
-      buttons.forEach(button => button.classList.remove('active'));
+      // Add selected class to clicked element
+      element.classList.add('selected');
 
-      // 给当前按钮添加active类
-      element.classList.add('active');
-
-      // 设置选中的值
+      // Store selection
       const value = element.dataset.value;
+      playerData[category] = value;
 
-      // 根据选项类型进行处理
-      if (category === 'gender') {
-        playerData.gender = value;
-        console.log("设置性别为:", value);
-      } else if (category === 'magicStrength') {
-        playerData.magicStrength = value;
-      } else if (category === 'playerTrait') {
-        playerData.playerTrait = value;
-        if (value === 'custom') {
-          showCustomTraitDialog();
-        }
-      } else if (category === 'mysticCode') {
-        playerData.mysticCode = value;
-        if (value === 'custom') {
-          showCustomMysticCodeDialog();
-        }
-      } else if (category === 'specialSkill') {
-        playerData.specialSkill = value;
-        selectedSpecialSkill = value;
-
-        // 如果不是自定义特殊技能，显示特殊技能详情对话框
-        if (value !== 'custom_special_skill') {
-          showSpecialSkillDetails(value);
-        } else {
-          showCustomSpecialSkillDialog();
-        }
-      } else if (category === 'noblePhantasm') {
-        playerData.noblePhantasm = value;
-        if (value === 'custom') {
-          showCustomNoblePhantasmDialog();
-        }
+      // Reset custom flag if selecting a predefined option
+      if (category === 'specialSkill') {
+        playerData.isCustomSpecialSkill = false;
       }
-
-      // 更新playerData对象
-      console.log("更新后的playerData:", playerData);
-
-      // 更新messageToSend对象
-      updateMessageToSend();
     }
 
     // Function to select magic strength
@@ -1372,7 +1148,7 @@
 
       // Store selection
       const value = element.dataset.value;
-      playerData.mysticCode = value;
+      playerData.mysticCodeId = value;
       playerData.mysticCodeDetails = mysticCodesData[codeName];
 
       // Display mystic code details
@@ -1670,7 +1446,7 @@
           }
           break;
         case 2:
-          if (!playerData.mysticCode) {
+          if (!playerData.mysticCodeId) {
             alert('请选择魔术礼装！');
             return false;
           }
@@ -1785,7 +1561,7 @@
       summaryHTML += `
         <div class="summary-item">
           <span>特殊技能:</span>
-          <span>${specialSkillText[playerData.specialSkill] || '未选择'}</span>
+          <span>${specialSkillText[playerData.specialSkill] || playerData.specialSkill || '未选择'}</span>
         </div>
         <div class="summary-item">
           <span>宝具:</span>
@@ -1952,7 +1728,7 @@
       if (playerData.playerTrait === 'custom' && playerData.customPlayerTrait.description) {
         summary += `  描述：${playerData.customPlayerTrait.description}\n`;
       }
-      summary += `◆ 魔术礼装：${mysticCodeText[playerData.mysticCode] || '未选择'}\n`;
+      summary += `◆ 魔术礼装：${mysticCodeText[playerData.mysticCodeId] || '未选择'}\n`;
 
       // Mystic code details
       if (playerData.mysticCodeDetails && playerData.mysticCodeDetails.skills) {
@@ -1965,17 +1741,16 @@
       // Special skill
       summary += `◆ 特殊技能：`;
 
-      if (playerData.isCustomSpecialSkill && playerData.customSpecialSkills && playerData.customSpecialSkills[playerData.specialSkill]) {
-        const customSkill = playerData.customSpecialSkills[playerData.specialSkill];
-        summary += `${customSkill.name}（自定义）\n`;
-        if (customSkill.description) {
-          summary += `  描述：${customSkill.description}\n`;
+      if (playerData.isCustomSpecialSkill && playerData.customSpecialSkill) {
+        summary += `${playerData.customSpecialSkill.name}（自定义）\n`;
+        if (playerData.customSpecialSkill.description) {
+          summary += `  描述：${playerData.customSpecialSkill.description}\n`;
         }
-        if (customSkill.origin) {
-          summary += `  来源：${customSkill.origin}\n`;
+        if (playerData.customSpecialSkill.origin) {
+          summary += `  来源：${playerData.customSpecialSkill.origin}\n`;
         }
-        if (customSkill.limit) {
-          summary += `  限制：${customSkill.limit}\n`;
+        if (playerData.customSpecialSkill.limit) {
+          summary += `  限制：${playerData.customSpecialSkill.limit}\n`;
         }
       } else {
         summary += `${specialSkillText[playerData.specialSkill] || '未选择'}\n`;
@@ -2028,61 +1803,43 @@
 
     // Function to confirm selections and start the game
     function confirmSelections() {
-      // Format noble phantasm data
-      let noblePhantasmData;
-      let randomNoblePhantasmRequest = false;
-      let randomNPPrompt = '';
+      // 生成要发送的数据
+      const messageToSend = buildFinalData();
 
-      if (playerData.noblePhantasm === 'custom') {
-        noblePhantasmData = playerData.customNoblePhantasm;
-      } else if (playerData.noblePhantasm === '随机对城宝具') {
-        alert('系统将为您生成一个随机对城宝具。');
-        noblePhantasmData = { type: '对城宝具', isRandom: true };
-        randomNoblePhantasmRequest = true;
-        randomNPPrompt = '请为我生成一个对城级别的宝具，包括名称、等级、类型与效果描述，并记录到我的角色设定中。';
-      } else if (playerData.noblePhantasm === '完全随机宝具') {
-        alert('系统将为您生成一个完全随机的宝具。');
-        noblePhantasmData = { isFullyRandom: true };
-        randomNoblePhantasmRequest = true;
-        randomNPPrompt = '请为我生成一个完全随机的宝具，包括名称、等级、类型与效果描述，并记录到我的角色设定中。';
-      } else {
-        noblePhantasmData = { name: playerData.noblePhantasm };
+      // 更新摘要显示
+      const summaryElement = document.getElementById('summaryContainer');
+      summaryElement.innerHTML = `<pre>${messageToSend}</pre>`;
+
+      console.log("准备发送数据:", messageToSend);
+
+      // 复制到剪贴板作为备份方式
+      try {
+        navigator.clipboard.writeText(messageToSend)
+          .then(() => console.log("已复制到剪贴板"))
+          .catch(err => console.error("剪贴板复制失败:", err));
+      } catch (e) {
+        console.error("剪贴板操作失败:", e);
       }
 
-      // Generate detailed summary
-      const detailedSummary = generateDetailedSummary();
-
-      // Prepare data to send to SillyTavern
-      const gameData = {
-        gameAction: "continue",
-        player: {
-          isPMerlin: playerData.isPMerlin,
-          ishtarAffection: playerData.ishtarAffection,
-          ishtarTraining: playerData.ishtarTraining,
-          ereshAffection: playerData.ereshAffection,
-          ereshTraining: playerData.ereshTraining,
-          thirdStageTrait: playerData.thirdStageTrait,
-          startPoint: playerData.startPoint,
-          selectedServants: playerData.selectedServants
+      // 发送到SillyTavern
+      try {
+        // 使用与开局ui_pcr.html完全相同的方式发送
+        if (window.parent && typeof window.parent.triggerSlash === 'function') {
+          // 如果在iframe中运行，使用父窗口的triggerSlash
+          window.parent.triggerSlash(`/send ${messageToSend}|/trigger`);
+          console.log("通过父窗口triggerSlash发送成功");
+        } else if (typeof triggerSlash === 'function') {
+          // 直接使用triggerSlash
+          triggerSlash(`/send ${messageToSend}|/trigger`);
+          console.log("通过triggerSlash发送成功");
+        } else {
+          // 如果triggerSlash不可用，显示警告
+          console.warn("triggerSlash函数不可用，请手动复制内容");
+          alert("无法自动发送数据，内容已复制到剪贴板，请手动粘贴到聊天框");
         }
-      };
-
-      // Combine game data with summary and random NP request if needed
-      let messageToSend = detailedSummary + "\n\n";
-
-      // Add JSON data that will trigger the game
-      messageToSend += JSON.stringify(gameData) + "|/trigger";
-
-      // Add the random Noble Phantasm request if applicable
-      if (randomNoblePhantasmRequest) {
-        messageToSend += "\n\n" + randomNPPrompt;
-      }
-
-      // Execute the command using triggerSlash
-      if (typeof triggerSlash === 'function') {
-        triggerSlash(`/send ${messageToSend}`);
-      } else {
-        console.log('Command to execute:', `/send ${messageToSend}`);
+      } catch (error) {
+        console.error("发送到SillyTavern失败:", error);
+        alert("发送失败，请手动复制内容到聊天框");
       }
     }
 
@@ -2179,7 +1936,7 @@
 
     // Functions for custom special skill
     function showCustomSpecialSkillDialog() {
-      document.getElementById('customSpecialSkillDialog').style.display = 'flex';
+      document.getElementById('customSpecialSkillDialog').style.display = 'block';
     }
 
     function closeCustomSpecialSkillDialog() {
@@ -2187,397 +1944,534 @@
     }
 
     function saveCustomSpecialSkill() {
+      // 获取输入的值
       const name = document.getElementById('customSpecialSkillName').value.trim();
+      const description = document.getElementById('customSpecialSkillDescription').value.trim();
+      const effect1 = document.getElementById('customSpecialSkillEffect1').value.trim();
+      const effect2 = document.getElementById('customSpecialSkillEffect2').value.trim();
+
+      // 验证必填字段
       if (!name) {
         alert('请输入技能名称');
         return;
       }
 
-      const description = document.getElementById('customSpecialSkillDescription').value.trim();
-      const origin = document.getElementById('customSpecialSkillOrigin').value.trim();
-      const limit = document.getElementById('customSpecialSkillLimit').value.trim();
-
-      // Create a custom skill data
+      // 创建自定义特殊技能对象
       const customSkill = {
         name: name,
-        description: description || "自定义特殊技能",
-        origin: origin || `由<user>独特开发的技能`,
-        limit: limit || "无特殊限制",
-        isCustom: true
+        description: description,
+        effect1: effect1,
+        effect2: effect2
       };
 
-      // Store in player data or a dedicated structure if needed
-      if (!playerData.customSpecialSkills) {
-        playerData.customSpecialSkills = {};
-      }
+      // 保存到playerData
+      playerData.specialSkill = name;
+      playerData.isCustomSpecialSkill = true;
+      playerData.customSpecialSkill = customSkill;
 
-      // Generate a unique ID for this custom skill
-      const skillId = 'custom_skill_' + Date.now();
-      playerData.customSpecialSkills[skillId] = customSkill;
-
-      // Find the option grid - using a more reliable approach
-      const headers = document.querySelectorAll('.box-header');
-      let specialSkillsGrid = null;
-
-      // Find the header with text "选择特殊技能" and then get its parent's .option-grid
-      for (const header of headers) {
-        if (header.textContent.trim() === '选择特殊技能') {
-          // Navigate to the .option-grid inside the box-content
-          specialSkillsGrid = header.closest('.box-container').querySelector('.option-grid');
-          break;
-        }
-      }
-
-      if (!specialSkillsGrid) {
-        console.error('Could not find special skills grid');
-        return;
-      }
-
-      // Create a new button for this custom skill
+      // 创建一个自定义技能按钮并添加到技能列表中
+      const optionGrid = document.querySelector('#stage2 .option-grid');
       const newButton = document.createElement('div');
-      newButton.className = 'option-button custom-created';
-      newButton.dataset.value = skillId;
+      newButton.className = 'option-button selected';
       newButton.textContent = name;
-      newButton.onclick = function () {
-        selectCustomSpecialSkill(this, skillId);
-      };
+      newButton.setAttribute('data-value', 'custom_' + Date.now()); // 使用时间戳确保唯一性
+      newButton.onclick = function () { selectCustomSpecialSkill(this, name); };
 
-      // Insert new button before the custom option button
-      const customButton = document.querySelector('[data-value="custom_special_skill"]');
-      specialSkillsGrid.insertBefore(newButton, customButton);
+      // 移除其他按钮的选择状态
+      const allButtons = optionGrid.querySelectorAll('.option-button');
+      allButtons.forEach(btn => btn.classList.remove('selected'));
 
-      // Select the new skill
-      selectCustomSpecialSkill(newButton, skillId);
+      // 将新按钮添加到自定义按钮之前
+      const customButton = optionGrid.querySelector('[data-value="custom_special_skill"]');
+      optionGrid.insertBefore(newButton, customButton);
 
-      // Close dialog
+      // 显示详情
+      const detailsDiv = document.getElementById('specialSkillDetails');
+      detailsDiv.innerHTML = `
+        <p><strong>描述：</strong>${description}</p>
+        <p><strong>技能效果：</strong></p>
+        <ul class="skill-list">
+          ${effect1 ? `<li><strong>技能1：</strong>${effect1}</li>` : ''}
+          ${effect2 ? `<li><strong>技能2：</strong>${effect2}</li>` : ''}
+        </ul>
+      `;
+      detailsDiv.style.display = 'block';
+
+      // 关闭对话框
       closeCustomSpecialSkillDialog();
 
-      // Reset form
+      // 重置表单
       document.getElementById('customSpecialSkillName').value = '';
       document.getElementById('customSpecialSkillDescription').value = '';
-      document.getElementById('customSpecialSkillOrigin').value = '';
-      document.getElementById('customSpecialSkillLimit').value = '';
+      document.getElementById('customSpecialSkillEffect1').value = '';
+      document.getElementById('customSpecialSkillEffect2').value = '';
     }
 
-    function selectCustomSpecialSkill(element, skillId) {
-      // Clear previous selections
-      const siblings = element.parentElement.querySelectorAll('.option-button');
-      siblings.forEach(sib => sib.classList.remove('selected'));
+    function selectCustomSpecialSkill(element, skillName) {
+      // 清除之前的选择
+      const skillButtons = element.parentElement.querySelectorAll('.option-button');
+      skillButtons.forEach(btn => btn.classList.remove('selected'));
 
-      // Add selected class
+      // 添加选中样式
       element.classList.add('selected');
 
-      // Store selection in playerData
-      playerData.specialSkill = skillId;
+      // 存储选择到playerData
+      playerData.specialSkill = skillName;
       playerData.isCustomSpecialSkill = true;
+
+      // 显示自定义技能详情
+      const customSkill = playerData.customSpecialSkill;
+      if (customSkill) {
+        const detailsDiv = document.getElementById('specialSkillDetails');
+        detailsDiv.innerHTML = `
+          <p><strong>描述：</strong>${customSkill.description || ''}</p>
+          <p><strong>技能效果：</strong></p>
+          <ul class="skill-list">
+            ${customSkill.effect1 ? `<li><strong>技能1：</strong>${customSkill.effect1}</li>` : ''}
+            ${customSkill.effect2 ? `<li><strong>技能2：</strong>${customSkill.effect2}</li>` : ''}
+          </ul>
+        `;
+        detailsDiv.style.display = 'block';
+      }
     }
 
     // 特殊技能数据
     const specialSkillsData = {
-      "欲望共振": {
-        "description": "通过共鸣心灵深处的渴望，激发目标的潜在欲望，使其行动变得狂热。",
-        "skills": [
-          {
-            "name": "共振波",
-            "effect": "提升全体从者的攻击力（20%~40%，持续3回合），并有50%几率使敌方陷入混乱（1回合）",
-            "cooldown": "12回合"
-          },
-          {
-            "name": "渴望引爆",
-            "effect": "对一名敌人造成固定伤害（1000~3000），若目标处于混乱状态则伤害翻倍",
-            "cooldown": "10回合"
-          }
-        ]
-      },
-      "情感回路": {
-        "description": "构建一条情感的魔术回路，将内心的激情转化为力量的源泉。",
-        "skills": [
-          {
-            "name": "情感充能",
-            "effect": "一名从者的NP增加（20%~40%），并提升其暴击星生成率（50%~100%，持续3回合）",
-            "cooldown": "8回合"
-          },
-          {
-            "name": "回路过载",
-            "effect": "提升全体从者的暴击威力（30%~50%，持续3回合），但每回合损失5%HP",
-            "cooldown": "12回合"
-          }
-        ]
-      },
-      "恐惧之刃": {
-        "description": "将恐惧化为锋利的魔术之刃，切割敌人的意志与肉体。",
-        "skills": [
-          {
-            "name": "恐惧切割",
-            "effect": "对一名敌人造成固定伤害（1500~4000），并降低其防御力（20%~40%，持续3回合）",
-            "cooldown": "10回合"
-          },
-          {
-            "name": "刃之寒颤",
-            "effect": "赋予一名从者攻击时附加恐惧效果（敌方行动几率降低30%，持续3回合）",
-            "cooldown": "15回合"
-          }
-        ]
-      },
-      "机械欲望引擎": {
-        "description": "启动一台由欲望驱动的魔术机械引擎，释放无尽的动力。",
-        "skills": [
-          {
-            "name": "引擎加速",
-            "effect": "提升全体从者的攻击速度（50%~100%，持续3回合）",
-            "cooldown": "12回合"
-          },
-          {
-            "name": "欲望喷射",
-            "effect": "对全体敌人造成固定伤害（500~1500），并提升自身NP获取率（20%~40%，持续3回合）",
-            "cooldown": "10回合"
-          }
-        ]
-      },
-      "圣欲转化": {
-        "description": "将凡俗的欲望升华为圣洁的力量，净化并强化己方。",
-        "skills": [
-          {
-            "name": "净化祷告",
-            "effect": "恢复全体从者的HP（500~1500），并清除所有弱体状态",
-            "cooldown": "12回合"
-          },
-          {
-            "name": "圣光恩赐",
-            "effect": "赋予一名从者无敌状态（1次，3回合），并提升其攻击力（30%~50%，持续3回合）",
-            "cooldown": "15回合"
-          }
-        ]
-      },
-      "战意燃烧": {
-        "description": "点燃内心的战斗欲望，将战意化为熊熊烈焰席卷战场。",
-        "skills": [
-          {
-            "name": "烈焰意志",
-            "effect": "提升全体从者的攻击力（20%~40%，持续3回合），并附加燃烧效果（每回合损失500HP）",
-            "cooldown": "10回合"
-          },
-          {
-            "name": "燃烧爆发",
-            "effect": "对一名敌人造成固定伤害（2000~5000），若目标处于燃烧状态则触发额外爆炸（全体敌人损失1000HP）",
-            "cooldown": "12回合"
-          }
-        ]
-      },
-      "星欲映射": {
-        "description": "通过星辰映射出内心的欲望，引导命运之力扭转战局。",
-        "skills": [
-          {
-            "name": "星光指引",
-            "effect": "生成暴击星（5~10颗），并提升全体从者的暴击威力（20%~40%，持续3回合）",
-            "cooldown": "10回合"
-          },
-          {
-            "name": "命运映射",
-            "effect": "一名从者的NP增加（30%~50%），并赋予其闪避状态（1次，3回合）",
-            "cooldown": "15回合"
-          }
-        ]
-      },
       "魔偶": {
         "description": "活动限定技能，替换御主技能以应对特殊战斗。",
         "skills": [
-          {
-            "name": "魔偶操控",
-            "effect": "提升全体从者的攻击力（20%~40%，持续3回合）",
-            "cooldown": "10回合"
-          },
-          {
-            "name": "傀儡防御",
-            "effect": "赋予一名从者无敌状态（1次，3回合）",
-            "cooldown": "15回合"
-          }
+          { "name": "魔偶操控", "effect": "提升全体从者的攻击力（20%~40%，持续3回合）", "cooldown": "10回合" },
+          { "name": "傀儡防御", "effect": "赋予一名从者无敌状态（1次，3回合）", "cooldown": "15回合" }
         ]
       },
       "印笼技能": {
         "description": "德川回天迷宫大奥活动中的特殊技能。",
         "skills": [
-          {
-            "name": "烟雾障壁",
-            "effect": "赋予全体从者闪避状态（1次，3回合）",
-            "cooldown": "15回合"
-          },
-          {
-            "name": "忍术打击",
-            "effect": "提升一名从者的暴击威力（30%~50%，持续3回合）",
-            "cooldown": "10回合"
-          }
+          { "name": "烟雾障壁", "effect": "赋予全体从者闪避状态（1次，3回合）", "cooldown": "15回合" },
+          { "name": "忍术打击", "effect": "提升一名从者的暴击威力（30%~50%，持续3回合）", "cooldown": "10回合" }
+        ]
+      },
+      "战神阿瑞斯 ARES": {
+        "description": "奥林波斯剧情中的特殊技能。",
+        "skills": [
+          { "name": "战神咆哮", "effect": "提升全体从者的攻击力（20%~40%，持续3回合）", "cooldown": "10回合" },
+          { "name": "神力冲击", "effect": "对一名敌人造成固定伤害（1000~3000）", "cooldown": "12回合" }
+        ]
+      },
+      "GOLDEN 大具足": {
+        "description": "金闪闪专属战斗装备，散发着神性的光辉。",
+        "skills": [
+          { "name": "黄金法则", "effect": "提升自身获得的宝具NP（30%~50%，持续2回合）", "cooldown": "8回合" },
+          { "name": "神王威严", "effect": "对所有敌人施加恐惧效果（30%概率昏迷1回合）", "cooldown": "12回合" }
+        ]
+      },
+      "神之巴祖卡": {
+        "description": "人类最强之盾的特殊武装，具有神秘的起源。",
+        "skills": [
+          { "name": "弹幕覆盖", "effect": "对敌方全体造成伤害（中等伤害）并降低防御10%", "cooldown": "7回合" },
+          { "name": "无限武装", "effect": "提升自身攻击力25%并赋予贯通防御效果（1次）", "cooldown": "10回合" }
+        ]
+      },
+      "对兽魔术": {
+        "description": "专门用于对抗兽级敌人的特殊魔术。",
+        "skills": [
+          { "name": "兽威衰减", "effect": "降低特定敌人（兽特性）的攻击力（20%~40%，持续3回合）", "cooldown": "10回合" },
+          { "name": "人理守护", "effect": "赋予全体从者伤害减免（3000点，持续2回合）", "cooldown": "15回合" }
+        ]
+      },
+      "欲望共振": {
+        "description": "通过同调对方欲望来增强自身能力的特殊技能。",
+        "skills": [
+          { "name": "欲望汲取", "effect": "从敌人汲取NP（10%~30%）并增加自身攻击力15%", "cooldown": "8回合" },
+          { "name": "欲望投影", "effect": "复制敌人的一个增益效果到己方一名从者身上", "cooldown": "12回合" }
+        ]
+      },
+      "情感回路": {
+        "description": "基于情感能量转化的特殊魔术回路。",
+        "skills": [
+          { "name": "情感链接", "effect": "治疗全体从者（2000~4000HP）并提升防御力10%", "cooldown": "9回合" },
+          { "name": "共情屏障", "effect": "赋予一名从者伤害反弹（30%，持续2回合）", "cooldown": "12回合" }
+        ]
+      },
+      "恐惧之刃": {
+        "description": "收集敌人恐惧转化为力量的诅咒武器。",
+        "skills": [
+          { "name": "恐惧注入", "effect": "对敌人施加恐惧效果（50%概率技能封印1回合）", "cooldown": "10回合" },
+          { "name": "恐惧收割", "effect": "对恐惧状态的敌人造成额外伤害（+50%）", "cooldown": "8回合" }
+        ]
+      },
+      "机械欲望引擎": {
+        "description": "将欲望能量转化为战斗力的机械装置。",
+        "skills": [
+          { "name": "过载充能", "effect": "提升自身暴击率（50%，持续3回合）但每回合损失500HP", "cooldown": "7回合" },
+          { "name": "能量爆发", "effect": "对单体敌人造成特大伤害并有20%概率眩晕", "cooldown": "10回合" }
+        ]
+      },
+      "圣欲转化": {
+        "description": "将欲望转化为神圣力量的特殊能力。",
+        "skills": [
+          { "name": "净化之光", "effect": "解除己方全体的负面状态并恢复1000HP", "cooldown": "10回合" },
+          { "name": "圣光祝福", "effect": "提升一名从者的宝具威力（20%，持续1次）", "cooldown": "12回合" }
+        ]
+      },
+      "战意燃烧": {
+        "description": "燃烧战斗意志提升战力的狂化技能。",
+        "skills": [
+          { "name": "狂战士之怒", "effect": "提升自身攻击力30%但降低防御力15%", "cooldown": "7回合" },
+          { "name": "不灭斗志", "effect": "赋予自身弱点防御（减少50%克制伤害，持续3回合）", "cooldown": "12回合" }
+        ]
+      },
+      "星欲映射": {
+        "description": "将星空的力量与欲望结合的神秘技能。",
+        "skills": [
+          { "name": "星光聚集", "effect": "获得20~30颗暴击星", "cooldown": "9回合" },
+          { "name": "星命链接", "effect": "提升全体从者的NP获取率（20%，持续3回合）", "cooldown": "10回合" }
+        ]
+      },
+      // 新增特殊技能.json中的技能
+      "大帝衣": {
+        "description": "活动限定技能，象征帝王威严。",
+        "skills": [
+          { "name": "帝王威压", "effect": "降低全体敌人的攻击力（10%~20%，持续3回合）", "cooldown": "12回合" },
+          { "name": "荣耀加冕", "effect": "提升一名从者的攻击力（30%~50%，持续3回合）", "cooldown": "10回合" }
+        ]
+      },
+      "吸引力": {
+        "description": "活动限定技能，增强队伍吸引力。",
+        "skills": [
+          { "name": "魅力光环", "effect": "提升全体从者的NP获取率（20%~40%，持续3回合）", "cooldown": "12回合" },
+          { "name": "诱惑之力", "effect": "生成暴击星（5~10颗）", "cooldown": "8回合" }
+        ]
+      },
+      "大炮技能": {
+        "description": "活动限定技能，提供火炮支援。",
+        "skills": [
+          { "name": "炮火轰鸣", "effect": "对全体敌人造成固定伤害（500~1500）", "cooldown": "12回合" },
+          { "name": "烟幕掩护", "effect": "赋予一名从者闪避状态（1次，3回合）", "cooldown": "15回合" }
+        ]
+      },
+      "希翁技能": {
+        "description": "希翁协助提供的特殊技能。",
+        "skills": [
+          { "name": "以太计算", "effect": "提升一名从者的NP增加（20%~40%）", "cooldown": "8回合" },
+          { "name": "灵子解析", "effect": "降低一名敌人的防御力（20%~40%，持续3回合）", "cooldown": "10回合" }
+        ]
+      },
+      "徽章技能": {
+        "description": "活动限定技能，强化队伍协作。",
+        "skills": [
+          { "name": "徽章激励", "effect": "提升全体从者的攻击力（20%~40%，持续3回合）", "cooldown": "10回合" },
+          { "name": "团结护盾", "effect": "赋予全体从者防御力提升（20%~40%，持续3回合）", "cooldown": "12回合" }
         ]
       }
     };
 
-    // 当前选中的特殊技能
-    let selectedSpecialSkill = "";
-    let selectedSpecialSkillDetails = null;
+    // 重写特殊技能文本映射，使用中文名称作为键
+    const specialSkillText = {
+      '魔偶': '魔偶',
+      '印笼技能': '印笼技能',
+      '战神阿瑞斯 ARES': '战神阿瑞斯 ARES',
+      'GOLDEN 大具足': 'GOLDEN 大具足',
+      '神之巴祖卡': '神之巴祖卡',
+      '对兽魔术': '对兽魔术',
+      '欲望共振': '欲望共振',
+      '情感回路': '情感回路',
+      '恐惧之刃': '恐惧之刃',
+      '机械欲望引擎': '机械欲望引擎',
+      '圣欲转化': '圣欲转化',
+      '战意燃烧': '战意燃烧',
+      '星欲映射': '星欲映射',
+      '大帝衣': '大帝衣',
+      '吸引力': '吸引力',
+      '大炮技能': '大炮技能',
+      '希翁技能': '希翁技能',
+      '徽章技能': '徽章技能'
+    };
 
-    // 通用函数：选择选项
-    function selectOption(optionType, element) {
-      // 移除其他按钮的active类
-      const buttons = document.querySelectorAll(`.${optionType}-options .option-button`);
-      buttons.forEach(button => button.classList.remove('active'));
+    // 选择特殊技能函数
+    function selectSpecialSkill(element) {
+      // 移除所有特殊技能按钮的选中状态
+      const skillButtons = element.parentElement.querySelectorAll('.option-button');
+      skillButtons.forEach(btn => btn.classList.remove('selected'));
 
-      // 给当前按钮添加active类
-      element.classList.add('active');
+      // 为当前点击的按钮添加选中状态
+      element.classList.add('selected');
 
-      // 设置选中的值
-      const value = element.dataset.value;
+      // 获取选中的技能名称
+      const skillName = element.getAttribute('data-value');
 
-      if (optionType === 'specialSkill') {
-        selectedSpecialSkill = value;
+      // 显示技能详情
+      displaySpecialSkillDetails(skillName);
 
-        // 如果不是自定义特殊技能，显示特殊技能详情对话框
-        if (value !== 'custom_special_skill') {
-          showSpecialSkillDetails(value);
-        }
+      // 保存选中的特殊技能到全局变量 
+      selectedSpecialSkill = skillName;
+
+      // 重要：保存选中的特殊技能到playerData对象中
+      playerData.specialSkill = skillName;
+      console.log("已选择特殊技能: " + skillName); // 添加日志以便调试
+    }
+
+    // 显示特殊技能详情函数
+    function displaySpecialSkillDetails(skillName) {
+      const skill = specialSkillsData[skillName];
+      const detailsDiv = document.getElementById('specialSkillDetails');
+
+      if (skill) {
+        let skillsHtml = '<ul class="skill-list">';
+        skill.skills.forEach(s => {
+          skillsHtml += `<li><strong>${s.name}：</strong>${s.effect}（冷却：${s.cooldown}）</li>`;
+        });
+        skillsHtml += '</ul>';
+
+        detailsDiv.innerHTML = `
+          <p><strong>描述：</strong>${skill.description}</p>
+          <p><strong>技能效果：</strong></p>
+          ${skillsHtml}
+        `;
+        detailsDiv.style.display = 'block';
+      } else {
+        detailsDiv.innerHTML = '';
+        detailsDiv.style.display = 'none';
+      }
+    }
+
+    // 声明全局变量用于保存选中的特殊技能
+    let selectedSpecialSkill = '';
+
+    function buildFinalData() {
+      // Get selected servants
+      const selectedServants = document.querySelectorAll('.selected-servant');
+      const servants = [];
+
+      selectedServants.forEach(servant => {
+        const servantName = servant.querySelector('.servant-name').textContent;
+        const servantStats = servant.querySelector('.servant-stats').textContent;
+        servants.push({ name: servantName, stats: servantStats });
+      });
+
+      // Define genderText since it's not defined elsewhere
+      const genderText = {
+        'male': '男性',
+        'female': '女性',
+        'futa': '扶他',
+        'femboy': '男身女相'
+      };
+
+      // Define playerTraitText to fix the ReferenceError
+      const playerTraitText = {
+        'lustful_curse': '淫神诅咒（所接触到的东西都会色情化）',
+        'fragile_cauldron': '易碎鼎炉（看起来娇弱但又好吃）',
+        'wish_fulfillment': '心想事成（拥有心想事成的能力）',
+        'hypnosis_master': '催眠大师（可以催眠普通人，甚至从者）',
+        'sex_king': '性爱之王（在性爱方面拥有无与伦比的技巧）',
+        'seduction_king': '诱惑之王（谁都想跟<user>做爱）',
+        'lady_training': '淑女修行（强制戴着外表美丽的调教用具）',
+        'training_master': '调教大师（可以轻松的使人恶堕）',
+        'none': '无特殊特质'
+      };
+
+      // 定义魔术礼装文本映射
+      const mysticCodeText = {
+        'chaldea': '迦勒底制服',
+        'atlas': '阿特拉斯院制服',
+        'combat': '魔术协会制服',
+        'mage': '魔术师协会制服',
+        'arctic': '极地迦勒底制服',
+        'royal': '王室礼装',
+        'plugsuit': '灵子转移服',
+        'fragment_2004': '魔术礼装・2004',
+        'anniversary_blonde': '金黄庆典',
+        'fine_year': '魔术礼装・Finis年',
+        'tropical': '热带夏日',
+        'summer': '真夏的水上竞赛',
+        'brilliant': '华丽跃动',
+        'white_day': '雄性气息礼装',
+        'captain': '船长的礼装',
+        'vr_mashu': '魔偶装・玛修',
+        'winter_casual': '冬日便装'
+      };
+
+      // 定义开局点映射
+      const startPointMap = {
+        'fuyuki_normal': '燃烧污染都市 冬木（对魔术一无所知，没有关于两位女神的记忆）',
+        'fuyuki_mage': '燃烧污染都市 冬木（本地魔术师，没有关于两位女神的记忆，但有些许印象）',
+        'fuyuki_chaldea': '燃烧污染都市 冬木（迦勒底成员）',
+        'orleans': '邪龙百年战争 奥尔良',
+        'septem': '永续疯狂帝国 七丘之城',
+        'okeanos': '封锁终局四海 俄刻刻阿诺斯',
+        'london': '死界魔雾都市 伦敦',
+        'america': '北美神话大战 合众为一',
+        'camelot': '神圣圆桌领域 卡美洛',
+        'babylonia': '绝对魔兽战线 巴比伦尼亚',
+        'solomon': '冠位时间神殿 所罗门',
+        'shinjuku': '恶性隔绝魔境 新宿',
+        'agartha': '传承地底世界 雅戈泰',
+        'shimousa': '全身满是武士的英灵剑豪七番胜负',
+        'salem': '异端Salem 塞勒姆',
+        'anastasia': '永久冻土帝国 安娜斯塔西娅',
+        'gotterdammerung': '无间冰焰世纪 哥特',
+        'sinum_chaldea': '迦勒底（与伊什塔尔、艾蕾均有记忆和好感度）',
+        'lostbelt1': '永久冻土帝国 阿纳斯塔西娅',
+        'lostbelt2': '无间冰焰世纪 诸神黄昏',
+        'lostbelt3': '人智统合真国 SIN',
+        'lostbelt4': '创世灭亡轮回 由伽·刹多罗',
+        'lostbelt5_1': '神代巨神海洋 亚特兰蒂斯',
+        'lostbelt5_2': '星间都市山脉 奥林波斯',
+        'heian_kyo': '地狱界曼荼罗 平安京',
+        'lostbelt6': '妖精圆桌领域 阿瓦隆·勒·菲',
+        'tunguska': '非灵长生存圈 通古斯卡·圣域',
+        'traum': '死想显现界域 Traum',
+        'lostbelt7': '黄金树海纪行 纳维·米克特兰'
+      };
+
+      // Format playerData for output
+      let messageToSend = `
+### 型月世界角色卡 ###
+
+【基本信息】
+性别: ${genderText[playerData.gender] || '未选择'}
+魔术强度: ${playerData.magicStrength || '未选择'}
+个人特质: ${playerData.playerTrait === 'custom' ? playerData.customPlayerTrait.name : playerTraitText[playerData.playerTrait] || '未选择'}
+${playerData.playerTrait === 'custom' ? '特质描述: ' + playerData.customPlayerTrait.description : ''}
+开局点: ${startPointMap[playerData.startPoint] || '未选择'}
+令咒数量: ${playerData.commandSeals}
+伊什塔尔好感度: ${playerData.ishtarAffection}
+伊什塔尔调教度: ${playerData.ishtarTraining}
+艾蕾好感度: ${playerData.ereshAffection}
+艾蕾调教度: ${playerData.ereshTraining}
+`;
+
+      // Add mystic code details if available
+      if (playerData.mysticCodeId === 'custom_mystic_code' && playerData.mysticCodeDetails) {
+        messageToSend += `
+【魔术礼装 - 自定义】
+外观: ${playerData.mysticCodeDetails.appearance || ''}
+介绍: ${playerData.mysticCodeDetails.introduction || ''}
+效果: ${playerData.mysticCodeDetails.effects || ''}
+`;
+      } else if (playerData.mysticCodeId && mysticCodeText[playerData.mysticCodeId]) {
+        messageToSend += `
+【魔术礼装】
+名称: ${mysticCodeText[playerData.mysticCodeId]}
+`;
       }
 
-      // 更新messageToSend对象
-      updateMessageToSend();
-    }
+      // 添加特殊技能信息 - 修复特殊技能部分
+      if (playerData.specialSkill) {
+        console.log("正在添加特殊技能到消息: " + playerData.specialSkill);
 
-    // 显示自定义特殊技能对话框
-    function showCustomSpecialSkillDialog() {
-      document.getElementById('customSpecialSkillDialog').style.display = 'flex';
-    }
+        if (playerData.isCustomSpecialSkill && playerData.customSpecialSkill) {
+          // 如果是自定义特殊技能
+          messageToSend += `
+【特殊技能 - 自定义】
+名称: ${playerData.customSpecialSkill.name || ''}
+描述: ${playerData.customSpecialSkill.description || ''}
+效果1: ${playerData.customSpecialSkill.effect1 || ''}
+效果2: ${playerData.customSpecialSkill.effect2 || ''}
+`;
+        } else {
+          // 如果是预设特殊技能，从specialSkillsData获取详细信息
+          const skillDetails = specialSkillsData[playerData.specialSkill];
+          if (skillDetails) {
+            let skillEffects = '';
+            if (skillDetails.skills && skillDetails.skills.length > 0) {
+              skillDetails.skills.forEach((skill, index) => {
+                skillEffects += `效果${index + 1}: ${skill.name} - ${skill.effect} (冷却: ${skill.cooldown})\n`;
+              });
+            }
 
-    // 关闭自定义特殊技能对话框
-    function closeCustomSpecialSkillDialog() {
-      document.getElementById('customSpecialSkillDialog').style.display = 'none';
-    }
+            messageToSend += `
+【特殊技能】
+名称: ${playerData.specialSkill}
+描述: ${skillDetails.description || ''}
+${skillEffects}
+`;
+          } else {
+            messageToSend += `
+【特殊技能】
+名称: ${playerData.specialSkill}
+`;
+          }
+        }
+      } else {
+        messageToSend += `
+【特殊技能】
+名称: 未选择
+`;
+      }
 
-    // 显示特殊技能详情对话框
-    function showSpecialSkillDetails(skillName) {
-      const skillData = specialSkillsData[skillName];
-      if (!skillData) return;
+      // Add noble phantasm details
+      if (playerData.noblePhantasm === 'custom') {
+        messageToSend += `
+【宝具 - 自定义】
+名称: ${playerData.customNoblePhantasm.name || ''}
+类型: ${playerData.customNoblePhantasm.type || ''}
+等级: ${playerData.customNoblePhantasm.rank || ''}
+分类: ${playerData.customNoblePhantasm.classification || ''}
+范围: ${playerData.customNoblePhantasm.range || ''}
+最大捕捉: ${playerData.customNoblePhantasm.maxTarget || ''}
+效果: ${playerData.customNoblePhantasm.effect || ''}
+`;
+      } else if (playerData.noblePhantasm === '随机对城宝具') {
+        messageToSend += `
+【宝具】
+名称: 随机对城宝具（请AI生成）
+`;
+      } else if (playerData.noblePhantasm === '完全随机宝具') {
+        messageToSend += `
+【宝具】
+名称: 完全随机宝具（请AI生成）
+`;
+      } else if (playerData.noblePhantasm) {
+        messageToSend += `
+【宝具】
+名称: ${playerData.noblePhantasm}
+`;
+      }
 
-      selectedSpecialSkillDetails = skillData;
-
-      // 设置技能标题和描述
-      document.getElementById('specialSkillTitle').textContent = skillName;
-      document.getElementById('specialSkillDescription').textContent = skillData.description;
-
-      // 清空并重新填充子技能容器
-      const subskillsContainer = document.getElementById('specialSkillSubskills');
-      subskillsContainer.innerHTML = '';
-
-      // 添加子技能详情
-      if (skillData.skills && skillData.skills.length > 0) {
-        skillData.skills.forEach(skill => {
-          const skillElement = document.createElement('div');
-          skillElement.className = 'subskill-item';
-
-          const nameElement = document.createElement('h4');
-          nameElement.textContent = skill.name;
-
-          const effectElement = document.createElement('p');
-          effectElement.innerHTML = `<strong>效果:</strong> ${skill.effect}`;
-
-          const cooldownElement = document.createElement('p');
-          cooldownElement.innerHTML = `<strong>冷却:</strong> ${skill.cooldown}`;
-
-          skillElement.appendChild(nameElement);
-          skillElement.appendChild(effectElement);
-          skillElement.appendChild(cooldownElement);
-
-          subskillsContainer.appendChild(skillElement);
+      // Add selected servants
+      if (servants.length > 0) {
+        messageToSend += `
+【从者】
+`;
+        servants.forEach(servant => {
+          messageToSend += `${servant.name} - ${servant.stats}\n`;
         });
       }
 
-      // 显示对话框
-      document.getElementById('specialSkillDetailsDialog').style.display = 'flex';
-    }
-
-    // 关闭特殊技能详情对话框
-    function closeSpecialSkillDetailsDialog() {
-      document.getElementById('specialSkillDetailsDialog').style.display = 'none';
-    }
-
-    // 确认选择特殊技能
-    function confirmSpecialSkill() {
-      // 更新UI，标记当前选中的按钮
-      const buttons = document.querySelectorAll('.specialSkill-options .option-button');
-      buttons.forEach(button => {
-        if (button.dataset.value === selectedSpecialSkill) {
-          button.classList.add('active');
-        } else {
-          button.classList.remove('active');
-        }
-      });
-
-      // 更新messageToSend对象
-      updateMessageToSend();
-
-      // 关闭对话框
-      closeSpecialSkillDetailsDialog();
-    }
-
-    // 保存自定义特殊技能
-    function saveCustomSpecialSkill() {
-      const name = document.getElementById('customSpecialSkillName').value;
-      const description = document.getElementById('customSpecialSkillDescription').value;
-      const origin = document.getElementById('customSpecialSkillOrigin').value;
-      const limit = document.getElementById('customSpecialSkillLimit').value;
-
-      if (!name) {
-        alert('请输入技能名称！');
-        return;
+      // Add final comments
+      if (playerData.finalComments) {
+        messageToSend += `
+【额外补充】
+${playerData.finalComments}
+`;
       }
 
-      // 创建自定义技能对象
-      selectedSpecialSkill = 'custom';
-      selectedSpecialSkillDetails = {
-        name: name,
-        description: description,
-        origin: origin,
-        limit: limit,
-        isCustom: true
+      // 添加游戏数据
+      const gameData = {
+        gameAction: "continue",
+        player: {
+          isPMerlin: playerData.isPMerlin,
+          ishtarAffection: playerData.ishtarAffection,
+          ishtarTraining: playerData.ishtarTraining,
+          ereshAffection: playerData.ereshAffection,
+          ereshTraining: playerData.ereshTraining,
+          commandSeals: playerData.commandSeals,
+          thirdStageTrait: playerData.playerTrait,
+          startPoint: playerData.startPoint,
+          selectedServants: playerData.selectedServants
+        }
       };
 
-      // 更新UI
-      const buttons = document.querySelectorAll('.specialSkill-options .option-button');
-      buttons.forEach(button => {
-        if (button.dataset.value === 'custom_special_skill') {
-          button.classList.add('active');
-        } else {
-          button.classList.remove('active');
-        }
-      });
+      // 添加JSON数据触发游戏
+      messageToSend += "\n\n" + JSON.stringify(gameData) + "|/trigger";
 
-      // 更新messageToSend对象
-      updateMessageToSend();
-
-      // 关闭对话框
-      closeCustomSpecialSkillDialog();
+      return messageToSend;
     }
 
-    // 更新要发送的消息对象
-    function updateMessageToSend() {
-      // 更新playerInfo部分
-      messageToSend.playerInfo = { ...playerData };
 
-      // 获取特殊技能数据
-      let specialSkillData = null;
 
-      if (selectedSpecialSkill === 'custom') {
-        specialSkillData = selectedSpecialSkillDetails;
-      } else if (selectedSpecialSkill && selectedSpecialSkill !== 'custom_special_skill') {
-        specialSkillData = {
-          name: selectedSpecialSkill,
-          description: specialSkillsData[selectedSpecialSkill].description,
-          skills: specialSkillsData[selectedSpecialSkill].skills
-        };
-      }
 
-      // 更新messageToSend对象的特殊技能部分
-      messageToSend.specialSkill = specialSkillData;
-
-      console.log("更新后的messageToSend:", messageToSend);
-    }
   </script>
 </body>
 

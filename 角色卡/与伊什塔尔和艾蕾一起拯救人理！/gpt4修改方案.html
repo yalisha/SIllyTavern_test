@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>型月世界设定角色创建</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      background-color: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .option-button {
+      background-color: #2b2b2b;
+      color: white;
+      border: 1px solid #444;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .option-button.selected,
+    .option-button:hover {
+      background-color: #0078d7;
+      border-color: #0078d7;
+    }
+
+    .mystic-code-detail {
+      display: none;
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #2a2a2a;
+      border: 1px solid #444;
+    }
+
+    .skill-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .skill-list li {
+      margin-bottom: 8px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .skill-list li:before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #0078d7;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>选择特殊技能</h2>
+  <div class="option-grid">
+    <div class="option-button" data-value="魔偶" onclick="selectSpecialSkill(this)">魔偶</div>
+    <div class="option-button" data-value="印笼技能" onclick="selectSpecialSkill(this)">印笼技能</div>
+    <div class="option-button" data-value="战神阿瑞斯 ARES" onclick="selectSpecialSkill(this)">战神阿瑞斯 ARES</div>
+    <div class="option-button" data-value="GOLDEN 大具足" onclick="selectSpecialSkill(this)">GOLDEN 大具足</div>
+    <div class="option-button" data-value="神之巴祖卡" onclick="selectSpecialSkill(this)">神之巴祖卡</div>
+    <div class="option-button" data-value="对兽魔术" onclick="selectSpecialSkill(this)">对兽魔术</div>
+    <div class="option-button" data-value="欲望共振" onclick="selectSpecialSkill(this)">欲望共振</div>
+    <div class="option-button" data-value="情感回路" onclick="selectSpecialSkill(this)">情感回路</div>
+    <div class="option-button" data-value="恐惧之刃" onclick="selectSpecialSkill(this)">恐惧之刃</div>
+    <div class="option-button" data-value="机械欲望引擎" onclick="selectSpecialSkill(this)">机械欲望引擎</div>
+    <div class="option-button" data-value="圣欲转化" onclick="selectSpecialSkill(this)">圣欲转化</div>
+    <div class="option-button" data-value="战意燃烧" onclick="selectSpecialSkill(this)">战意燃烧</div>
+    <div class="option-button" data-value="星欲映射" onclick="selectSpecialSkill(this)">星欲映射</div>
+  </div>
+
+  <div id="specialSkillDetails" class="mystic-code-detail"></div>
+
+  <script>
+    const specialSkillsData = {
+      "魔偶": {
+        "description": "活动限定技能，替换御主技能以应对特殊战斗。",
+        "skills": [
+          { "name": "魔偶操控", "effect": "提升全体从者的攻击力（20%~40%，持续3回合）", "cooldown": "10回合" },
+          { "name": "傀儡防御", "effect": "赋予一名从者无敌状态（1次，3回合）", "cooldown": "15回合" }
+        ]
+      },
+      "印笼技能": {
+        "description": "德川回天迷宫大奥活动中的特殊技能。",
+        "skills": [
+          { "name": "烟雾障壁", "effect": "赋予全体从者闪避状态（1次，3回合）", "cooldown": "15回合" },
+          { "name": "忍术打击", "effect": "提升一名从者的暴击威力（30%~50%，持续3回合）", "cooldown": "10回合" }
+        ]
+      },
+      "战神阿瑞斯 ARES": {
+        "description": "奥林波斯剧情中的特殊技能。",
+        "skills": [
+          { "name": "战神咆哮", "effect": "提升全体从者的攻击力（20%~40%，持续3回合）", "cooldown": "10回合" },
+          { "name": "神力冲击", "effect": "对一名敌人造成固定伤害（1000~3000）", "cooldown": "12回合" }
+        ]
+      }
+      // 请将其他技能数据依次添加到此处
+    };
+
+    function selectSpecialSkill(element) {
+      document.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('selected'));
+      element.classList.add('selected');
+      const skillName = element.getAttribute('data-value');
+      displaySpecialSkillDetails(skillName);
+    }
+
+    function selectOption(category, element) {
+      selectSpecialSkill(element);
+    }
+
+    function displaySpecialSkillDetails(skillName) {
+      const skill = specialSkillsData[skillName];
+      const detailsDiv = document.getElementById('specialSkillDetails');
+
+      if (skill) {
+        let skillsHtml = '<ul class="skill-list">';
+        skill.skills.forEach(s => {
+          skillsHtml += `<li><strong>${s.name}：</strong>${s.effect}（冷却：${s.cooldown}）</li>`;
+        });
+        skillsHtml += '</ul>';
+
+        detailsDiv.innerHTML = `
+          <p><strong>描述：</strong>${skill.description}</p>
+          <p><strong>技能效果：</strong></p>
+          ${skillsHtml}
+        `;
+        detailsDiv.style.display = 'block';
+      } else {
+        detailsDiv.innerHTML = '';
+        detailsDiv.style.display = 'none';
+      }
+    }
+
+    function selectSpecialSkill(element) {
+      const siblings = element.parentElement.querySelectorAll('.option-button');
+      siblings.forEach(sib => sib.classList.remove('selected'));
+      element.classList.add('selected');
+      const skillName = element.getAttribute('data-value');
+      displaySpecialSkillDetails(skillName);
+    }
+  </script>
+</body>
+
+</html>
+<!-- 替换方法：
+打开你的HTML文件（你当前正在开发的那个HTML文件）。
+全选并删除文件中原有的所有内容。
+复制上述完整HTML代码，粘贴到你的HTML文件中。
+保存文件，然后在浏览器中打开该HTML文件进行测试。 -->
