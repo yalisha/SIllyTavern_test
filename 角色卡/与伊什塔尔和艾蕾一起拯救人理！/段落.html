@@ -208,6 +208,7 @@
       border-left: 3px solid #ff4081;
       padding: 12px;
       margin-top: 8px;
+      margin-bottom: 12px;
       border-radius: 0 5px 5px 0;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       position: relative;
@@ -308,6 +309,190 @@
 
     ::-webkit-scrollbar-thumb:hover {
       background: rgba(255, 64, 129, 0.8);
+    }
+
+    /* 自定义颜色类 - 将由JS动态设置 */
+    :root {
+      --main-bg-color: #0e1121;
+      --panel-bg-color: #1a1f35;
+      --header-gradient-from: #b71c1c;
+      --header-gradient-to: #880e4f;
+      --text-color: #e0e0e0;
+      --label-color: #ff9e80;
+      --accent-color: #ff4081;
+      --border-color: #2c3352;
+      --darkline-bg: #121520;
+      --progress-fill-from: #ff5252;
+      --progress-fill-to: #ff4081;
+      --status-normal: #43a047;
+      --status-caution: #ff9800;
+      --status-danger: #e53935;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+      background-color: var(--main-bg-color);
+      margin: 0;
+      padding: 0;
+      color: var(--text-color);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 15px;
+      background: linear-gradient(to right, var(--header-gradient-from), var(--header-gradient-to));
+      padding: 12px;
+      border-radius: 5px;
+      color: #ffffff;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-panel {
+      flex: 1;
+      min-width: 200px;
+      padding: 12px;
+      border-radius: 6px;
+      background-color: var(--panel-bg-color);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      overflow: auto;
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .info-panel h3 {
+      margin-top: 0;
+      text-align: center;
+      background: linear-gradient(to right, var(--header-gradient-from), var(--header-gradient-to));
+      padding: 8px;
+      border-radius: 4px;
+      color: #fff;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    .content-panel {
+      padding: 18px;
+      border-radius: 6px;
+      background-color: var(--panel-bg-color);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      margin-bottom: 15px;
+      flex-grow: 1;
+      border: 1px solid var(--border-color);
+      line-height: 1.6;
+    }
+
+    .data-label {
+      font-weight: bold;
+      color: var(--label-color);
+      margin-right: 5px;
+    }
+
+    .data-value {
+      margin-left: 5px;
+      color: var(--text-color);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--progress-fill-from), var(--progress-fill-to));
+      border-radius: 6px;
+      position: relative;
+      transition: width 0.3s ease;
+    }
+
+    .status-normal {
+      background-color: var(--status-normal);
+      color: white;
+    }
+
+    .status-caution {
+      background-color: var(--status-caution);
+      color: white;
+    }
+
+    .status-danger {
+      background-color: var(--status-danger);
+      color: white;
+    }
+
+    .dark-line {
+      background-color: var(--darkline-bg);
+      border-left: 3px solid var(--accent-color);
+      padding: 12px;
+      margin-top: 8px;
+      margin-bottom: 12px;
+      border-radius: 0 5px 5px 0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .dark-line::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--accent-color), #7c4dff);
+    }
+
+    .servant-name {
+      font-weight: bold;
+      color: var(--accent-color);
+      margin-bottom: 8px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid var(--border-color);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      font-size: 1.1em;
+    }
+
+    #debugButton {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      z-index: 9999;
+      padding: 8px 15px;
+      background: linear-gradient(to bottom, var(--accent-color), #c2185b);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      transition: all 0.2s ease;
+      font-weight: bold;
+    }
+
+    /* 主题选择器 */
+    .theme-selector {
+      position: fixed;
+      bottom: 15px;
+      left: 15px;
+      z-index: 9999;
+      display: flex;
+      gap: 8px;
+    }
+
+    .theme-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid white;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      transition: all 0.2s ease;
+    }
+
+    .theme-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .theme-btn.active {
+      transform: scale(1.2);
+      box-shadow: 0 0 0 2px white, 0 0 0 4px var(--accent-color);
     }
   </style>
 </head>
@@ -527,6 +712,240 @@
       }
     };
 
+    // 主题管理器
+    const ThemeManager = {
+      // 预设主题
+      themes: {
+        default: {
+          name: "默认",
+          colors: {
+            mainBg: "#0e1121",
+            panelBg: "#1a1f35",
+            headerFrom: "#b71c1c",
+            headerTo: "#880e4f",
+            textColor: "#e0e0e0",
+            labelColor: "#ff9e80",
+            accentColor: "#ff4081",
+            borderColor: "#2c3352",
+            darklineBg: "#121520",
+            progressFrom: "#ff5252",
+            progressTo: "#ff4081",
+            statusNormal: "#43a047",
+            statusCaution: "#ff9800",
+            statusDanger: "#e53935"
+          }
+        },
+        blue: {
+          name: "星空蓝",
+          colors: {
+            mainBg: "#0A1929",
+            panelBg: "#132F4C",
+            headerFrom: "#1565C0",
+            headerTo: "#0D47A1",
+            textColor: "#E3F2FD",
+            labelColor: "#90CAF9",
+            accentColor: "#2196F3",
+            borderColor: "#1E3A5F",
+            darklineBg: "#071A2E",
+            progressFrom: "#42A5F5",
+            progressTo: "#1E88E5",
+            statusNormal: "#43A047",
+            statusCaution: "#FB8C00",
+            statusDanger: "#E53935"
+          }
+        },
+        gold: {
+          name: "金碧辉煌",
+          colors: {
+            mainBg: "#211D15",
+            panelBg: "#2C2416",
+            headerFrom: "#CD9B1D",
+            headerTo: "#8B6914",
+            textColor: "#F5EFE0",
+            labelColor: "#FFC107",
+            accentColor: "#FFD700",
+            borderColor: "#3D3424",
+            darklineBg: "#1A1710",
+            progressFrom: "#FFC107",
+            progressTo: "#FF8F00",
+            statusNormal: "#558B2F",
+            statusCaution: "#EF6C00",
+            statusDanger: "#C62828"
+          }
+        },
+        purple: {
+          name: "魔法紫",
+          colors: {
+            mainBg: "#170B33",
+            panelBg: "#281854",
+            headerFrom: "#6A1B9A",
+            headerTo: "#4A148C",
+            textColor: "#E8DEF8",
+            labelColor: "#CE93D8",
+            accentColor: "#9C27B0",
+            borderColor: "#36206F",
+            darklineBg: "#0F0928",
+            progressFrom: "#AB47BC",
+            progressTo: "#8E24AA",
+            statusNormal: "#43A047",
+            statusCaution: "#FB8C00",
+            statusDanger: "#E53935"
+          }
+        }
+      },
+
+      // 当前主题
+      currentTheme: 'default',
+
+      // 应用主题
+      applyTheme(themeName) {
+        if (!this.themes[themeName]) return;
+
+        const theme = this.themes[themeName];
+        const colors = theme.colors;
+        const root = document.documentElement;
+
+        root.style.setProperty('--main-bg-color', colors.mainBg);
+        root.style.setProperty('--panel-bg-color', colors.panelBg);
+        root.style.setProperty('--header-gradient-from', colors.headerFrom);
+        root.style.setProperty('--header-gradient-to', colors.headerTo);
+        root.style.setProperty('--text-color', colors.textColor);
+        root.style.setProperty('--label-color', colors.labelColor);
+        root.style.setProperty('--accent-color', colors.accentColor);
+        root.style.setProperty('--border-color', colors.borderColor);
+        root.style.setProperty('--darkline-bg', colors.darklineBg);
+        root.style.setProperty('--progress-fill-from', colors.progressFrom);
+        root.style.setProperty('--progress-fill-to', colors.progressTo);
+        root.style.setProperty('--status-normal', colors.statusNormal);
+        root.style.setProperty('--status-caution', colors.statusCaution);
+        root.style.setProperty('--status-danger', colors.statusDanger);
+
+        this.currentTheme = themeName;
+        this.updateThemeButtons();
+
+        // 保存用户主题选择
+        localStorage.setItem('fgoUITheme', themeName);
+      },
+
+      // 添加自定义主题
+      addCustomTheme(themeName, colors) {
+        this.themes[themeName] = {
+          name: themeName,
+          colors: colors
+        };
+      },
+
+      // 处理UI更新中的主题设置
+      processUIUpdate(uiUpdate) {
+        if (!uiUpdate) return;
+
+        // 主题切换命令
+        const themeMatch = uiUpdate.match(/主题：(\w+)/);
+        if (themeMatch && this.themes[themeMatch[1]]) {
+          this.applyTheme(themeMatch[1]);
+        }
+
+        // 自定义颜色设置
+        const colorSettings = uiUpdate.match(/颜色设置：([\s\S]*?)(?=\n\n|$)/);
+        if (colorSettings) {
+          const settings = colorSettings[1].split('\n');
+          const customColors = {};
+
+          settings.forEach(setting => {
+            const parts = setting.split('：');
+            if (parts.length === 2) {
+              const key = parts[0].trim();
+              const value = parts[1].trim();
+
+              // 映射键名到CSS变量名
+              const cssMap = {
+                '背景': 'mainBg',
+                '面板': 'panelBg',
+                '标题起': 'headerFrom',
+                '标题止': 'headerTo',
+                '文本': 'textColor',
+                '标签': 'labelColor',
+                '强调': 'accentColor',
+                '边框': 'borderColor',
+                '暗线背景': 'darklineBg',
+                '进度起': 'progressFrom',
+                '进度止': 'progressTo',
+                '正常状态': 'statusNormal',
+                '警戒状态': 'statusCaution',
+                '危险状态': 'statusDanger'
+              };
+
+              if (cssMap[key]) {
+                customColors[cssMap[key]] = value;
+              }
+            }
+          });
+
+          // 如果至少有一个颜色设置，创建或更新自定义主题
+          if (Object.keys(customColors).length > 0) {
+            // 创建完整的主题对象，使用默认主题填充未指定的颜色
+            const fullColors = { ...this.themes.default.colors, ...customColors };
+            this.addCustomTheme('custom', fullColors);
+            this.applyTheme('custom');
+          }
+        }
+      },
+
+      // 创建主题选择器UI
+      createThemeSelector() {
+        const container = document.createElement('div');
+        container.className = 'theme-selector';
+
+        for (const [key, theme] of Object.entries(this.themes)) {
+          if (key === 'custom') continue; // 不为自定义主题创建按钮
+
+          const btn = document.createElement('button');
+          btn.className = 'theme-btn';
+          btn.title = theme.name;
+          btn.style.backgroundColor = theme.colors.accentColor;
+          btn.dataset.theme = key;
+
+          if (key === this.currentTheme) {
+            btn.classList.add('active');
+          }
+
+          btn.addEventListener('click', () => {
+            this.applyTheme(key);
+          });
+
+          container.appendChild(btn);
+        }
+
+        document.body.appendChild(container);
+      },
+
+      // 更新主题按钮激活状态
+      updateThemeButtons() {
+        const buttons = document.querySelectorAll('.theme-btn');
+        buttons.forEach(btn => {
+          if (btn.dataset.theme === this.currentTheme) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      },
+
+      // 初始化主题管理器
+      init() {
+        // 尝试加载之前保存的主题
+        const savedTheme = localStorage.getItem('fgoUITheme');
+        if (savedTheme && this.themes[savedTheme]) {
+          this.applyTheme(savedTheme);
+        } else {
+          this.applyTheme('default'); // 默认主题
+        }
+
+        // 创建主题选择器UI
+        this.createThemeSelector();
+      }
+    };
+
     // UI更新器
     const UIUpdater = {
       updateContent(data) {
@@ -536,6 +955,11 @@
         isUpdating = true;
 
         try {
+          // 处理UI更新数据
+          if (data.uiUpdate) {
+            ThemeManager.processUIUpdate(data.uiUpdate);
+          }
+
           this.updateStory(data.story);
           this.updatePersonInfo(data.person);
           this.updateServantsInfo(data.servants);
@@ -705,22 +1129,28 @@
         if (data.storylines && data.storylines.length > 0) {
           html += `<div class="data-item">
             <span class="data-label">暗线剧情:</span>
-                    </div>`;
+          </div>
+          <div class="dark-lines-container" style="margin-bottom: 15px;">`;
 
           data.storylines.forEach(story => {
             html += `<div class="dark-line">- ${story}</div>`;
           });
+
+          html += `</div>`;
         }
 
         // 敌对存在信息
         if (data.enemies && data.enemies.length > 0) {
           html += `<div class="data-item">
             <span class="data-label">敌对存在:</span>
-                  </div>`;
+          </div>
+          <div class="dark-lines-container">`;
 
           data.enemies.forEach(enemy => {
             html += `<div class="dark-line">- ${enemy.value}</div>`;
           });
+
+          html += `</div>`;
         }
 
         container.innerHTML = html || '<div class="data-item"><span class="data-label">状态:</span><span class="data-value">无暗线信息</span></div>';
@@ -774,6 +1204,9 @@
 
     // 初始化函数
     function initializeContent() {
+      // 初始化主题管理器
+      ThemeManager.init();
+
       processContent();
 
       // 设置调试按钮事件
