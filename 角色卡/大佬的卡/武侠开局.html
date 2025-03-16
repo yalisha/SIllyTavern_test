@@ -1,0 +1,2234 @@
+```
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <title>苍玄九洲·侠客录</title>
+  <style>
+    /* 全局变量定义 */
+    :root {
+      --primary-color: #ecf0f1;
+      --secondary-color: #bdc3c7;
+      --background-dark: rgba(0, 0, 0, 0.75);
+      --text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      --border-light: rgba(255, 255, 255, 0.2);
+    }
+
+    /* 基础样式 */
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: url('path/to/your/bamboo-image.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: "楷体", "STKaiti", serif;
+      color: var(--primary-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* 主容器样式 */
+    .game-container {
+      width: 90%;
+      max-width: 1200px;
+      background: var(--background-dark);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--border-light);
+    }
+
+    /* 标题样式 */
+    .game-header {
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 2px solid var(--border-light);
+      padding-bottom: 20px;
+    }
+
+    .game-header h1 {
+      font-size: 2.5em;
+      margin: 0;
+      text-shadow: var(--text-shadow);
+    }
+
+    /* 步骤指示器样式 */
+    .steps-indicator {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      margin: 0 15px;
+      opacity: 0.6;
+      transition: opacity 0.3s ease;
+    }
+
+    .step.active {
+      opacity: 1;
+    }
+
+    .step-number {
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--primary-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
+
+    /* 选项卡样式 */
+    .selection-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .selection-card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .selection-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .selection-card.selected {
+      border-color: var(--primary-color);
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* 属性点数显示 */
+    .points-display {
+      text-align: right;
+      margin-bottom: 20px;
+      font-size: 1.2em;
+    }
+
+    /* 导航按钮 */
+    .navigation {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 30px;
+    }
+
+    .nav-button {
+      padding: 10px 30px;
+      background: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      cursor: pointer;
+      font-size: 1.1em;
+      transition: all 0.3s ease;
+      margin-left: 15px;
+    }
+
+    .nav-button:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .attributes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .attribute-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 15px;
+    }
+
+    .attribute-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .attribute-controls {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .attribute-controls button {
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--primary-color);
+      background: transparent;
+      color: var(--primary-color);
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .attribute-controls button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .difficulty-selection {
+      margin-bottom: 30px;
+    }
+
+    .cost-info {
+      color: var(--accent-color);
+      margin: 10px 0;
+    }
+
+    .effects-info {
+      font-size: 0.9em;
+      color: var(--secondary-color);
+    }
+
+    .summary-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .summary-section {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 15px;
+    }
+
+    .summary-section h3 {
+      margin: 0 0 15px 0;
+      color: var(--primary-color);
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 10px;
+    }
+
+    .summary-content {
+      display: grid;
+      gap: 10px;
+    }
+
+    .attributes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+
+    .attribute-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 5px;
+    }
+
+    .experiences-list {
+      display: grid;
+      gap: 15px;
+    }
+
+    .experience-item {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .experience-item h4 {
+      margin: 0 0 5px 0;
+      color: var(--secondary-color);
+    }
+
+    .talents-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .talent-item {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .talent-name {
+      color: var(--secondary-color);
+      font-weight: bold;
+    }
+
+    .talent-value {
+      float: right;
+      color: var(--primary-color);
+    }
+
+    .talent-description {
+      margin-top: 5px;
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+
+    /* 添加武道资质相关样式 */
+    .talents-info {
+      margin: 10px 0;
+      padding: 5px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 5px;
+    }
+
+    .effect-item,
+    .talent-item {
+      display: inline-block;
+      margin: 2px 5px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+
+    .positive {
+      background: rgba(76, 175, 80, 0.1);
+      color: #4CAF50;
+    }
+
+    .negative {
+      background: rgba(244, 67, 54, 0.1);
+      color: #f44336;
+    }
+
+    .special-effect {
+      margin-top: 10px;
+      padding: 5px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 5px;
+    }
+
+    h4 {
+      margin: 5px 0;
+      font-size: 0.9em;
+      color: var(--secondary-color);
+    }
+
+    /* 添加开始游戏按钮样式 */
+    .start-game-btn {
+      background: rgba(76, 175, 80, 0.2) !important;
+      border-color: #4CAF50 !important;
+      color: #4CAF50 !important;
+      font-weight: bold;
+    }
+
+    .start-game-btn:hover:not(:disabled) {
+      background: rgba(76, 175, 80, 0.3) !important;
+    }
+
+    .start-game-btn:disabled {
+      opacity: 0.5;
+      background: rgba(76, 175, 80, 0.1) !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="game-container">
+    <div class="game-header">
+      <h1>苍玄九洲·侠客录</h1>
+    </div>
+
+    <!-- 步骤指示器 -->
+    <div class="steps-indicator">
+      <div class="step active" data-step="1">
+        <div class="step-number">1</div>
+        <div class="step-text">选择难度</div>
+      </div>
+      <div class="step" data-step="2">
+        <div class="step-number">2</div>
+        <div class="step-text">属性体质</div>
+      </div>
+      <div class="step" data-step="3">
+        <div class="step-number">3</div>
+        <div class="step-text">开局定位</div>
+      </div>
+      <div class="step" data-step="4">
+        <div class="step-number">4</div>
+        <div class="step-text">最终确认</div>
+      </div>
+    </div>
+
+    <div id="content-area">
+      <!-- 动态内容区域 -->
+    </div>
+
+    <!-- 添加导航按钮 -->
+    <div class="navigation">
+      <button class="nav-button" id="prev-btn">上一步</button>
+      <button class="nav-button" id="next-btn">下一步</button>
+    </div>
+  </div>
+
+  <script>
+    // 游戏状态初始化
+    const gameState = {
+      currentStep: 1,
+      points: 0,
+      selections: {
+        origin: null,
+        difficulty: null,
+        attributes: {
+          physique: 5,
+          internal_force: 5,
+          mental_state: 5,
+          destiny: 5,
+          enlightenment: 5,
+          reputation: 5
+        },
+        experiences: [],
+        constitution: null,
+        startingPoint: null,
+        region: null
+      }
+    };
+
+    // 游戏配置
+    const CONFIG = {
+      // 难度设定
+      DIFFICULTY_LEVELS: {
+        normal: {
+          name: "众人之相",
+          points: 30,
+          description: "平凡起步，艰难修行"
+        },
+        chosen: {
+          name: "一代天骄",
+          points: 70,
+          description: "天赋异禀，机缘不凡"
+        },
+        legendary: {
+          name: "天命之人",
+          points: 150,
+          description: "盖世奇才，惊才绝艳"
+        }
+      },
+
+      // 出身选项
+      ORIGINS: {
+        martial_family: {
+          name: "武学世家",
+          description: "出身名门望族，自幼习武"
+        },
+        merchant_child: {
+          name: "商贾之子",
+          description: "富贵人家，见多识广"
+        },
+        wanderer: {
+          name: "江湖浪人",
+          description: "漂泊无依，机缘巧合习得武艺"
+        }
+      },
+
+      // 属性定义
+      ATTRIBUTES: {
+        physique: {
+          name: "体质",
+          description: "影响生命上限和身体强度"
+        },
+        internal_force: {
+          name: "内力",
+          description: "影响内功威力和真气储量"
+        },
+        mental_state: {
+          name: "心境",
+          description: "影响心法修炼和精神状态"
+        },
+        destiny: {
+          name: "机缘",
+          description: "影响遇到奇遇的概率"
+        },
+        enlightenment: {
+          name: "悟性",
+          description: "影响学习速度和技能领悟"
+        },
+        reputation: {
+          name: "声望",
+          description: "影响江湖地位和NPC态度"
+        }
+      },
+
+      // 经历选项
+      EXPERIENCES: {
+        mountain_training: {
+          name: "深山苦修",
+          description: "独居深山，专注武学，历经三年寒暑",
+          cost: 10,
+          effects: {
+            physique: 3,
+            internal_force: 2,
+            mental_state: 1,
+            reputation: -1
+          }
+        },
+        market_adventure: {
+          name: "市井历练",
+          description: "游历城镇，见识世态，历经人情冷暖",
+          cost: 8,
+          effects: {
+            reputation: 2,
+            destiny: 1,
+            enlightenment: 1
+          }
+        },
+        ancient_tomb: {
+          name: "古墓寻宝",
+          description: "机缘巧合，入古墓习得秘技，获得前人传承",
+          cost: 15,
+          effects: {
+            internal_force: 3,
+            enlightenment: 2,
+            destiny: -1
+          }
+        },
+        sect_training: {
+          name: "门派修行",
+          description: "拜入名门，系统习武，打下扎实根基",
+          cost: 12,
+          effects: {
+            internal_force: 2,
+            enlightenment: 1,
+            reputation: 2,
+            destiny: -1
+          }
+        },
+        battlefield_tempering: {
+          name: "战场历练",
+          description: "参与边境战事，在生死间磨砺武艺",
+          cost: 18,
+          effects: {
+            physique: 3,
+            mental_state: 3,
+            reputation: 2,
+            enlightenment: -1
+          }
+        },
+        hermit_teaching: {
+          name: "遇隐士指点",
+          description: "得到隐居高人指点，顿悟武学真谛",
+          cost: 20,
+          effects: {
+            enlightenment: 4,
+            internal_force: 2,
+            reputation: -2
+          }
+        },
+        jianghu_wandering: {
+          name: "江湖漂泊",
+          description: "四处游历，与各路高手切磋，增长见闻",
+          cost: 15,
+          effects: {
+            mental_state: 2,
+            destiny: 2,
+            enlightenment: 1,
+            reputation: 1
+          }
+        },
+        escort_business: {
+          name: "镖局历练",
+          description: "在镖局工作，练就一身硬功夫",
+          cost: 12,
+          effects: {
+            physique: 2,
+            reputation: 2,
+            mental_state: 1,
+            destiny: 1
+          }
+        },
+        sword_training: {
+          name: "剑冢悟道",
+          description: "在古剑冢中参悟剑意",
+          cost: 20,
+          effects: {
+            enlightenment: 2,
+            mental_state: 1
+          },
+          martial_talents: {
+            sword: 3,
+            internal: 1
+          }
+        },
+        fist_heritage: {
+          name: "拳谱传承",
+          description: "得到前辈高人的拳法真传",
+          cost: 15,
+          effects: {
+            physique: 1
+          },
+          martial_talents: {
+            fist: 3,
+            palm: 2
+          }
+        },
+        hidden_master: {
+          name: "奇人指点",
+          description: "得到隐世高人指点武学要诀",
+          cost: 25,
+          effects: {
+            enlightenment: 2
+          },
+          martial_talents: {
+            internal: 3,
+            movement: 2
+          }
+        },
+        temple_study: {
+          name: "寺庙修行",
+          description: "在古刹静修，参悟禅机，习得独特心法",
+          cost: 15,
+          effects: {
+            mental_state: 3,
+            enlightenment: 2,
+            internal_force: 1,
+            reputation: -1
+          },
+          martial_talents: {
+            finger: 2,
+            palm: 1,
+            internal: 2
+          }
+        },
+        medical_apprentice: {
+          name: "悬壶济世",
+          description: "随医师学习医术，掌握经脉要穴之理",
+          cost: 12,
+          effects: {
+            enlightenment: 2,
+            mental_state: 1,
+            reputation: 2
+          },
+          martial_talents: {
+            finger: 2,
+            internal: 2
+          }
+        },
+        circus_performer: {
+          name: "江湖卖艺",
+          description: "在江湖卖艺，练就一身绝技",
+          cost: 10,
+          effects: {
+            physique: 2,
+            destiny: 1,
+            reputation: 1
+          },
+          martial_talents: {
+            movement: 3,
+            hidden_weapon: 2
+          }
+        },
+        mine_worker: {
+          name: "矿山历练",
+          description: "在矿山中搬运重物，练就强健体魄",
+          cost: 8,
+          effects: {
+            physique: 4,
+            internal_force: 1,
+            enlightenment: -1
+          }
+        },
+        prison_survival: {
+          name: "牢狱求生",
+          description: "身陷囹圄，在险境中磨练意志",
+          cost: 15,
+          effects: {
+            mental_state: 4,
+            physique: 2,
+            reputation: -2
+          }
+        },
+        royal_guard: {
+          name: "皇宫侍卫",
+          description: "在皇宫当值，习得宫廷秘传武学",
+          cost: 20,
+          effects: {
+            internal_force: 2,
+            reputation: 3,
+            enlightenment: 1
+          },
+          martial_talents: {
+            sword: 2,
+            spear: 2,
+            movement: 1
+          }
+        },
+        bandit_life: {
+          name: "山寨匪患",
+          description: "误入匪窝，在刀口舔血中求生",
+          cost: 12,
+          effects: {
+            physique: 2,
+            mental_state: 2,
+            reputation: -3
+          },
+          martial_talents: {
+            saber: 3,
+            hidden_weapon: 2
+          }
+        },
+        scholar_study: {
+          name: "书院求学",
+          description: "潜心研读古籍，参悟武学真谛",
+          cost: 15,
+          effects: {
+            enlightenment: 4,
+            mental_state: 1,
+            physique: -1
+          }
+        },
+        poison_master: {
+          name: "毒师传承",
+          description: "跟随毒师学习，掌握奇毒秘术",
+          cost: 18,
+          effects: {
+            enlightenment: 2,
+            mental_state: 2,
+            reputation: -2
+          },
+          martial_talents: {
+            finger: 2,
+            hidden_weapon: 3
+          }
+        },
+        gambling_house: {
+          name: "赌场沉浮",
+          description: "在赌场中历练，练就过人眼力",
+          cost: 10,
+          effects: {
+            destiny: 3,
+            mental_state: 2,
+            reputation: -1
+          },
+          martial_talents: {
+            finger: 2,
+            hidden_weapon: 1
+          }
+        },
+        weapon_smith: {
+          name: "铸剑师徒",
+          description: "拜入名匠门下，了解兵器特性",
+          cost: 15,
+          effects: {
+            physique: 2,
+            enlightenment: 2
+          },
+          martial_talents: {
+            sword: 2,
+            saber: 2,
+            spear: 1
+          }
+        },
+        grave_keeper: {
+          name: "守陵人",
+          description: "在皇陵当值，偶得秘传",
+          cost: 18,
+          effects: {
+            mental_state: 3,
+            internal_force: 2,
+            reputation: -1
+          },
+          martial_talents: {
+            internal: 3,
+            movement: 2
+          }
+        },
+        street_fighter: {
+          name: "街头搏斗",
+          description: "在街头斗殴中磨练实战技巧",
+          cost: 8,
+          effects: {
+            physique: 3,
+            mental_state: 1,
+            reputation: -2
+          },
+          martial_talents: {
+            fist: 3,
+            palm: 1
+          }
+        },
+        merchant_guard: {
+          name: "商队护卫",
+          description: "保护商队往来，见识各地武学",
+          cost: 12,
+          effects: {
+            physique: 1,
+            destiny: 2,
+            reputation: 1
+          },
+          martial_talents: {
+            saber: 2,
+            spear: 1,
+            movement: 1
+          }
+        }
+      },
+
+      // 体质选项
+      CONSTITUTIONS: {
+        normal: {
+          name: "平平无奇",
+          description: "普通体质，无特殊之处",
+          cost: 0,
+          effects: {},
+          special: "无特殊效果"
+        },
+        iron_body: {
+          name: "铁骨金身",
+          description: "天生神力，刀枪不入",
+          cost: 25,
+          effects: {
+            physique: 5,
+            internal_force: -1,
+            enlightenment: -1
+          },
+          special: "受到的物理伤害减少30%"
+        },
+        spirit_vessel: {
+          name: "灵体之躯",
+          description: "天生亲和真气，修炼事半功倍",
+          cost: 25,
+          effects: {
+            internal_force: 4,
+            enlightenment: 2,
+            physique: -2
+          },
+          special: "内力修炼速度提升50%"
+        },
+        phoenix_blood: {
+          name: "凤血传承",
+          description: "体内流淌着上古凤凰血脉",
+          cost: 35,
+          effects: {
+            destiny: 3,
+            enlightenment: 3,
+            mental_state: 2
+          },
+          special: "对火属性功法有特殊亲和"
+        },
+        jade_bone: {
+          name: "玉骨清像",
+          description: "天生道骨，悟性超绝",
+          cost: 30,
+          effects: {
+            enlightenment: 5,
+            mental_state: 2,
+            physique: -2
+          },
+          special: "功法领悟速度提升40%"
+        },
+        sword_bone: {
+          name: "剑骨天成",
+          description: "天生剑骨，对剑法有超凡悟性",
+          cost: 30,
+          effects: {
+            enlightenment: 2
+          },
+          martial_talents: {
+            sword: 5,
+            movement: 2
+          },
+          special: "剑法修炼速度提升50%"
+        },
+        iron_fist: {
+          name: "铁拳之体",
+          description: "天生神力，拳掌威力惊人",
+          cost: 25,
+          effects: {
+            physique: 3
+          },
+          martial_talents: {
+            fist: 4,
+            palm: 3
+          },
+          special: "拳掌类武学伤害提升30%"
+        },
+        agile_body: {
+          name: "灵猿之躯",
+          description: "身轻如燕，动若脱兔",
+          cost: 28,
+          effects: {
+            enlightenment: 1
+          },
+          martial_talents: {
+            movement: 5,
+            hidden_weapon: 2
+          },
+          special: "身法类武学消耗内力减少20%"
+        },
+        weapon_master: {
+          name: "百兵之体",
+          description: "对各类兵器有独特感应",
+          cost: 35,
+          effects: {
+            enlightenment: 3
+          },
+          martial_talents: {
+            sword: 2,
+            saber: 2,
+            spear: 2,
+            staff: 2
+          },
+          special: "兵器类武学领悟速度提升30%"
+        },
+        dragon_blood: {
+          name: "真龙血脉",
+          description: "体内流淌着上古真龙血脉，天生霸气",
+          cost: 40,
+          effects: {
+            physique: 3,
+            internal_force: 3,
+            destiny: 2,
+            reputation: 2
+          },
+          martial_talents: {
+            internal: 3,
+            movement: 2
+          },
+          special: "内力属性偏向龙息，修炼速度提升40%，威力增加30%"
+        },
+        thunder_body: {
+          name: "雷体",
+          description: "天生亲和雷电之力，动若雷霆",
+          cost: 35,
+          effects: {
+            internal_force: 4,
+            mental_state: 2,
+            physique: 1
+          },
+          martial_talents: {
+            movement: 3,
+            finger: 2
+          },
+          special: "速度类武学威力提升50%"
+        },
+        yin_yang_body: {
+          name: "阴阳同体",
+          description: "天生阴阳调和，刚柔并济",
+          cost: 30,
+          effects: {
+            internal_force: 3,
+            enlightenment: 3,
+            mental_state: 2
+          },
+          martial_talents: {
+            internal: 4,
+            palm: 2
+          },
+          special: "可同时修炼阴阳属性功法，不会有冲突"
+        },
+        thousand_changes: {
+          name: "千变之体",
+          description: "天生百窍玲珑，善于模仿",
+          cost: 25,
+          effects: {
+            enlightenment: 4,
+            destiny: 2,
+            mental_state: 1
+          },
+          martial_talents: {
+            movement: 2,
+            finger: 2,
+            palm: 2
+          },
+          special: "学习他人武功的速度提升100%"
+        },
+        immortal_bone: {
+          name: "仙骨",
+          description: "骨骼晶莹剔透，蕴含仙道气息",
+          cost: 45,
+          effects: {
+            internal_force: 4,
+            enlightenment: 3,
+            mental_state: 2,
+            physique: -1
+          },
+          martial_talents: {
+            internal: 5,
+            finger: 2
+          },
+          special: "道法亲和度极高，内力质量提升50%"
+        },
+        demon_body: {
+          name: "魔体",
+          description: "体内蕴含魔性，力量狂暴",
+          cost: 35,
+          effects: {
+            physique: 4,
+            internal_force: 3,
+            reputation: -3
+          },
+          martial_talents: {
+            fist: 3,
+            internal: 3
+          },
+          special: "狂暴状态下战力提升70%，但易受心魔影响"
+        },
+        steel_bone: {
+          name: "百炼筋骨",
+          description: "经过特殊锻炼，筋骨坚韧异常",
+          cost: 30,
+          effects: {
+            physique: 5,
+            internal_force: 2,
+            enlightenment: -1
+          },
+          martial_talents: {
+            fist: 2,
+            palm: 2,
+            movement: 1
+          },
+          special: "外功威力提升40%，受到的物理伤害减少25%"
+        },
+        wind_spirit: {
+          name: "风灵之体",
+          description: "与风亲和，动如疾风",
+          cost: 28,
+          effects: {
+            enlightenment: 2,
+            destiny: 2,
+            physique: -1
+          },
+          martial_talents: {
+            movement: 5,
+            hidden_weapon: 2
+          },
+          special: "轻功消耗减少50%，移动速度提升40%"
+        },
+        poison_body: {
+          name: "百毒之体",
+          description: "天生百毒不侵，可吸收毒素增强功力",
+          cost: 25,
+          effects: {
+            physique: 2,
+            internal_force: 2,
+            reputation: -2
+          },
+          martial_talents: {
+            finger: 3,
+            hidden_weapon: 3
+          },
+          special: "免疫毒素伤害，可吸收毒素转化为内力"
+        },
+        healing_body: {
+          name: "药体",
+          description: "天生具有治愈能力，对药理有特殊悟性",
+          cost: 25,
+          effects: {
+            enlightenment: 3,
+            mental_state: 2,
+            reputation: 2
+          },
+          martial_talents: {
+            internal: 2,
+            finger: 2
+          },
+          special: "恢复速度提升100%，使用药物效果提升50%"
+        }
+      },
+
+      // 开局地点
+      STARTING_POINTS: {
+        martial_sect: {
+          name: "名门正派",
+          description: "拜入武学名门，继承正统武学传承",
+          background: "出身平凡，因缘际会拜入名门",
+          features: [
+            "有完整的武学传承体系",
+            "较为封闭的修炼环境",
+            "需要遵守门规戒律"
+          ]
+        },
+        merchant_city: {
+          name: "富商之家",
+          description: "生于富贾之家，在繁华都城中成长",
+          background: "商贾子弟，见多识广",
+          features: [
+            "资源丰富，起点较高",
+            "人脉广阔，消息灵通",
+            "需要平衡家业与武道"
+          ]
+        },
+        wanderer_town: {
+          name: "江湖小镇",
+          description: "在江湖小镇中长大，耳濡目染武林事",
+          background: "江湖浪人，随遇而安",
+          features: [
+            "自由自在，不受约束",
+            "接触各路武学，见识广博",
+            "起点较低，需要自己打拼"
+          ]
+        },
+        border_fortress: {
+          name: "边塞重镇",
+          description: "生于边境军镇，在战火中成长",
+          background: "军旅之家，习武强身",
+          features: [
+            "军中武学资源丰富",
+            "实战机会众多",
+            "需要应对战争威胁"
+          ]
+        },
+        hidden_sect: {
+          name: "隐世门派",
+          description: "深居秘境的门派，传承上古武学秘法",
+          background: "被隐世高人收养的弃婴",
+          features: [
+            "掌握失传的古老武学",
+            "与世隔绝的修炼环境",
+            "需保守门派存在之秘"
+          ]
+        },
+        medical_valley: {
+          name: "杏林医谷",
+          description: "医武双修的神秘山谷，以金针渡穴闻名",
+          background: "医仙传人，悬壶济世",
+          features: [
+            "精通医理与毒术",
+            "可调配增强功力的药浴",
+            "常需应对江湖仇杀求医"
+          ]
+        },
+        overseas_island: {
+          name: "海外孤岛",
+          description: "与中原隔绝的奇异岛屿，武学自成一派",
+          background: "海难幸存者的后裔",
+          features: [
+            "可修炼独特的潮汐功法",
+            "岛上有上古武者遗迹",
+            "需应对定期台风侵袭"
+          ]
+        },
+        tomb_raider: {
+          name: "盗墓世家",
+          description: "世代钻研古墓机关的风水世家",
+          background: "倒斗高手的嫡传子弟",
+          features: [
+            "精通各类机关暗器",
+            "熟悉古代武学典籍存放处",
+            "易遭古墓诅咒反噬"
+          ]
+        },
+        alliance_scion: {
+          name: "武林盟主之后",
+          description: "生于统领江湖的名门世家",
+          background: "前任盟主的嫡子",
+          features: [
+            "继承顶级武学资源",
+            "可调动部分江湖势力",
+            "时刻面临暗杀挑战"
+          ]
+        },
+        poison_clan: {
+          name: "苗疆毒寨",
+          description: "掌控蛊毒秘术的南疆部落",
+          background: "毒巫选中的蛊皿",
+          features: [
+            "可驱使毒虫作战",
+            "精通百毒不侵之法",
+            "每月需忍受蛊毒反噬"
+          ]
+        },
+        silkroad_caravan: {
+          name: "西域商队",
+          description: "往来丝路的骆驼客集团",
+          background: "商队首领的养子",
+          features: [
+            "熟悉各国武学特点",
+            "掌握沙漠生存秘技",
+            "常遭遇马贼劫掠"
+          ]
+        },
+        mountain_sect: {
+          name: "开山立派",
+          description: "开山立派，自成一派",
+          background: "山中隐士，自创武学",
+          features: [
+            "自创武学，独树一帜",
+            "山中资源丰富，修炼环境优越",
+            "需应对山中妖兽与毒虫"
+          ]
+        }
+      },
+
+      // 九州设定
+      REGIONS: {
+        central: {
+          name: "中州",
+          description: "龙兴之地，沃野千里，江河如网",
+          features: [
+            "龙脉汇聚，皇城而立",
+            "百姓安居乐业，茶馆最热话题是'昨日哪个大侠在醉仙楼斗剑'",
+            "地下藏有前朝武道秘境「千机陵」"
+          ],
+          difficulty: "普通",
+          suitable_for: "适合初入江湖者"
+        },
+        frost: {
+          name: "霜州",
+          description: "极北寒冰牢狱，终年积雪，冰川中封冻着上古妖兽遗骸",
+          features: [
+            "特产「冰髓」可压制心魔，采冰人需防'雪鬼'",
+            "玄冰宫隐于万丈冰崖，弟子踏冰如履平地",
+            "每至冬夜，冰川深处传来未知巨兽心跳声"
+          ],
+          difficulty: "困难",
+          suitable_for: "适合追求极限历练者"
+        },
+        east_waves: {
+          name: "东澜州",
+          description: "沧海浮云，丘陵起伏，云雾缭绕",
+          features: [
+            "踏云坊总部设于'摘星崖'，弟子常踏浪练轻功",
+            "近海'蜃楼岛'每月现形一次，登岛者多疯癫而返",
+            "渔民供奉「妈祖像」镇压海底妖兽"
+          ],
+          difficulty: "中等",
+          suitable_for: "适合喜欢轻功水上功夫者"
+        },
+        ember: {
+          name: "烬州",
+          description: "熔岩炼狱，火山群立，岩浆河纵横",
+          features: [
+            "铁骨山庄依活火山而建，以地火淬炼兵器",
+            "「火浣布」作坊林立，江湖人争相购买",
+            "地底偶现'炎魔'，吞食铁矿为生"
+          ],
+          difficulty: "困难",
+          suitable_for: "适合横练硬功者"
+        },
+        miasma: {
+          name: "瘴州",
+          description: "密林遮天，沼气泡咕噜，十步外难辨人影",
+          features: [
+            "百兽门在此驯养变异毒虫",
+            "「腐骨花」制成的迷烟，黑市价超黄金",
+            "传说林中有座「千蛊城」，居民皆半人半虫"
+          ],
+          difficulty: "困难",
+          suitable_for: "适合擅长用毒和驯兽者"
+        },
+        abyss: {
+          name: "溟州",
+          description: "群岛星罗棋布，海底沉睡着上古巨鲸遗骨",
+          features: [
+            "龙渊阁分坛'听潮轩'立于孤岛，专研水系剑法",
+            "采珠人会猝死病（实为触碰妖兽'噬魂贝'所致）",
+            "每月大潮时，归墟崖显现通往海底城的漩涡"
+          ],
+          difficulty: "中等",
+          suitable_for: "适合修习水系功法者"
+        },
+        wasteland: {
+          name: "荒州",
+          description: "裂谷纵横，岩山如兽牙，无官道无城池",
+          features: [
+            "唯一妖兽多于野兽的大州，四大派试炼禁地",
+            "地缝常喷发紫色毒雾（妖兽兴奋剂）",
+            "流放者组建「拾骨帮」，专捡妖兽残骸换钱"
+          ],
+          difficulty: "极难",
+          suitable_for: "适合追求极限挑战者"
+        },
+        void: {
+          name: "墟州",
+          description: "地面布满裂缝，阴风呼啸如鬼泣",
+          features: [
+            "地脉阴气喷涌口，催生变异妖兽概率高出十倍",
+            "朝廷在此设「镇龙柱」，柱身刻满武道符文",
+            "亡命徒来此寻找「地髓」（传闻能突破武学瓶颈）"
+          ],
+          difficulty: "极难",
+          suitable_for: "适合不惧生死的疯狂武者"
+        },
+        abyss_realm: {
+          name: "渊州",
+          description: "地底世界，常年不见天日，遍布神秘遗迹",
+          features: [
+            "地底暗河纵横，孕育着不见天日的诡异生物",
+            "散落着上古修士的洞府遗迹",
+            "有传言称地底深处藏着「万年地火」"
+          ],
+          difficulty: "极难",
+          suitable_for: "适合寻找上古秘境的探险者"
+        }
+      },
+
+      // 武道资质
+      MARTIAL_TALENTS: {
+        sword: {
+          name: "剑法资质",
+          description: "影响剑法的领悟和发挥"
+        },
+        saber: {
+          name: "刀法资质",
+          description: "影响刀法的修炼速度和威力"
+        },
+        spear: {
+          name: "枪法资质",
+          description: "影响长兵器的使用效果"
+        },
+        palm: {
+          name: "掌法资质",
+          description: "影响掌法的修炼和威力"
+        },
+        fist: {
+          name: "拳法资质",
+          description: "影响拳法的修炼和威力"
+        },
+        finger: {
+          name: "指法资质",
+          description: "影响指法的精准度和杀伤力"
+        },
+        staff: {
+          name: "棍法资质",
+          description: "影响棍法的修炼和运用"
+        },
+        whip: {
+          name: "鞭法资质",
+          description: "影响软兵器的使用效果"
+        },
+        hidden_weapon: {
+          name: "暗器资质",
+          description: "影响暗器的使用精准度"
+        },
+        movement: {
+          name: "身法资质",
+          description: "影响轻功和步法的修炼"
+        },
+        internal: {
+          name: "内功资质",
+          description: "影响内功心法的修炼速度"
+        }
+      },
+
+      // 悲惨经历配置
+      TRAGIC_EXPERIENCES: {
+        family_massacre: {
+          name: "家破人亡",
+          description: "目睹全家惨遭灭门，心灵受到重创",
+          points_gain: 25,
+          effects: {
+            mental_state: -3,
+            reputation: -1
+          },
+          aftermath: "每当遇到类似场景时有50%几率陷入疯狂状态",
+          trauma: "对亲情相关剧情特别敏感，容易失控"
+        },
+
+        crippled_meridians: {
+          name: "经脉受损",
+          description: "幼时遭人暗算，经脉受损",
+          points_gain: 20,
+          effects: {
+            internal_force: -2,
+            physique: -1
+          },
+          aftermath: "内力运行速度降低30%",
+          trauma: "阴雨天气会感到经脉隐痛"
+        },
+
+        poison_scars: {
+          name: "剧毒摧残",
+          description: "曾被剧毒折磨，虽获救但留下后遗症",
+          points_gain: 15,
+          effects: {
+            physique: -2,
+            destiny: -1
+          },
+          aftermath: "对毒性攻击的抗性降低50%",
+          trauma: "体质虚弱，易受风寒"
+        },
+
+        mental_trauma: {
+          name: "心魔缠身",
+          description: "曾遭受重大打击，心中种下心魔",
+          points_gain: 30,
+          effects: {
+            mental_state: -4,
+            enlightenment: 2
+          },
+          aftermath: "修炼时有20%几率走火入魔",
+          trauma: "情绪容易失控，易怒易狂"
+        },
+
+        qi_deviation: {
+          name: "走火入魔",
+          description: "曾经修炼出差错，导致走火入魔",
+          points_gain: 25,
+          effects: {
+            internal_force: -3,
+            mental_state: -2
+          },
+          aftermath: "内力运行不稳，战斗时有10%几率内力紊乱",
+          trauma: "经脉损伤，难以承受强大内力"
+        },
+
+        betrayal_scar: {
+          name: "背叛阴影",
+          description: "曾被至亲好友背叛，留下心理阴影",
+          points_gain: 20,
+          effects: {
+            mental_state: -2,
+            reputation: -2
+          },
+          aftermath: "难以与他人建立深厚信任关系",
+          trauma: "对友情相关剧情特别敏感"
+        },
+
+        cursed_seal: {
+          name: "身负剧毒",
+          description: "中了难解的剧毒，需定期服用特殊药物，或是上山采药",
+          points_gain: 35,
+          effects: {
+            physique: -2,
+            destiny: -2,
+            internal_force: -1
+          },
+          aftermath: "每月需花费大量银两购买压制剧毒的药物，或是上山采药",
+          trauma: "剧毒发作时会失去战斗能力"
+        },
+
+        broken_spirit: {
+          name: "心志崩溃",
+          description: "经历生死劫难，精神几近崩溃",
+          points_gain: 30,
+          effects: {
+            mental_state: -5,
+            enlightenment: 3
+          },
+          aftermath: "压力大时有40%几率陷入呆滞状态",
+          trauma: "难以承受重大打击"
+        },
+
+        debt_burden: {
+          name: "血债缠身",
+          description: "背负着巨额债务，需要不断偿还",
+          points_gain: 15,
+          effects: {
+            reputation: -3,
+            destiny: -1
+          },
+          aftermath: "每月需上缴50%收入还债",
+          trauma: "常有追债人上门骚扰"
+        },
+      }
+    };
+
+    // 初始化页面
+    document.addEventListener('DOMContentLoaded', function () {
+      // 初始化内容
+      updateContent();
+      setupNavigationButtons();
+    });
+
+    // 更新页面内容
+    function updateContent() {
+      const contentArea = document.getElementById('content-area');
+      const nextBtn = document.getElementById('next-btn');
+
+      // 更新步骤指示器
+      document.querySelectorAll('.step').forEach(step => {
+        step.classList.toggle('active',
+          parseInt(step.dataset.step) === gameState.currentStep);
+      });
+
+      // 根据当前步骤生成内容
+      switch (gameState.currentStep) {
+        case 1:
+          contentArea.innerHTML = generateOriginSelection();
+          break;
+        case 2:
+          contentArea.innerHTML = generateAttributeAllocation();
+          break;
+        case 3:
+          contentArea.innerHTML = generateStartingPointSelection();
+          break;
+        case 4:
+          contentArea.innerHTML = generateSummary();
+          break;
+        default:
+          contentArea.innerHTML = '';
+      }
+
+      // 更新按钮状态和文本
+      if (gameState.currentStep === 4) {
+        nextBtn.textContent = '开始游戏';
+        nextBtn.classList.add('start-game-btn');
+      } else {
+        nextBtn.textContent = '下一步';
+        nextBtn.classList.remove('start-game-btn');
+      }
+
+      setupNavigationButtons();
+    }
+
+    // 生成出身选择界面
+    function generateOriginSelection() {
+      return `
+        <div class="section-title">选择难度</div>
+        <div class="difficulty-selection">
+          <div class="selection-grid">
+            ${Object.entries(CONFIG.DIFFICULTY_LEVELS).map(([id, level]) => `
+              <div class="selection-card ${gameState.selections.difficulty === id ? 'selected' : ''}"
+                   onclick="selectDifficulty('${id}')">
+                <h3>${level.name}</h3>
+                <p>${level.description}</p>
+                <div class="points-info">起始点数：${level.points}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // 修改计算属性值的函数
+    function calculateAttributeValue(id) {
+      // 基础值为5
+      let value = 0;
+
+      // 加上玩家分配的点数
+      if (gameState.selections.attributes && gameState.selections.attributes[id]) {
+        value += gameState.selections.attributes[id];
+      }
+
+      // 加上体质加成
+      if (gameState.selections.constitution) {
+        const constitution = CONFIG.CONSTITUTIONS[gameState.selections.constitution];
+        if (constitution && constitution.effects && constitution.effects[id]) {
+          value += constitution.effects[id];
+        }
+      }
+
+      // 加上经历加成
+      if (Array.isArray(gameState.selections.experiences)) {
+        gameState.selections.experiences.forEach(expId => {
+          const exp = CONFIG.EXPERIENCES[expId];
+          if (exp && exp.effects && exp.effects[id]) {
+            value += exp.effects[id];
+          }
+        });
+      }
+
+      // 加上悲惨经历的影响
+      if (Array.isArray(gameState.selections.tragicExperiences)) {
+        gameState.selections.tragicExperiences.forEach(expId => {
+          const exp = CONFIG.TRAGIC_EXPERIENCES[expId];
+          if (exp && exp.effects && exp.effects[id]) {
+            value += exp.effects[id];
+          }
+        });
+      }
+
+      return value;
+    }
+
+    // 修改属性显示部分
+    function generateAttributeAllocation() {
+      const remainingPoints = calculateRemainingPoints();
+
+      return `
+        <div class="section-title">属性与体质选择</div>
+        <div class="points-display">
+            剩余点数：${remainingPoints}
+        </div>
+        
+        <div class="attributes-section">
+            <h3>基础属性</h3>
+            <div class="attributes-grid">
+                ${Object.entries(CONFIG.ATTRIBUTES).map(([id, attr]) => {
+        const baseValue = gameState.selections.attributes[id] || 5;
+        const totalValue = calculateAttributeValue(id);
+        const bonus = totalValue - baseValue;
+
+        return `
+                        <div class="attribute-card">
+                            <div class="attribute-header">
+                                <span>${attr.name}</span>
+                                <span class="attribute-value">
+                                    ${totalValue}${bonus !== 0 ? ` (${bonus > 0 ? '+' : ''}${bonus})` : ''}
+                                </span>
+                            </div>
+                            <p>${attr.description}</p>
+                            <div class="attribute-controls">
+                                <button onclick="adjustAttribute('${id}', -1)" 
+                                        ${(gameState.selections.attributes[id] <= 5 ||
+            !canReduceAttribute(id)) ? 'disabled' : ''}>-</button>
+                                <button onclick="adjustAttribute('${id}', 1)"
+                                        ${(gameState.selections.attributes[id] >= 20 ||
+            remainingPoints <= 0) ? 'disabled' : ''}>+</button>
+                            </div>
+                        </div>
+                    `;
+      }).join('')}
+            </div>
+        </div>
+
+        <div class="constitution-section">
+            <h3>体质选择</h3>
+            <div class="selection-grid">
+                ${Object.entries(CONFIG.CONSTITUTIONS).map(([id, constitution]) => `
+                    <div class="selection-card ${gameState.selections.constitution === id ? 'selected' : ''}"
+                         onclick="selectConstitution('${id}')"
+                         ${remainingPoints < constitution.cost ? 'style="opacity: 0.5;"' : ''}>
+                        <h3>${constitution.name}</h3>
+                        <p>${constitution.description}</p>
+                        <div class="cost-info">消耗点数：${constitution.cost}</div>
+                        <div class="effects-info">
+                            <h4>属性加成：</h4>
+                            ${Object.entries(constitution.effects).map(([attr, value]) =>
+        `<span class="effect-item ${value > 0 ? 'positive' : 'negative'}">
+                                    ${CONFIG.ATTRIBUTES[attr].name} ${value > 0 ? '+' : ''}${value}
+                                </span>`
+      ).join('')}
+                        </div>
+                        ${constitution.martial_talents ? `
+                            <div class="talents-info">
+                                <h4>资质加成：</h4>
+                                ${Object.entries(constitution.martial_talents).map(([talent, value]) =>
+        `<span class="talent-item positive">
+                                        ${CONFIG.MARTIAL_TALENTS[talent].name} +${value}
+                                    </span>`
+      ).join('')}
+                            </div>
+                        ` : ''}
+                        <div class="special-effect">
+                            <h4>特殊效果：</h4>
+                            <p>${constitution.special}</p>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+
+        <div class="experiences-section">
+            <h3>经历选择</h3>
+            <div class="selection-grid">
+                ${Object.entries(CONFIG.EXPERIENCES).map(([id, exp]) => `
+                    <div class="selection-card ${gameState.selections.experiences.includes(id) ? 'selected' : ''}"
+                         onclick="toggleExperience('${id}')"
+                         ${remainingPoints < exp.cost ? 'style="opacity: 0.5;"' : ''}>
+                        <h3>${exp.name}</h3>
+                        <p>${exp.description}</p>
+                        <div class="cost-info">消耗点数：${exp.cost}</div>
+                        <div class="effects-info">
+                            <h4>属性加成：</h4>
+                            ${Object.entries(exp.effects).map(([attr, value]) =>
+        `<span class="effect-item ${value > 0 ? 'positive' : 'negative'}">
+                                    ${CONFIG.ATTRIBUTES[attr].name} ${value > 0 ? '+' : ''}${value}
+                                </span>`
+      ).join('')}
+                        </div>
+                        ${exp.martial_talents ? `
+                            <div class="talents-info">
+                                <h4>资质加成：</h4>
+                                ${Object.entries(exp.martial_talents).map(([talent, value]) =>
+        `<span class="talent-item positive">
+                                        ${CONFIG.MARTIAL_TALENTS[talent].name} +${value}
+                                    </span>`
+      ).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+
+        <div class="tragic-experiences-section">
+          <h3>悲惨经历</h3>
+          <p class="section-desc">选择悲惨经历可获得额外点数，但会带来永久性负面影响</p>
+          <div class="selection-grid">
+            ${Object.entries(CONFIG.TRAGIC_EXPERIENCES).map(([id, exp]) => `
+              <div class="selection-card ${gameState.selections.tragicExperiences?.includes(id) ? 'selected' : ''}"
+                   onclick="toggleTragicExperience('${id}')">
+                <h3>${exp.name}</h3>
+                <p>${exp.description}</p>
+                <div class="points-gain">获得点数：${exp.points_gain}</div>
+                <div class="effects-info">
+                  <h4>属性影响：</h4>
+                  ${Object.entries(exp.effects).map(([attr, value]) =>
+        `<span class="effect-item ${value > 0 ? 'positive' : 'negative'}">
+                      ${CONFIG.ATTRIBUTES[attr].name} ${value > 0 ? '+' : ''}${value}
+                    </span>`
+      ).join('')}
+                </div>
+                <div class="aftermath-info">
+                  <h4>后遗症：</h4>
+                  <p>${exp.aftermath}</p>
+                </div>
+                <div class="trauma-info">
+                  <h4>心理创伤：</h4>
+                  <p>${exp.trauma}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+    `;
+    }
+
+    // 生成体质选择界面
+    function generateCompanionSelection() {
+      const remainingPoints = calculateRemainingPoints();
+
+      return `
+        <div class="section-title">体质选择</div>
+        <div class="points-display">
+            剩余点数：${remainingPoints}
+        </div>
+        <div class="constitution-section">
+            <div class="selection-grid">
+                ${Object.entries(CONFIG.CONSTITUTIONS).map(([id, constitution]) => `
+                    <div class="selection-card ${gameState.selections.constitution === id ? 'selected' : ''}"
+                         onclick="selectConstitution('${id}')"
+                         ${remainingPoints < constitution.cost ? 'style="opacity: 0.5;"' : ''}>
+                        <h3>${constitution.name}</h3>
+                        <p>${constitution.description}</p>
+                        <div class="cost-info">消耗点数：${constitution.cost}</div>
+                        <div class="effects-info">
+                            属性效果：
+                            ${Object.entries(constitution.effects).map(([attr, value]) =>
+        `${CONFIG.ATTRIBUTES[attr].name} ${value > 0 ? '+' : ''}${value}`).join(', ')}
+                        </div>
+                        <div class="special-effect">
+                            特殊效果：${constitution.special}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+    }
+
+    // 修改开局选择界面的生成函数
+    function generateStartingPointSelection() {
+      return `
+        <div class="section-title">开局选择</div>
+        
+        <div class="region-selection">
+            <h3>选择起始州域</h3>
+            <div class="selection-grid">
+                ${Object.entries(CONFIG.REGIONS).map(([id, region]) => `
+                    <div class="selection-card ${gameState.selections.region === id ? 'selected' : ''}"
+                         onclick="selectRegion('${id}')">
+                        <h3>${region.name}</h3>
+                        <p>${region.description}</p>
+                        <div class="difficulty-info">
+                            <p>难度：${region.difficulty}</p>
+                            <p>${region.suitable_for}</p>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+
+        <div class="starting-points-section">
+            <h3>选择开局身份</h3>
+            <div class="selection-grid">
+                ${Object.entries(CONFIG.STARTING_POINTS).map(([id, point]) => `
+                    <div class="selection-card ${gameState.selections.startingPoint === id ? 'selected' : ''}"
+                         onclick="selectStartingPoint('${id}')">
+                        <h3>${point.name}</h3>
+                        <p>${point.description}</p>
+                        <div class="background-info">
+                            <h4>背景：</h4>
+                            <p>${point.background}</p>
+                        </div>
+                        <div class="features-list">
+                            <h4>特点：</h4>
+                            <ul>
+                                ${point.features.map(feature => `<li>${feature}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+    }
+
+    // 设置导航按钮
+    function setupNavigationButtons() {
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+
+      // 移除旧的事件监听器
+      prevBtn.replaceWith(prevBtn.cloneNode(true));
+      nextBtn.replaceWith(nextBtn.cloneNode(true));
+
+      // 重新获取按钮引用
+      const newPrevBtn = document.getElementById('prev-btn');
+      const newNextBtn = document.getElementById('next-btn');
+
+      // 添加新的事件监听器
+      newPrevBtn.addEventListener('click', () => {
+        if (gameState.currentStep > 1) {
+          gameState.currentStep--;
+          updateContent();
+        }
+      });
+
+      newNextBtn.addEventListener('click', () => {
+        if (gameState.currentStep < 4) {
+          if (canProceed()) {
+            gameState.currentStep++;
+            updateContent();
+          }
+        } else if (gameState.currentStep === 4 && canProceed()) {
+          startGame();
+        }
+      });
+
+      // 更新按钮状态
+      newPrevBtn.disabled = gameState.currentStep === 1;
+      newNextBtn.disabled = !canProceed();
+    }
+
+    // 检查是否可以进入下一步
+    function canProceed() {
+      switch (gameState.currentStep) {
+        case 1:
+          return gameState.selections.difficulty !== null;
+        case 2:
+          return gameState.selections.constitution !== null;
+        case 3:
+          // 需要同时选择州域和开局身份
+          return gameState.selections.region !== null &&
+            gameState.selections.startingPoint !== null;
+        case 4:
+          return true;
+        default:
+          return false;
+      }
+    }
+
+    // 选择出身
+    function selectOrigin(id) {
+      gameState.selections.origin = id;
+      updateContent();
+    }
+
+    // 选择难度
+    function selectDifficulty(id) {
+      gameState.selections.difficulty = id;
+      gameState.points = CONFIG.DIFFICULTY_LEVELS[id].points;
+      updateContent();
+    }
+
+    // 调整属性点数
+    function adjustAttribute(id, delta) {
+      const currentValue = gameState.selections.attributes[id] || 5;
+      const newValue = currentValue + delta;
+
+      if (newValue >= 5 && newValue <= 20 && calculateRemainingPoints() - delta >= 0) {
+        gameState.selections.attributes[id] = newValue;
+        updateContent();
+      }
+    }
+
+    // 添加属性点数检查函数
+    function canReduceAttribute(id) {
+      const currentValue = gameState.selections.attributes[id];
+      // 只有当属性是自己加的点数时才能减
+      return currentValue > 5 &&
+        currentValue > (CONFIG.ORIGINS[gameState.selections.origin]?.bonus[id] || 0) + 5;
+    }
+
+    // 计算剩余点数
+    function calculateRemainingPoints() {
+      let total = CONFIG.DIFFICULTY_LEVELS[gameState.selections.difficulty]?.points || 0;
+
+      // 加上悲惨经历获得的点数
+      if (Array.isArray(gameState.selections.tragicExperiences)) {
+        gameState.selections.tragicExperiences.forEach(expId => {
+          total += CONFIG.TRAGIC_EXPERIENCES[expId].points_gain;
+        });
+      }
+
+      // 减去属性点数消耗
+      Object.entries(gameState.selections.attributes).forEach(([attr, value]) => {
+        const baseValue = 5;
+        total -= (value - baseValue); // 移除出身加成的考虑
+      });
+
+      // 减去经历消耗
+      if (gameState.selections.experiences) {
+        gameState.selections.experiences.forEach(expId => {
+          total -= CONFIG.EXPERIENCES[expId].cost;
+        });
+      }
+
+      // 减去体质消耗
+      if (gameState.selections.constitution) {
+        total -= CONFIG.CONSTITUTIONS[gameState.selections.constitution].cost;
+      }
+
+      return total;
+    }
+
+    // 修改 toggleExperience 函数
+    function toggleExperience(id) {
+      if (!Array.isArray(gameState.selections.experiences)) {
+        gameState.selections.experiences = [];
+      }
+
+      const exp = CONFIG.EXPERIENCES[id];
+      const index = gameState.selections.experiences.indexOf(id);
+      const remainingPoints = calculateRemainingPoints();
+
+      if (index === -1) {
+        // 检查点数是否足够
+        if (remainingPoints >= exp.cost) {
+          gameState.selections.experiences.push(id);
+        }
+      } else {
+        gameState.selections.experiences.splice(index, 1);
+      }
+
+      updateContent();
+    }
+
+    // 修改 selectConstitution 函数
+    function selectConstitution(id) {
+      const constitution = CONFIG.CONSTITUTIONS[id];
+      const remainingPoints = calculateRemainingPoints();
+
+      if (remainingPoints >= constitution.cost || gameState.selections.constitution === id) {
+        if (gameState.selections.constitution === id) {
+          gameState.selections.constitution = null;
+        } else {
+          gameState.selections.constitution = id;
+        }
+        updateContent();
+      }
+    }
+
+    // 添加州域选择函数
+    function selectRegion(id) {
+      gameState.selections.region = id;
+      updateContent();
+    }
+
+    // 修改选择开局函数
+    function selectStartingPoint(id) {
+      gameState.selections.startingPoint = id;
+      // 自动设置对应的出身
+      gameState.selections.origin = id;
+      updateContent();
+    }
+
+    // 添加最终确认界面
+    function generateSummary() {
+      const difficulty = CONFIG.DIFFICULTY_LEVELS[gameState.selections.difficulty];
+      const startingPoint = CONFIG.STARTING_POINTS[gameState.selections.startingPoint];
+      const constitution = CONFIG.CONSTITUTIONS[gameState.selections.constitution];
+      const region = CONFIG.REGIONS[gameState.selections.region];
+
+      // 计算最终武道资质
+      const finalTalents = {};
+      Object.keys(CONFIG.MARTIAL_TALENTS).forEach(talent => {
+        finalTalents[talent] = 0;
+
+        // 加上体质带来的资质加成
+        if (gameState.selections.constitution) {
+          const constitution = CONFIG.CONSTITUTIONS[gameState.selections.constitution];
+          if (constitution.martial_talents && constitution.martial_talents[talent]) {
+            finalTalents[talent] += constitution.martial_talents[talent];
+          }
+        }
+
+        // 加上经历带来的资质加成
+        if (Array.isArray(gameState.selections.experiences)) {
+          gameState.selections.experiences.forEach(expId => {
+            const exp = CONFIG.EXPERIENCES[expId];
+            if (exp.martial_talents && exp.martial_talents[talent]) {
+              finalTalents[talent] += exp.martial_talents[talent];
+            }
+          });
+        }
+      });
+
+      return `
+        <div class="section-title">角色总览</div>
+        <div class="summary-container">
+            <div class="summary-section">
+                <h3>基础设定</h3>
+                <div class="summary-content">
+                    <p><strong>难度：</strong>${difficulty.name}</p>
+                    <p><strong>起始州域：</strong>${region.name}</p>
+                    <p><strong>开局身份：</strong>${startingPoint.name}</p>
+                    <p><strong>体质：</strong>${constitution.name}</p>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h3>最终属性</h3>
+                <div class="attributes-grid">
+                    ${Object.entries(CONFIG.ATTRIBUTES).map(([id, attr]) => `
+                        <div class="attribute-summary">
+                            <span class="attribute-name">${attr.name}</span>
+                            <span class="attribute-final-value">${calculateAttributeValue(id)}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h3>经历列表</h3>
+                <div class="experiences-list">
+                    ${gameState.selections.experiences.map(expId => `
+                        <div class="experience-item">
+                            <h4>${CONFIG.EXPERIENCES[expId].name}</h4>
+                            <p>${CONFIG.EXPERIENCES[expId].description}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h3>特殊效果</h3>
+                <p>${constitution.special}</p>
+            </div>
+
+            <div class="summary-section">
+                <h3>武道资质</h3>
+                <div class="talents-grid">
+                    ${Object.entries(CONFIG.MARTIAL_TALENTS).map(([id, talent]) => `
+                        <div class="talent-item">
+                            <span class="talent-name">${talent.name}</span>
+                            <span class="talent-value">${finalTalents[id]}</span>
+                            <div class="talent-description">${talent.description}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `;
+    }
+
+    function startGame() {
+      const difficulty = CONFIG.DIFFICULTY_LEVELS[gameState.selections.difficulty];
+      const region = CONFIG.REGIONS[gameState.selections.region];
+      const startingPoint = CONFIG.STARTING_POINTS[gameState.selections.startingPoint];
+      const constitution = CONFIG.CONSTITUTIONS[gameState.selections.constitution];
+
+      // 准备命令序列
+      let commands = [];
+
+      // 设置基础属性
+      const attributes = {
+        physique: "根骨",
+        internal: "内力",
+        mental_state: "心性",
+        destiny: "机缘",
+        enlightenment: "悟性",
+        fame: "声望"
+      };
+
+      // 计算武道资质
+      const finalTalents = {};
+      Object.keys(CONFIG.MARTIAL_TALENTS).forEach(talent => {
+        finalTalents[talent] = 0;
+        if (constitution.martial_talents && constitution.martial_talents[talent]) {
+          finalTalents[talent] += constitution.martial_talents[talent];
+        }
+        if (Array.isArray(gameState.selections.experiences)) {
+          gameState.selections.experiences.forEach(expId => {
+            const exp = CONFIG.EXPERIENCES[expId];
+            if (exp.martial_talents && exp.martial_talents[talent]) {
+              finalTalents[talent] += exp.martial_talents[talent];
+            }
+          });
+        }
+      });
+
+      // 准备条目内容
+      let entryContent = {
+        "基本信息": {
+          "难度": difficulty.name,
+          "起始州域": region.name,
+          "开局身份": startingPoint.name,
+          "体质": constitution.name,
+          "基础属性": Object.entries(attributes).reduce((acc, [id, name]) => {
+            acc[name] = calculateAttributeValue(id);
+            return acc;
+          }, {}),
+          "武道资质": Object.entries(finalTalents).reduce((acc, [id, value]) => {
+            if (value > 0) {
+              acc[CONFIG.MARTIAL_TALENTS[id].name] = value;
+            }
+            return acc;
+          }, {})
+        },
+        "州域详情": {
+          "州域描述": region.description,
+          "州域特点": region.features
+        },
+        "身份详情": {
+          "身份描述": startingPoint.description,
+          "身份特点": startingPoint.features
+        },
+        "体质详情": {
+          "体质描述": constitution.description,
+          "特殊效果": constitution.special
+        },
+        "经历详情": gameState.selections.experiences.map(expId => {
+          const exp = CONFIG.EXPERIENCES[expId];
+          return {
+            "名称": exp.name,
+            "描述": exp.description
+          };
+        })
+      };
+
+      // 设置变量
+      commands.push(`/setvar key=entryContent ${JSON.stringify(entryContent)}`);
+      Object.entries(attributes).forEach(([id, name]) => {
+        commands.push(`/setvar key=${id} ${calculateAttributeValue(id)}`);
+      });
+      Object.entries(finalTalents).forEach(([id, value]) => {
+        if (value > 0) {
+          commands.push(`/setvar key=talent_${id} ${value}`);
+        }
+      });
+
+      // 准备总结文本
+      let summary = `【角色开局设定】\n\n`;
+      summary += `${difficulty.name}难度的武侠之路即将开始。\n\n`;
+
+      // 添加基本信息
+      summary += `▎基本信息\n`;
+      summary += `难度：${difficulty.name}\n`;
+      summary += `起始州域：${region.name}\n`;
+      summary += `开局身份：${startingPoint.name}\n`;
+      summary += `体质：${constitution.name}\n\n`;
+
+      // 添加州域信息
+      summary += `▎州域详情\n`;
+      summary += `${region.description}\n`;
+      summary += `州域特点：\n`;
+      region.features.forEach(feature => {
+        summary += `• ${feature}\n`;
+      });
+      summary += '\n';
+
+      // 添加身份信息
+      summary += `▎身份详情\n`;
+      summary += `${startingPoint.description}\n`;
+      summary += `身份特点：\n`;
+      startingPoint.features.forEach(feature => {
+        summary += `• ${feature}\n`;
+      });
+      summary += '\n';
+
+      // 添加体质信息
+      summary += `▎体质详情\n`;
+      summary += `${constitution.description}\n`;
+      summary += `特殊效果：${constitution.special}\n\n`;
+
+      // 添加基础属性
+      summary += `▎基础属性\n`;
+      Object.entries(CONFIG.ATTRIBUTES).forEach(([id, attr]) => {
+        const value = calculateAttributeValue(id);
+        summary += `${attr.name}：${value}\n`;
+      });
+      summary += '\n';
+
+      // 添加武道资质
+      summary += `▎武道资质\n`;
+      Object.entries(finalTalents).forEach(([id, value]) => {
+        if (value > 0) {
+          summary += `${CONFIG.MARTIAL_TALENTS[id].name}：${value}\n`;
+        }
+      });
+      summary += '\n';
+
+      // 添加经历信息
+      if (gameState.selections.experiences.length > 0) {
+        summary += `▎经历详情\n`;
+        gameState.selections.experiences.forEach(expId => {
+          const exp = CONFIG.EXPERIENCES[expId];
+          summary += `${exp.name}：${exp.description}\n`;
+        });
+      }
+
+      try {
+        // 直接设置输入框内容并发送
+        window.parent.document.querySelector('#main-textarea').value = summary;
+        window.parent.document.querySelector('#send-button').click();
+      } catch (error) {
+        console.error('发送总结时出错:', error);
+        // 如果出错，至少在控制台显示内容
+        console.log('生成的总结:', summary);
+      }
+
+      // 发送消息
+      const message = summary;
+      if (typeof triggerSlash === 'function') {
+        triggerSlash(`/send ${message}|/trigger`);
+      } else {
+        console.log('triggerSlash未定义');
+      }
+    }
+
+    // 修改executeCommands函数
+    function executeCommands(commandString) {
+      try {
+        // 获取命令数组
+        const commands = commandString.split(' | ');
+
+        // 处理每个命令
+        commands.forEach(cmd => {
+          if (cmd.startsWith('/setinput ')) {
+            // 设置输入框内容
+            const text = cmd.substring(9);
+            window.parent.document.querySelector('#main-textarea').value = text;
+          } else if (cmd === '/send') {
+            // 触发发送按钮点击
+            window.parent.document.querySelector('#send-button').click();
+          }
+        });
+      } catch (error) {
+        console.error('执行命令时出错:', error);
+      }
+    }
+
+    // 添加切换悲惨经历的函数
+    function toggleTragicExperience(id) {
+      if (!Array.isArray(gameState.selections.tragicExperiences)) {
+        gameState.selections.tragicExperiences = [];
+      }
+
+      const index = gameState.selections.tragicExperiences.indexOf(id);
+      if (index === -1) {
+        gameState.selections.tragicExperiences.push(id);
+      } else {
+        gameState.selections.tragicExperiences.splice(index, 1);
+      }
+
+      updateContent();
+    }
+  </script>
+</body>
+
+</html>
+```
