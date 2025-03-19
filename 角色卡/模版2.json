@@ -1,0 +1,115 @@
+{
+  "Chinese_name": "",
+  "gender": "",
+  "age": "",
+  "background": [],
+  "identity": "",
+  "appearance": {
+    "height": "",
+    "hair_color": "",
+    "hairstyle": "",
+    "eyes": "",
+    "nose": "",
+    "lips": "",
+    "skin": "",
+    "body": ""
+  },
+  "weapon": {
+    "primary_weapon": "primary_weapon",
+    "secondary_weapons": [
+      "secondary_weapons"
+    ]
+  },
+  "combat_skills": {
+    "skill1": {
+      "name": "skill_name",
+      "description": "skill_description",
+    },
+    "skill2": {
+      "name": "skill_name",
+      "description": "skill_description",
+    },
+    "宝具/特殊能力": {
+      "name": "treasure_name",
+      "class": "class",
+      "type": "type",
+      "range": "range",
+      "max_targets": "max_targets",
+      "description": "treasure_description"
+    }
+  },
+  "attires": {
+    "formal_occasion": {
+      "tops": "",
+      "bottoms": "",
+      "shoes": "",
+      "socks": "",
+      "accessories": ""
+    },
+    "casual_time": {
+      "tops": "",
+      "bottoms": "",
+      "shoes": "",
+      "socks": "",
+      "underwears": "",
+      "accessories": ""
+    },
+    "sleepwear": {
+      "tops": "",
+      "bottoms": "",
+      "shoes": "",
+      "socks": "",
+      "underwears": "",
+      "accessories": ""
+    }
+  },
+  "MBTI_personality": "",
+  "personal_traits": [
+    {
+      "trait_name": "",
+      "description": "",
+      "dialogue_examples": [],
+      "behavior_examples": []
+    }
+  ],
+  "goals": {
+    "short_term_goals": "",
+    "long_term_goals": "",
+    "ultimately_desired_goal": ""
+  },
+  "relationship": {
+    "{{user}}": []
+  },
+  "likes": [],
+  "dislikes": [],
+  "daily_routine": {
+    "early_morning": "",
+    "morning": "",
+    "afternoon": "",
+    "evening": "",
+    "night": "",
+    "late_night": ""
+  },
+  "abilities": [
+    {
+      "name": "",
+      "description": ""
+    }
+  ],
+  "signature_items": [],
+  "NSFW_information": {
+    "sexual_orientation": "",
+    "kinks": [],
+    "turn_ons": [],
+    "turn_offs": [],
+    "preferences": []
+  },
+  "other_dialogue_examples": [
+    "<start>examples",
+    "<start>examples"
+  ]
+}
+// 将以下内容修改为以上格式，要求：
+// 1.输出中英文各一版本，两个版本都用json格式输出，并且相互分开，英文版本不翻译人名、专有名词、台词
+// 2.nsfw部分每个模块至少要有三个，并且要贴合人设，详细且色情
+// 3.其他所有的空都尽量根据网络资料或推测补充。
