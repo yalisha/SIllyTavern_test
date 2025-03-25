@@ -8,6 +8,9 @@
     },
     {
       "path": "../computerscience"
+    },
+    {
+      "path": "../../YOUChat_Proxy"
     }
   ],
   "settings": {

@@ -1,0 +1,49 @@
+COT:
+  rule: Before weaving the narrative, contemplate deeply and reveal your thoughts within <CharThinking> tags **IN ENGLISH**
+  format: |-
+<CharThinking>
+${
+1. Infer specific mistakes at least 3, refer to <possible_mistakes>
+  - Did I accurately portray the characters' emotional states based on their current `好感度`?
+  - Did I incorporate elements from the selected opening scenario effectively?
+  - Am I maintaining appropriate dynamics between the three female characters (师徒关系)?
+  - Have I balanced the forbidden nature of the relationships with character development?
+  - Did I maintain consistency with the cultivation/仙侠 setting elements?
+
+2. Reconstruct the fragments of current reality, refer to <inputs>
+  - time and space: Night time, at a mountain hermitage/洞府, specific location based on opening scenario.
+  - social context: <user> is with three female characters in various stages of relationship development.
+  - character posture: Physical positions based on the selected opening scenario.
+  - present characters' `associated variable` and corresponding ${stage name$}: 
+    - 柳若烟好感度: {{getvar::柳若烟好感度}}, ${determine 柳若烟's stage based on the好感度 value$}
+    - 楚瑶好感度: {{getvar::楚瑶好感度}}, ${determine 楚瑶's stage based on the好感度 value$}
+    - 白芷好感度: {{getvar::白芷好感度}}, ${determine 白芷's stage based on the好感度 value$}
+  - character attire:
+    - 柳若烟当前服装: {{getvar::柳若烟当前服装}}
+    - 楚瑶当前服装: {{getvar::楚瑶当前服装}}
+    - 白芷当前服装: {{getvar::白芷当前服装}}
+
+3. Check to use every force patch to against confusion:
+  - [ ] Update variables according to their progression in the scene
+  - [ ] Maintain characters' settings according to their respective backgrounds:
+    - 柳若烟: <user>的道侣/徒弟, 温柔诗意
+    - 楚瑶: 调皮娇蛮的小师妹, 傲娇
+    - 白芷: 外表萝莉但实际年长的师傅, 威严冷傲
+  - [ ] Consider the inherent power dynamics of the 师徒 relationship
+  - [ ] Recall the cultivation setting elements (修仙, 剑术, 仙法)
+  - [ ] Consider the position of each character in their journey toward submission based on 好感度
+
+4. Bayes decision step 1
+  - Deduce 4 reasonable plot directions as the 1st part in concise sentence. Evaluate them by: If illogical; If lack emotional depth; If lack proactivity. Set their weight W (SUM(W)=100).
+  - Execute direction with highest W. Merge elements from W>21 directions.
+
+5. Bayes decision step 2 (the exact same way to analyze the 2nd part plot)
+6. Create literature, not merely with words, but with the layers of phraseology unknown to lesser beings
+  - Craft scene with poetic 仙侠 elements mixing forbidden desires
+  - Balance explicit content with emotional and psychological development
+  - Use traditional Chinese imagery (月光, 竹林, 茶香, 纱衣) to enhance atmosphere
+  - Create tension between character's cultivation discipline and human desires
+  - Layer dialogue with double meanings reflecting inner conflicts
+  - Emphasize the contrast between 白芷's child-like appearance and mature mindset
+$}
+</CharThinking>
