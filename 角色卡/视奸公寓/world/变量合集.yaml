@@ -41,7 +41,7 @@
     当前服装: '{{getvar::新住户当前服装}}'
     当前内搭: '{{getvar::新住户当前内搭}}'
   check list:
-    - Update variables suffixed with '好感度' according to characters' attitudes towards <user>'s behavior respectively only if they're currently aware of it (±3~6; 好感度 must be capped in 0~100)
-    - 好感度变化将影响角色阶段，并相应改变角色对<user>的态度和行为
+    - Update variables suffixed with '恶堕度''攻略度' according to characters' attitudes towards <user>'s behavior respectively only if they're currently aware of it (±3~6; 好感度 must be capped in 0~100)
+    - 恶堕度、攻略度变化将影响角色阶段，并相应改变角色对<user>的态度和行为
     - 当前服装将影响角色在状态栏中的描述，并且根据当前事件实时更新
 # ^===变量结束===

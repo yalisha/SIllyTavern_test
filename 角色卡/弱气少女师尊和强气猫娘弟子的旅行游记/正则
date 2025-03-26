@@ -1,0 +1,13 @@
+/associated variable:[\s\S]*?双向好感度\\((0|1?[0-9]|2[0-4])\\)/
+/associated variable:[\s\S]*?双向好感度\((-[0-9]+|\+?(2[5-9]|[3-4][0-9]|50))\)/
+/associated variable:[\s\S]*?双向好感度\((-[0-9]+|\+?(5[0-9]|[6-7][0-5]))\)/
+/associated variable:[\s\S]*?双向好感度\((-[0-9]+|\+?(7[5-9]|[8-9][0-9]))\)/
+/associated variable:[\s\S]*?双向好感度\((-[0-9]+|\+?100)\)/
+
+<UpdateVariable>[\s\S]*?<\/UpdateVariable>
+<CharThinking>[\s\S]*?</CharThinking>
+
+/associated variable:[\s\S]*?楚衔月好感度\((-[0-9]+|\+?(1?[0-9]|2[0-4]))\)/
+
+/@(.*?)=(?:.*?⇒)?'?(.*?)'?(?=@)/gm
+{{setvar::$1::$2}}

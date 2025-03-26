@@ -11,6 +11,9 @@
     },
     {
       "path": "../../YOUChat_Proxy"
+    },
+    {
+      "path": "../../SillyTavern"
     }
   ],
   "settings": {

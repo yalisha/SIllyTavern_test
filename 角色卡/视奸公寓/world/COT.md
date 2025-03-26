@@ -1,7 +1,7 @@
 COT:
-  rule: Before crafting the narrative, contemplate deeply and reveal your analysis within <think> tags
+  rule: Before crafting the narrative, contemplate deeply and reveal your analysis within <charthink> tags
   format: |-
-<think>
+<charthink>
 1. Character Analysis & Variable Assessment:
    - Current characters in focus: [list relevant characters in scene]
    - Initial assessment of variable states:
@@ -49,4 +49,4 @@ COT:
    - Which body part to highlight in 部位特写
    - Current 恶堕度/攻略度 trends to display
    - Clothing details to emphasize
-</think>
+</charthink>

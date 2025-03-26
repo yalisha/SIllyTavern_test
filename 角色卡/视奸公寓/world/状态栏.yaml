@@ -1,9 +1,10 @@
 状态栏:
-  rule: 你必须在每次回复的最底部，输出<StatusBlock>包裹的状态栏，根据互动实时更新状态栏中的内容
+  rule: 你必须在每次回复的由<UpdateVariable>包裹的变量更新后面，输出<StatusBlock>包裹的状态栏
   format:
     basic: |-
       <StatusBlock>
       ```yaml
+      时间：${当前时间，尤其是要注明是白天还是晚上}
       名称: ${所有在场的非<user>角色名称}
       恶堕度趋势: ${用↑↓→表示角色对<user>的恶堕度变化趋势，并说明原因，例如↑(<user>调教)}
       ${非<user>角色名称}恶堕度:${{getvar::所有在场的非<user>角色恶堕度}
