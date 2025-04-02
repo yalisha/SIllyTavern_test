@@ -488,6 +488,25 @@
       background-color: #252525;
       color: white;
     }
+
+    /* 角色倾向选择样式 */
+    .role-preference {
+      display: flex;
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .role-preference label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .role-preference input[type="radio"] {
+      margin: 0;
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -540,6 +559,7 @@
           <div class="tab active" onclick="switchTab('protagonist-tab', 0)">角色列表</div>
           <div class="tab" onclick="switchTab('protagonist-tab', 1)">自定义角色</div>
           <div class="tab" onclick="switchTab('protagonist-tab', 2)">角色分类</div>
+          <div class="tab" onclick="switchTab('protagonist-tab', 3)">服装与角色设定</div>
         </div>
 
         <div class="tab-content active" id="protagonist-tab-0">
@@ -581,6 +601,32 @@
             </div>
           </div>
         </div>
+
+        <div class="tab-content" id="protagonist-tab-3">
+          <div class="custom-controls">
+            <div class="custom-field">
+              <label>主角服装选择</label>
+              <div class="options-grid" id="protagonist-costume-options">
+                <!-- 服装选项将由JS动态生成 -->
+              </div>
+              <button class="random" onclick="randomSelectProtagonistCostume()">随机选择服装</button>
+            </div>
+            <div class="custom-field">
+              <label>主角倾向</label>
+              <div class="role-preference">
+                <label>
+                  <input type="radio" name="role-preference" value="active" checked> 主动方
+                </label>
+                <label>
+                  <input type="radio" name="role-preference" value="passive"> 被动方
+                </label>
+                <label>
+                  <input type="radio" name="role-preference" value="switch"> 双方切换
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="selection-summary">
@@ -591,6 +637,14 @@
         <div class="selection-item">
           <div class="selection-label">主角角色:</div>
           <div class="selection-value" id="selected-protagonist">未选择</div>
+        </div>
+        <div class="selection-item">
+          <div class="selection-label">主角服装:</div>
+          <div class="selection-value" id="selected-protagonist-costume">未选择</div>
+        </div>
+        <div class="selection-item">
+          <div class="selection-label">主角倾向:</div>
+          <div class="selection-value" id="selected-role-preference">主动方</div>
         </div>
       </div>
 
@@ -834,7 +888,13 @@
       // 数据存储
       const worldData = {
         playerGender: '',
-        protagonist: { name: '', desc: '', isCustom: false },
+        protagonist: {
+          name: '',
+          desc: '',
+          isCustom: false,
+          costume: '',
+          rolePreference: 'active'  // 新增：角色倾向
+        },
         interactions: [],
         theme: { selected: [], custom: [] },
         costume: { selected: [], custom: [] },
@@ -1138,13 +1198,17 @@
           // 眼镜与配饰
           "眼镜", "猫耳", "身体链", "高跟鞋", "袜子", "绑腿",
           "墨镜", "发带", "手链", "皮靴", "耳环", "项圈",
+          "蝴蝶结", "发饰", "手套", "腿环", "脚链", "头饰",
+          "面具", "翅膀", "尾巴", "铃铛", "纹身贴", "腰带",
 
           // 角色扮演
           "角色扮演", "COSPLAY制服", "女僕", "女战士", "女忍者",
           "OL", "泳装模特", "空中小姐", "宪兵", "女祭司", "动漫人物",
           "迷你裙警察", "福利彩色扮演", "女僕人派",
           "魔法少女", "海盗", "护士", "吸血鬼", "精灵", "巫女",
-          "赛车女郎", "啦啦队员", "蒸汽朋克",
+          "赛车女郎", "啦啦队员", "蒸汽朋克", "兔女郎", "猫女",
+          "女仆装", "护士装", "警察制服", "空姐制服", "教师装",
+          "医生白大褂", "军装", "运动员装", "舞者装", "厨师装",
 
           // 常规服装
           "内衣", "制服", "水手服", "泳装", "和服", "围裙",
@@ -1153,7 +1217,30 @@
           "螺旋紧身衣", "紧身", "日本衣服和浴衣", "娃娃",
           "旗袍", "牛仔裤", "风衣", "毛衣", "晚礼服", "汉服",
           "皮衣", "吊带裙", "衬衫", "运动服", "和服", "巫女服",
-          "芭蕾舞蹈服", "全裸"
+          "芭蕾舞蹈服", "全裸",
+
+          // 性感服装
+          "比基尼", "丁字裤", "蕾丝内衣", "网袜", "吊带袜",
+          "透视装", "露背装", "深V装", "露肩装", "开叉裙",
+          "露脐装", "热裤", "迷你短裙", "紧身皮裤", "渔网袜",
+          "吊带睡衣", "真空装", "露肩上衣", "低胸装", "透明睡衣",
+
+          // 特殊服装
+          "哥特装", "洛丽塔", "维多利亚风格", "朋克风格",
+          "中世纪装", "未来风格", "童话风格", "民族风格",
+          "复古装", "摇滚风格", "嬉皮风格", "贵族装",
+          "仙女装", "女王装", "公主裙", "女武士装",
+          "机甲装", "赛博朋克", "童话公主", "女巫装",
+
+          // 运动装备
+          "瑜伽服", "健身服", "舞蹈服", "游泳衣",
+          "网球裙", "啦啦队服", "骑行服", "滑雪服",
+          "跑步服", "武术服", "体操服", "击剑服",
+
+          // 职业装扮
+          "秘书装", "实验室工作服", "记者装", "艺术家装",
+          "摄影师装", "厨师服", "园丁装", "机械工装",
+          "飞行员装", "船员装", "消防员装", "建筑师装"
         ],
 
         "行为": [
@@ -1587,24 +1674,33 @@
       // 选择主角角色
       function selectProtagonist(characterName) {
         // 清除之前的选择
-        document.querySelectorAll('#protagonists-grid .option-item').forEach(option => {
+        document.querySelectorAll('#protagonists-grid .option-item, #categorized-protagonists-grid .option-item').forEach(option => {
           option.classList.remove('selected');
         });
 
         // 设置新选择
-        document.querySelector(`#protagonists-grid .option-item[data-value="${characterName}"]`).classList.add('selected');
-        worldData.protagonist = {
-          name: characterName,
-          desc: '',
-          isCustom: false
-        };
+        const options = document.querySelectorAll(`#protagonists-grid .option-item[data-value="${characterName}"], #categorized-protagonists-grid .option-item[data-value="${characterName}"]`);
+        options.forEach(option => option.classList.add('selected'));
+
+        worldData.protagonist.name = characterName;
+        worldData.protagonist.isCustom = false;
 
         // 更新显示
         document.getElementById('selected-protagonist').textContent = characterName;
-        document.getElementById('next-to-stage3').disabled = false;
+
+        // 检查是否可以启用下一步按钮
+        checkEnableNextStage();
       }
 
-      // 添加自定义主角
+      // 添加检查是否可以启用下一步按钮的函数
+      function checkEnableNextStage() {
+        const nextButton = document.getElementById('next-to-stage3');
+        if (nextButton) {
+          nextButton.disabled = !worldData.protagonist.name;
+        }
+      }
+
+      // 修改添加自定义主角函数
       function addCustomProtagonist() {
         const name = document.getElementById('custom-protagonist-name').value.trim();
         const desc = document.getElementById('custom-protagonist-desc').value.trim();
@@ -1617,12 +1713,16 @@
         worldData.protagonist = {
           name: name,
           desc: desc,
-          isCustom: true
+          isCustom: true,
+          costume: worldData.protagonist.costume,
+          rolePreference: worldData.protagonist.rolePreference
         };
 
         // 更新显示
         document.getElementById('selected-protagonist').textContent = `${name} (自定义)`;
-        document.getElementById('next-to-stage3').disabled = false;
+
+        // 检查是否可以启用下一步按钮
+        checkEnableNextStage();
 
         // 清空输入框
         document.getElementById('custom-protagonist-name').value = '';
@@ -1632,46 +1732,63 @@
         switchTab('protagonist-tab', 0);
       }
 
-      // 添加自定义互动角色
-      function addCustomInteraction() {
-        const name = document.getElementById('custom-interaction-name').value.trim();
-        const gender = document.getElementById('custom-interaction-gender').value;
-        const desc = document.getElementById('custom-interaction-desc').value.trim();
-
-        if (name === '') {
-          alert('请输入角色名称');
-          return;
-        }
-
-        // 添加到互动列表
-        worldData.interactions.push({
-          name: name,
-          gender: gender,
-          desc: desc,
-          isCustom: true
+      // 修改选择主角服装函数
+      function selectProtagonistCostume(costume) {
+        document.querySelectorAll('#protagonist-costume-options .option-item').forEach(option => {
+          option.classList.remove('selected');
         });
 
-        // 更新显示
-        const interactionsText = worldData.interactions.map(i => i.name).join(', ');
-        document.getElementById('selected-interactions').textContent = interactionsText;
+        const selectedOption = document.querySelector(`#protagonist-costume-options .option-item[data-value="${costume}"]`);
+        if (selectedOption) {
+          selectedOption.classList.add('selected');
+        }
 
-        // 清空输入框
-        document.getElementById('custom-interaction-name').value = '';
-        document.getElementById('custom-interaction-desc').value = '';
-
-        // 切换回列表选项卡并刷新角色网格
-        switchTab('interaction-tab', 0);
-        populateInteractionOptions();
+        worldData.protagonist.costume = costume;
+        document.getElementById('selected-protagonist-costume').textContent = costume;
       }
 
-      // 随机选择主角
-      function randomSelectProtagonist() {
-        const characterList = worldData.playerGender === 'male'
-          ? optionsData.男性角色
-          : optionsData.女性角色;
+      // 随机选择主角服装
+      function randomSelectProtagonistCostume() {
+        const costumes = optionsData.服装;
+        const randomCostume = costumes[Math.floor(Math.random() * costumes.length)];
+        selectProtagonistCostume(randomCostume);
+      }
 
-        const randomIndex = Math.floor(Math.random() * characterList.length);
-        selectProtagonist(characterList[randomIndex]);
+      // 监听角色倾向选择
+      document.addEventListener('DOMContentLoaded', function () {
+        const rolePreferenceInputs = document.querySelectorAll('input[name="role-preference"]');
+        rolePreferenceInputs.forEach(input => {
+          input.addEventListener('change', function () {
+            worldData.protagonist.rolePreference = this.value;
+            const preferenceText = {
+              'active': '主动方',
+              'passive': '被动方',
+              'switch': '双方切换'
+            }[this.value];
+            document.getElementById('selected-role-preference').textContent = preferenceText;
+          });
+        });
+
+        // 初始化主角服装选项
+        initializeProtagonistCostumeOptions();
+      });
+
+      // 添加主角服装选择功能
+      function initializeProtagonistCostumeOptions() {
+        const costumeGrid = document.getElementById('protagonist-costume-options');
+        if (!costumeGrid) return;
+
+        costumeGrid.innerHTML = '';
+        optionsData.服装.forEach(costume => {
+          const option = document.createElement('div');
+          option.className = 'option-item';
+          option.textContent = costume;
+          option.setAttribute('data-value', costume);
+          option.onclick = function () {
+            selectProtagonistCostume(costume);
+          };
+          costumeGrid.appendChild(option);
+        });
       }
 
       // 切换标签页
@@ -1721,16 +1838,14 @@
         // 当进入主角角色选择阶段时
         if (stage === 2) {
           populateProtagonistOptions();
-
-          // 初始化角色分类视图
           filterProtagonistsByCategory('all');
+          initializeProtagonistCostumeOptions();
+          checkEnableNextStage();
         }
 
         // 当进入互动对象选择阶段时
         if (stage === 3) {
           populateInteractionOptions();
-
-          // 初始化角色分类视图
           filterInteractionsByCategory('all');
         }
 
@@ -2079,6 +2194,17 @@
           playText = plays.join(', ');
         }
         document.getElementById('summary-play').textContent = playText;
+
+        // 添加主角服装和倾向的显示
+        const costumeInfo = worldData.protagonist.costume || '未选择';
+        document.getElementById('selected-protagonist-costume').textContent = costumeInfo;
+
+        const preferenceText = {
+          'active': '主动方',
+          'passive': '被动方',
+          'switch': '双方切换'
+        }[worldData.protagonist.rolePreference] || '主动方';
+        document.getElementById('selected-role-preference').textContent = preferenceText;
       }
     </script>
 </body>
