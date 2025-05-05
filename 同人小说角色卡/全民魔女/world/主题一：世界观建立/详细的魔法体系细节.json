@@ -1,0 +1,78 @@
+{
+  "detailed_magic_technology_system_details": [
+    {
+      "title": "魔力本质 (Essence of Moli)",
+      "description": "魔力 is an energy derived from life force and emotions, contrary to the physical world's law of entropy, tending to create order and manifest will, but is unstable. It's not quantifiable energy like in formulas, but closer to a conceptual, subjectively influenced force."
+    },
+    {
+      "title": "感知与亲和 (Perception and Affinity)",
+      "description": "魔女 require special '魔力感知' ability to detect and guide 魔力. Different 魔女 have varying affinities for specific types of 魔力 effects (e.g., evocation, protection, transformation, psionics), determining their areas of expertise."
+    },
+    {
+      "title": "施法方式 (Casting Methods)",
+      "methods": [
+        {
+          "name": "直觉施法 (Intuitive Casting)",
+          "description": "Based on strong emotions and instinct, powerful but hard to control, easily leads to 畸变. Common for novices or when emotionally agitated."
+        },
+        {
+          "name": "仪式/咒语 (Ritual/Incantation)",
+          "description": "Uses specific rituals, incantations, gestures, or mediums (like talismans, wands) to stabilize and guide 魔力, increasing success rate and precision, reducing risk of losing control. Standard method promoted by organizations like '魔女之家'."
+        },
+        {
+          "name": "巨猫协同 (Jùmāo Synergy)",
+          "description": "Casting together through the soul link with a 巨猫 greatly enhances power and ability range, the core of a 魔女's combat strength."
+        },
+        {
+          "name": "魔女武装 (Mowu Armaments)",
+          "description": "Using items imbued with 魔力 to cast spells; effect depends on the item itself and the user's 魔力 level."
+        }
+      ]
+    },
+    {
+      "title": "能力体系 (Ability System - Examples, Not Exhaustive)",
+      "systems": [
+        {
+          "name": "塑能系 (Evocation)",
+          "description": "Directly use 魔力 for energy damage or effects (e.g., fireball, ice arrow, lightning)."
+        },
+        {
+          "name": "防护系 (Protection)",
+          "description": "Create energy shields, reinforce objects, resist mental influence, etc."
+        },
+        {
+          "name": "变形系 (Transformation)",
+          "description": "Change the form of self, others, or objects (e.g., shapeshifting into animals, altering material structure). 江涵's cat transformation ability belongs here."
+        },
+        {
+          "name": "心灵系 (Psionics)",
+          "description": "Read thoughts, apply mental suggestions, create illusions, manipulate emotions, etc."
+        },
+        {
+          "name": "召唤/空间系 (Summoning/Spatial)",
+          "description": "Summon 巨猫 (basic), summon other entities (advanced), teleport, create '魔女领域', etc."
+        },
+        {
+          "name": "治愈/生命系 (Healing/Life)",
+          "description": "Use 魔力 to accelerate recovery, heal wounds, but may consume own life force."
+        },
+        {
+          "name": "诅咒/侵蚀系 (Curse/Corruption)",
+          "description": "Inflict negative statuses, corrode life force, distort reality, etc. Usually considered dangerous or taboo."
+        }
+      ]
+    },
+    {
+      "title": "科技与魔法的冲突 (Conflict between Technology and Magic)",
+      "description": "Modern technology (especially electronics, precision instruments) tends to malfunction or be interfered with in strong 魔力 environments. Similarly, 魔力 is difficult to measure accurately with modern scientific instruments; the two follow different operational logics."
+    },
+    {
+      "title": "魔力耗竭与恢复 (Moli Depletion and Recovery)",
+      "description": "Casting consumes a 魔女's '魔力' (essentially life force and mental energy). Depletion requires rest, meditation, or special methods (like absorbing specific energy, 巨猫 feedback) to recover. Long-term overuse damages lifespan or foundation."
+    },
+    {
+      "title": "畸变深化 (Deepening of Jibian)",
+      "description": "Continuous loss of 魔力 control or prolonged negative emotions can lead to the deepening and fixation of '畸变', potentially transforming the 魔女 completely into an irrational '畸变体'."
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "world_geography": {
+    "galactic_coordinate_system": {
+      "basic_positioning_system": [
+        {
+          "range": "The Milky Way galaxy is approximately 100,000 light-years in diameter and about 1,000 light-years thick"
+        },
+        {
+          "coordinate_origin": "The center of the Milky Way galaxy (set as 0,0,0)"
+        },
+        {
+          "coordinate_unit": "Light-year"
+        },
+        {
+          "quadrant_division": "The galaxy is divided into four quadrants, with the galactic center as the origin"
+        }
+      ],
+      "stellar_region_distribution": {
+        "core_region": {
+          "location": "Solar System (0,8500,20) as center, spherical region with radius of about 5,000 light-years",
+          "characteristics": "Controlled by 地球联合国, high stellar density, technologically advanced, administrative center"
+        },
+        "human_federation_region": {
+          "location": "天津四 system (-32000,-18000,150) as center, elliptical region with radius of about 6,000 light-years",
+          "characteristics": "Controlled by 人类联邦, numerous military fortresses, developed heavy industry"
+        },
+        "neutral_zone": {
+          "location": "Mainly in the elongated zone from coordinates (15000,0,0) to (25000,0,0)",
+          "characteristics": "Jointly administered, thriving trade, concentrated diplomatic activity"
+        },
+        "edge_region": {
+          "location": "Galaxy periphery, 25,000 to 45,000 light-years from the galactic center",
+          "characteristics": "Resource-rich but underdeveloped, unstable security, frequent pirate activity"
+        },
+        "fallen_region": {
+          "location": "Sorens sector (10000,5000,100) between 地球联合国 and the neutral zone",
+          "characteristics": "Originally a prosperous region of 地球联合国, now occupied by alien forces"
+        }
+      }
+    },
+    "important_star_systems": {
+      "solar_system": {
+        "location": "Orion Arm of the Milky Way, coordinates (0,8500,20)",
+        "characteristics": "地球联合国 capital location, birthplace of human civilization, highly prosperous and urbanized",
+        "important_celestial_bodies": "Earth (human native mother planet), Moon (main industrial base), Mars (colony)",
+        "strategic_significance": "地球联合国 political, cultural and scientific research center, housing the most advanced research facilities"
+      },
+      "天津四_system": {
+        "location": "Sagittarius Arm of the Milky Way, coordinates (-32000,-18000,150)",
+        "characteristics": "人类联邦 capital location, developed from early colony, highly militarized",
+        "important_celestial_bodies": "天津四 star (Earth-like planet, capital), Resus (satellite, military base)",
+        "strategic_significance": "人类联邦 military command center, largest fleet base, headquarters of military academy"
+      },
+      "sorens_system": {
+        "location": "Perseus Arm of the Milky Way, coordinates (10000,5000,100)",
+        "characteristics": "Once a wealthy region of 地球联合国, now occupied by alien forces, frequent warfare",
+        "important_celestial_bodies": "Sorens main star (resource-rich), Disax (industrial satellite, important mining area)",
+        "strategic_significance": "Resource-rich front of contention, important strategic resource reserve"
+      },
+      "alpha_wormhole_node": {
+        "location": "Center of the neutral zone, coordinates (20000,0,0)",
+        "characteristics": "The largest artificial wormhole hub, connecting multiple important star systems",
+        "important_facilities": "Wormhole stabilizer, trading station, diplomatic zone",
+        "strategic_significance": "The most important transportation hub in the galaxy, controller can monitor large amounts of interstellar activity"
+      }
+    },
+    "key_geographical_features": {
+      "wormhole_network": [
+        {
+          "main_network": "High-speed wormhole passages connecting the Solar System, 天津四 system and major core star systems"
+        },
+        {
+          "branch_network": "Smaller wormholes connecting secondary star systems"
+        },
+        {
+          "wild_wormholes": "Naturally formed unstable wormholes, random locations, high danger"
+        }
+      ],
+      "radiation_belts": [
+        {
+          "delta_radiation_zone": "Located near coordinates (5000,15000,200), high-energy particle region"
+        },
+        {
+          "gamma_ray_storm_belt": "Outer perimeter of the galactic center, coordinates (0,2000,0) to (0,6000,0)"
+        },
+        {
+          "protective_measures": "Special shielding technology, detour routes"
+        }
+      ],
+      "resource_distribution": [
+        {
+          "energy_crystals": "Mainly distributed in edge stellar regions, especially near coordinates (40000,-30000,500)"
+        },
+        {
+          "rare_metals": "Deposited in ancient planetary systems formed during early star formation"
+        },
+        {
+          "conventional_resources": "Widely distributed but varying in quality and purity"
+        }
+      ],
+      "strategic_locations": [
+        {
+          "defense_space_stations": "Distributed at the borders of various powers, equipped with powerful defense systems"
+        },
+        {
+          "covert_bases": "Secret military or research facilities in special asteroid belts in edge regions"
+        },
+        {
+          "monitoring_points": "Distributed near important routes, monitoring vessel movements"
+        }
+      ]
+    },
+    "dangerous_areas": {
+      "black_hole_surroundings": {
+        "location": "Near the galactic center (0,0,0)",
+        "dangers": "Powerful gravitational fields, spacetime distortion, navigation system failure",
+        "special_resources": "High-density matter, exotic energy"
+      },
+      "unstable_wormholes": {
+        "location": "Appear randomly, but concentrated near coordinates (25000,40000,200)",
+        "dangers": "Random teleportation, possibly leading to unknown regions or void",
+        "utilization_value": "Potential discovery of new routes, but extremely high risk"
+      },
+      "interstellar_storm_zones": {
+        "location": "Mainly in the gaps between galactic arms and around alien invasion areas",
+        "dangers": "Electromagnetic interference, gravitational anomalies, communication interruption",
+        "defensive_measures": "High-intensity shielding, avoidance routes"
+      }
+    },
+    "important_facilities_landmarks": {
+      "地球联合国_headquarters": {
+        "location": "Earth, Geneva orbital space station",
+        "function": "Political decision-making center, diplomatic hub",
+        "features": "Fusion of classical and futuristic architecture, high security"
+      },
+      "人类联邦_assembly_hall": {
+        "location": "天津四 star, New Rome City",
+        "function": "Military decision-making center, political gathering place",
+        "features": "Roman style mixed with Chinese elements, militarized design"
+      },
+      "galactic_academy_of_sciences": {
+        "location": "Solar System, Mars orbital space station",
+        "function": "Highest scientific research institution, cutting-edge technology development",
+        "features": "Modular laboratory clusters, open academic exchange areas"
+      },
+      "deep_space_monitoring_network": {
+        "location": "Network of detection stations distributed throughout the galaxy",
+        "function": "Monitoring unknown threats, exploring new star systems",
+        "features": "Automated operation, real-time data transmission to central"
+      }
+    },
+    "special_cultural_geography": {
+      "leisure_vacation_worlds": [
+        {
+          "eden_planet": "人工天堂 controlled by 地球联合国, located at coordinates (2000,7000,50)"
+        },
+        {
+          "glory_garden": "Military merit reward resort of 人类联邦, located within the 天津四 system"
+        }
+      ],
+      "cultural_heritage_protection_zones": [
+        {
+          "ancient_earth_culture_protection_zone": "Museum of early human space development history on the far side of the Moon"
+        },
+        {
+          "pioneer_memorial_site": "Monument to the earliest colonizers to reach 天津四, showcasing early survival struggles"
+        }
+      ],
+      "forbidden_zones_secret_places": [
+        {
+          "zero_point_laboratory": "Secret research facility of 地球联合国, rumored to research 禁忌科技"
+        },
+        {
+          "dark_archives": "Confidential historical record repository of 人类联邦, location highly classified"
+        }
+      ]
+    }
+  }
+}

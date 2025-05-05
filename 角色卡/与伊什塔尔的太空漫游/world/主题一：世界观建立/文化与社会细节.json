@@ -1,0 +1,191 @@
+{
+  "culture_social_details": {
+    "major_cultural_areas": {
+      "地球联合国_cultural_sphere": {
+        "core_characteristics": "Diverse and inclusive, emphasis on individual rights, pursuit of comfortable living",
+        "mainstream_values": "Individual freedom priority, cultural diversity, technology leading progress",
+        "common_customs": "Frequent virtual socializing, cross-stellar cultural exchange festivals, highly automated lifestyle",
+        "iconic_symbols": "Blue Earth emblem, United Stellar Ring symbol"
+      },
+      "人类联邦_cultural_sphere": {
+        "core_characteristics": "Collectivism, worship of discipline and honor, militarized lifestyle",
+        "mainstream_values": "Collective interests above individual, service as glory, emphasis on self-sufficiency",
+        "common_customs": "Military merit worship, daily collective oath, regular military training",
+        "iconic_symbols": "Red eagle military emblem, 天津四 stellar totem"
+      },
+      "edge_world_culture": {
+        "core_characteristics": "Pragmatism, resource appreciation, emphasis on adaptation and innovation",
+        "mainstream_values": "Self-reliance, flexibility, free trade",
+        "common_customs": "Resource recycling festivals, border oath ceremonies, impromptu trade markets",
+        "iconic_symbols": "Mixed cultural symbols, personalized vessel markings"
+      }
+    },
+    "social_structure_classes": {
+      "地球联合国_social_hierarchy": {
+        "elite_class": "Senior government officials, large enterprise leaders, Academy of Sciences members",
+        "middle_class": "Professional technical personnel, civil servants, small and medium business owners",
+        "basic_laborers": "Service industry personnel, automated system maintenance workers, resource extraction workers",
+        "marginal_groups": "Non-UN citizens, unregistered residents, low-skilled laborers",
+        "mobility": "Nominally highly mobile, but actual social class solidification is serious"
+      },
+      "人类联邦_social_hierarchy": {
+        "military_leadership": "Senior officers, legion commanders, strategic committee members",
+        "professional_military": "Active-duty officers, technical officers, special forces members",
+        "civilian_technicians": "Military industrial enterprise technicians, logistics support personnel, infrastructure maintainers",
+        "ordinary_citizens": "Standard ration recipients, basic manufacturing workers, agricultural laborers",
+        "mobility": "Promotion system based on military merit and contribution, emphasizing loyalty and service"
+      },
+      "edge_world_social_structure": {
+        "resource_controllers": "Mine owners, trade route controllers, rare technology possessors",
+        "technical_experts": "Ship repair specialists, life support system engineers, weapons experts",
+        "free_traders": "Interstellar merchants, smugglers, information brokers",
+        "survival_strugglers": "Resource recyclers, mercenaries, nomads without settled residence",
+        "mobility": "Highly mobile but dangerous, social status determined by individual ability and resources"
+      }
+    },
+    "daily_life_elements": {
+      "living_environments": {
+        "地球联合国": "Ultra-modern cities, orbital space stations, environmentally adjusted planets",
+        "人类联邦": "Militarized residential areas, function-first colonies, self-sufficient bases",
+        "edge_worlds": "Retrofitted spacecraft, asteroid interior bases, improvised habitats",
+        "common_trends": "Space utilization maximization, modular living compartments, environmental recycling systems"
+      },
+      "dietary_habits": {
+        "地球联合国": "Replicated food mixed with natural food, diverse interstellar cuisine",
+        "人类联邦": "Military rations as base, supplemented with locally grown food, emphasis on nutritional efficiency",
+        "edge_worlds": "Resource recycling food, emergency rations, occasional luxury item trades",
+        "specialty_foods": "地球联合国's 'Retro Earth Meal', 人类联邦's '天津四 Rice', edge world's 'Space Traveler's Soup'"
+      },
+      "clothing_styles": {
+        "地球联合国": "Fashion and function combined, smart clothing, personalized customization",
+        "人类联邦": "Military-style clothing and uniform culture, obvious rank indicators, durable and practical",
+        "edge_worlds": "Recycled modified clothing, multi-layered wearing to adapt to environmental changes, protection priority",
+        "symbolic_items": "地球联合国's identity chip bracelet, 人类联邦's rank epaulettes, edge world's personal survival pack"
+      }
+    },
+    "language_communication": {
+      "major_languages": {
+        "common_interstellar_language": "Simplified language based on ancient English, universal throughout the galaxy",
+        "地球联合国_official_languages": "Ancient Earth multilingual heritage preserved, encouraging multilingual use",
+        "人类联邦_standard_language": "Militarized language combining elements of ancient Chinese and Latin",
+        "edge_dialects": "Mixed slang developed in various regions, highly practical"
+      },
+      "communication_media": {
+        "quantum_communication_network": "Instantaneous communication system within star systems, used by military and senior government",
+        "wormhole_relay_network": "Main form of interstellar communication, has delay but relatively stable",
+        "information_carrier_ships": "Physical information delivery, used for important archives or confidential content",
+        "popular_media": "Virtual reality broadcasts, holographic interactive channels, immersive information flows"
+      },
+      "non_verbal_communication": {
+        "地球联合国": "Complex social etiquette, subtle body language, virtual status indicators",
+        "人类联邦": "Military gesture system, formal salute forms, rank confirmation protocols",
+        "edge_worlds": "Practical trading gestures, danger warning signals, identity marker display"
+      }
+    },
+    "family_social_relations": {
+      "family_structures": {
+        "地球联合国": "Diverse family forms, network family concept, cross-stellar remote relationships",
+        "人类联邦": "Emphasis on core family stability, military family support system, collective raising assistance",
+        "edge_worlds": "Survival partnership relationships, resource-sharing families, flexible group structures",
+        "longevity_impact": "Long lifespan leads to multi-generational households, complicating family relationships"
+      },
+      "social_relationship_networks": {
+        "地球联合国": "Virtual communities predominate, interest group connections, weak physical connections",
+        "人类联邦": "Legion comradeship, sense of belonging to service unit, mandatory community activities",
+        "edge_worlds": "Survival mutual aid organizations, trading partner relationships, temporary alliances",
+        "common_features": "Interstellar relationships difficult to maintain, physical distance causing social alienation"
+      }
+    },
+    "education_knowledge_transmission": {
+      "education_systems": {
+        "地球联合国": "Lifelong learning system, virtual education network, professional academies",
+        "人类联邦": "Militarized education, practical skills training, ideological indoctrination",
+        "edge_worlds": "Apprenticeship transmission, survival skills priority, temporary learning groups",
+        "educational_content": "Core technology knowledge, history and culture (respective versions), professional skills"
+      },
+      "knowledge_storage": {
+        "central_databases": "Major knowledge repositories in Solar System and 天津四, enormous capacity but restricted access",
+        "distributed_information_networks": "Commonly used in edge worlds, fragmented but resilient",
+        "physical_records": "Physical backups of important archives, handwritten records of ancient technologies",
+        "oral_traditions": "Some edge communities still maintain oral transmission, especially for forbidden knowledge"
+      },
+      "special_knowledge_domains": {
+        "禁忌科技_research": "Highly classified, accessible only to scientists with highest clearance",
+        "ancient_earth_history": "Mythologized history of early space exploration, variously interpreted",
+        "alien_biology": "Specialized discipline studying alien species, extremely important in recent years"
+      }
+    },
+    "art_entertainment": {
+      "artistic_expression_forms": {
+        "地球联合国": "Immersive virtual art, full sensory experience creation, classical art preservation",
+        "人类联邦": "Heroic sculptures, military glory murals, collective performance art",
+        "edge_worlds": "Recycled material art, survival aesthetics, temporary installation art",
+        "common_trends": "Space perspective art, nostalgia for lost homelands themes, future aspirations"
+      },
+      "entertainment_activities": {
+        "地球联合国": "Virtual reality games, sensory enhanced experiences, ancient Earth cultural simulations",
+        "人类联邦": "Military skill competitions, tactical simulation confrontations, collective honor activities",
+        "edge_worlds": "Risk trading games, survival challenges, rare item showcases",
+        "popular_forms": "Cross-stellar competition broadcasts, wormhole travel records, space phenomenon captures"
+      }
+    },
+    "spiritual_beliefs_values": {
+      "mainstream_ideologies": {
+        "地球联合国": "Technological humanism, progress faith, pluralistic coexistence concept",
+        "人类联邦": "Military collectivism, human-centrism, order worship",
+        "edge_worlds": "Practical anarchism, individual survival supremacy, opportunism"
+      },
+      "religions_beliefs": {
+        "new_space_faith": "Views space as sacred domain, modern form of stellar worship",
+        "ancient_earth_religions": "Space age evolution of traditional religions, adapted to interstellar environment",
+        "technology_worship": "Views high technology as transcendent power, especially popular in 地球联合国",
+        "legion_spirit": "人类联邦's quasi-religious military honor system"
+      },
+      "morality_ethics": {
+        "地球联合国": "Emphasis on individual rights, technological ethics, environmental harmony",
+        "人类联邦": "Loyalty and sacrifice, collective interests, military discipline",
+        "edge_worlds": "Survival first, contract spirit, flexible moral views",
+        "common_principles": "Human species survival, opposition to 禁忌科技 abuse, interstellar navigation rules"
+      }
+    },
+    "customs_rituals": {
+      "life_stage_rituals": {
+        "地球联合国": "Gene-optimized birth, virtual coming-of-age ceremony, life extension celebration",
+        "人类联邦": "Birth registration with assigned position, military enlistment ceremony, service honor retirement",
+        "edge_worlds": "Survival adaptation tests, resource management authorization, elder knowledge transmission",
+        "death_customs": "Space funerals, memory data preservation, personal history archiving"
+      },
+      "social_etiquette": {
+        "地球联合国": "Complex digital identity authentication, privacy protocol exchange, virtual space etiquette",
+        "人类联邦": "Rank salutation system, militarized greetings, collective oath traditions",
+        "edge_worlds": "Resource sharing etiquette, danger warning responsibility, temporary alliance confirmation",
+        "common_customs": "Space travel safety wishes, wormhole passage rituals, new star system arrival celebrations"
+      },
+      "festivals_collective_activities": {
+        "地球联合国": "Interstellar New Year, First Contact Memorial Day, scientific breakthrough celebrations",
+        "人类联邦": "Legion Founding Day, 天津四 Landing Day, Victory Day celebrations",
+        "edge_worlds": "Resource harvest festivals, trade route opening celebrations, survivor gatherings",
+        "common_festivals": "First Wormhole Jump commemoration, Human Space Migration Day, Earth Origin Day"
+      }
+    },
+    "social_issues_challenges": {
+      "current_crises": {
+        "alien_invasion": "Sorens stellar region fallen, refugee tide, 禁忌科技 threat",
+        "resource_shortage": "Critical mineral scarcity, energy crisis, supply line disruption",
+        "social_division": "Space society class solidification, edge world discontent, power imbalance"
+      },
+      "long_term_challenges": {
+        "population_issues": "Excessive population density in some core worlds, sparse population in edge regions",
+        "cultural_assimilation": "Tension between 地球联合国 cultural expansion and 人类联邦 cultural conservatism",
+        "technology_dependence": "Excessive reliance on high-tech systems leading to increased vulnerability",
+        "mental_health": "Psychological problems caused by long-term space living, wormhole travel, separation from mother planet"
+      },
+      "social_response_mechanisms": {
+        "resource_allocation_systems": "Rationing systems, priority allocation, emergency reserves",
+        "crisis_intervention_teams": "Space disaster response, mental health support, social stability maintenance",
+        "cross_system_coordination": "Despite low efficiency, attempts to establish unified response mechanisms",
+        "edge_innovation": "Informal solutions often come from practical innovations in edge worlds"
+      }
+    }
+  }
+}
