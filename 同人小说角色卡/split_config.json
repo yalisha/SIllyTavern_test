@@ -1,9 +1,0 @@
-{
-  "default_chunk_size": 500000,
-  "files": [
-    {
-      "input_file": "/Users/mac/Documents/SIllyTavern_test/同人小说角色卡/《全民魔女1994》（校对版全本）作者：宇宙鸽.txt",
-      "chunk_size": 100000
-    }
-  ]
-}
