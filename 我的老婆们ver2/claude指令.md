@@ -1,0 +1,9 @@
+根据/Users/mac/Documents/SIllyTavern_test/我的老婆们ver2/资料中的此文件，尤其是对应角色文件夹中的图片资料与文字资料文件
+根据此模版文件/Users/mac/Documents/SIllyTavern_test/我的老婆们ver2/模版_公开版.json
+于/Users/mac/Documents/SIllyTavern_test/我的老婆们ver2/test路径生成相关的资料文件
+并且在/Users/mac/Documents/SIllyTavern_test/我的老婆们ver2/world/工具/妻子们的名单.md此文件增加上一句话简介
+中文版文件文件名为：角色名+!；英文版文件文件名为角色名。
+创作时： 
+1.列出三个创作时可参考的文学作品；注意文采和描写准确性(外貌、性格)
+2.列出三个让这个角色受读者喜欢的“萌点”，并且尽量规避不令人喜欢的地方
+3.你需要以简体中文为母语进行创作，之所以需要你翻译成英文是为了节省token，但是有一些你认为翻译成英文无法表达原意的就不用翻译，当然模版中明确提到了的也不用翻译

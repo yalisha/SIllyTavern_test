@@ -1,0 +1,8 @@
+document.write("");
+var adData = {
+  type: "headerBidding",
+  headerBidding: false
+}
+document.write("<script>window.gnshbrequest=window.gnshbrequest||{cmd:[]},gnshbrequest.cmd.push(function(){gnshbrequest.registerPassback(\"1517560\")})</scr"+"ipt><script async src=https://cpt.geniee.jp/hb/v1/214484/554/wrapper.min.js></scr"+"ipt><div data-cptid=1517560><script>gnshbrequest.cmd.push(function(){gnshbrequest.applyPassback(\"1517560\",\"[data-cptid=\'1517560\']\")})</scr"+"ipt></div>");
+window.parent.postMessage(adData);
+if(document.readyState!=="loading"){document.body.insertAdjacentHTML('beforeend', '<img src="https://pixon.ads-pixiv.net/imp?ab_test_digits_first=85&ad_group_id=13665&campaign_id=9876&client_id=266&creative_id=23562&format=js&l=zh&ng=w&os=pc&ref=https%3A%2F%2Fdic.pixiv.net%2Fa%2F%25E9%258F%25A1%25E6%25B5%2581&yuid=FwgmVIA&zone_id=d_rectangle_side_bottom" width="1" height="1" style="display:none">');}else{document.addEventListener("DOMContentLoaded",function(){document.body.insertAdjacentHTML('beforeend', '<img src="https://pixon.ads-pixiv.net/imp?ab_test_digits_first=85&ad_group_id=13665&campaign_id=9876&client_id=266&creative_id=23562&format=js&l=zh&ng=w&os=pc&ref=https%3A%2F%2Fdic.pixiv.net%2Fa%2F%25E9%258F%25A1%25E6%25B5%2581&yuid=FwgmVIA&zone_id=d_rectangle_side_bottom" width="1" height="1" style="display:none">');},{once:true});}

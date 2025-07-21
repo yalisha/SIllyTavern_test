@@ -1,0 +1,958 @@
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>FGO-Style Message Display</title>
+  <style>
+    /* 基础样式 */
+    body {
+      font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+      background-color: #0e1121;
+      margin: 0;
+      padding: 0;
+      color: #e0e0e0;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      max-width: 100%;
+      min-height: 100vh;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    /* 标题部分 */
+    .header {
+      text-align: center;
+      margin-bottom: 15px;
+      background: linear-gradient(to right, #b71c1c, #880e4f);
+      padding: 12px;
+      border-radius: 5px;
+      color: #ffffff;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%);
+      background-size: 4px 4px;
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    .header h2 {
+      margin: 0;
+      position: relative;
+      z-index: 2;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    /* 信息面板 */
+    .info-panels {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .info-panel {
+      flex: 1;
+      min-width: 200px;
+      padding: 12px;
+      border-radius: 6px;
+      background-color: #1a1f35;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      overflow: auto;
+      border: 1px solid #2c3352;
+      transition: all 0.3s ease;
+    }
+
+    .info-panel:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .info-panel h3 {
+      margin-top: 0;
+      text-align: center;
+      background: linear-gradient(to right, #c62828, #ad1457);
+      padding: 8px;
+      border-radius: 4px;
+      color: #fff;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    .info-panel h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* 正文部分 */
+    .content-panel {
+      padding: 18px;
+      border-radius: 6px;
+      background-color: #1a1f35;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      margin-bottom: 15px;
+      flex-grow: 1;
+      border: 1px solid #2c3352;
+      line-height: 1.6;
+    }
+
+    .content-panel p {
+      margin: 0 0 15px 0;
+    }
+
+    .content-panel p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 数据项样式 */
+    .data-item {
+      margin-bottom: 10px;
+      border-bottom: 1px solid #343851;
+      padding-bottom: 8px;
+      transition: background-color 0.2s;
+    }
+
+    .data-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .data-label {
+      font-weight: bold;
+      color: #ff9e80;
+      margin-right: 5px;
+    }
+
+    .data-value {
+      margin-left: 5px;
+      color: #e0e0e0;
+    }
+
+    /* 进度条样式 */
+    .progress-bar {
+      height: 12px;
+      background-color: #2c3352;
+      border-radius: 6px;
+      margin-top: 8px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(to right, #ff5252, #ff4081);
+      border-radius: 6px;
+      position: relative;
+      transition: width 0.3s ease;
+    }
+
+    /* 状态标签 */
+    .status-tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      margin-left: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .status-normal {
+      background-color: #43a047;
+      color: white;
+    }
+
+    .status-caution {
+      background-color: #ff9800;
+      color: white;
+    }
+
+    .status-danger {
+      background-color: #e53935;
+      color: white;
+    }
+
+    /* 黑暗线条部分 */
+    .dark-line {
+      background-color: #121520;
+      border-left: 3px solid #ff4081;
+      padding: 12px;
+      margin-top: 8px;
+      border-radius: 0 5px 5px 0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .dark-line::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, #ff4081, #7c4dff);
+    }
+
+    /* 从者项目样式 */
+    .servant-item {
+      margin-bottom: 15px;
+      padding: 10px;
+      background-color: #212845;
+      border-radius: 6px;
+      border: 1px solid #343851;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .servant-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+      border-color: #ff4081;
+    }
+
+    .servant-name {
+      font-weight: bold;
+      color: #ff4081;
+      margin-bottom: 8px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #343851;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      font-size: 1.1em;
+    }
+
+    /* 响应式调整 */
+    @media (max-width: 768px) {
+      .info-panels {
+        flex-direction: column;
+      }
+
+      .info-panel {
+        width: 100%;
+      }
+    }
+
+    /* 调试按钮样式 */
+    #debugButton {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      z-index: 9999;
+      padding: 8px 15px;
+      background: linear-gradient(to bottom, #ff4081, #c2185b);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      transition: all 0.2s ease;
+      font-weight: bold;
+    }
+
+    #debugButton:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+      background: linear-gradient(to bottom, #ff5b94, #d81b60);
+    }
+
+    #debugButton:active {
+      transform: translateY(1px);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    /* 滚动条美化 */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(44, 51, 82, 0.3);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 64, 129, 0.5);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 64, 129, 0.8);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .page-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100%;
+    }
+
+    .tab-buttons {
+      display: flex;
+      background-color: #1a1a1a;
+      border-bottom: 1px solid #333;
+    }
+
+    .tab-button {
+      padding: 10px 20px;
+      background-color: white;
+      border: none;
+      cursor: pointer;
+      flex: 1;
+      text-align: center;
+      font-weight: bold;
+      border-right: 1px solid #ddd;
+    }
+
+    .tab-button:last-child {
+      border-right: none;
+    }
+
+    .tab-button.active {
+      background-color: #f0f0f0;
+    }
+
+    .tab-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 15px;
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* 内容样式 */
+    .section-heading {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .info-card {
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .servant-card {
+      border-left: 3px solid #ff9800;
+      padding-left: 10px;
+      margin-bottom: 15px;
+    }
+
+    .settings-option {
+      margin-bottom: 15px;
+    }
+
+    .settings-option label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .settings-option select,
+    .settings-option input,
+    .settings-option button {
+      width: 100%;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    .settings-option button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>与伊什塔尔和艾蕾一起拯救人理！</h2>
+    </div>
+
+    <div class="info-panels">
+      <!-- 用户信息面板 -->
+      <div class="info-panel" id="userPanel">
+        <h3>御主信息</h3>
+        <div id="playerInfo"></div>
+      </div>
+
+      <!-- 从者信息面板 -->
+      <div class="info-panel" id="servantPanel">
+        <h3>从者信息</h3>
+        <div id="servantInfo"></div>
+      </div>
+
+      <!-- 世界信息面板 -->
+      <div class="info-panel" id="worldPanel">
+        <h3>世界信息</h3>
+        <div id="worldInfo"></div>
+      </div>
+
+      <!-- 暗线行动面板 -->
+      <div class="info-panel" id="darkLinePanel">
+        <h3>暗线行动</h3>
+        <div id="darkLineInfo"></div>
+      </div>
+    </div>
+
+    <!-- 正文内容面板 -->
+    <div class="content-panel">
+      <div id="mainContent"></div>
+    </div>
+  </div>
+
+  <!-- 调试按钮 -->
+  <button id="debugButton">手动解析</button>
+
+  <script>
+    // 定义游戏文本模板
+    let gameText = `<outputcontent>$1</outputcontent>`;
+    // 防止递归更新
+    let isUpdating = false;
+    // 存储上一次处理的内容
+    let lastProcessedContent = '';
+
+    // 数据提取器
+    const DataExtractor = {
+      extractContent(text) {
+        // 检查是否有outputcontent标签
+        const outputContentMatch = text.match(/<outputcontent>([\s\S]*?)<\/outputcontent>/);
+        const content = outputContentMatch ? outputContentMatch[1] : text;
+
+        // 如果内容与上次处理的相同，不重复处理
+        if (content === lastProcessedContent) {
+          return null;
+        }
+        lastProcessedContent = content;
+
+        // 匹配各个部分的内容
+        const articleMatch = content.match(/<article>([\s\S]*?)<\/article>/);
+        const personMatch = content.match(/<personstatus>([\s\S]*?)<\/personstatus>/);
+        const servantsMatch = content.match(/<servants>([\s\S]*?)<\/servants>/);
+        const worldsMatch = content.match(/<worlds>([\s\S]*?)<\/worlds>/);
+        const darklineMatch = content.match(/<darkline>([\s\S]*?)<\/darkline>/);
+        const uiupdateMatch = content.match(/<uiupdate>([\s\S]*?)<\/uiupdate>/);
+
+        return {
+          story: articleMatch ? articleMatch[1].trim() : '',
+          person: this.extractPersonInfo(personMatch ? personMatch[1] : ''),
+          servants: this.extractServantsInfo(servantsMatch ? servantsMatch[1] : ''),
+          world: this.extractWorldInfo(worldsMatch ? worldsMatch[1] : ''),
+          darkLine: this.extractDarkLineInfo(darklineMatch ? darklineMatch[1] : ''),
+          uiUpdate: uiupdateMatch ? uiupdateMatch[1].trim() : ''
+        };
+      },
+
+      extractPersonInfo(text) {
+        const info = {};
+        const lines = text.split('\n');
+        lines.forEach(line => {
+          const [key, value] = line.split('：').map(s => s.trim());
+          if (key && value) {
+            info[key] = value;
+          }
+        });
+        return info;
+      },
+
+      extractServantsInfo(text) {
+        const info = {};
+        const lines = text.split('\n');
+        lines.forEach(line => {
+          if (line.includes('好感度：')) {
+            // 从者格式，提取从者名和好感度
+            const servantName = line.split('好感度')[0].trim();
+            if (!info[servantName]) {
+              info[servantName] = {};
+            }
+            const affection = line.split('：')[1].trim();
+            info[servantName]['好感度'] = affection;
+          } else if (line.includes('调教度：')) {
+            // 找到最后设置的从者，添加调教度
+            const servantName = line.split('调教度')[0].trim();
+            if (!info[servantName]) {
+              info[servantName] = {};
+            }
+            const training = line.split('：')[1].trim();
+            info[servantName]['调教度'] = training;
+          } else if (line.includes('称呼：')) {
+            // 找到最后设置的从者，添加称呼
+            const servantName = line.split('称呼')[0].trim();
+            if (!info[servantName]) {
+              info[servantName] = {};
+            }
+            const title = line.split('：')[1].trim();
+            info[servantName]['称呼'] = title;
+          } else if (line.includes('状态：')) {
+            // 找到最后设置的从者，添加状态
+            const servantName = line.split('状态')[0].trim();
+            if (!info[servantName]) {
+              info[servantName] = {};
+            }
+            const status = line.split('：')[1].trim();
+            info[servantName]['状态'] = status;
+          } else if (line.includes('位置：')) {
+            // 找到最后设置的从者，添加位置
+            const servantName = line.split('位置')[0].trim();
+            if (!info[servantName]) {
+              info[servantName] = {};
+            }
+            const location = line.split('：')[1].trim();
+            info[servantName]['位置'] = location;
+          }
+        });
+        return info;
+      },
+
+      extractWorldInfo(text) {
+        const info = {
+          npcs: []
+        };
+        const lines = text.split('\n');
+        let inNpcSection = false;
+
+        lines.forEach(line => {
+          line = line.trim();
+          if (line === 'NPC列表：') {
+            inNpcSection = true;
+            return;
+          }
+
+          if (inNpcSection) {
+            if (line.startsWith('-') && line.includes('：')) {
+              const parts = line.substring(1).split('：');
+              if (parts.length >= 2) {
+                const name = parts[0].trim();
+                const status = parts[1].trim();
+                info.npcs.push({ name, status });
+              }
+            }
+          } else {
+            const [key, value] = line.split('：').map(s => s.trim());
+            if (key && value) {
+              info[key] = value;
+            }
+          }
+        });
+        return info;
+      },
+
+      extractDarkLineInfo(text) {
+        const info = {
+          storylines: [],
+          enemies: []
+        };
+        const lines = text.split('\n');
+        let section = '';
+
+        lines.forEach(line => {
+          line = line.trim();
+          if (line === '暗线剧情：') {
+            section = 'storylines';
+            return;
+          }
+          if (line === '敌对存在信息：') {
+            section = 'enemies';
+            return;
+          }
+
+          if (section === 'storylines') {
+            if (line.startsWith('-')) {
+              info.storylines.push(line.substring(1).trim());
+            }
+          } else if (section === 'enemies') {
+            if (line.startsWith('-')) {
+              const content = line.substring(1).trim();
+              info.enemies.push({
+                type: content.includes('从者职阶') ? 'class' :
+                  content.includes('从者真名') ? 'servant' :
+                    content.includes('御主姓名') ? 'master' :
+                      content.includes('宝具名称') ? 'np' :
+                        content.includes('暗线行动') ? 'action' : 'other',
+                value: content
+              });
+            }
+          }
+        });
+        return info;
+      }
+    };
+
+    // UI更新器
+    const UIUpdater = {
+      updateContent(data) {
+        if (!data) return;
+
+        // 开始更新，设置标志以防止递归
+        isUpdating = true;
+
+        try {
+          this.updateStory(data.story);
+          this.updatePersonInfo(data.person);
+          this.updateServantsInfo(data.servants);
+          this.updateWorldInfo(data.world);
+          this.updateDarkLineInfo(data.darkLine);
+        } catch (error) {
+          console.error("更新UI时出错:", error);
+        } finally {
+          // 完成更新，重置标志
+          setTimeout(() => {
+            isUpdating = false;
+          }, 100); // 短暂延迟确保DOM更新完成
+        }
+      },
+
+      updateStory(content) {
+        if (!content) return;
+        document.getElementById('mainContent').innerHTML = this.formatParagraphs(content);
+      },
+
+      formatParagraphs(text) {
+        return '<p>' + text.replace(/\n\s*\n/g, '</p><p>').replace(/\n/g, '<br>') + '</p>';
+      },
+
+      updatePersonInfo(data) {
+        if (!data) return;
+        const container = document.getElementById('playerInfo');
+        let html = '';
+
+        // 遍历所有字段并创建HTML
+        for (const [key, value] of Object.entries(data)) {
+          if (key === '剩余令咒数量') {
+            const seals = parseInt(value) || 0;
+            html += `<div class="data-item">
+              <span class="data-label">${key}:</span>
+              <span class="data-value">${'⚜'.repeat(seals)}${'◯'.repeat(3 - seals)}</span>
+            </div>`;
+          } else if (key === '当前状态') {
+            const statusClass = this.getStatusClass(value);
+            html += `<div class="data-item">
+              <span class="data-label">${key}:</span>
+              <span class="status-tag ${statusClass}">${value}</span>
+              </div>`;
+          } else {
+            html += `<div class="data-item">
+              <span class="data-label">${key}:</span>
+              <span class="data-value">${value}</span>
+              </div>`;
+          }
+        }
+
+        container.innerHTML = html || '<div class="data-item"><span class="data-label">状态:</span><span class="data-value">无玩家信息</span></div>';
+      },
+
+      updateServantsInfo(data) {
+        if (!data || Object.keys(data).length === 0) {
+          document.getElementById('servantInfo').innerHTML = '<div class="servant-item"><div class="servant-name">从者</div><div class="data-item"><span class="data-label">状态:</span><span class="data-value">无从者信息</span></div></div>';
+          return;
+        }
+
+        const container = document.getElementById('servantInfo');
+        let html = '';
+
+        // 处理每个从者
+        for (const [name, servant] of Object.entries(data)) {
+          html += `<div class="servant-item">
+            <div class="servant-name">${name}</div>`;
+
+          if (servant['称呼']) {
+            html += `<div class="data-item">
+              <span class="data-label">称呼:</span>
+              <span class="data-value">${servant['称呼']}</span>
+            </div>`;
+          }
+
+          if (servant['状态']) {
+            const statusClass = this.getStatusClass(servant['状态']);
+            html += `<div class="data-item">
+              <span class="data-label">状态:</span>
+              <span class="status-tag ${statusClass}">${servant['状态']}</span>
+            </div>`;
+          }
+
+          if (servant['位置']) {
+            html += `<div class="data-item">
+              <span class="data-label">位置:</span>
+              <span class="data-value">${servant['位置']}</span>
+            </div>`;
+          }
+
+          // 好感度进度条
+          if (servant['好感度']) {
+            const affection = parseInt(servant['好感度']) || 0;
+            html += `<div class="data-item">
+                <span class="data-label">好感度:</span>
+                <span class="data-value">${affection}</span>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: ${affection}%;"></div>
+                </div>
+              </div>`;
+          }
+
+          // 调教度进度条
+          if (servant['调教度']) {
+            const training = parseInt(servant['调教度']) || 0;
+            html += `<div class="data-item">
+                <span class="data-label">调教度:</span>
+                <span class="data-value">${training}</span>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: ${training}%;"></div>
+                </div>
+              </div>`;
+          }
+
+          html += `</div>`;
+        }
+
+        container.innerHTML = html;
+      },
+
+      updateWorldInfo(data) {
+        if (!data) {
+          document.getElementById('worldInfo').innerHTML = '<div class="data-item"><span class="data-label">状态:</span><span class="data-value">无世界信息</span></div>';
+          return;
+        }
+
+        const container = document.getElementById('worldInfo');
+        let html = '';
+
+        // 遍历所有字段并创建HTML（除了npcs数组）
+        for (const [key, value] of Object.entries(data)) {
+          if (key !== 'npcs') {
+            html += `<div class="data-item">
+              <span class="data-label">${key}:</span>
+              <span class="data-value">${value}</span>
+            </div>`;
+          }
+        }
+
+        // NPC列表
+        if (data.npcs && data.npcs.length > 0) {
+          html += `<div class="data-item">
+            <span class="data-label">NPC列表:</span>
+            </div>`;
+
+          data.npcs.forEach(npc => {
+            html += `<div class="data-item" style="margin-left: 15px;">
+                <span class="data-label">${npc.name}:</span>
+                <span class="data-value">${npc.status}</span>
+              </div>`;
+          });
+        }
+
+        container.innerHTML = html || '<div class="data-item"><span class="data-label">状态:</span><span class="data-value">无世界信息</span></div>';
+      },
+
+      updateDarkLineInfo(data) {
+        if (!data) {
+          document.getElementById('darkLineInfo').innerHTML = '<div class="data-item"><span class="data-label">状态:</span><span class="data-value">无暗线信息</span></div>';
+          return;
+        }
+
+        const container = document.getElementById('darkLineInfo');
+        let html = '';
+
+        // 暗线剧情部分
+        if (data.storylines && data.storylines.length > 0) {
+          html += `<div class="data-item">
+            <span class="data-label">暗线剧情:</span>
+                    </div>`;
+
+          data.storylines.forEach(story => {
+            html += `<div class="dark-line">- ${story}</div>`;
+          });
+        }
+
+        // 敌对存在信息
+        if (data.enemies && data.enemies.length > 0) {
+          html += `<div class="data-item">
+            <span class="data-label">敌对存在:</span>
+                  </div>`;
+
+          data.enemies.forEach(enemy => {
+            html += `<div class="dark-line">- ${enemy.value}</div>`;
+          });
+        }
+
+        container.innerHTML = html || '<div class="data-item"><span class="data-label">状态:</span><span class="data-value">无暗线信息</span></div>';
+      },
+
+      getStatusClass(status) {
+        if (!status) return '';
+
+        const lowerStatus = status.toLowerCase();
+        if (lowerStatus.includes('正常') || lowerStatus.includes('安全')) {
+          return 'status-normal';
+        } else if (lowerStatus.includes('警戒') || lowerStatus.includes('注意')) {
+          return 'status-caution';
+        } else if (lowerStatus.includes('危险') || lowerStatus.includes('受伤') || lowerStatus.includes('紧急')) {
+          return 'status-danger';
+        }
+        return '';
+      }
+    };
+
+    // 寻找包含<outputcontent>标签的内容
+    function findOutputContent() {
+      // 首先尝试查找ST消息元素内的内容
+      const stMessages = document.querySelectorAll('.mes_text, .mes_content, .message-content');
+      for (const element of stMessages) {
+        if (element && element.innerHTML && element.innerHTML.includes('<outputcontent>')) {
+          return element.innerHTML;
+        }
+      }
+
+      // 如果在ST消息中找不到，尝试在整个网页中查找
+      const match = document.body.innerHTML.match(/<outputcontent>[\s\S]*?<\/outputcontent>/);
+      return match ? match[0] : null;
+    }
+
+    // 处理内容函数
+    function processContent() {
+      // 如果正在更新，跳过以防止循环
+      if (isUpdating) return;
+
+      // 查找内容
+      const outputContent = findOutputContent();
+      if (!outputContent) return;
+
+      // 解析内容
+      const data = DataExtractor.extractContent(outputContent);
+      if (data) {
+        UIUpdater.updateContent(data);
+      }
+    }
+
+    // 初始化函数
+    function initializeContent() {
+      processContent();
+
+      // 设置调试按钮事件
+      document.getElementById('debugButton').addEventListener('click', function () {
+        console.log("手动触发解析");
+        isUpdating = false; // 重置状态，强制进行更新
+        lastProcessedContent = ''; // 清空上次处理内容，强制重新处理
+        processContent();
+      });
+    }
+
+    // 在页面加载时初始化
+    document.addEventListener('DOMContentLoaded', function () {
+      initializeContent();
+
+      // 初始渲染一些提示信息
+      if (!document.getElementById('mainContent').innerHTML) {
+        document.getElementById('mainContent').innerHTML = '<p>等待SillyTavern消息...<br>请在SillyTavern中生成包含&lt;outputcontent&gt;标签的回复</p>';
+      }
+    });
+
+    // 设置MutationObserver监听变化
+    const observer = new MutationObserver(function (mutations) {
+      // 如果正在更新，不触发处理
+      if (isUpdating) return;
+
+      let shouldProcess = false;
+
+      // 检查是否有相关变化
+      for (const mutation of mutations) {
+        // 只处理添加节点或者文本变化
+        if (mutation.type === 'childList' || mutation.type === 'characterData') {
+          // 检查是否涉及到我们关心的内容
+          if (mutation.target &&
+            (mutation.target.nodeType === Node.TEXT_NODE ||
+              (mutation.target.innerHTML && mutation.target.innerHTML.includes('<outputcontent>')))) {
+            shouldProcess = true;
+            break;
+          }
+
+          // 检查新添加的节点
+          if (mutation.addedNodes && mutation.addedNodes.length) {
+            for (const node of mutation.addedNodes) {
+              if (node.nodeType === Node.ELEMENT_NODE &&
+                node.innerHTML &&
+                node.innerHTML.includes('<outputcontent>')) {
+                shouldProcess = true;
+                break;
+              }
+            }
+            if (shouldProcess) break;
+          }
+        }
+      }
+
+      // 如果有相关变化，处理内容
+      if (shouldProcess) {
+        setTimeout(processContent, 50); // 短暂延迟确保DOM已完全更新
+      }
+    });
+
+    // 监听body的变化，但排除我们自己的面板
+    const config = {
+      childList: true,
+      subtree: true,
+      characterData: true
+    };
+
+    // 启动观察者
+    observer.observe(document.body, config);
+
+    // 每5秒检查一次，以防观察者错过更新
+    setInterval(function () {
+      if (!isUpdating) {
+        processContent();
+      }
+    }, 5000);
+  </script>
+</body>
+
+</html>
+```

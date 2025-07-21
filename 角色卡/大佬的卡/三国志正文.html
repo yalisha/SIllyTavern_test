@@ -1,0 +1,1046 @@
+```html
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>正文内容</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: "Noto Sans SC", sans-serif;
+      background: url('https://example.com/old-paper-texture.jpg') repeat;
+    }
+
+    .paper-container {
+      position: relative;
+      max-width: 850px;
+      margin: 0px auto;
+      padding: 25px;
+      background: linear-gradient(135deg,
+          rgba(245, 235, 220, 0.95) 0%,
+          rgba(240, 230, 210, 0.95) 50%,
+          rgba(235, 225, 200, 0.95) 100%);
+      border: 3px double #6b4f36;
+      box-shadow:
+        0 0 20px rgba(107, 79, 54, 0.3),
+        inset 0 0 15px rgba(107, 79, 54, 0.2);
+      overflow: hidden;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      line-height: 1.8;
+      color: #3d2b1e;
+      text-align: justify;
+      animation: naturalFadeIn 2s ease-out;
+      padding: 20px;
+      margin: 10px 0;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid rgba(170, 220, 198, 0.5);
+      white-space: pre-wrap;
+      transition: all 0.3s ease;
+      font-family: 'ZCOOL XiaoWei', 'Ma Shan Zheng', cursive;
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+    }
+
+    .content:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .content p {
+      margin: 12px 0;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 12px;
+      border: 1px solid rgba(170, 220, 198, 0.3);
+      transition: all 0.3s ease;
+      animation: inkSpread 1.5s ease-out;
+    }
+
+    .content p:hover {
+      transform: translateX(5px);
+      background: rgba(183, 223, 230, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    @keyframes naturalFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatAnimation {
+      0% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-5px);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    .ripple-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 50%,
+          rgba(183, 223, 230, 0.1) 0%,
+          rgba(170, 220, 198, 0.05) 50%,
+          transparent 70%);
+      animation: ripple 8s ease-in-out infinite;
+    }
+
+    @keyframes ripple {
+      0% {
+        transform: scale(1);
+        opacity: 0.3;
+      }
+
+      50% {
+        transform: scale(1.1);
+        opacity: 0.2;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 0.3;
+      }
+    }
+
+    .options-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 20px;
+      padding: 0 20px;
+    }
+
+    .option {
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      border: 1px solid rgba(170, 220, 198, 0.3);
+      color: #5f9ea0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+      font-size: 0.95em;
+      line-height: 1.4;
+      animation: floatAnimation 3s ease-in-out infinite;
+    }
+
+    .option:nth-child(2) {
+      animation-delay: 0.75s;
+    }
+
+    .option:nth-child(3) {
+      animation-delay: 1.5s;
+    }
+
+    .option:nth-child(4) {
+      animation-delay: 2.25s;
+    }
+
+    .option:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      background: #5f9ea0;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .options-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .quote-text {
+      color: #2AA198;
+      /* 使用更深的蓝绿色 */
+      //font-style: italic;
+    }
+
+    /* 手机端适配 */
+    @media screen and (max-width: 768px) {
+      .paper-container {
+        margin: 0px auto;
+        padding: 15px;
+        /* 减小内边距 */
+        max-width: 100%;
+        /* 充分利用屏幕宽度 */
+      }
+
+      .content {
+        padding: 15px;
+        font-size: 0.9em;
+        /* 减小字体大小 */
+        line-height: 1.6;
+        /* 适当减小行高 */
+      }
+
+      .content p {
+        padding: 8px;
+        margin: 8px 0;
+        font-size: 0.95em;
+      }
+
+      .option {
+        font-size: 0.85em;
+        /* 选项字体略小 */
+        padding: 10px 15px;
+      }
+
+      body {
+        padding: 10px;
+        /* 减小body的内边距 */
+      }
+    }
+
+    /* 更小屏幕的额外适配 */
+    @media screen and (max-width: 480px) {
+      .content {
+        font-size: 0.85em;
+        /* 更小屏幕进一步减小字体 */
+      }
+
+      .option {
+        font-size: 0.8em;
+      }
+    }
+
+    /* 标签栏样式 */
+    .tab-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      margin-bottom: 20px;
+    }
+
+    .tab-button {
+      padding: 8px 12px;
+      font-size: 0.9em;
+      white-space: nowrap;
+    }
+
+    .tab-button:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: translateY(-2px);
+    }
+
+    .tab-button.active {
+      background: #5f9ea0;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .tab-content {
+      display: none;
+      white-space: pre-wrap;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: naturalFadeIn 0.5s ease-out;
+    }
+
+    @media (max-width: 768px) {
+      .tab-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .tab-button {
+        font-size: 0.8em;
+        padding: 6px 10px;
+      }
+    }
+
+    /* 卷轴装饰 */
+    .paper-container::before,
+    .paper-container::after {
+      content: '';
+      position: absolute;
+      width: 50px;
+      height: 100%;
+      background: url('https://example.com/scroll-end.png') center/contain repeat-y;
+      z-index: 0;
+    }
+
+    .paper-container::before {
+      left: -25px;
+    }
+
+    .paper-container::after {
+      right: -25px;
+    }
+
+    /* 章节标题样式 */
+    .chapter-title {
+      font-size: 1.8em;
+      color: #8b0000;
+      text-align: center;
+      border-bottom: 2px solid #6b4f36;
+      padding-bottom: 10px;
+      margin: 20px 0;
+      font-family: 'Ma Shan Zheng', cursive;
+    }
+
+    /* 人物对话样式 */
+    .dialogue {
+      color: #2f4f4f;
+      margin-left: 30px;
+      border-left: 3px solid #8b0000;
+      padding-left: 15px;
+    }
+
+    /* 势力徽章 */
+    .faction-badge {
+      display: inline-block;
+      padding: 5px 15px;
+      border-radius: 15px;
+      margin: 5px;
+      font-family: 'Ma Shan Zheng', cursive;
+    }
+
+    .wei {
+      background: #2a4b8d;
+      color: white;
+    }
+
+    .shu {
+      background: #b22222;
+      color: white;
+    }
+
+    .wu {
+      background: #228b22;
+      color: white;
+    }
+
+    /* 地图容器 */
+    #map-tab {
+      background: url('https://example.com/ancient-map.jpg') center/cover;
+      min-height: 400px;
+      position: relative;
+    }
+
+    /* 任务列表样式 */
+    .quest-item {
+      background: rgba(245, 235, 220, 0.8);
+      border: 1px solid #6b4f36;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    /* 新增水墨动画 */
+    @keyframes inkSpread {
+      from {
+        opacity: 0;
+        transform: scale(0.98);
+        filter: blur(1px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+      }
+    }
+
+    /* 状态栏界面的人物板块样式 */
+    .character-panel {
+      background: rgba(245, 235, 220, 0.9);
+      border: 1px solid #6b4f36;
+      border-radius: 10px;
+      margin: 10px 0;
+      padding: 15px;
+      box-shadow: 0 3px 8px rgba(107, 79, 54, 0.2);
+      transition: all 0.3s ease;
+      animation: naturalFadeIn 0.5s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .character-panel:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(107, 79, 54, 0.3);
+    }
+
+    .character-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #8b0000;
+      border-bottom: 1px solid #6b4f36;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+      font-family: 'Ma Shan Zheng', cursive;
+    }
+
+    .character-value {
+      color: #3d2b1e;
+      font-size: 1em;
+      padding: 5px 0;
+      white-space: pre-wrap;
+    }
+
+    /* 不同势力背景色 */
+    .character-panel.wei {
+      border-left: 5px solid #2a4b8d;
+    }
+
+    .character-panel.shu {
+      border-left: 5px solid #b22222;
+    }
+
+    .character-panel.wu {
+      border-left: 5px solid #228b22;
+    }
+
+    .character-panel.other {
+      border-left: 5px solid #8b4513;
+    }
+
+    @media screen and (max-width: 768px) {
+      .character-panel {
+        padding: 10px;
+        margin: 8px 0;
+      }
+
+      .character-name {
+        font-size: 1.1em;
+      }
+
+      .character-value {
+        font-size: 0.9em;
+      }
+    }
+
+    /* 三国地图样式 */
+    .three-kingdoms-map {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      background: url('https://files.catbox.moe/o2wzh4.jpeg') center/cover;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(107, 79, 54, 0.3);
+      overflow: hidden;
+      margin: 20px 0;
+    }
+
+    .map-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(245, 235, 220, 0.4);
+    }
+
+    .map-title {
+      text-align: center;
+      font-size: 1.6em;
+      font-weight: bold;
+      color: #8b0000;
+      margin: 15px 0;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      font-family: 'Ma Shan Zheng', cursive;
+    }
+
+    .territory {
+      position: absolute;
+      border: 2px solid rgba(0, 0, 0, 0.4);
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      opacity: 0.85;
+      backdrop-filter: blur(2px);
+      padding: 5px;
+      /* 添加内边距 */
+      overflow: visible;
+      /* 允许内容超出容器 */
+    }
+
+    .territory>div {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 5;
+      /* 确保内容在上层 */
+    }
+
+    .territory-name {
+      font-size: 1.1em;
+      font-family: 'Ma Shan Zheng', cursive;
+      margin-bottom: 3px;
+      white-space: pre-wrap;
+      text-align: center;
+      text-shadow: 0 0 3px #000, 0 0 5px #000;
+      /* 文字阴影增强可读性 */
+      z-index: 6;
+    }
+
+    .territory-area {
+      font-size: 0.8em;
+      opacity: 0.9;
+      white-space: pre-wrap;
+      text-align: center;
+      text-shadow: 0 0 3px #000, 0 0 5px #000;
+      /* 文字阴影增强可读性 */
+      z-index: 6;
+    }
+
+    /* 不同势力的地区颜色 */
+    .dongzhuo {
+      background: rgba(139, 0, 0, 0.7);
+    }
+
+    /* 深红色 */
+    .yuanshao {
+      background: rgba(85, 107, 47, 0.7);
+    }
+
+    /* 深橄榄绿 */
+    .yuanshu {
+      background: rgba(218, 165, 32, 0.7);
+    }
+
+    /* 金菊色 */
+    .caocao {
+      background: rgba(25, 25, 112, 0.7);
+    }
+
+    /* 深蓝色 - 魏 */
+    .liubei {
+      background: rgba(178, 34, 34, 0.7);
+    }
+
+    /* 砖红色 - 蜀 */
+    .sunquan {
+      background: rgba(34, 139, 34, 0.7);
+    }
+
+    /* 森林绿 - 吴 */
+    .lvbu {
+      background: rgba(138, 43, 226, 0.7);
+    }
+
+    /* 紫色 */
+    .liubiao {
+      background: rgba(205, 133, 63, 0.7);
+    }
+
+    /* 秘鲁色 */
+    .liuzhang {
+      background: rgba(95, 158, 160, 0.7);
+    }
+
+    /* 青色 */
+
+    /* 地图图例 */
+    .map-legend {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      background: rgba(245, 235, 220, 0.85);
+      border: 1px solid #6b4f36;
+      border-radius: 8px;
+      padding: 8px;
+      width: 120px;
+      font-size: 0.8em;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin: 4px 0;
+    }
+
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+      border-radius: 3px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .three-kingdoms-map {
+        height: 400px;
+      }
+
+      .territory-name {
+        font-size: 0.9em;
+      }
+
+      .territory-area {
+        font-size: 0.7em;
+      }
+    }
+
+    /* 任务区块样式 */
+    .quest-section {
+      margin-bottom: 25px;
+      animation: naturalFadeIn 0.5s ease-out;
+    }
+
+    .quest-section-title {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #8b0000;
+      border-bottom: 2px solid #6b4f36;
+      padding-bottom: 8px;
+      margin-bottom: 15px;
+      font-family: 'Ma Shan Zheng', cursive;
+    }
+
+    .quest-container {
+      background: rgba(245, 235, 220, 0.8);
+      border: 1px solid #6b4f36;
+      border-radius: 10px;
+      padding: 15px;
+      min-height: 50px;
+      box-shadow: 0 3px 8px rgba(107, 79, 54, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .quest-container:hover {
+      box-shadow: 0 5px 15px rgba(107, 79, 54, 0.3);
+    }
+
+    /* 不同任务类型的边框颜色 */
+    .main-quest {
+      border-left: 5px solid #8b0000;
+      /* 主线任务-红色 */
+    }
+
+    .side-quest {
+      border-left: 5px solid #2a4b8d;
+      /* 支线任务-蓝色 */
+    }
+
+    .urgent-quest {
+      border-left: 5px solid #ff8c00;
+      /* 紧急任务-橙色 */
+      animation: urgentPulse 2s infinite;
+    }
+
+    @keyframes urgentPulse {
+      0% {
+        box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+      }
+
+      50% {
+        box-shadow: 0 0 15px rgba(255, 140, 0, 0.8);
+      }
+
+      100% {
+        box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .quest-section-title {
+        font-size: 1.1em;
+      }
+
+      .quest-container {
+        padding: 10px;
+      }
+    }
+
+    /* 添加到CSS样式中 */
+    #faction-tab p {
+      margin: 12px 0;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 12px;
+      border: 1px solid rgba(170, 220, 198, 0.3);
+      transition: all 0.3s ease;
+      animation: inkSpread 1.5s ease-out;
+      white-space: pre-wrap;
+    }
+
+    #faction-tab p:hover {
+      transform: translateX(5px);
+      background: rgba(183, 223, 230, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    /* 为所有标签页内容添加通用格式保持样式 */
+    .tab-content {
+      white-space: pre-wrap;
+    }
+
+    /* 更改悬停效果，避免遮挡 */
+    .territory:hover {
+      transform: scale(1.1);
+      opacity: 1;
+      z-index: 10;
+      overflow: visible;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+
+    /* 针对特别小的区域的特殊处理 */
+    .territory.liubei,
+    .territory.lvbu {
+      overflow: visible;
+    }
+
+    .territory.liubei>div,
+    .territory.lvbu>div {
+      position: absolute;
+      width: auto;
+      max-width: 150%;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 5px;
+      padding: 5px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="paper-container">
+    <div class="ripple-background"></div>
+
+    <!-- 更新标签栏 -->
+    <div class="tab-container">
+      <button class="tab-button active" data-tab="content-tab">📖 正文</button>
+      <button class="tab-button" data-tab="status-tab">⚙️ 状态</button>
+      <button class="tab-button" data-tab="faction-tab">🏰 势力</button>
+      <button class="tab-button" data-tab="quest-tab">🎯 任务</button>
+      <button class="tab-button" data-tab="map-tab">🗺️ 地图</button>
+    </div>
+
+    <!-- 更新内容区域 -->
+    <div id="content-tab" class="tab-content active">$1</div>
+    <div id="status-tab" class="tab-content">
+      <div class="character-panel other">
+        <div class="character-name">1. 董卓</div>
+        <div class="character-value" id="dongzhuo-status"></div>
+      </div>
+
+      <div class="character-panel other">
+        <div class="character-name">2. 袁绍</div>
+        <div class="character-value" id="yuanshao-status"></div>
+      </div>
+
+      <div class="character-panel other">
+        <div class="character-name">3. 袁术</div>
+        <div class="character-value" id="yuanshu-status"></div>
+      </div>
+
+      <div class="character-panel wei">
+        <div class="character-name">4. 曹操</div>
+        <div class="character-value" id="caocao-status"></div>
+      </div>
+
+      <div class="character-panel shu">
+        <div class="character-name">5. 刘备</div>
+        <div class="character-value" id="liubei-status"></div>
+      </div>
+
+      <div class="character-panel wu">
+        <div class="character-name">6. 孙权</div>
+        <div class="character-value" id="sunquan-status"></div>
+      </div>
+
+      <div class="character-panel other">
+        <div class="character-name">7. 吕布</div>
+        <div class="character-value" id="lvbu-status"></div>
+      </div>
+
+      <div class="character-panel other">
+        <div class="character-name">8. 刘表</div>
+        <div class="character-value" id="liubiao-status"></div>
+      </div>
+
+      <div class="character-panel other">
+        <div class="character-name">9. 刘璋</div>
+        <div class="character-value" id="liuzhang-status"></div>
+      </div>
+    </div>
+    <div id="faction-tab" class="tab-content">$3</div>
+    <div id="quest-tab" class="tab-content">
+      <div class="quest-section">
+        <div class="quest-section-title">主线任务</div>
+        <div class="quest-container main-quest" id="main-quest"></div>
+      </div>
+
+      <div class="quest-section">
+        <div class="quest-section-title">支线任务</div>
+        <div class="quest-container side-quest" id="side-quest"></div>
+      </div>
+
+      <div class="quest-section">
+        <div class="quest-section-title">紧急任务</div>
+        <div class="quest-container urgent-quest" id="urgent-quest"></div>
+      </div>
+    </div>
+    <div id="map-tab" class="tab-content">
+      <div class="map-title">三国群雄割据形势图</div>
+      <div class="three-kingdoms-map">
+        <div class="map-overlay"></div>
+
+        <div class="territory dongzhuo" style="top: 30%; left: 20%; width: 12%; height: 15%;">
+          <div>
+            <div class="territory-name" id="dongzhuo-name"></div>
+            <div class="territory-area" id="dongzhuo-area"></div>
+          </div>
+        </div>
+
+        <div class="territory yuanshao" style="top: 15%; left: 35%; width: 20%; height: 20%;">
+          <div>
+            <div class="territory-name" id="yuanshao-name"></div>
+            <div class="territory-area" id="yuanshao-area"></div>
+          </div>
+        </div>
+
+        <div class="territory yuanshu" style="top: 45%; left: 42%; width: 12%; height: 15%;">
+          <div>
+            <div class="territory-name" id="yuanshu-name"></div>
+            <div class="territory-area" id="yuanshu-area"></div>
+          </div>
+        </div>
+
+        <div class="territory caocao" style="top: 32%; left: 35%; width: 15%; height: 18%;">
+          <div>
+            <div class="territory-name" id="caocao-name"></div>
+            <div class="territory-area" id="caocao-area"></div>
+          </div>
+        </div>
+
+        <div class="territory sunquan" style="top: 55%; left: 55%; width: 18%; height: 15%;">
+          <div>
+            <div class="territory-name" id="sunquan-name"></div>
+            <div class="territory-area" id="sunquan-area"></div>
+          </div>
+        </div>
+
+        <div class="territory lvbu" style="top: 32%; left: 48%; width: 8%; height: 10%;">
+          <div>
+            <div class="territory-name" id="lvbu-name"></div>
+            <div class="territory-area" id="lvbu-area"></div>
+          </div>
+        </div>
+
+        <div class="territory liubiao" style="top: 60%; left: 32%; width: 18%; height: 16%;">
+          <div>
+            <div class="territory-name" id="liubiao-name"></div>
+            <div class="territory-area" id="liubiao-area"></div>
+          </div>
+        </div>
+
+        <div class="territory liuzhang" style="top: 60%; left: 15%; width: 15%; height: 20%;">
+          <div>
+            <div class="territory-name" id="liuzhang-name"></div>
+            <div class="territory-area" id="liuzhang-area"></div>
+          </div>
+        </div>
+
+        <div class="territory liubei"
+          style="top: 45%; left: 25%; width: 8%; height: 8%; animation: floatAnimation 4s ease-in-out infinite;">
+          <div>
+            <div class="territory-name" id="liubei-name"></div>
+            <div class="territory-area" id="liubei-area"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 新增原始数据区域 -->
+  <div class="raw-data" style="display:none;">
+    <mainbody>$1</mainbody>
+    <statusbar>$2</statusbar>
+    <faction>$3</faction>
+    <quests>$4</quests>
+    <map>$5</map>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // 处理所有标签页的格式
+      function formatTabContent(tabId) {
+        const tabContent = document.getElementById(tabId);
+        if (tabContent) {
+          // 将原始内容中的换行符转换为<br>标签和段落标签
+          const rawContent = tabContent.innerHTML;
+
+          // 分割成段落并用<p>标签包装每个段落
+          const paragraphs = rawContent.split(/\n\s*\n/);
+          const formattedContent = paragraphs.map(para => {
+            // 替换单个换行为<br>
+            const paraWithLineBreaks = para.replace(/\n/g, '<br>');
+            return `<p>${paraWithLineBreaks}</p>`;
+          }).join('');
+
+          tabContent.innerHTML = formattedContent;
+        }
+      }
+
+      // 处理所有需要保持格式的标签页
+      formatTabContent('content-tab');
+      formatTabContent('faction-tab');
+
+      const content = document.querySelector('.content');
+      if (content) {
+        content.innerHTML = content.innerHTML.replace(
+          /「([^」]+)」|"([^"]+)"/g,
+          match => `<span class="quote-text">${match}</span>`
+        );
+      }
+
+      // 标签切换功能
+      document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', function () {
+          // 移除所有标签和内容的激活状态
+          document.querySelectorAll('.tab-button').forEach(btn => {
+            btn.classList.remove('active');
+          });
+          document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+          });
+
+          // 激活当前选中的标签和对应内容
+          this.classList.add('active');
+          const tabId = this.getAttribute('data-tab');
+          document.getElementById(tabId).classList.add('active');
+        });
+      });
+
+      document.querySelectorAll('.option').forEach(option => {
+        option.addEventListener('click', function () {
+          const choice = this.dataset.choice;
+          triggerSlash(`/send ${choice}|/trigger`);
+        });
+      });
+
+      // 添加水墨动画效果
+      document.querySelectorAll('.content p').forEach(p => {
+        p.style.animation = 'inkSpread 1.5s ease-out';
+      });
+
+      // 获取原始数据
+      const rawData = document.querySelector('.raw-data');
+      const statusData = rawData.querySelector('statusbar').textContent;
+      const questsData = rawData.querySelector('quests').textContent;
+      const mapData = rawData.querySelector('map').textContent;
+
+      // 更新状态面板内容
+      const statusElements = {
+        'dongzhuo-status': /dongzhuo: (.*?)(\n|$)/,
+        'yuanshao-status': /yuanshao: (.*?)(\n|$)/,
+        'yuanshu-status': /yuanshu: (.*?)(\n|$)/,
+        'caocao-status': /caocao: (.*?)(\n|$)/,
+        'liubei-status': /liubei: (.*?)(\n|$)/,
+        'sunquan-status': /sunquan: (.*?)(\n|$)/,
+        'lvbu-status': /lvbu: (.*?)(\n|$)/,
+        'liubiao-status': /liubiao: (.*?)(\n|$)/,
+        'liuzhang-status': /liuzhang: (.*?)(\n|$)/
+      };
+
+      // 更新任务内容
+      const questElements = {
+        'main-quest': /main:\s*(.*?)(?=\s*side:|$)/,
+        'side-quest': /side:\s*(.*?)(?=\s*urgent:|$)/,
+        'urgent-quest': /urgent:\s*(.*?)(\n|$)/
+      };
+
+      // 更新地图信息 - 使用统一且更简单的正则表达式
+      const mapElements = {
+        'dongzhuo-name': /dongzhuo_name:\s*(.+?)(?=\n|$)/,
+        'dongzhuo-area': /dongzhuo_area:\s*(.+?)(?=\n|$)/,
+        'yuanshao-name': /yuanshao_name:\s*(.+?)(?=\n|$)/,
+        'yuanshao-area': /yuanshao_area:\s*(.+?)(?=\n|$)/,
+        'yuanshu-name': /yuanshu_name:\s*(.+?)(?=\n|$)/,
+        'yuanshu-area': /yuanshu_area:\s*(.+?)(?=\n|$)/,
+        'caocao-name': /caocao_name:\s*(.+?)(?=\n|$)/,
+        'caocao-area': /caocao_area:\s*(.+?)(?=\n|$)/,
+        'liubei-name': /liubei_name:\s*(.+?)(?=\n|$)/,
+        'liubei-area': /liubei_area:\s*(.+?)(?=\n|$)/,
+        'sunquan-name': /sunquan_name:\s*(.+?)(?=\n|$)/,
+        'sunquan-area': /sunquan_area:\s*(.+?)(?=\n|$)/,
+        'lvbu-name': /lvbu_name:\s*(.+?)(?=\n|$)/,
+        'lvbu-area': /lvbu_area:\s*(.+?)(?=\n|$)/,
+        'liubiao-name': /liubiao_name:\s*(.+?)(?=\n|$)/,
+        'liubiao-area': /liubiao_area:\s*(.+?)(?=\n|$)/,
+        'liuzhang-name': /liuzhang_name:\s*(.+?)(?=\n|$)/,
+        'liuzhang-area': /liuzhang_area:\s*(.+?)(?=\n|$)/
+      };
+
+      // 更新状态数据
+      Object.entries(statusElements).forEach(([elementId, pattern]) => {
+        const element = document.getElementById(elementId);
+        if (element) {
+          const match = statusData.match(pattern);
+          element.textContent = match ? match[1].trim() : "未知";
+        }
+      });
+
+      // 更新任务数据
+      Object.entries(questElements).forEach(([elementId, pattern]) => {
+        const element = document.getElementById(elementId);
+        if (element) {
+          const match = questsData.match(pattern);
+          if (match && match[1]) {
+            element.textContent = match[1].trim();
+          } else {
+            element.textContent = "暂无任务";
+          }
+        }
+      });
+
+      // 更新地图数据并添加详细调试信息
+      Object.entries(mapElements).forEach(([elementId, pattern]) => {
+        const element = document.getElementById(elementId);
+        if (element) {
+          const match = mapData.match(pattern);
+          if (match && match[1]) {
+            element.textContent = match[1].trim();
+          } else {
+            element.textContent = "未知";
+            console.log(`未能匹配到 ${elementId} 的数据，使用的模式: ${pattern}`);
+
+            // 输出完整的地图数据进行调试
+            if (elementId.includes('name') || elementId.includes('area')) {
+              const key = elementId.split('-')[0]; // 提取名称前缀
+              console.log(`查找的键: ${key}`);
+              console.log(`完整数据: ${mapData}`);
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
+```

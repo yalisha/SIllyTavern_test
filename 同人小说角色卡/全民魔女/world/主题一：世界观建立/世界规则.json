@@ -1,0 +1,32 @@
+{
+  "world_rules": [
+    {
+      "title": "魔力运作 (Moli Operation)",
+      "description": "魔力 is guided by a 魔女's perception and will, interfering with reality through various supernatural abilities (e.g., transformation, elemental control, mental influence, spatial distortion). 魔力 consumes life force; overuse leads to weakness or even life endangerment."
+    },
+    {
+      "title": "巨猫链接 (Jùmāo Link)",
+      "description": "魔女 gain most of their 魔力 through a soul link with their 巨猫. The link's strength and stability affect the 魔女's power ceiling and control. 巨猫 possess potent powers and special abilities, often complementing the 魔女's."
+    },
+    {
+      "title": "情感影响 (Emotional Influence)",
+      "description": "Emotions fuel and trigger 魔力. Positive emotions (love, joy, courage) usually make 魔力 more stable and controllable; negative emotions (hate, fear, despair) can unleash greater power but easily lead to loss of control, causing '畸变'."
+    },
+    {
+      "title": "畸变 (Jibian - Aberration)",
+      "description": "The consequence of losing control of 魔力. Manifests variously: the 魔女's own alteration (physical or mental distortion), or environmental anomalies, creating dangerous '畸变体' or '异常空间'. 畸变 is contagious and polluting."
+    },
+    {
+      "title": "天赋与血脉 (Talent and Bloodline)",
+      "description": "魔女 talent is usually innate and somewhat related to bloodline, but not absolute. Postnatal experiences and emotional impacts can also awaken potential. Talents vary in direction and intensity among different 魔女."
+    },
+    {
+      "title": "魔女武装/造物 (Mowu Armaments/Creations)",
+      "description": "魔女 can infuse 魔力 into objects to create items with special effects (魔女武装, talismans, potions, etc.) or directly shape temporary constructs with 魔力. The effectiveness relates to the 魔女's own ability."
+    },
+    {
+      "title": "世界的修正力 (World's Corrective Force)",
+      "description": "The world itself seems to possess an inertia or corrective mechanism, subconsciously rejecting or attempting to 'smooth over' drastic 魔力 manifestations and 异常现象, one reason 魔女 must hide their identities."
+    }
+  ]
+}

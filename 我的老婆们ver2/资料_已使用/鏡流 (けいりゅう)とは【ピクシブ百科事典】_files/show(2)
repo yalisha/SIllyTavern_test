@@ -1,0 +1,8 @@
+document.write("");
+var adData = {
+  type: "headerBidding",
+  headerBidding: false
+}
+document.write("<script>\nvar microadCompass = microadCompass || {};\nmicroadCompass.queue = microadCompass.queue || [];\n</scr"+"ipt><script src=//j.microad.net/js/compass.js onload=\"(new microadCompass.AdInitializer).initialize()\" async></scr"+"ipt><div id=1859b54f3b0cf936836c588fb6769d66><script>\n  microadCompass.queue.push({\n   \"spot\": \"1859b54f3b0cf936836c588fb6769d66\",\n   \"url\": \"${COMPASS_EXT_URL}\",\n   \"referrer\": \"${COMPASS_EXT_REF}\"\n  });\n </scr"+"ipt></div>");
+window.parent.postMessage(adData);
+if(document.readyState!=="loading"){document.body.insertAdjacentHTML('beforeend', '<img src="https://pixon.ads-pixiv.net/imp?ab_test_digits_first=85&ad_group_id=3770&campaign_id=242&client_id=618&creative_id=7006&format=js&l=zh&ng=w&os=pc&ref=https%3A%2F%2Fdic.pixiv.net%2Fa%2F%25E9%258F%25A1%25E6%25B5%2581&yuid=FwgmVIA&zone_id=d_rectangle" width="1" height="1" style="display:none">');}else{document.addEventListener("DOMContentLoaded",function(){document.body.insertAdjacentHTML('beforeend', '<img src="https://pixon.ads-pixiv.net/imp?ab_test_digits_first=85&ad_group_id=3770&campaign_id=242&client_id=618&creative_id=7006&format=js&l=zh&ng=w&os=pc&ref=https%3A%2F%2Fdic.pixiv.net%2Fa%2F%25E9%258F%25A1%25E6%25B5%2581&yuid=FwgmVIA&zone_id=d_rectangle" width="1" height="1" style="display:none">');},{once:true});}

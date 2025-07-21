@@ -1,0 +1,2983 @@
+```
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>型月世界设定角色创建</title>
+  <!-- Add FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* FGO-inspired styling with box design - Flat UI version */
+    body {
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      background-color: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .stage {
+      display: none;
+      background-color: #1e1e1e;
+      border: 1px solid #444;
+      border-radius: 4px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .active {
+      display: block;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: #fff;
+      text-align: center;
+      font-weight: 400;
+    }
+
+    .box-container {
+      border: 1px solid #444;
+      border-radius: 4px;
+      margin: 15px 0;
+      background-color: #252525;
+      overflow: hidden;
+    }
+
+    .box-header {
+      background-color: #0078d7;
+      color: white;
+      padding: 10px;
+      font-weight: normal;
+    }
+
+    .box-content {
+      padding: 15px;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .option-button {
+      background-color: #2b2b2b;
+      color: white;
+      border: 1px solid #444;
+      border-radius: 2px;
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    /* 为特质按钮添加特殊样式 */
+    #stage3 .option-button {
+      height: auto;
+      min-height: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* 特殊处理无特质和自定义特质按钮 */
+    #stage3 .option-button[data-value="none"],
+    #stage3 .option-button[data-value="custom"] {
+      min-height: unset;
+      padding: 10px;
+    }
+
+    .option-button:hover {
+      background-color: #0078d7;
+      border-color: #0078d7;
+    }
+
+    .option-button.selected {
+      background-color: #0078d7;
+      border-color: #0078d7;
+    }
+
+    .magic-strength-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .magic-strength-table th,
+    .magic-strength-table td {
+      border: 1px solid #444;
+      padding: 8px 10px;
+    }
+
+    .magic-strength-table th {
+      background-color: #333;
+      color: white;
+    }
+
+    .magic-strength-table tr:nth-child(even) {
+      background-color: #2a2a2a;
+    }
+
+    .magic-strength-table tr:hover {
+      background-color: #3a3a3a;
+    }
+
+    .mystic-code-detail {
+      display: none;
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #2a2a2a;
+      border: 1px solid #444;
+    }
+
+    .noble-phantasm-card {
+      border: 1px solid #444;
+      margin: 10px 0;
+      padding: 15px;
+      background-color: #2a2a2a;
+      border-radius: 2px;
+    }
+
+    .noble-phantasm-title {
+      font-weight: normal;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .noble-phantasm-properties {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .noble-phantasm-property {
+      padding: 2px 8px;
+      background-color: #333;
+      border-radius: 2px;
+      font-size: 0.9em;
+    }
+
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .nav-button {
+      background-color: #0078d7;
+      color: white;
+      border: none;
+      border-radius: 2px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+    }
+
+    .nav-button:hover {
+      background-color: #106ebe;
+    }
+
+    .nav-button:disabled {
+      background-color: #666;
+      cursor: not-allowed;
+    }
+
+    .slider-container {
+      margin: 15px 0;
+    }
+
+    .slider {
+      width: 100%;
+      height: 4px;
+      -webkit-appearance: none;
+      background: #555;
+      outline: none;
+      border-radius: 2px;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #0078d7;
+      cursor: pointer;
+    }
+
+    .slider-value {
+      text-align: center;
+      font-size: 1.2em;
+      margin-top: 5px;
+    }
+
+    .summary-container {
+      background-color: #2a2a2a;
+      padding: 15px;
+      border-radius: 2px;
+      margin-top: 15px;
+    }
+
+    .summary-item {
+      margin: 5px 0;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .fgo-logo {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .command-seal {
+      width: 100px;
+      height: 100px;
+      background-image: url('https://static.wikia.nocookie.net/fategrandorder/images/9/9f/Command_Spell_Ritsuka.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0 auto;
+      margin-bottom: 20px;
+    }
+
+    .skill-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .skill-list li {
+      margin-bottom: 8px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .skill-list li:before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #0078d7;
+    }
+
+    .selected-servant {
+      background-color: #2a2a2a;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 2px;
+      border-left: 3px solid #0078d7;
+    }
+
+    .servant-name {
+      font-size: 1.1em;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    .servant-stats {
+      font-size: 0.9em;
+      color: #ccc;
+      margin-bottom: 5px;
+    }
+
+    .section-header {
+      background-color: #333;
+      padding: 5px;
+      margin-top: 10px;
+      border-radius: 2px;
+    }
+
+    .indented {
+      padding-left: 20px;
+    }
+
+    input[type="text"],
+    textarea,
+    select {
+      background-color: #333;
+      border: 1px solid #444;
+      color: white;
+      border-radius: 2px;
+    }
+
+    input[type="radio"] {
+      accent-color: #0078d7;
+    }
+
+    /* 添加自定义魔术礼装对话框样式 */
+    .custom-dialog {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .dialog-content {
+      background-color: #24273a;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #363a4f;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 600px;
+      max-height: 80%;
+      overflow-y: auto;
+      color: #cad3f5;
+    }
+
+    .close-button {
+      color: #939ab7;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-button:hover {
+      color: #f5a97f;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #363a4f;
+      border-radius: 4px;
+      background-color: #1e2030;
+      color: #cad3f5;
+    }
+
+    .form-group textarea {
+      height: 80px;
+      resize: vertical;
+    }
+
+    .skill-section {
+      margin-top: 20px;
+    }
+
+    .skill-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .skill-input {
+      display: flex;
+      gap: 10px;
+    }
+
+    .skill-name {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #363a4f;
+      border-radius: 4px;
+      background-color: #1e2030;
+      color: #cad3f5;
+    }
+
+    .skill-effect {
+      flex: 2;
+      padding: 8px;
+      border: 1px solid #363a4f;
+      border-radius: 4px;
+      background-color: #1e2030;
+      color: #cad3f5;
+    }
+
+    .dialog-buttons {
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    .dialog-buttons button {
+      padding: 8px 16px;
+      margin-left: 10px;
+      background-color: #7287fd;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .dialog-buttons button:hover {
+      background-color: #8caaee;
+    }
+
+    .custom-option {
+      background-color: #363a4f;
+      border: 2px dashed #f5a97f;
+    }
+
+    .custom-option:hover {
+      background-color: #494d64;
+    }
+
+    /* Style for custom created buttons */
+    .custom-created {
+      background-color: #2d4f67;
+      border-left: 3px solid #f5a97f;
+    }
+
+    .custom-created:hover {
+      background-color: #3a6380;
+    }
+
+    .custom-created.selected {
+      background-color: #0078d7;
+      border-color: #0078d7;
+    }
+
+    /* 新增特质显示样式 */
+    .trait-name {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .trait-desc {
+      font-weight: normal;
+      font-size: 0.9em;
+      display: block;
+    }
+
+    /* 调整特质按钮高度以适应两行文本 */
+    .option-button[data-value^="lustful_"],
+    .option-button[data-value^="fragile_"],
+    .option-button[data-value^="wish_"],
+    .option-button[data-value^="hypnosis_"],
+    .option-button[data-value^="sex_"],
+    .option-button[data-value^="seduction_"],
+    .option-button[data-value^="lady_"],
+    .option-button[data-value^="training_"],
+    .option-button[data-value^="grail_"],
+    .option-button[data-value^="mana_"],
+    .option-button[data-value^="beast_"],
+    .option-button[data-value^="curse_"],
+    .option-button[data-value^="paradox_"],
+    .option-button[data-value^="divine_"],
+    .option-button[data-value^="lewd_"],
+    .option-button[data-value^="succubus_"],
+    .option-button[data-value^="forbidden_"],
+    .option-button[data-value^="lustful_"],
+    .option-button[data-value^="servant_"],
+    .option-button[data-value^="tantric_"],
+    .option-button[data-value^="erotic_"],
+    .option-button[data-value^="slave_"],
+    .option-button[data-value^="orgasmic_"],
+    .option-button[data-value^="bound_"],
+    .option-button[data-value^="sacrificial_"],
+    .option-button[data-value^="chained_"],
+    .option-button[data-value^="mana_drain"],
+    .option-button.custom-created {
+      height: auto;
+      min-height: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>与伊什塔尔和艾蕾一起拯救人理！</h1>
+
+    <!-- Stage 1: Basic Player Information -->
+    <div id="stage1" class="stage active">
+      <h2>第一阶段：<user>基本信息</h2>
+
+      <div class="box-container">
+        <div class="box-header">选择性别</div>
+        <div class="box-content">
+          <div class="option-grid">
+            <div class="option-button" data-value="male" onclick="selectOption('gender', this)">男性</div>
+            <div class="option-button" data-value="female" onclick="selectOption('gender', this)">女性</div>
+            <div class="option-button" data-value="futa" onclick="selectOption('gender', this)">扶他</div>
+            <div class="option-button" data-value="femboy" onclick="selectOption('gender', this)">男身女相</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box-container">
+        <div class="box-header">魔术强度</div>
+        <div class="box-content">
+          <table class="magic-strength-table">
+            <thead>
+              <tr>
+                <th>阶段</th>
+                <th>对应头衔</th>
+                <th>核心能力标志</th>
+                <th>剧情定位</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="selectable-row" onclick="selectMagicStrength('普通人')">
+                <td>普通人</td>
+                <td>Mundane</td>
+                <td>无魔术能力</td>
+                <td>对魔术一无所知</td>
+              </tr>
+              <tr class="selectable-row" onclick="selectMagicStrength('末子')">
+                <td>末子</td>
+                <td>Initiate</td>
+                <td>基础元素感知</td>
+                <td>魔术学院新生</td>
+              </tr>
+              <tr class="selectable-row" onclick="selectMagicStrength('开位')">
+                <td>开位</td>
+                <td>Cause</td>
+                <td>单一属性魔术精通</td>
+                <td>执行基础任务的代行者</td>
+              </tr>
+              <tr class="selectable-row" onclick="selectMagicStrength('长位')">
+                <td>长位</td>
+                <td>Pride</td>
+                <td>复合属性魔术开发</td>
+                <td>地区级事件解决者</td>
+              </tr>
+              <tr class="selectable-row" onclick="selectMagicStrength('典位')">
+                <td>典位</td>
+                <td>Fes</td>
+                <td>独创术式构建</td>
+                <td>时钟塔精英讲师</td>
+              </tr>
+              <tr class="selectable-row" onclick="selectMagicStrength('祭位')">
+                <td>祭位</td>
+                <td>Brand</td>
+                <td>跨学科神秘研究</td>
+                <td>封印指定执行者候补</td>
+              </tr>
+              <tr class="selectable-row" onclick="selectMagicStrength('色位')">
+                <td>色位</td>
+                <td>Grand</td>
+                <td>根源接触尝试</td>
+                <td>冠位候选人</td>
+              </tr>
+              <tr class="selectable-row" onclick="selectMagicStrength('冠位')">
+                <td>冠位</td>
+                <td>Crown</td>
+                <td>魔法（True Magic）碎片解析</td>
+                <td>人理存续保障机构核心成员</td>
+              </tr>
+              <tr class="selectable-row" onclick="selectMagicStrength('冠位·极')">
+                <td>冠位·极</td>
+                <td>EX Crown</td>
+                <td>固有结界/拟似魔法展开</td>
+                <td>对抗Beast级威胁的传奇魔术师</td>
+              </tr>
+              <tr class="selectable-row" onclick="selectMagicStrength('封印指定')">
+                <td>封印指定</td>
+                <td>Sealed</td>
+                <td>禁忌术式永久固化</td>
+                <td>游离于协会外的"危险存在"</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="navigation">
+        <button class="nav-button" disabled>上一步</button>
+        <button class="nav-button" onclick="nextStage()">下一步</button>
+      </div>
+    </div>
+
+    <!-- Stage 2: Magic Equipment Selection -->
+    <div id="stage2" class="stage">
+      <h2>第二阶段：魔术礼装选择</h2>
+
+      <div class="box-container">
+        <div class="box-header">选择魔术礼装</div>
+        <div class="box-content">
+          <div class="option-grid">
+            <div class="option-button" data-value="mystic_code_chaldea" onclick="selectMysticCode(this, '魔术礼装·迦勒底')">
+              魔术礼装·迦勒底</div>
+            <div class="option-button" data-value="mystic_code_chaldea_combat"
+              onclick="selectMysticCode(this, '魔术礼装·迦勒底战斗服')">
+              魔术礼装·迦勒底战斗服</div>
+            <div class="option-button" data-value="mystic_code_association"
+              onclick="selectMysticCode(this, '魔术礼装·魔术协会制服')">
+              魔术礼装·魔术协会制服</div>
+            <div class="option-button" data-value="mystic_code_atlas" onclick="selectMysticCode(this, '魔术礼装·阿特拉斯院制服')">
+              魔术礼装·阿特拉斯院制服</div>
+            <div class="option-button" data-value="golden_celebration" onclick="selectMysticCode(this, '金色庆典')">
+              金色庆典
+            </div>
+            <div class="option-button" data-value="bright_summer" onclick="selectMysticCode(this, '明亮夏日')">
+              明亮夏日</div>
+            <div class="option-button" data-value="memories_of_lunar_sea" onclick="selectMysticCode(this, '月之海的记忆')">
+              月之海的记忆</div>
+            <div class="option-button" data-value="polar_chaldea" onclick="selectMysticCode(this, '极地用制服')">
+              极地用制服</div>
+            <div class="option-button" data-value="tropical_summer" onclick="selectMysticCode(this, '热带夏日')">
+              热带夏日</div>
+            <div class="option-button" data-value="fifth_true_element" onclick="selectMysticCode(this, '第五真说要素环境用制服')">
+              第五真说要素环境用制服</div>
+            <div class="option-button" data-value="explorer_uniform" onclick="selectMysticCode(this, '童子军服')">
+              童子军服</div>
+            <div class="option-button" data-value="winter_casual" onclick="selectMysticCode(this, '冬日便装')">
+              冬日便装</div>
+            <!-- Custom Mystic Code Button -->
+            <div class="option-button custom-option" data-value="custom_mystic_code"
+              onclick="showCustomMysticCodeDialog()">
+              <i class="fas fa-plus"></i> 自定义魔术礼装
+            </div>
+          </div>
+
+          <!-- Custom Mystic Code Dialog -->
+          <div id="customMysticCodeDialog" class="custom-dialog">
+            <div class="dialog-content">
+              <span class="close-button" onclick="closeCustomDialog()">&times;</span>
+              <h3>创建自定义魔术礼装</h3>
+              <div class="form-group">
+                <label for="customMysticCodeName">名称:</label>
+                <input type="text" id="customMysticCodeName" placeholder="例如: 自创魔术礼装">
+              </div>
+              <div class="form-group">
+                <label for="customMysticCodeAppearance">外观描述:</label>
+                <textarea id="customMysticCodeAppearance" placeholder="描述这套魔术礼装的外观特征"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="customMysticCodeIntro">介绍:</label>
+                <textarea id="customMysticCodeIntro" placeholder="这套魔术礼装的背景介绍"></textarea>
+              </div>
+              <div class="skill-section">
+                <h4>技能 (最多3个)</h4>
+                <div class="skill-inputs">
+                  <div class="skill-input">
+                    <input type="text" placeholder="技能名称" class="skill-name">
+                    <input type="text" placeholder="技能效果" class="skill-effect">
+                  </div>
+                  <div class="skill-input">
+                    <input type="text" placeholder="技能名称" class="skill-name">
+                    <input type="text" placeholder="技能效果" class="skill-effect">
+                  </div>
+                  <div class="skill-input">
+                    <input type="text" placeholder="技能名称" class="skill-name">
+                    <input type="text" placeholder="技能效果" class="skill-effect">
+                  </div>
+                </div>
+              </div>
+              <div class="dialog-buttons">
+                <button onclick="saveCustomMysticCode()">保存</button>
+                <button onclick="closeCustomDialog()">取消</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="mysticCodeDetails" class="mystic-code-detail"></div>
+        </div>
+      </div>
+
+      <!-- 新增特殊技能选择区域 -->
+      <div class="box-container">
+        <div class="box-header">选择特殊技能</div>
+        <div class="box-content">
+          <div class="option-grid">
+            <div class="option-button" data-value="魔偶" onclick="selectSpecialSkill(this)">魔偶</div>
+            <div class="option-button" data-value="印笼技能" onclick="selectSpecialSkill(this)">印笼技能</div>
+            <div class="option-button" data-value="战神阿瑞斯 ARES" onclick="selectSpecialSkill(this)">战神阿瑞斯 ARES</div>
+            <div class="option-button" data-value="GOLDEN 大具足" onclick="selectSpecialSkill(this)">GOLDEN 大具足</div>
+            <div class="option-button" data-value="神之巴祖卡" onclick="selectSpecialSkill(this)">神之巴祖卡</div>
+            <div class="option-button" data-value="对兽魔术" onclick="selectSpecialSkill(this)">对兽魔术</div>
+            <div class="option-button" data-value="欲望共振" onclick="selectSpecialSkill(this)">欲望共振</div>
+            <div class="option-button" data-value="情感回路" onclick="selectSpecialSkill(this)">情感回路</div>
+            <div class="option-button" data-value="恐惧之刃" onclick="selectSpecialSkill(this)">恐惧之刃</div>
+            <div class="option-button" data-value="机械欲望引擎" onclick="selectSpecialSkill(this)">机械欲望引擎</div>
+            <div class="option-button" data-value="圣欲转化" onclick="selectSpecialSkill(this)">圣欲转化</div>
+            <div class="option-button" data-value="战意燃烧" onclick="selectSpecialSkill(this)">战意燃烧</div>
+            <div class="option-button" data-value="星欲映射" onclick="selectSpecialSkill(this)">星欲映射</div>
+            <!-- 添加新的特殊技能按钮 -->
+            <div class="option-button" data-value="大帝衣" onclick="selectSpecialSkill(this)">大帝衣</div>
+            <div class="option-button" data-value="吸引力" onclick="selectSpecialSkill(this)">吸引力</div>
+            <div class="option-button" data-value="大炮技能" onclick="selectSpecialSkill(this)">大炮技能</div>
+            <div class="option-button" data-value="希翁技能" onclick="selectSpecialSkill(this)">希翁技能</div>
+            <div class="option-button" data-value="徽章技能" onclick="selectSpecialSkill(this)">徽章技能</div>
+            <!-- 自定义特殊技能按钮 -->
+            <div class="option-button custom-option" data-value="custom_special_skill"
+              onclick="showCustomSpecialSkillDialog()">
+              <i class="fas fa-plus"></i> 自定义特殊技能
+            </div>
+          </div>
+          <div id="specialSkillDetails" class="mystic-code-detail"></div>
+        </div>
+      </div>
+
+      <div class="navigation">
+        <button class="nav-button" onclick="prevStage()">上一步</button>
+        <button class="nav-button" onclick="nextStage()">下一步</button>
+      </div>
+    </div>
+
+    <!-- Stage 3: Player Traits Selection -->
+    <div id="stage3" class="stage">
+      <h2>第三阶段：个人特质选择</h2>
+
+      <div class="box-container">
+        <div class="box-header">选择个人特质（可多选）</div>
+        <div class="box-content">
+          <div class="option-grid">
+            <div class="option-button" data-value="lustful_curse" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">淫神诅咒</span>
+              <span class="trait-desc">所接触到的东西都会色情化</span>
+            </div>
+            <div class="option-button" data-value="fragile_cauldron" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">易碎鼎炉</span>
+              <span class="trait-desc">看起来娇弱但又好吃</span>
+            </div>
+            <div class="option-button" data-value="wish_fulfillment" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">心想事成</span>
+              <span class="trait-desc">拥有心想事成的能力</span>
+            </div>
+            <div class="option-button" data-value="hypnosis_master" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">催眠大师</span>
+              <span class="trait-desc">可以催眠普通人，甚至从者</span>
+            </div>
+            <div class="option-button" data-value="sex_king" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">性爱之王</span>
+              <span class="trait-desc">在性爱方面拥有无与伦比的技巧</span>
+            </div>
+            <div class="option-button" data-value="seduction_king" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">诱惑之王</span>
+              <span class="trait-desc">谁都想跟<user>做爱</span>
+            </div>
+            <div class="option-button" data-value="lady_training" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">淑女修行</span>
+              <span class="trait-desc">强制戴着外表美丽的调教用具</span>
+            </div>
+            <div class="option-button" data-value="training_master" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">调教大师</span>
+              <span class="trait-desc">可以轻松的使人恶堕</span>
+            </div>
+            <!-- 新增正面特质 -->
+            <div class="option-button" data-value="grail_vessel" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">圣杯容器</span>
+              <span class="trait-desc">体内寄宿着微弱的圣杯之力，吸引从者靠近</span>
+            </div>
+            <div class="option-button" data-value="mana_battery" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">魔力电池</span>
+              <span class="trait-desc">拥有异常充沛的魔力，可供从者无限制使用</span>
+            </div>
+            <div class="option-button" data-value="beast_tamer" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">兽性驯服者</span>
+              <span class="trait-desc">能与兽类特质的从者建立深层羁绊</span>
+            </div>
+            <div class="option-button" data-value="curse_blood" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">诅咒之血</span>
+              <span class="trait-desc">血液带有魔性，能腐蚀敌人或强化盟友</span>
+            </div>
+            <div class="option-button" data-value="paradox_mage" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">悖论魔术师</span>
+              <span class="trait-desc">魔术回路异常，能逆转因果短暂时间</span>
+            </div>
+            <div class="option-button" data-value="divine_favor" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">神明恩宠</span>
+              <span class="trait-desc">受到某位神灵的眷顾，战斗中幸运值极高</span>
+            </div>
+
+            <!-- 情欲相关特质 -->
+            <div class="option-button" data-value="lewd_grail" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">淫欲圣杯</span>
+              <span class="trait-desc">圣杯之力转化为情欲，能激发从者的肉体渴望</span>
+            </div>
+            <div class="option-button" data-value="mana_seductress" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">魔力诱惑者</span>
+              <span class="trait-desc">魔力带有媚惑效果，削弱敌人的意志</span>
+            </div>
+            <div class="option-button" data-value="succubus_lineage" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">魅魔血统</span>
+              <span class="trait-desc">天生具备魅魔特性，能吸取生命力或魔力</span>
+            </div>
+            <div class="option-button" data-value="forbidden_touch" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">禁忌之触</span>
+              <span class="trait-desc">触碰他人时会引发强烈的快感，甚至从者也不例外</span>
+            </div>
+            <div class="option-button" data-value="lustful_aura" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">色欲光环</span>
+              <span class="trait-desc">周围的人会不由自主地产生情欲幻想</span>
+            </div>
+            <div class="option-button" data-value="servant_breeder" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">从者孕育者</span>
+              <span class="trait-desc">与从者的亲密行为可能孕育出新的力量</span>
+            </div>
+            <div class="option-button" data-value="tantric_mage" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">密宗魔术师</span>
+              <span class="trait-desc">通过肉体交融提升魔力和从者力量</span>
+            </div>
+            <div class="option-button" data-value="erotic_phantasm" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">色情宝具</span>
+              <span class="trait-desc">能将敌人的宝具效果转化为情欲冲击</span>
+            </div>
+            <div class="option-button" data-value="slave_collar" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">奴隶项圈</span>
+              <span class="trait-desc">能将普通人或弱小从者变为听命的性仆</span>
+            </div>
+            <div class="option-button" data-value="lustful_summon" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">淫欲召唤</span>
+              <span class="trait-desc">召唤的从者会带有强烈的肉欲倾向</span>
+            </div>
+            <div class="option-button" data-value="orgasmic_core" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">极乐核心</span>
+              <span class="trait-desc">灵核异常，能通过快感强化自身与从者</span>
+            </div>
+
+            <!-- 被动特质（被支配） -->
+            <div class="option-button" data-value="bound_servant" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">被缚之仆</span>
+              <span class="trait-desc">被从者以魔术锁链束缚，身体完全受其支配</span>
+            </div>
+            <div class="option-button" data-value="sacrificial_lamb" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">祭品羔羊</span>
+              <span class="trait-desc">被选为从者或神灵的欲望祭品，无法反抗</span>
+            </div>
+            <div class="option-button" data-value="lewd_vessel" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">淫荡容器</span>
+              <span class="trait-desc">身体被改造为承载从者情欲的容器，动弹不得</span>
+            </div>
+            <div class="option-button" data-value="chained_caress" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">锁链爱抚</span>
+              <span class="trait-desc">被魔力锁链缠绕，每动一下都带来羞耻快感</span>
+            </div>
+            <div class="option-button" data-value="servant_toy" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">从者玩物</span>
+              <span class="trait-desc">被从者视为调教对象，意志逐渐崩坏</span>
+            </div>
+            <div class="option-button" data-value="mana_drain" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">魔力榨取</span>
+              <span class="trait-desc">魔力被从者强行吸取，每次都伴随着色情折磨</span>
+            </div>
+            <div class="option-button" data-value="divine_pet" onclick="selectOption('playerTrait', this)">
+              <span class="trait-name">神灵宠物</span>
+              <span class="trait-desc">被神性从者收为禁脔，永远侍奉其欲望</span>
+            </div>
+
+            <div class="option-button" data-value="none" onclick="selectOption('playerTrait', this)">无特殊特质</div>
+            <div class="option-button" data-value="custom" onclick="showCustomInput('playerTrait')">自定义特质</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="customPlayerTraitInput" style="display: none;" class="box-container">
+        <div class="box-header">自定义特质</div>
+        <div class="box-content">
+          <div style="margin-bottom: 10px;">
+            <label>特质名称:</label>
+            <input type="text" id="customPlayerTraitName" style="width: 100%; padding: 5px; margin-top: 5px;">
+          </div>
+          <div style="margin-bottom: 10px;">
+            <label>特质描述:</label>
+            <textarea id="customPlayerTraitDesc"
+              style="width: 100%; height: 80px; padding: 5px; margin-top: 5px;"></textarea>
+          </div>
+          <button class="nav-button" onclick="saveCustomInput('playerTrait')">保存特质</button>
+        </div>
+      </div>
+
+      <div class="navigation">
+        <button class="nav-button" onclick="previousStage()">上一步</button>
+        <button class="nav-button" onclick="nextStage()">下一步</button>
+      </div>
+    </div>
+
+    <!-- Stage 4: Noble Phantasm Selection -->
+    <div id="stage4" class="stage">
+      <h2>第四阶段：宝具选择</h2>
+
+      <div class="box-container">
+        <div class="box-header">选择宝具</div>
+        <div class="box-content">
+          <!-- 宝具1 -->
+          <div class="noble-phantasm-card">
+            <input type="radio" name="noblePhantasm" id="np1" value="抑止封杀·堕兽毒牙"
+              onclick="selectNoblePhantasm(this.value)">
+            <label for="np1" class="noble-phantasm-title">【抑止封杀·堕兽毒牙】</label>
+            <div class="noble-phantasm-properties">
+              <span class="noble-phantasm-property">等级：A</span>
+              <span class="noble-phantasm-property">类型：对【抑止力】宝具</span>
+            </div>
+            <p>效果：凝集世间男女欢愉之时淫声浪语，汇聚为至阴至阳之能，化作穿透万物的"欲望毒牙"。宝具发动时，万千男女欢爱幻象环绕，令敌方沉溺其中，心神失守。敌方承受宝具伤害同时，浑身热流涌动，痛与乐并生，犹如经历绝顶之欢。
+            </p>
+            <p>背景：若君主因对世间欲海之深沉而心神往之，则此宝具将化为极乐的象征，能使敌方在销魂蚀骨之时，肉体精华尽失。此宝具发动时，周围空气如春帐之内，沁人心脾，令人春情难禁。</p>
+          </div>
+
+          <!-- 宝具2 -->
+          <div class="noble-phantasm-card">
+            <input type="radio" name="noblePhantasm" id="np2" value="不被知晓的遥远之星"
+              onclick="selectNoblePhantasm(this.value)">
+            <label for="np2" class="noble-phantasm-title">【不被知晓的遥远之星】</label>
+            <div class="noble-phantasm-properties">
+              <span class="noble-phantasm-property">等级：A~EX</span>
+              <span class="noble-phantasm-property">类型：对存在宝具</span>
+            </div>
+            <p>效果：<user>
+                浑身绽放绮丽光华，如牡丹初绽，摇曳生姿。清辉万道，使对方神魂摇曳，情动不能自已。此宝具化实为虚，化虚为实，将<user>
+                  体内若隐若现的"春意"释放，使敌方如醉春风，酥软无力。每逢宝具展开，周围空气中弥漫着兰麝之香，令人欲念丛生。
+            </p>
+            <p>特色：宝具形似笙歌起处，百花争艳，其中蕴含万般柔情，胜却人间无数。每当宝具发动，<user>身上散发出如兰似麝之气息，令人欲火焚身，难以自持。<user>
+                  轻吟："此身若桃花，为君独绽放"，令敌方神魂颠倒，甘愿臣服。</p>
+          </div>
+
+          <!-- 宝具3 -->
+          <div class="noble-phantasm-card">
+            <input type="radio" name="noblePhantasm" id="np3" value="回应吧，穿越遥远的彼方"
+              onclick="selectNoblePhantasm(this.value)">
+            <label for="np3" class="noble-phantasm-title">【回应吧，穿越遥远的彼方】</label>
+            <div class="noble-phantasm-properties">
+              <span class="noble-phantasm-property">等级：EX</span>
+              <span class="noble-phantasm-property">类型：对世界宝具</span>
+            </div>
+            <p>效果：<user>裸裎其身，犹如春江水暖，樱花初绽，体表泛起如玉般润泽光华。<user>
+                  情动之际，体内阴阳之气交融，贯通六脉，引得诸多从者心神共鸣。当宝具展开，周围空气化作春水，使人如置温泉，浑身酥麻，欲火难耐。</p>
+            <p>
+              机制：<user>须解衣宽带，展露玉体，心中思念与其鱼水之欢的从者。心神合一之时，<user>体内真气上涌，玉茎挺立（若为女性则玉门含露），引动天地灵气，召唤心系之人现世。此时<user>
+                    神魂摇曳，丹田气涌，如登极乐，酥软无力，足令敌方望之心神俱失。
+            </p>
+          </div>
+
+          <!-- 宝具4 -->
+          <div class="noble-phantasm-card">
+            <input type="radio" name="noblePhantasm" id="np4" value="磷火噬却·终末黎明"
+              onclick="selectNoblePhantasm(this.value)">
+            <label for="np4" class="noble-phantasm-title">【磷火噬却·终末黎明】</label>
+            <div class="noble-phantasm-properties">
+              <span class="noble-phantasm-property">等级：EX</span>
+              <span class="noble-phantasm-property">类型：对文明宝具</span>
+            </div>
+            <p>
+              效果：<user>
+                身化白玉之躯，肌肤胜雪，引天地阴阳二气交合，生出青白色"磷火"，此火非烧肉身，而专燃情欲。敌方为此火所染，不觉裸裎其体，如饥似渴，难耐寂寞。男子阳物挺拔，如玉柱擎天；女子玉门流溢，若桃花带雨，不得云雨之欢则会体内灼热难耐，七窍流血而亡。
+            </p>
+            <p>设定依据：此宝具发动时，<user>
+                先浑身泛起红晕，春情难抑，而后化作纯白之兽，浑身散发淫靡之气。周围空气化作莲池春水，令人如堕温柔乡，欲罢不能。百丈之内，生灵受其影响，皆欲行鱼水之欢，云雨之事，不得满足则焚身而亡。
+            </p>
+          </div>
+
+          <!-- 宝具5 -->
+          <div class="noble-phantasm-card">
+            <input type="radio" name="noblePhantasm" id="np5" value="随机对城宝具" onclick="selectNoblePhantasm(this.value)">
+            <label for="np5" class="noble-phantasm-title">随机对城宝具</label>
+            <div class="noble-phantasm-properties">
+              <span class="noble-phantasm-property">类型：对城宝具</span>
+            </div>
+            <p>系统将根据宝具格式随机生成一个对城级别的宝具。</p>
+          </div>
+
+          <!-- 宝具6 -->
+          <div class="noble-phantasm-card">
+            <input type="radio" name="noblePhantasm" id="np6" value="完全随机宝具" onclick="selectNoblePhantasm(this.value)">
+            <label for="np6" class="noble-phantasm-title">完全随机宝具</label>
+            <p>系统将根据宝具格式完全随机生成一个宝具。</p>
+          </div>
+
+          <!-- 宝具7 -->
+          <div class="noble-phantasm-card">
+            <input type="radio" name="noblePhantasm" id="np7" value="custom" onclick="showCustomInput('noblePhantasm')">
+            <label for="np7" class="noble-phantasm-title">自定义宝具</label>
+            <p>您可以自行定义宝具的名称、等级、类型与效果。</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="customNoblePhantasmInput" style="display: none;" class="box-container">
+        <div class="box-header">自定义宝具</div>
+        <div class="box-content">
+          <div style="margin-bottom: 10px;">
+            <label>宝具名称:</label>
+            <input type="text" id="customNoblePhantasmName" style="width: 100%; padding: 5px; margin-top: 5px;">
+          </div>
+          <div style="margin-bottom: 10px;">
+            <label>宝具等级:</label>
+            <select id="customNoblePhantasmRank" style="width: 100%; padding: 5px; margin-top: 5px;">
+              <option value="E">E</option>
+              <option value="D">D</option>
+              <option value="C">C</option>
+              <option value="B">B</option>
+              <option value="A">A</option>
+              <option value="EX">EX</option>
+            </select>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <label>宝具类型:</label>
+            <select id="customNoblePhantasmType" style="width: 100%; padding: 5px; margin-top: 5px;">
+              <option value="对人宝具">对人宝具</option>
+              <option value="对军宝具">对军宝具</option>
+              <option value="对城宝具">对城宝具</option>
+              <option value="对国宝具">对国宝具</option>
+              <option value="对界宝具">对界宝具</option>
+              <option value="对神宝具">对神宝具</option>
+              <option value="结界宝具">结界宝具</option>
+              <option value="固有结界">固有结界</option>
+              <option value="自定义">自定义类型</option>
+            </select>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <label>宝具描述:</label>
+            <textarea id="customNoblePhantasmDesc"
+              style="width: 100%; height: 80px; padding: 5px; margin-top: 5px;"></textarea>
+          </div>
+          <button class="nav-button" onclick="saveCustomInput('noblePhantasm')">保存宝具</button>
+        </div>
+      </div>
+
+      <div class="navigation">
+        <button class="nav-button" onclick="previousStage()">上一步</button>
+        <button class="nav-button" onclick="nextStage()">下一步</button>
+      </div>
+    </div>
+
+    <!-- Stage 5: Story Start Point -->
+    <div id="stage5" class="stage">
+      <h2>第五阶段：剧情开局</h2>
+
+      <div class="box-container">
+        <div class="box-header">选择开局点</div>
+        <div class="box-content">
+          <div class="option-grid">
+            <div class="option-button" data-value="fuyuki_normal" onclick="selectOption('startPoint', this)">
+              燃烧污染都市 冬木（对魔术一无所知，没有关于两位女神的记忆）</div>
+            <div class="option-button" data-value="fuyuki_mage" onclick="selectOption('startPoint', this)">
+              燃烧污染都市 冬木（本地魔术师，没有关于两位女神的记忆，但有些许印象）</div>
+            <div class="option-button" data-value="fuyuki_chaldea" onclick="selectOption('startPoint', this)">
+              燃烧污染都市 冬木（迦勒底成员）</div>
+            <div class="option-button" data-value="orleans" onclick="selectOption('startPoint', this)">
+              邪龙百年战争 奥尔良</div>
+            <div class="option-button" data-value="septem" onclick="selectOption('startPoint', this)">
+              永续疯狂帝国 七丘之城</div>
+            <div class="option-button" data-value="okeanos" onclick="selectOption('startPoint', this)">
+              封锁终局四海 俄刻刻阿诺斯</div>
+            <div class="option-button" data-value="london" onclick="selectOption('startPoint', this)">
+              死界魔雾都市 伦敦</div>
+            <div class="option-button" data-value="america" onclick="selectOption('startPoint', this)">
+              北美神话大战 合众为一</div>
+            <div class="option-button" data-value="camelot" onclick="selectOption('startPoint', this)">
+              神圣圆桌领域 卡美洛</div>
+            <div class="option-button" data-value="babylonia" onclick="selectOption('startPoint', this)">
+              绝对魔兽战线 巴比伦尼亚</div>
+            <div class="option-button" data-value="solomon" onclick="selectOption('startPoint', this)">
+              冠位时间神殿 所罗门</div>
+            <div class="option-button" data-value="shinjuku" onclick="selectOption('startPoint', this)">
+              恶性隔绝魔境 新宿</div>
+            <div class="option-button" data-value="agartha" onclick="selectOption('startPoint', this)">
+              传承地底世界 雅戈泰</div>
+            <div class="option-button" data-value="shimosa" onclick="selectOption('startPoint', this)">
+              户山血河舞台 下总国</div>
+            <div class="option-button" data-value="salem" onclick="selectOption('startPoint', this)">
+              禁忌降临庭园 塞勒姆</div>
+            <div class="option-button" data-value="lostbelt1" onclick="selectOption('startPoint', this)">
+              永久冻土帝国 阿纳斯塔西娅</div>
+            <div class="option-button" data-value="lostbelt2" onclick="selectOption('startPoint', this)">
+              无间冰焰世纪 诸神黄昏</div>
+            <div class="option-button" data-value="lostbelt3" onclick="selectOption('startPoint', this)">
+              人智统合真国 SIN</div>
+            <div class="option-button" data-value="lostbelt4" onclick="selectOption('startPoint', this)">
+              创世灭亡轮回 由伽·刹多罗</div>
+            <div class="option-button" data-value="lostbelt5_1" onclick="selectOption('startPoint', this)">
+              神代巨神海洋 亚特兰蒂斯</div>
+            <div class="option-button" data-value="lostbelt5_2" onclick="selectOption('startPoint', this)">
+              星间都市山脉 奥林波斯</div>
+            <div class="option-button" data-value="heian_kyo" onclick="selectOption('startPoint', this)">
+              地狱界曼荼罗 平安京</div>
+            <div class="option-button" data-value="lostbelt6" onclick="selectOption('startPoint', this)">
+              妖精圆桌领域 阿瓦隆·勒·菲</div>
+            <div class="option-button" data-value="tunguska" onclick="selectOption('startPoint', this)">
+              非灵长生存圈 通古斯卡·圣域</div>
+            <div class="option-button" data-value="traum" onclick="selectOption('startPoint', this)">
+              死想显现界域 Traum</div>
+            <div class="option-button" data-value="lostbelt7" onclick="selectOption('startPoint', this)">
+              黄金树海纪行 纳维·米克特兰</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="navigation">
+        <button class="nav-button" onclick="previousStage()">上一步</button>
+        <button class="nav-button" onclick="nextStage()">下一步</button>
+      </div>
+    </div>
+
+    <!-- Stage 6: Summary -->
+    <div id="stage6" class="stage">
+      <h2>第六阶段：选择确认</h2>
+
+      <div class="box-container">
+        <div class="box-header">角色设定摘要</div>
+        <div class="box-content">
+          <div class="summary-container" id="summaryContainer">
+            <!-- Summary will be filled by JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <div class="navigation">
+        <button class="nav-button" onclick="previousStage()">返回修改</button>
+        <button class="nav-button" onclick="confirmSelections()">确认开始游戏</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 添加自定义特殊技能对话框 -->
+  <div id="customSpecialSkillDialog"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 1000;">
+    <div
+      style="position: relative; width: 90%; max-width: 600px; margin: 50px auto; background-color: #2a2a2a; padding: 20px; border-radius: 4px;">
+      <h3 style="margin-top: 0;">创建自定义特殊技能</h3>
+      <button onclick="closeCustomSpecialSkillDialog()"
+        style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: white; font-size: 20px; cursor: pointer;">&times;</button>
+
+      <div style="margin-bottom: 15px;">
+        <label for="customSpecialSkillName">技能名称:</label>
+        <input type="text" id="customSpecialSkillName"
+          style="width: 100%; padding: 8px; box-sizing: border-box; margin-top: 5px;">
+      </div>
+
+      <div style="margin-bottom: 15px;">
+        <label for="customSpecialSkillDescription">技能描述:</label>
+        <textarea id="customSpecialSkillDescription"
+          style="width: 100%; height: 60px; padding: 8px; box-sizing: border-box; margin-top: 5px;"></textarea>
+      </div>
+
+      <div style="margin-bottom: 15px;">
+        <label for="customSpecialSkillEffect1">技能效果1:</label>
+        <input type="text" id="customSpecialSkillEffect1"
+          style="width: 100%; padding: 8px; box-sizing: border-box; margin-top: 5px;" placeholder="如：提升全体从者攻击力30%">
+      </div>
+
+      <div style="margin-bottom: 15px;">
+        <label for="customSpecialSkillEffect2">技能效果2:</label>
+        <input type="text" id="customSpecialSkillEffect2"
+          style="width: 100%; padding: 8px; box-sizing: border-box; margin-top: 5px;" placeholder="如：赋予指定从者无敌（1次）">
+      </div>
+
+      <button onclick="saveCustomSpecialSkill()"
+        style="background-color: #0078d7; color: white; border: none; padding: 10px 20px; border-radius: 2px; cursor: pointer;">确定</button>
+    </div>
+  </div>
+
+  <script>
+    // 魔术礼装数据
+    const mysticCodesData = {
+      "魔术礼装·迦勒底": {
+        "appearance": "深蓝色中性制服，配白色衬衣与红色领带，腰部有银色金属腰带，袖口印有迦勒底徽记",
+        "introduction": "被分配给人理续存保障机构·迦勒底的<user>的魔术礼装",
+        "skills": [
+          { "名称": "应急处置", "效果": "己方单体HP大回复（1000-3000）" },
+          { "名称": "瞬间强化", "效果": "己方单体攻击力极大提升（30%-50%，1回合）" },
+          { "名称": "紧急回避", "效果": "赋予己方单体回避状态（1回合）" }
+        ]
+      },
+      "魔术礼装·迦勒底战斗服": {
+        "appearance": "黑色紧身战斗服，肩部与腰部配有红色装甲带，手腕处有战术显示屏",
+        "introduction": "为承受激烈战斗开发的魔术礼装，技术部特制强化版本",
+        "skills": [
+          { "名称": "全体强化", "效果": "己方全体攻击力提升（20%-30%，1回合）" },
+          { "名称": "Gandr", "效果": "赋予敌方单体眩晕状态（1回合）" },
+          { "名称": "Order Change", "效果": "战斗成员与替补成员交换" }
+        ]
+      },
+      "魔术礼装·魔术协会制服": {
+        "appearance": "白色长款风衣式制服，金色纽扣与深蓝镶边，领口有魔术协会纹章",
+        "introduction": "魔术协会时钟塔优秀学生专用礼装",
+        "skills": [
+          { "名称": "全体回复", "效果": "己方全体HP回复（800-2800）" },
+          { "名称": "灵子转让", "效果": "己方单体NP增加20%" },
+          { "名称": "洗牌", "效果": "指令卡重新抽取" }
+        ]
+      },
+      "魔术礼装·阿特拉斯院制服": {
+        "appearance": "黑色兜帽长袍，胸前有金色天体仪装饰，袖口镶嵌星象符文",
+        "introduction": "阿特拉斯院试验型战斗礼装",
+        "skills": [
+          { "名称": "欧西里斯之尘", "效果": "赋予己方单体无敌状态（1回合）" },
+          { "名称": "伊西斯之雨", "效果": "解除己方单体弱化状态" },
+          { "名称": "梅杰德之眼", "效果": "己方单体技能冷却减少2回合" }
+        ]
+      },
+      "金色庆典": {
+        "appearance": "金色骑士风格礼服，肩部有蓝色披风，腰部配剑鞘装饰",
+        "introduction": "模仿骑士王服装制作的华丽礼装",
+        "skills": [
+          { "名称": "魔力放出", "效果": "己方单体Buster性能超幅提升（40%-60%，1回合）" },
+          { "名称": "对胜利的确信", "效果": "获得暴击星（10-20）" },
+          { "名称": "骑士的誓言", "效果": "赋予己方单体毅力状态（2000-4000HP）" }
+        ]
+      },
+      "明亮夏日": {
+        "appearance": "蓝白条纹泳装搭配透明沙滩巾，腰部系有贝壳装饰",
+        "introduction": "达芬奇工房特制热带战斗泳装，具备战术功能",
+        "skills": [
+          { "名称": "海洋之风", "效果": "全体Quick性能提升20%-30%（1回合）" },
+          { "名称": "珊瑚冲击", "效果": "赋予单体无敌贯通（1回合）" },
+          { "名称": "潮汐治愈", "效果": "单体HP回复1000-3000+10%NP" }
+        ]
+      },
+      "月之海的记忆": {
+        "appearance": "白色水手服配红色领结，裙摆有星月刺绣",
+        "introduction": "平行世界学园风礼装，蓝卡体系特化型",
+        "skills": [
+          { "名称": "月光增幅", "效果": "单体Arts性能提升30%-50%（1回合）" },
+          { "名称": "星尘闪耀", "效果": "提升单体50%-100%暴击发生率（1回合）" },
+          { "名称": "以太封锁", "效果": "赋予敌方单体强化无效（1次）" }
+        ]
+      },
+      "极地用制服": {
+        "appearance": "白色防寒服配热能核心装置，领口有极光纹路",
+        "introduction": "第七特异点专用御寒装备，群体续航特化",
+        "skills": [
+          { "名称": "寒冰护盾", "效果": "全体获得伤害减免500-1000（3回合）" },
+          { "名称": "热能充能", "效果": "自身NP增加20%" },
+          { "名称": "极光复苏", "效果": "全体HP回复1500-2500" }
+        ]
+      },
+      "热带夏日": {
+        "appearance": "夏威夷衫配贝壳项链，短裤印有棕榈树图案",
+        "introduction": "蓝卡队特攻礼装，附带NP充能功能",
+        "skills": [
+          { "名称": "碧浪魔放", "效果": "单体Arts性能提升30%-50%（1回合）" },
+          { "名称": "珊瑚宝威", "效果": "提升单体20%-30%宝具威力（1回合）" },
+          { "名称": "潮涌充能", "效果": "全体NP增加10%" }
+        ]
+      },
+      "第五真说要素环境用制服": {
+        "appearance": "黑色符文装甲镶嵌神代文字，肩部有悬浮能量核心",
+        "introduction": "冠位指定专用礼装，神代魔术复合型",
+        "skills": [
+          { "名称": "真说解放", "效果": "全体攻击力提升30%-50%（1回合）" },
+          { "名称": "要素重构", "效果": "解除全体弱化状态+HP回复1000-2000" },
+          { "名称": "终局演算", "效果": "减少敌方全体1回合技能冷却" }
+        ]
+      },
+      "童子军服": {
+        "appearance": "卡其色短裤配探险背包，帽子别着指南针徽章",
+        "introduction": "户外探险特化型礼装，暴击体系辅助",
+        "skills": [
+          { "名称": "荒野求生", "效果": "获得15-30暴击星+集星率提升300%-500%（1回合）" },
+          { "名称": "陷阱解除", "效果": "解除全体弱化状态" },
+          { "名称": "紧急补给", "效果": "全体HP回复800-1500" }
+        ]
+      },
+      "冬日便装": {
+        "appearance": "白色毛领大衣配红色腰带，袖口有雪花晶片装饰",
+        "introduction": "首套群体充能礼装，双色魔放复合型",
+        "skills": [
+          { "名称": "双色增幅", "效果": "全体绿&蓝卡性能提升10%-20%（1回合）" },
+          { "名称": "雪原疾行", "效果": "赋予单体回避状态（3回合）+15暴击星" },
+          { "名称": "暖炉复苏", "效果": "全体HP回复1000-2000+10%NP" }
+        ]
+      }
+    };
+
+    // 初始化玩家数据对象
+    const playerData = {
+      gender: '',
+      magicStrength: '',
+      playerTrait: '',
+      playerTraits: [], // New array to store multiple traits
+      customPlayerTrait: null,
+      customPlayerTraits: [], // New array to store multiple custom traits
+      mysticCodeId: '',
+      mysticCodeDetails: null,
+      startPoint: '',
+      noblePhantasm: '',
+      customNoblePhantasm: {
+        name: '',
+        type: '',
+        rank: '',
+        classification: '',
+        range: '',
+        maxTarget: '',
+        effect: ''
+      },
+      isPMerlin: false,
+      specialSkill: '',
+      specialSkillDetails: null,
+      selectedServants: [],
+      finalComments: '',
+      commandSeals: 3, // 初始令咒数量为3
+      ishtarAffection: 100, // 伊什塔尔初始好感度为100
+      ishtarTraining: 100, // 伊什塔尔初始调教度为100
+      ereshAffection: 100, // 艾蕾初始好感度为100
+      ereshTraining: 100  // 艾蕾初始调教度为100
+    };
+
+    // Current stage tracking
+    let currentStage = 1;
+    let currentServant = {
+      id: '',
+      name: '',
+      affection: 50,
+      training: 50
+    };
+
+    // Function to select gender option
+    function selectOption(category, element) {
+      const value = element.dataset.value;
+
+      // Special handling for player traits to allow multiple selections
+      if (category === 'playerTrait') {
+        // Toggle selected class on this element
+        element.classList.toggle('selected');
+
+        // If this is the "none" option, clear all other selections
+        if (value === 'none') {
+          if (element.classList.contains('selected')) {
+            // Clear other trait selections if "none" is selected
+            element.parentElement.querySelectorAll('.option-button').forEach(btn => {
+              if (btn !== element && btn.dataset.value !== 'custom') {
+                btn.classList.remove('selected');
+              }
+            });
+            // Reset traits array
+            playerData.playerTraits = ['none'];
+            playerData.playerTrait = 'none'; // For backwards compatibility
+          } else {
+            // If "none" was deselected, clear the traits array
+            playerData.playerTraits = [];
+            playerData.playerTrait = ''; // For backwards compatibility
+          }
+          return;
+        }
+
+        // If this is the "custom" option, just show the custom input and don't affect selections
+        if (value === 'custom') {
+          return; // The click handler will call showCustomInput separately
+        }
+
+        // Remove "none" selection if any trait is selected
+        const noneButton = element.parentElement.querySelector('[data-value="none"]');
+        if (noneButton) {
+          noneButton.classList.remove('selected');
+          // Remove "none" from traits array if present
+          const noneIndex = playerData.playerTraits.indexOf('none');
+          if (noneIndex !== -1) {
+            playerData.playerTraits.splice(noneIndex, 1);
+          }
+        }
+
+        // Add or remove the trait from the array
+        if (element.classList.contains('selected')) {
+          if (!playerData.playerTraits.includes(value)) {
+            playerData.playerTraits.push(value);
+          }
+        } else {
+          const index = playerData.playerTraits.indexOf(value);
+          if (index !== -1) {
+            playerData.playerTraits.splice(index, 1);
+          }
+        }
+
+        // Set the first trait (or empty) as the main trait for backwards compatibility
+        playerData.playerTrait = playerData.playerTraits.length > 0 ? playerData.playerTraits[0] : '';
+      } else {
+        // For other categories, keep the original behavior (single selection)
+        // Clear previous selections in the same category
+        const siblings = element.parentElement.querySelectorAll('.option-button');
+        siblings.forEach(sib => sib.classList.remove('selected'));
+
+        // Add selected class to clicked element
+        element.classList.add('selected');
+
+        // Store selection
+        playerData[category] = value;
+      }
+    }
+
+    // Function to select magic strength
+    function selectMagicStrength(strength) {
+      const rows = document.querySelectorAll('.magic-strength-table tr.selectable-row');
+      rows.forEach(row => {
+        row.style.backgroundColor = '';
+      });
+
+      const selectedRow = Array.from(rows).find(row => row.cells[0].textContent === strength);
+      if (selectedRow) {
+        selectedRow.style.backgroundColor = 'rgba(138, 94, 255, 0.3)';
+        playerData.magicStrength = strength;
+      }
+    }
+
+    // Function to select mystic code
+    function selectMysticCode(element, codeName) {
+      // Clear previous selections
+      const siblings = element.parentElement.querySelectorAll('.option-button');
+      siblings.forEach(sib => sib.classList.remove('selected'));
+
+      // Add selected class to clicked element
+      element.classList.add('selected');
+
+      // Store selection
+      const value = element.dataset.value;
+      playerData.mysticCodeId = value;
+      playerData.mysticCodeDetails = mysticCodesData[codeName];
+
+      // If this is a custom mystic code, store the name
+      if (value === 'custom_mystic_code') {
+        playerData.customMysticCodeName = codeName;
+      }
+
+      // Display mystic code details
+      const detailsDiv = document.getElementById('mysticCodeDetails');
+      detailsDiv.style.display = 'block';
+
+      const code = mysticCodesData[codeName];
+      if (code) {
+        let skillsHtml = '<ul class="skill-list">';
+        code.skills.forEach(skill => {
+          skillsHtml += `<li><strong>${skill.名称}:</strong> ${skill.效果}</li>`;
+        });
+        skillsHtml += '</ul>';
+
+        detailsDiv.innerHTML = `
+          <p><strong>外观:</strong> ${code.appearance}</p>
+          <p><strong>介绍:</strong> ${code.introduction}</p>
+          <p><strong>技能:</strong></p>
+          ${skillsHtml}
+        `;
+      }
+    }
+
+    // Function to select noble phantasm
+    function selectNoblePhantasm(value) {
+      playerData.noblePhantasm = value;
+
+      // If custom option, show the custom input form
+      if (value === 'custom') {
+        document.getElementById('customNoblePhantasmInput').style.display = 'block';
+      } else {
+        document.getElementById('customNoblePhantasmInput').style.display = 'none';
+      }
+    }
+
+    // Function to show custom input field
+    function showCustomInput(type) {
+      if (type === 'noblePhantasm') {
+        document.getElementById('customNoblePhantasmInput').style.display = 'block';
+        // Select the custom radio button
+        document.getElementById('np7').checked = true;
+        playerData.noblePhantasm = 'custom';
+      } else if (type === 'playerTrait') {
+        document.getElementById('customPlayerTraitInput').style.display = 'block';
+        // Find and select the custom trait button
+        const customButton = Array.from(document.querySelectorAll('.option-button')).find(btn =>
+          btn.dataset.value === 'custom' && btn.getAttribute('onclick').includes('playerTrait'));
+        if (customButton) {
+          // Clear other selections
+          const siblings = customButton.parentElement.querySelectorAll('.option-button');
+          siblings.forEach(sib => sib.classList.remove('selected'));
+          // Select custom button
+          customButton.classList.add('selected');
+        }
+        playerData.playerTrait = 'custom';
+      }
+    }
+
+    // Function to save custom input values
+    function saveCustomInput(type) {
+      if (type === 'noblePhantasm') {
+        const name = document.getElementById('customNpName').value;
+        const rank = document.getElementById('customNpRank').value;
+        const classification = document.getElementById('customNpClassification').value;
+        const range = document.getElementById('customNpRange').value;
+        const maxTarget = document.getElementById('customNpMaxTarget').value;
+        const effect = document.getElementById('customNpEffect').value;
+        const npType = document.getElementById('customNpType').value;
+
+        if (!name) {
+          alert('请输入宝具名称');
+          return;
+        }
+
+        // Update player data
+        playerData.noblePhantasm = 'custom';
+        playerData.customNoblePhantasm = {
+          name: name,
+          type: npType,
+          rank: rank,
+          classification: classification,
+          range: range,
+          maxTarget: maxTarget,
+          effect: effect
+        };
+
+        // Hide the custom input form
+        document.getElementById('customNoblePhantasmInput').style.display = 'none';
+      } else if (type === 'playerTrait') {
+        const name = document.getElementById('customPlayerTraitName').value;
+        const description = document.getElementById('customPlayerTraitDesc').value;
+
+        if (!name) {
+          alert('请输入特质名称');
+          return;
+        }
+
+        // Create custom trait object
+        const customTrait = {
+          name: name,
+          description: description
+        };
+
+        // Add to customPlayerTraits array
+        if (!playerData.customPlayerTraits) {
+          playerData.customPlayerTraits = [];
+        }
+        playerData.customPlayerTraits.push(customTrait);
+
+        // Also update the single trait for backwards compatibility
+        playerData.playerTrait = 'custom';
+        playerData.customPlayerTrait = customTrait;
+
+        // Add custom trait to option grid
+        const traitGrid = document.querySelector('#stage3 .option-grid');
+        if (traitGrid) {
+          const customButton = document.createElement('div');
+          customButton.className = 'option-button custom-created selected';
+          customButton.dataset.value = 'custom_' + playerData.customPlayerTraits.length;
+
+          // 使用新的格式显示特质
+          const nameSpan = document.createElement('span');
+          nameSpan.className = 'trait-name';
+          nameSpan.textContent = name;
+
+          const descSpan = document.createElement('span');
+          descSpan.className = 'trait-desc';
+          descSpan.textContent = description || ''; // 如果没有描述则显示空字符串
+
+          customButton.appendChild(nameSpan);
+          customButton.appendChild(descSpan);
+
+          customButton.onclick = function () {
+            this.classList.toggle('selected');
+            // Handle tracking of custom traits in the selection
+            const customIndex = playerData.playerTraits.indexOf(this.dataset.value);
+            if (this.classList.contains('selected') && customIndex === -1) {
+              playerData.playerTraits.push(this.dataset.value);
+            } else if (!this.classList.contains('selected') && customIndex !== -1) {
+              playerData.playerTraits.splice(customIndex, 1);
+            }
+          };
+
+          // Insert before the "custom" button
+          const customTraitButton = traitGrid.querySelector('[data-value="custom"]');
+          traitGrid.insertBefore(customButton, customTraitButton);
+
+          // Add to playerTraits array
+          if (!playerData.playerTraits.includes(customButton.dataset.value)) {
+            playerData.playerTraits.push(customButton.dataset.value);
+          }
+        }
+
+        // Hide custom input form
+        document.getElementById('customPlayerTraitInput').style.display = 'none';
+
+        // Reset input fields for next custom trait
+        document.getElementById('customPlayerTraitName').value = '';
+        document.getElementById('customPlayerTraitDesc').value = '';
+      }
+    }
+
+    // Function to select servant
+    function selectServant(element, servantName) {
+      // Clear previous selections
+      const siblings = element.parentElement.querySelectorAll('.option-button');
+      siblings.forEach(sib => sib.classList.remove('selected'));
+
+      // Add selected class to clicked element
+      element.classList.add('selected');
+
+      // Set current servant
+      currentServant.id = element.dataset.value;
+      currentServant.name = servantName;
+      currentServant.affection = 50;
+      currentServant.training = 50;
+
+      // Update UI
+      document.getElementById('servantName').textContent = servantName;
+      document.getElementById('servantAffection').value = 50;
+      document.getElementById('servantAffectionValue').textContent = '50';
+      document.getElementById('servantTraining').value = 50;
+      document.getElementById('servantTrainingValue').textContent = '50';
+
+      // Show config panel
+      document.getElementById('servantConfigPanel').style.display = 'block';
+      document.getElementById('customServantInput').style.display = 'none';
+    }
+
+    // Function to show custom servant input
+    function showCustomServantInput() {
+      // Set current servant
+      currentServant.id = 'custom';
+      currentServant.name = '';
+      currentServant.affection = 50;
+      currentServant.training = 50;
+
+      // Update UI
+      document.getElementById('servantConfigPanel').style.display = 'block';
+      document.getElementById('customServantInput').style.display = 'block';
+      document.getElementById('servantName').textContent = '自定义从者';
+      document.getElementById('servantAffection').value = 50;
+      document.getElementById('servantAffectionValue').textContent = '50';
+      document.getElementById('servantTraining').value = 50;
+      document.getElementById('servantTrainingValue').textContent = '50';
+
+      // Clear custom input
+      document.getElementById('customServantName').value = '';
+
+      // Select the custom button
+      const buttons = document.querySelectorAll('.option-grid .option-button');
+      buttons.forEach(btn => btn.classList.remove('selected'));
+      buttons[buttons.length - 1].classList.add('selected');
+    }
+
+    // Function to save custom servant
+    function saveCustomServant() {
+      const name = document.getElementById('customServantName').value;
+      if (name.trim() !== '') {
+        currentServant.name = name;
+        document.getElementById('servantName').textContent = name;
+      } else {
+        alert('请输入从者名称！');
+      }
+    }
+
+    // Function to update servant values
+    function updateServantValue(type) {
+      const slider = document.getElementById(`servant${type}`);
+      const valueDisplay = document.getElementById(`servant${type}Value`);
+
+      valueDisplay.textContent = slider.value;
+      currentServant[type.toLowerCase()] = parseInt(slider.value);
+    }
+
+    // Function to confirm servant settings
+    function confirmServantSettings() {
+      if (currentServant.id === 'custom' && !currentServant.name) {
+        alert('请为自定义从者输入名称！');
+        return;
+      }
+
+      // Check if servant already exists
+      const existingIndex = playerData.selectedServants.findIndex(s => s.id === currentServant.id);
+      if (existingIndex >= 0) {
+        // Update existing servant
+        playerData.selectedServants[existingIndex] = { ...currentServant };
+      } else {
+        // Add new servant
+        playerData.selectedServants.push({ ...currentServant });
+      }
+
+      // Update selected servants display
+      updateSelectedServantsDisplay();
+
+      // Hide config panel
+      // document.getElementById('servantConfigPanel').style.display = 'none';
+    }
+
+    // Function to update selected servants display
+    function updateSelectedServantsDisplay() {
+      const container = document.getElementById('selectedServantsContent');
+      if (playerData.selectedServants.length > 0) {
+        document.getElementById('selectedServants').style.display = 'block';
+
+        let html = '';
+        playerData.selectedServants.forEach(servant => {
+          html += `
+            <div class="selected-servant">
+              <div class="servant-name">${servant.name}</div>
+              <div class="servant-stats">
+                <span>好感度: ${servant.affection}</span> | 
+                <span>调教度: ${servant.training}</span>
+              </div>
+              <button class="nav-button" style="margin-top: 5px;" onclick="editServant('${servant.id}')">编辑</button>
+              <button class="nav-button" style="margin-top: 5px; margin-left: 10px;" onclick="removeServant('${servant.id}')">删除</button>
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+      } else {
+        document.getElementById('selectedServants').style.display = 'none';
+      }
+    }
+
+    // Function to edit servant
+    function editServant(servantId) {
+      const servant = playerData.selectedServants.find(s => s.id === servantId);
+      if (servant) {
+        currentServant = { ...servant };
+
+        // Update UI
+        document.getElementById('servantName').textContent = servant.name;
+        document.getElementById('servantAffection').value = servant.affection;
+        document.getElementById('servantAffectionValue').textContent = servant.affection;
+        document.getElementById('servantTraining').value = servant.training;
+        document.getElementById('servantTrainingValue').textContent = servant.training;
+
+        // Show config panel
+        document.getElementById('servantConfigPanel').style.display = 'block';
+        document.getElementById('customServantInput').style.display = servant.id === 'custom' ? 'block' : 'none';
+
+        // Select the appropriate button
+        const buttons = document.querySelectorAll('.option-grid .option-button');
+        buttons.forEach(btn => {
+          if (btn.dataset.value === servant.id) {
+            btn.classList.add('selected');
+          } else {
+            btn.classList.remove('selected');
+          }
+        });
+      }
+    }
+
+    // Function to remove servant
+    function removeServant(servantId) {
+      playerData.selectedServants = playerData.selectedServants.filter(s => s.id !== servantId);
+      updateSelectedServantsDisplay();
+    }
+
+    // Function to update slider value
+    function updateSliderValue(sliderId) {
+      const slider = document.getElementById(sliderId);
+      const valueDisplay = document.getElementById(`${sliderId}Value`);
+
+      valueDisplay.textContent = slider.value;
+      playerData[sliderId] = parseInt(slider.value);
+    }
+
+    // Function to move to next stage
+    function nextStage() {
+      if (validateCurrentStage()) {
+        document.getElementById(`stage${currentStage}`).classList.remove('active');
+        currentStage++;
+        document.getElementById(`stage${currentStage}`).classList.add('active');
+
+        // If entering the summary stage, update the summary
+        if (currentStage === 6) {
+          updateSummary();
+        }
+      }
+    }
+
+    // Function to move to previous stage
+    function previousStage() {
+      document.getElementById(`stage${currentStage}`).classList.remove('active');
+      currentStage--;
+      document.getElementById(`stage${currentStage}`).classList.add('active');
+    }
+
+    // Function to validate current stage
+    function validateCurrentStage() {
+      switch (currentStage) {
+        case 1:
+          if (!playerData.gender) {
+            alert('请选择性别！');
+            return false;
+          }
+          if (!playerData.magicStrength) {
+            alert('请选择魔术强度！');
+            return false;
+          }
+          break;
+        case 2:
+          if (!playerData.mysticCodeId) {
+            alert('请选择魔术礼装！');
+            return false;
+          }
+          break;
+        case 3:
+          if (!playerData.playerTrait) {
+            alert('请选择个人特质！');
+            return false;
+          }
+          break;
+        case 4:
+          if (!playerData.noblePhantasm) {
+            alert('请选择宝具！');
+            return false;
+          }
+          break;
+        case 5:
+          if (!playerData.startPoint) {
+            alert('请选择剧情开局点！');
+            return false;
+          }
+          break;
+      }
+      return true;
+    }
+
+    // Function to update the summary
+    function updateSummary() {
+      const summaryContainer = document.getElementById('summaryContainer');
+
+      // Map values to readable text
+      const genderText = {
+        'male': '男性',
+        'female': '女性',
+        'futa': '扶他',
+        'femboy': '男身女相'
+      };
+
+      const mysticCodeText = {
+        'mystic_code_chaldea': '魔术礼装·迦勒底',
+        'mystic_code_chaldea_combat': '魔术礼装·迦勒底战斗服',
+        'mystic_code_association': '魔术礼装·魔术协会制服',
+        'mystic_code_atlas': '魔术礼装·阿特拉斯院制服',
+        'golden_celebration': '金色庆典',
+        'bright_summer': '明亮夏日',
+        'memories_of_lunar_sea': '月之海的记忆',
+        'polar_chaldea': '极地用制服',
+        'tropical_summer': '热带夏日',
+        'fifth_true_element': '第五真说要素环境用制服',
+        'explorer_uniform': '童子军服',
+        'winter_casual': '冬日便装'
+      };
+
+      const specialSkillText = {
+        'puppet': '魔偶',
+        'print_cage': '印笼技能',
+        'ares': '战神阿瑞斯 ARES',
+        'golden_armor': 'GOLDEN 大具足',
+        'god_bazooka': '神之巴祖卡',
+        'anti_beast': '对兽魔术',
+        'desire_resonance': '欲望共振',
+        'emotion_circuit': '情感回路',
+        'blade_of_dread': '恐惧之刃',
+        'desire_engine': '机械欲望引擎',
+        'sacred_desire_shift': '圣欲转化',
+        'warflame_ignition': '战意燃烧',
+        'stellar_desire': '星欲映射'
+      };
+
+      const playerTraitText = {
+        'lustful_curse': '淫神诅咒（所接触到的东西都会色情化）',
+        'fragile_cauldron': '易碎鼎炉（看起来娇弱但又好吃）',
+        'wish_fulfillment': '心想事成（拥有心想事成的能力）',
+        'hypnosis_master': '催眠大师（可以催眠普通人，甚至从者）',
+        'sex_king': '性爱之王（在性爱方面拥有无与伦比的技巧）',
+        'seduction_king': '诱惑之王（谁都想跟<user>做爱）',
+        'lady_training': '淑女修行（强制戴着外表美丽的调教用具）',
+        'training_master': '调教大师（可以轻松的使人恶堕）',
+        'none': '无特殊特质',
+        // 新增特质
+        'grail_vessel': '圣杯容器（体内寄宿着微弱的圣杯之力，吸引从者靠近）',
+        'mana_battery': '魔力电池（拥有异常充沛的魔力，可供从者无限制使用）',
+        'beast_tamer': '兽性驯服者（能与兽类特质的从者建立深层羁绊）',
+        'curse_blood': '诅咒之血（血液带有魔性，能腐蚀敌人或强化盟友）',
+        'paradox_mage': '悖论魔术师（魔术回路异常，能逆转因果短暂时间）',
+        'divine_favor': '神明恩宠（受到某位神灵的眷顾，战斗中幸运值极高）',
+        'lewd_grail': '淫欲圣杯（圣杯之力转化为情欲，能激发从者的肉体渴望）',
+        'mana_seductress': '魔力诱惑者（魔力带有媚惑效果，削弱敌人的意志）',
+        'succubus_lineage': '魅魔血统（天生具备魅魔特性，能吸取生命力或魔力）',
+        'forbidden_touch': '禁忌之触（触碰他人时会引发强烈的快感，甚至从者也不例外）',
+        'lustful_aura': '色欲光环（周围的人会不由自主地产生情欲幻想）',
+        'servant_breeder': '从者孕育者（与从者的亲密行为可能孕育出新的力量）',
+        'tantric_mage': '密宗魔术师（通过肉体交融提升魔力和从者力量）',
+        'erotic_phantasm': '色情宝具（能将敌人的宝具效果转化为情欲冲击）',
+        'slave_collar': '奴隶项圈（能将普通人或弱小从者变为听命的性仆）',
+        'lustful_summon': '淫欲召唤（召唤的从者会带有强烈的肉欲倾向）',
+        'orgasmic_core': '极乐核心（灵核异常，能通过快感强化自身与从者）',
+        'bound_servant': '被缚之仆（被从者以魔术锁链束缚，身体完全受其支配）',
+        'sacrificial_lamb': '祭品羔羊（被选为从者或神灵的欲望祭品，无法反抗）',
+        'lewd_vessel': '淫荡容器（身体被改造为承载从者情欲的容器，动弹不得）',
+        'chained_caress': '锁链爱抚（被魔力锁链缠绕，每动一下都带来羞耻快感）',
+        'servant_toy': '从者玩物（被从者视为调教对象，意志逐渐崩坏）',
+        'mana_drain': '魔力榨取（魔力被从者强行吸取，每次都伴随着色情折磨）',
+        'divine_pet': '神灵宠物（被神性从者收为禁脔，永远侍奉其欲望）'
+      };
+
+      // Create summary HTML
+      let summaryHTML = `
+        <div class="summary-item">
+          <span>性别:</span>
+          <span>${genderText[playerData.gender] || '未选择'}</span>
+        </div>
+        <div class="summary-item">
+          <span>魔术强度:</span>
+          <span>${playerData.magicStrength || '未选择'}</span>
+        </div>
+        <div class="summary-item">
+          <span>个人特质:</span>
+          <span>${playerData.playerTrait === 'custom' ? playerData.customPlayerTrait.name : playerTraitText[playerData.playerTrait] || '未选择'}</span>
+        </div>
+      `;
+
+      // Add mystic code details if available
+      if (playerData.mysticCodeDetails && playerData.mysticCodeDetails.appearance) {
+        summaryHTML += `
+          <div class="summary-item">
+            <span>礼装外观:</span>
+            <span>${playerData.mysticCodeDetails.appearance}</span>
+          </div>
+          <div class="summary-item">
+            <span>礼装介绍:</span>
+            <span>${playerData.mysticCodeDetails.introduction}</span>
+          </div>
+        `;
+      }
+
+      summaryHTML += `
+        <div class="summary-item">
+          <span>特殊技能:</span>
+          <span>${specialSkillText[playerData.specialSkill] || playerData.specialSkill || '未选择'}</span>
+        </div>
+        <div class="summary-item">
+          <span>宝具:</span>
+          <span>${playerData.noblePhantasm === 'custom' ? playerData.customNoblePhantasm.name : playerData.noblePhantasm}</span>
+        </div>
+      `;
+
+      // Add custom noble phantasm description if applicable
+      if (playerData.noblePhantasm === 'custom' && playerData.customNoblePhantasm.description) {
+        summaryHTML += `
+          <div class="summary-item">
+            <span>宝具等级:</span>
+            <span>${playerData.customNoblePhantasm.rank}</span>
+          </div>
+          <div class="summary-item">
+            <span>宝具类型:</span>
+            <span>${playerData.customNoblePhantasm.type}</span>
+          </div>
+          <div class="summary-item">
+            <span>宝具描述:</span>
+            <span>${playerData.customNoblePhantasm.description}</span>
+          </div>
+        `;
+      }
+
+      summaryHTML += `
+        <div class="summary-item">
+          <span>令咒数量:</span>
+          <span>${playerData.commandSeals}</span>
+        </div>
+        <div class="summary-item">
+          <span>伊什塔尔好感度:</span>
+          <span>${playerData.ishtarAffection}</span>
+        </div>
+        <div class="summary-item">
+          <span>伊什塔尔调教度:</span>
+          <span>${playerData.ishtarTraining}</span>
+        </div>
+        <div class="summary-item">
+          <span>艾蕾好感度:</span>
+          <span>${playerData.ereshAffection}</span>
+        </div>
+        <div class="summary-item">
+          <span>艾蕾调教度:</span>
+          <span>${playerData.ereshTraining}</span>
+        </div>
+      `;
+
+      // Add selected servants
+      if (playerData.selectedServants.length > 0) {
+        summaryHTML += `<div class="summary-item section-header"><span>其他从者:</span></div>`;
+        playerData.selectedServants.forEach(servant => {
+          summaryHTML += `
+            <div class="summary-item indented">
+              <span>${servant.name} 好感度:</span>
+              <span>${servant.affection}</span>
+            </div>
+            <div class="summary-item indented">
+              <span>${servant.name} 调教度:</span>
+              <span>${servant.training}</span>
+            </div>
+          `;
+        });
+      }
+
+      summaryHTML += `
+        <div class="summary-item">
+          <span>开局剧情:</span>
+          <span>${playerData.startPoint || '未选择'}</span>
+        </div>
+      `;
+
+      summaryContainer.innerHTML = summaryHTML;
+    }
+
+    // Function to generate a detailed Chinese summary of player selections
+    function generateDetailedSummary() {
+      // Map values to readable Chinese text
+      const genderText = {
+        'male': '男性',
+        'female': '女性',
+        'futa': '扶他',
+        'femboy': '男身女相'
+      };
+
+      const mysticCodeText = {
+        'mystic_code_chaldea': '魔术礼装·迦勒底',
+        'mystic_code_chaldea_combat': '魔术礼装·迦勒底战斗服',
+        'mystic_code_association': '魔术礼装·魔术协会制服',
+        'mystic_code_atlas': '魔术礼装·阿特拉斯院制服',
+        'golden_celebration': '金色庆典',
+        'bright_summer': '明亮夏日',
+        'memories_of_lunar_sea': '月之海的记忆',
+        'polar_chaldea': '极地用制服',
+        'tropical_summer': '热带夏日',
+        'fifth_true_element': '第五真说要素环境用制服',
+        'explorer_uniform': '童子军服',
+        'winter_casual': '冬日便装'
+      };
+
+      const specialSkillText = {
+        'puppet': '魔偶',
+        'print_cage': '印笼技能',
+        'ares': '战神阿瑞斯 ARES',
+        'golden_armor': 'GOLDEN 大具足',
+        'god_bazooka': '神之巴祖卡',
+        'anti_beast': '对兽魔术',
+        'desire_resonance': '欲望共振',
+        'emotion_circuit': '情感回路',
+        'blade_of_dread': '恐惧之刃',
+        'desire_engine': '机械欲望引擎',
+        'sacred_desire_shift': '圣欲转化',
+        'warflame_ignition': '战意燃烧',
+        'stellar_desire': '星欲映射'
+      };
+
+      const playerTraitText = {
+        'lustful_curse': '淫神诅咒（所接触到的东西都会色情化）',
+        'fragile_cauldron': '易碎鼎炉（看起来娇弱但又好吃）',
+        'wish_fulfillment': '心想事成（拥有心想事成的能力）',
+        'hypnosis_master': '催眠大师（可以催眠普通人，甚至从者）',
+        'sex_king': '性爱之王（在性爱方面拥有无与伦比的技巧）',
+        'seduction_king': '诱惑之王（谁都想跟<user>做爱）',
+        'lady_training': '淑女修行（强制戴着外表美丽的调教用具）',
+        'training_master': '调教大师（可以轻松的使人恶堕）',
+        'none': '无特殊特质',
+        // 新增特质
+        'grail_vessel': '圣杯容器（体内寄宿着微弱的圣杯之力，吸引从者靠近）',
+        'mana_battery': '魔力电池（拥有异常充沛的魔力，可供从者无限制使用）',
+        'beast_tamer': '兽性驯服者（能与兽类特质的从者建立深层羁绊）',
+        'curse_blood': '诅咒之血（血液带有魔性，能腐蚀敌人或强化盟友）',
+        'paradox_mage': '悖论魔术师（魔术回路异常，能逆转因果短暂时间）',
+        'divine_favor': '神明恩宠（受到某位神灵的眷顾，战斗中幸运值极高）',
+        'lewd_grail': '淫欲圣杯（圣杯之力转化为情欲，能激发从者的肉体渴望）',
+        'mana_seductress': '魔力诱惑者（魔力带有媚惑效果，削弱敌人的意志）',
+        'succubus_lineage': '魅魔血统（天生具备魅魔特性，能吸取生命力或魔力）',
+        'forbidden_touch': '禁忌之触（触碰他人时会引发强烈的快感，甚至从者也不例外）',
+        'lustful_aura': '色欲光环（周围的人会不由自主地产生情欲幻想）',
+        'servant_breeder': '从者孕育者（与从者的亲密行为可能孕育出新的力量）',
+        'tantric_mage': '密宗魔术师（通过肉体交融提升魔力和从者力量）',
+        'erotic_phantasm': '色情宝具（能将敌人的宝具效果转化为情欲冲击）',
+        'slave_collar': '奴隶项圈（能将普通人或弱小从者变为听命的性仆）',
+        'lustful_summon': '淫欲召唤（召唤的从者会带有强烈的肉欲倾向）',
+        'orgasmic_core': '极乐核心（灵核异常，能通过快感强化自身与从者）',
+        'bound_servant': '被缚之仆（被从者以魔术锁链束缚，身体完全受其支配）',
+        'sacrificial_lamb': '祭品羔羊（被选为从者或神灵的欲望祭品，无法反抗）',
+        'lewd_vessel': '淫荡容器（身体被改造为承载从者情欲的容器，动弹不得）',
+        'chained_caress': '锁链爱抚（被魔力锁链缠绕，每动一下都带来羞耻快感）',
+        'servant_toy': '从者玩物（被从者视为调教对象，意志逐渐崩坏）',
+        'mana_drain': '魔力榨取（魔力被从者强行吸取，每次都伴随着色情折磨）',
+        'divine_pet': '神灵宠物（被神性从者收为禁脔，永远侍奉其欲望）'
+      };
+
+      const startPointMap = {
+        'fuyuki_normal': '燃烧污染都市 冬木（对魔术一无所知，没有关于两位女神的记忆）',
+        'fuyuki_mage': '燃烧污染都市 冬木（本地魔术师，没有关于两位女神的记忆，但有些许印象）',
+        'fuyuki_chaldea': '燃烧污染都市 冬木（迦勒底成员）',
+        'orleans': '邪龙百年战争 奥尔良',
+        'septem': '永续疯狂帝国 七丘之城',
+        'okeanos': '封锁终局四海 俄刻刻阿诺斯',
+        'london': '死界魔雾都市 伦敦',
+        'america': '北美神话大战 合众为一',
+        'camelot': '神圣圆桌领域 卡美洛',
+        'babylonia': '绝对魔兽战线 巴比伦尼亚',
+        'solomon': '冠位时间神殿 所罗门',
+        'shinjuku': '恶性隔绝魔境 新宿',
+        'agartha': '传承地底世界 雅戈泰',
+        'shimousa': '全身满是武士的英灵剑豪七番胜负',
+        'salem': '异端Salem 塞勒姆',
+        'anastasia': '永久冻土帝国 安娜斯塔西娅',
+        'gotterdammerung': '无间冰焰世纪 哥特',
+        'sinum_chaldea': '迦勒底（与伊什塔尔、艾蕾均有记忆和好感度）',
+        'lostbelt1': '永久冻土帝国 阿纳斯塔西娅',
+        'lostbelt2': '无间冰焰世纪 诸神黄昏',
+        'lostbelt3': '人智统合真国 SIN',
+        'lostbelt4': '创世灭亡轮回 由伽·刹多罗',
+        'lostbelt5_1': '神代巨神海洋 亚特兰蒂斯',
+        'lostbelt5_2': '星间都市山脉 奥林波斯',
+        'heian_kyo': '地狱界曼荼罗 平安京',
+        'lostbelt6': '妖精圆桌领域 阿瓦隆·勒·菲',
+        'tunguska': '非灵长生存圈 通古斯卡·圣域',
+        'traum': '死想显现界域 Traum',
+        'lostbelt7': '黄金树海纪行 纳维·米克特兰'
+      };
+
+      let summary = "【角色选择确认】\n\n";
+
+      // Basic info
+      summary += `◆ 性别：${genderText[playerData.gender] || '未选择'}\n`;
+      summary += `◆ 魔术强度：${playerData.magicStrength || '未选择'}\n`;
+      summary += `◆ 个人特质：${playerData.playerTrait === 'custom' ? playerData.customPlayerTrait.name : playerTraitText[playerData.playerTrait] || '未选择'}\n`;
+      if (playerData.playerTrait === 'custom' && playerData.customPlayerTrait.description) {
+        summary += `  描述：${playerData.customPlayerTrait.description}\n`;
+      }
+      summary += `◆ 魔术礼装：${mysticCodeText[playerData.mysticCodeId] || '未选择'}\n`;
+
+      // Mystic code details
+      if (playerData.mysticCodeDetails && playerData.mysticCodeDetails.skills) {
+        summary += "  技能：\n";
+        playerData.mysticCodeDetails.skills.forEach(skill => {
+          summary += `  • ${skill.名称} - ${skill.效果}\n`;
+        });
+      }
+
+      // Special skill
+      summary += `◆ 特殊技能：`;
+
+      if (playerData.isCustomSpecialSkill && playerData.customSpecialSkill) {
+        summary += `${playerData.customSpecialSkill.name}（自定义）\n`;
+        if (playerData.customSpecialSkill.description) {
+          summary += `  描述：${playerData.customSpecialSkill.description}\n`;
+        }
+        if (playerData.customSpecialSkill.origin) {
+          summary += `  来源：${playerData.customSpecialSkill.origin}\n`;
+        }
+        if (playerData.customSpecialSkill.limit) {
+          summary += `  限制：${playerData.customSpecialSkill.limit}\n`;
+        }
+      } else {
+        summary += `${specialSkillText[playerData.specialSkill] || '未选择'}\n`;
+      }
+
+      // Noble Phantasm
+      if (playerData.noblePhantasm === 'custom') {
+        summary += `◆ 宝具：${playerData.customNoblePhantasm.name || '未命名'}\n`;
+        summary += `  等级：${playerData.customNoblePhantasm.rank || '未设定'}\n`;
+        summary += `  类型：${playerData.customNoblePhantasm.type || '未设定'}\n`;
+        if (playerData.customNoblePhantasm.description) {
+          summary += `  描述：${playerData.customNoblePhantasm.description}\n`;
+        }
+      } else if (playerData.noblePhantasm === '随机对城宝具') {
+        summary += "◆ 宝具：随机对城宝具（请AI生成）\n";
+      } else if (playerData.noblePhantasm === '完全随机宝具') {
+        summary += "◆ 宝具：完全随机宝具（请AI生成）\n";
+      } else {
+        summary += `◆ 宝具：${playerData.noblePhantasm || '未选择'}\n`;
+      }
+
+      // Command seals
+      summary += `◆ 令咒数量：${playerData.commandSeals}\n`;
+
+      // Goddesses
+      summary += `◆ 伊什塔尔好感度：${playerData.ishtarAffection}\n`;
+      summary += `◆ 伊什塔尔调教度：${playerData.ishtarTraining}\n`;
+      summary += `◆ 艾蕾好感度：${playerData.ereshAffection}\n`;
+      summary += `◆ 艾蕾调教度：${playerData.ereshTraining}\n`;
+
+      // Selected servants
+      if (playerData.selectedServants && playerData.selectedServants.length > 0) {
+        summary += "◆ 其他从者：\n";
+        playerData.selectedServants.forEach(servant => {
+          if (servant.isRandom) {
+            summary += `  • 随机从者（AI将在游戏开始时生成）\n`;
+          } else {
+            summary += `  • ${servant.name}（好感度：${servant.affection}，调教度：${servant.training}）\n`;
+          }
+        });
+      } else {
+        summary += "◆ 其他从者：无\n";
+      }
+
+      // Start point
+      summary += `◆ 开局剧情：${startPointMap[playerData.startPoint] || '未选择'}\n`;
+
+      return summary;
+    }
+
+    // Function to confirm selections and start the game
+    function confirmSelections() {
+      // 生成要发送的数据
+      const messageToSend = buildFinalData();
+
+      // 更新摘要显示
+      const summaryElement = document.getElementById('summaryContainer');
+      summaryElement.innerHTML = `<pre>${messageToSend}</pre>`;
+
+      console.log("准备发送数据:", messageToSend);
+
+      // 复制到剪贴板作为备份方式
+      try {
+        navigator.clipboard.writeText(messageToSend)
+          .then(() => console.log("已复制到剪贴板"))
+          .catch(err => console.error("剪贴板复制失败:", err));
+      } catch (e) {
+        console.error("剪贴板操作失败:", e);
+      }
+
+      // 发送到SillyTavern
+      try {
+        // 使用与开局ui_pcr.html完全相同的方式发送
+        if (window.parent && typeof window.parent.triggerSlash === 'function') {
+          // 如果在iframe中运行，使用父窗口的triggerSlash
+          window.parent.triggerSlash(`/send ${messageToSend}|/trigger`);
+          console.log("通过父窗口triggerSlash发送成功");
+        } else if (typeof triggerSlash === 'function') {
+          // 直接使用triggerSlash
+          triggerSlash(`/send ${messageToSend}|/trigger`);
+          console.log("通过triggerSlash发送成功");
+        } else {
+          // 如果triggerSlash不可用，显示警告
+          console.warn("triggerSlash函数不可用，请手动复制内容");
+          alert("无法自动发送数据，内容已复制到剪贴板，请手动粘贴到聊天框");
+        }
+      } catch (error) {
+        console.error("发送到SillyTavern失败:", error);
+        alert("发送失败，请手动复制内容到聊天框");
+      }
+    }
+
+    // Functions for custom mystic code
+    function showCustomMysticCodeDialog() {
+      document.getElementById('customMysticCodeDialog').style.display = 'block';
+    }
+
+    function closeCustomDialog() {
+      document.getElementById('customMysticCodeDialog').style.display = 'none';
+    }
+
+    function saveCustomMysticCode() {
+      const name = document.getElementById('customMysticCodeName').value.trim();
+      if (!name) {
+        alert('请输入魔术礼装名称');
+        return;
+      }
+
+      const appearance = document.getElementById('customMysticCodeAppearance').value.trim();
+      const introduction = document.getElementById('customMysticCodeIntro').value.trim();
+
+      // Collect skills
+      const skillInputs = document.querySelectorAll('.skill-input');
+      const skills = [];
+
+      skillInputs.forEach(input => {
+        const skillName = input.querySelector('.skill-name').value.trim();
+        const skillEffect = input.querySelector('.skill-effect').value.trim();
+
+        if (skillName && skillEffect) {
+          skills.push({
+            "名称": skillName,
+            "效果": skillEffect
+          });
+        }
+      });
+
+      // Create custom mystic code data
+      const customCode = {
+        "appearance": appearance || "自定义魔术礼装",
+        "introduction": introduction || `${name}，由<user>自行设计的魔术礼装`,
+        "skills": skills.length > 0 ? skills : [{ "名称": "自定义技能", "效果": "效果待定" }],
+        "isCustom": true
+      };
+
+      // Add to mysticCodesData
+      mysticCodesData[name] = customCode;
+
+      // Store the custom mystic code name in playerData
+      playerData.customMysticCodeName = name;
+
+      // Find the correct option grid for mystic codes
+      const headers = document.querySelectorAll('.box-header');
+      let mysticCodeGrid = null;
+
+      // Find the header with text "选择魔术礼装" and then get its parent's .option-grid
+      for (const header of headers) {
+        if (header.textContent.trim() === '选择魔术礼装') {
+          // Navigate to the .option-grid inside the box-content
+          mysticCodeGrid = header.closest('.box-container').querySelector('.option-grid');
+          break;
+        }
+      }
+
+      if (!mysticCodeGrid) {
+        console.error('Could not find mystic code grid');
+        return;
+      }
+
+      // Create a new button for this custom code
+      const dataValue = 'custom_' + Date.now(); // Create unique ID
+      const newButton = document.createElement('div');
+      newButton.className = 'option-button custom-created';
+      newButton.dataset.value = dataValue;
+      newButton.textContent = name;
+      newButton.onclick = function () { selectMysticCode(this, name); };
+
+      // Insert new button before the custom option button
+      const customButton = document.querySelector('[data-value="custom_mystic_code"]');
+      mysticCodeGrid.insertBefore(newButton, customButton);
+
+      // Select the new mystic code
+      selectMysticCode(newButton, name);
+
+      // Close dialog
+      closeCustomDialog();
+
+      // Reset form
+      document.getElementById('customMysticCodeName').value = '';
+      document.getElementById('customMysticCodeAppearance').value = '';
+      document.getElementById('customMysticCodeIntro').value = '';
+      document.querySelectorAll('.skill-name, .skill-effect').forEach(input => {
+        input.value = '';
+      });
+    }
+
+    // Functions for custom special skill
+    function showCustomSpecialSkillDialog() {
+      document.getElementById('customSpecialSkillDialog').style.display = 'block';
+    }
+
+    function closeCustomSpecialSkillDialog() {
+      document.getElementById('customSpecialSkillDialog').style.display = 'none';
+    }
+
+    function saveCustomSpecialSkill() {
+      // 获取输入的值
+      const name = document.getElementById('customSpecialSkillName').value.trim();
+      const description = document.getElementById('customSpecialSkillDescription').value.trim();
+      const effect1 = document.getElementById('customSpecialSkillEffect1').value.trim();
+      const effect2 = document.getElementById('customSpecialSkillEffect2').value.trim();
+
+      // 验证必填字段
+      if (!name) {
+        alert('请输入技能名称');
+        return;
+      }
+
+      // 创建自定义特殊技能对象
+      const customSkill = {
+        name: name,
+        description: description,
+        effect1: effect1,
+        effect2: effect2
+      };
+
+      // 保存到playerData
+      playerData.specialSkill = name;
+      playerData.isCustomSpecialSkill = true;
+      playerData.customSpecialSkill = customSkill;
+
+      // 创建一个自定义技能按钮并添加到技能列表中
+      const optionGrid = document.querySelector('#stage2 .option-grid');
+      const newButton = document.createElement('div');
+      newButton.className = 'option-button selected';
+      newButton.textContent = name;
+      newButton.setAttribute('data-value', 'custom_' + Date.now()); // 使用时间戳确保唯一性
+      newButton.onclick = function () { selectCustomSpecialSkill(this, name); };
+
+      // 移除其他按钮的选择状态
+      const allButtons = optionGrid.querySelectorAll('.option-button');
+      allButtons.forEach(btn => btn.classList.remove('selected'));
+
+      // 将新按钮添加到自定义按钮之前
+      const customButton = optionGrid.querySelector('[data-value="custom_special_skill"]');
+      optionGrid.insertBefore(newButton, customButton);
+
+      // 显示详情
+      const detailsDiv = document.getElementById('specialSkillDetails');
+      detailsDiv.innerHTML = `
+        <p><strong>描述：</strong>${description}</p>
+        <p><strong>技能效果：</strong></p>
+        <ul class="skill-list">
+          ${effect1 ? `<li><strong>技能1：</strong>${effect1}</li>` : ''}
+          ${effect2 ? `<li><strong>技能2：</strong>${effect2}</li>` : ''}
+        </ul>
+      `;
+      detailsDiv.style.display = 'block';
+
+      // 关闭对话框
+      closeCustomSpecialSkillDialog();
+
+      // 重置表单
+      document.getElementById('customSpecialSkillName').value = '';
+      document.getElementById('customSpecialSkillDescription').value = '';
+      document.getElementById('customSpecialSkillEffect1').value = '';
+      document.getElementById('customSpecialSkillEffect2').value = '';
+    }
+
+    function selectCustomSpecialSkill(element, skillName) {
+      // 清除之前的选择
+      const skillButtons = element.parentElement.querySelectorAll('.option-button');
+      skillButtons.forEach(btn => btn.classList.remove('selected'));
+
+      // 添加选中样式
+      element.classList.add('selected');
+
+      // 存储选择到playerData
+      playerData.specialSkill = skillName;
+      playerData.isCustomSpecialSkill = true;
+
+      // 显示自定义技能详情
+      const customSkill = playerData.customSpecialSkill;
+      if (customSkill) {
+        const detailsDiv = document.getElementById('specialSkillDetails');
+        detailsDiv.innerHTML = `
+          <p><strong>描述：</strong>${customSkill.description || ''}</p>
+          <p><strong>技能效果：</strong></p>
+          <ul class="skill-list">
+            ${customSkill.effect1 ? `<li><strong>技能1：</strong>${customSkill.effect1}</li>` : ''}
+            ${customSkill.effect2 ? `<li><strong>技能2：</strong>${customSkill.effect2}</li>` : ''}
+          </ul>
+        `;
+        detailsDiv.style.display = 'block';
+      }
+    }
+
+    // 特殊技能数据
+    const specialSkillsData = {
+      "魔偶": {
+        "description": "活动限定技能，替换御主技能以应对特殊战斗。",
+        "skills": [
+          { "name": "魔偶操控", "effect": "提升全体从者的攻击力（20%~40%，持续3回合）", "cooldown": "10回合" },
+          { "name": "傀儡防御", "effect": "赋予一名从者无敌状态（1次，3回合）", "cooldown": "15回合" }
+        ]
+      },
+      "印笼技能": {
+        "description": "德川回天迷宫大奥活动中的特殊技能。",
+        "skills": [
+          { "name": "烟雾障壁", "effect": "赋予全体从者闪避状态（1次，3回合）", "cooldown": "15回合" },
+          { "name": "忍术打击", "effect": "提升一名从者的暴击威力（30%~50%，持续3回合）", "cooldown": "10回合" }
+        ]
+      },
+      "战神阿瑞斯 ARES": {
+        "description": "奥林波斯剧情中的特殊技能。",
+        "skills": [
+          { "name": "战神咆哮", "effect": "提升全体从者的攻击力（20%~40%，持续3回合）", "cooldown": "10回合" },
+          { "name": "神力冲击", "effect": "对一名敌人造成固定伤害（1000~3000）", "cooldown": "12回合" }
+        ]
+      },
+      "GOLDEN 大具足": {
+        "description": "金闪闪专属战斗装备，散发着神性的光辉。",
+        "skills": [
+          { "name": "黄金法则", "effect": "提升自身获得的宝具NP（30%~50%，持续2回合）", "cooldown": "8回合" },
+          { "name": "神王威严", "effect": "对所有敌人施加恐惧效果（30%概率昏迷1回合）", "cooldown": "12回合" }
+        ]
+      },
+      "神之巴祖卡": {
+        "description": "人类最强之盾的特殊武装，具有神秘的起源。",
+        "skills": [
+          { "name": "弹幕覆盖", "effect": "对敌方全体造成伤害（中等伤害）并降低防御10%", "cooldown": "7回合" },
+          { "name": "无限武装", "effect": "提升自身攻击力25%并赋予贯通防御效果（1次）", "cooldown": "10回合" }
+        ]
+      },
+      "对兽魔术": {
+        "description": "专门用于对抗兽级敌人的特殊魔术。",
+        "skills": [
+          { "name": "兽威衰减", "effect": "降低特定敌人（兽特性）的攻击力（20%~40%，持续3回合）", "cooldown": "10回合" },
+          { "name": "人理守护", "effect": "赋予全体从者伤害减免（3000点，持续2回合）", "cooldown": "15回合" }
+        ]
+      },
+      "欲望共振": {
+        "description": "通过同调对方欲望来增强自身能力的特殊技能。",
+        "skills": [
+          { "name": "欲望汲取", "effect": "从敌人汲取NP（10%~30%）并增加自身攻击力15%", "cooldown": "8回合" },
+          { "name": "欲望投影", "effect": "复制敌人的一个增益效果到己方一名从者身上", "cooldown": "12回合" }
+        ]
+      },
+      "情感回路": {
+        "description": "基于情感能量转化的特殊魔术回路。",
+        "skills": [
+          { "name": "情感链接", "effect": "治疗全体从者（2000~4000HP）并提升防御力10%", "cooldown": "9回合" },
+          { "name": "共情屏障", "effect": "赋予一名从者伤害反弹（30%，持续2回合）", "cooldown": "12回合" }
+        ]
+      },
+      "恐惧之刃": {
+        "description": "收集敌人恐惧转化为力量的诅咒武器。",
+        "skills": [
+          { "name": "恐惧注入", "effect": "对敌人施加恐惧效果（50%概率技能封印1回合）", "cooldown": "10回合" },
+          { "name": "恐惧收割", "effect": "对恐惧状态的敌人造成额外伤害（+50%）", "cooldown": "8回合" }
+        ]
+      },
+      "机械欲望引擎": {
+        "description": "将欲望能量转化为战斗力的机械装置。",
+        "skills": [
+          { "name": "过载充能", "effect": "提升自身暴击率（50%，持续3回合）但每回合损失500HP", "cooldown": "7回合" },
+          { "name": "能量爆发", "effect": "对单体敌人造成特大伤害并有20%概率眩晕", "cooldown": "10回合" }
+        ]
+      },
+      "圣欲转化": {
+        "description": "将欲望转化为神圣力量的特殊能力。",
+        "skills": [
+          { "name": "净化之光", "effect": "解除己方全体的负面状态并恢复1000HP", "cooldown": "10回合" },
+          { "name": "圣光祝福", "effect": "提升一名从者的宝具威力（20%，持续1次）", "cooldown": "12回合" }
+        ]
+      },
+      "战意燃烧": {
+        "description": "燃烧战斗意志提升战力的狂化技能。",
+        "skills": [
+          { "name": "狂战士之怒", "effect": "提升自身攻击力30%但降低防御力15%", "cooldown": "7回合" },
+          { "name": "不灭斗志", "effect": "赋予自身弱点防御（减少50%克制伤害，持续3回合）", "cooldown": "12回合" }
+        ]
+      },
+      "星欲映射": {
+        "description": "将星空的力量与欲望结合的神秘技能。",
+        "skills": [
+          { "name": "星光聚集", "effect": "获得20~30颗暴击星", "cooldown": "9回合" },
+          { "name": "星命链接", "effect": "提升全体从者的NP获取率（20%，持续3回合）", "cooldown": "10回合" }
+        ]
+      },
+      // 新增特殊技能.json中的技能
+      "大帝衣": {
+        "description": "活动限定技能，象征帝王威严。",
+        "skills": [
+          { "name": "帝王威压", "effect": "降低全体敌人的攻击力（10%~20%，持续3回合）", "cooldown": "12回合" },
+          { "name": "荣耀加冕", "effect": "提升一名从者的攻击力（30%~50%，持续3回合）", "cooldown": "10回合" }
+        ]
+      },
+      "吸引力": {
+        "description": "活动限定技能，增强队伍吸引力。",
+        "skills": [
+          { "name": "魅力光环", "effect": "提升全体从者的NP获取率（20%~40%，持续3回合）", "cooldown": "12回合" },
+          { "name": "诱惑之力", "effect": "生成暴击星（5~10颗）", "cooldown": "8回合" }
+        ]
+      },
+      "大炮技能": {
+        "description": "活动限定技能，提供火炮支援。",
+        "skills": [
+          { "name": "炮火轰鸣", "effect": "对全体敌人造成固定伤害（500~1500）", "cooldown": "12回合" },
+          { "name": "烟幕掩护", "effect": "赋予一名从者闪避状态（1次，3回合）", "cooldown": "15回合" }
+        ]
+      },
+      "希翁技能": {
+        "description": "希翁协助提供的特殊技能。",
+        "skills": [
+          { "name": "以太计算", "effect": "提升一名从者的NP增加（20%~40%）", "cooldown": "8回合" },
+          { "name": "灵子解析", "effect": "降低一名敌人的防御力（20%~40%，持续3回合）", "cooldown": "10回合" }
+        ]
+      },
+      "徽章技能": {
+        "description": "活动限定技能，强化队伍协作。",
+        "skills": [
+          { "name": "徽章激励", "effect": "提升全体从者的攻击力（20%~40%，持续3回合）", "cooldown": "10回合" },
+          { "name": "团结护盾", "effect": "赋予全体从者防御力提升（20%~40%，持续3回合）", "cooldown": "12回合" }
+        ]
+      }
+    };
+
+    // 重写特殊技能文本映射，使用中文名称作为键
+    const specialSkillText = {
+      '魔偶': '魔偶',
+      '印笼技能': '印笼技能',
+      '战神阿瑞斯 ARES': '战神阿瑞斯 ARES',
+      'GOLDEN 大具足': 'GOLDEN 大具足',
+      '神之巴祖卡': '神之巴祖卡',
+      '对兽魔术': '对兽魔术',
+      '欲望共振': '欲望共振',
+      '情感回路': '情感回路',
+      '恐惧之刃': '恐惧之刃',
+      '机械欲望引擎': '机械欲望引擎',
+      '圣欲转化': '圣欲转化',
+      '战意燃烧': '战意燃烧',
+      '星欲映射': '星欲映射',
+      '大帝衣': '大帝衣',
+      '吸引力': '吸引力',
+      '大炮技能': '大炮技能',
+      '希翁技能': '希翁技能',
+      '徽章技能': '徽章技能'
+    };
+
+    // 选择特殊技能函数
+    function selectSpecialSkill(element) {
+      // 移除所有特殊技能按钮的选中状态
+      const skillButtons = element.parentElement.querySelectorAll('.option-button');
+      skillButtons.forEach(btn => btn.classList.remove('selected'));
+
+      // 为当前点击的按钮添加选中状态
+      element.classList.add('selected');
+
+      // 获取选中的技能名称
+      const skillName = element.getAttribute('data-value');
+
+      // 显示技能详情
+      displaySpecialSkillDetails(skillName);
+
+      // 保存选中的特殊技能到全局变量 
+      selectedSpecialSkill = skillName;
+
+      // 重要：保存选中的特殊技能到playerData对象中
+      playerData.specialSkill = skillName;
+      console.log("已选择特殊技能: " + skillName); // 添加日志以便调试
+    }
+
+    // 显示特殊技能详情函数
+    function displaySpecialSkillDetails(skillName) {
+      const skill = specialSkillsData[skillName];
+      const detailsDiv = document.getElementById('specialSkillDetails');
+
+      if (skill) {
+        let skillsHtml = '<ul class="skill-list">';
+        skill.skills.forEach(s => {
+          skillsHtml += `<li><strong>${s.name}：</strong>${s.effect}（冷却：${s.cooldown}）</li>`;
+        });
+        skillsHtml += '</ul>';
+
+        detailsDiv.innerHTML = `
+          <p><strong>描述：</strong>${skill.description}</p>
+          <p><strong>技能效果：</strong></p>
+          ${skillsHtml}
+        `;
+        detailsDiv.style.display = 'block';
+      } else {
+        detailsDiv.innerHTML = '';
+        detailsDiv.style.display = 'none';
+      }
+    }
+
+    // 声明全局变量用于保存选中的特殊技能
+    let selectedSpecialSkill = '';
+
+    function buildFinalData() {
+      // Get selected servants
+      const selectedServants = document.querySelectorAll('.selected-servant');
+      const servants = [];
+
+      selectedServants.forEach(servant => {
+        const servantName = servant.querySelector('.servant-name').textContent;
+        const servantStats = servant.querySelector('.servant-stats').textContent;
+        servants.push({ name: servantName, stats: servantStats });
+      });
+
+      // Define genderText since it's not defined elsewhere
+      const genderText = {
+        'male': '男性',
+        'female': '女性',
+        'futa': '扶他',
+        'femboy': '男身女相'
+      };
+
+      // Define playerTraitText to fix the ReferenceError
+      const playerTraitText = {
+        'lustful_curse': '淫神诅咒（所接触到的东西都会色情化）',
+        'fragile_cauldron': '易碎鼎炉（看起来娇弱但又好吃）',
+        'wish_fulfillment': '心想事成（拥有心想事成的能力）',
+        'hypnosis_master': '催眠大师（可以催眠普通人，甚至从者）',
+        'sex_king': '性爱之王（在性爱方面拥有无与伦比的技巧）',
+        'seduction_king': '诱惑之王（谁都想跟<user>做爱）',
+        'lady_training': '淑女修行（强制戴着外表美丽的调教用具）',
+        'training_master': '调教大师（可以轻松的使人恶堕）',
+        'none': '无特殊特质',
+        // 新增特质
+        'grail_vessel': '圣杯容器（体内寄宿着微弱的圣杯之力，吸引从者靠近）',
+        'mana_battery': '魔力电池（拥有异常充沛的魔力，可供从者无限制使用）',
+        'beast_tamer': '兽性驯服者（能与兽类特质的从者建立深层羁绊）',
+        'curse_blood': '诅咒之血（血液带有魔性，能腐蚀敌人或强化盟友）',
+        'paradox_mage': '悖论魔术师（魔术回路异常，能逆转因果短暂时间）',
+        'divine_favor': '神明恩宠（受到某位神灵的眷顾，战斗中幸运值极高）',
+        'lewd_grail': '淫欲圣杯（圣杯之力转化为情欲，能激发从者的肉体渴望）',
+        'mana_seductress': '魔力诱惑者（魔力带有媚惑效果，削弱敌人的意志）',
+        'succubus_lineage': '魅魔血统（天生具备魅魔特性，能吸取生命力或魔力）',
+        'forbidden_touch': '禁忌之触（触碰他人时会引发强烈的快感，甚至从者也不例外）',
+        'lustful_aura': '色欲光环（周围的人会不由自主地产生情欲幻想）',
+        'servant_breeder': '从者孕育者（与从者的亲密行为可能孕育出新的力量）',
+        'tantric_mage': '密宗魔术师（通过肉体交融提升魔力和从者力量）',
+        'erotic_phantasm': '色情宝具（能将敌人的宝具效果转化为情欲冲击）',
+        'slave_collar': '奴隶项圈（能将普通人或弱小从者变为听命的性仆）',
+        'lustful_summon': '淫欲召唤（召唤的从者会带有强烈的肉欲倾向）',
+        'orgasmic_core': '极乐核心（灵核异常，能通过快感强化自身与从者）',
+        'bound_servant': '被缚之仆（被从者以魔术锁链束缚，身体完全受其支配）',
+        'sacrificial_lamb': '祭品羔羊（被选为从者或神灵的欲望祭品，无法反抗）',
+        'lewd_vessel': '淫荡容器（身体被改造为承载从者情欲的容器，动弹不得）',
+        'chained_caress': '锁链爱抚（被魔力锁链缠绕，每动一下都带来羞耻快感）',
+        'servant_toy': '从者玩物（被从者视为调教对象，意志逐渐崩坏）',
+        'mana_drain': '魔力榨取（魔力被从者强行吸取，每次都伴随着色情折磨）',
+        'divine_pet': '神灵宠物（被神性从者收为禁脔，永远侍奉其欲望）'
+      };
+
+      // 定义魔术礼装文本映射
+      const mysticCodeText = {
+        'chaldea': '迦勒底制服',
+        'atlas': '阿特拉斯院制服',
+        'combat': '魔术协会制服',
+        'mage': '魔术师协会制服',
+        'arctic': '极地迦勒底制服',
+        'royal': '王室礼装',
+        'plugsuit': '灵子转移服',
+        'fragment_2004': '魔术礼装・2004',
+        'anniversary_blonde': '金黄庆典',
+        'fine_year': '魔术礼装・Finis年',
+        'tropical': '热带夏日',
+        'summer': '真夏的水上竞赛',
+        'brilliant': '华丽跃动',
+        'white_day': '雄性气息礼装',
+        'captain': '船长的礼装',
+        'vr_mashu': '魔偶装・玛修',
+        'winter_casual': '冬日便装'
+      };
+
+      // 定义开局点映射
+      const startPointMap = {
+        'fuyuki_normal': '燃烧污染都市 冬木（对魔术一无所知，没有关于两位女神的记忆）',
+        'fuyuki_mage': '燃烧污染都市 冬木（本地魔术师，没有关于两位女神的记忆，但有些许印象）',
+        'fuyuki_chaldea': '燃烧污染都市 冬木（迦勒底成员）',
+        'orleans': '邪龙百年战争 奥尔良',
+        'septem': '永续疯狂帝国 七丘之城',
+        'okeanos': '封锁终局四海 俄刻刻阿诺斯',
+        'london': '死界魔雾都市 伦敦',
+        'america': '北美神话大战 合众为一',
+        'camelot': '神圣圆桌领域 卡美洛',
+        'babylonia': '绝对魔兽战线 巴比伦尼亚',
+        'solomon': '冠位时间神殿 所罗门',
+        'shinjuku': '恶性隔绝魔境 新宿',
+        'agartha': '传承地底世界 雅戈泰',
+        'shimousa': '全身满是武士的英灵剑豪七番胜负',
+        'salem': '异端Salem 塞勒姆',
+        'anastasia': '永久冻土帝国 安娜斯塔西娅',
+        'gotterdammerung': '无间冰焰世纪 哥特',
+        'sinum_chaldea': '迦勒底（与伊什塔尔、艾蕾均有记忆和好感度）',
+        'lostbelt1': '永久冻土帝国 阿纳斯塔西娅',
+        'lostbelt2': '无间冰焰世纪 诸神黄昏',
+        'lostbelt3': '人智统合真国 SIN',
+        'lostbelt4': '创世灭亡轮回 由伽·刹多罗',
+        'lostbelt5_1': '神代巨神海洋 亚特兰蒂斯',
+        'lostbelt5_2': '星间都市山脉 奥林波斯',
+        'heian_kyo': '地狱界曼荼罗 平安京',
+        'lostbelt6': '妖精圆桌领域 阿瓦隆·勒·菲',
+        'tunguska': '非灵长生存圈 通古斯卡·圣域',
+        'traum': '死想显现界域 Traum',
+        'lostbelt7': '黄金树海纪行 纳维·米克特兰'
+      };
+
+      // Format playerData for output
+      let messageToSend = `
+### 型月世界角色卡 ###
+
+【基本信息】
+性别: ${genderText[playerData.gender] || '未选择'}
+魔术强度: ${playerData.magicStrength || '未选择'}
+`;
+
+      // Format player traits
+      if (playerData.playerTraits && playerData.playerTraits.length > 0) {
+        messageToSend += `个人特质: `;
+
+        // Handle custom traits differently
+        let customTraitsOutput = '';
+        let standardTraits = [];
+
+        playerData.playerTraits.forEach(trait => {
+          if (trait.startsWith('custom_')) {
+            // Find matching custom trait
+            const customIndex = parseInt(trait.split('_')[1]) - 1;
+            if (playerData.customPlayerTraits && playerData.customPlayerTraits[customIndex]) {
+              const customTrait = playerData.customPlayerTraits[customIndex];
+              customTraitsOutput += `${customTrait.name}、`;
+            }
+          } else if (trait !== 'custom') {
+            // Standard trait
+            if (playerTraitText[trait]) {
+              standardTraits.push(playerTraitText[trait]);
+            }
+          }
+        });
+
+        // Remove trailing separator if custom traits were added
+        if (customTraitsOutput.endsWith('、')) {
+          customTraitsOutput = customTraitsOutput.slice(0, -1);
+        }
+
+        // Combine standard and custom traits
+        const combinedTraits = [...standardTraits];
+        if (customTraitsOutput) {
+          combinedTraits.push(customTraitsOutput);
+        }
+
+        messageToSend += combinedTraits.join('、') + '\n';
+
+        // Add custom trait descriptions
+        playerData.customPlayerTraits?.forEach(trait => {
+          if (trait.description) {
+            messageToSend += `自定义特质描述 [${trait.name}]: ${trait.description}\n`;
+          }
+        });
+      } else if (playerData.playerTrait) {
+        // Backwards compatibility for single trait
+        messageToSend += `个人特质: ${playerData.playerTrait === 'custom' ? playerData.customPlayerTrait.name : playerTraitText[playerData.playerTrait] || '未选择'}\n`;
+        if (playerData.playerTrait === 'custom' && playerData.customPlayerTrait && playerData.customPlayerTrait.description) {
+          messageToSend += `特质描述: ${playerData.customPlayerTrait.description}\n`;
+        }
+      } else {
+        messageToSend += `个人特质: 未选择\n`;
+      }
+
+      messageToSend += `开局点: ${startPointMap[playerData.startPoint] || '未选择'}
+令咒数量: ${playerData.commandSeals}
+伊什塔尔好感度: ${playerData.ishtarAffection}
+伊什塔尔调教度: ${playerData.ishtarTraining}
+艾蕾好感度: ${playerData.ereshAffection}
+艾蕾调教度: ${playerData.ereshTraining}
+`;
+
+      // Add mystic code details if available
+      if (playerData.mysticCodeId === 'custom_mystic_code' && playerData.mysticCodeDetails) {
+        messageToSend += `
+【魔术礼装 - 自定义】
+外观: ${playerData.mysticCodeDetails.appearance || ''}
+介绍: ${playerData.mysticCodeDetails.introduction || ''}
+效果: ${playerData.mysticCodeDetails.effects || ''}
+`;
+      } else if (playerData.mysticCodeId && mysticCodeText[playerData.mysticCodeId]) {
+        messageToSend += `
+【魔术礼装】
+名称: ${mysticCodeText[playerData.mysticCodeId]}
+`;
+      }
+
+      // 添加特殊技能信息 - 修复特殊技能部分
+      if (playerData.specialSkill) {
+        console.log("正在添加特殊技能到消息: " + playerData.specialSkill);
+
+        if (playerData.isCustomSpecialSkill && playerData.customSpecialSkill) {
+          // 如果是自定义特殊技能
+          messageToSend += `
+【特殊技能 - 自定义】
+名称: ${playerData.customSpecialSkill.name || ''}
+描述: ${playerData.customSpecialSkill.description || ''}
+效果1: ${playerData.customSpecialSkill.effect1 || ''}
+效果2: ${playerData.customSpecialSkill.effect2 || ''}
+`;
+        } else {
+          // 如果是预设特殊技能，从specialSkillsData获取详细信息
+          const skillDetails = specialSkillsData[playerData.specialSkill];
+          if (skillDetails) {
+            let skillEffects = '';
+            if (skillDetails.skills && skillDetails.skills.length > 0) {
+              skillDetails.skills.forEach((skill, index) => {
+                skillEffects += `效果${index + 1}: ${skill.name} - ${skill.effect} (冷却: ${skill.cooldown})\n`;
+              });
+            }
+
+            messageToSend += `
+【特殊技能】
+名称: ${playerData.specialSkill}
+描述: ${skillDetails.description || ''}
+${skillEffects}
+`;
+          } else {
+            messageToSend += `
+【特殊技能】
+名称: ${playerData.specialSkill}
+`;
+          }
+        }
+      } else {
+        messageToSend += `
+【特殊技能】
+名称: 未选择
+`;
+      }
+
+      // Add noble phantasm details
+      if (playerData.noblePhantasm === 'custom') {
+        messageToSend += `
+【宝具 - 自定义】
+名称: ${playerData.customNoblePhantasm.name || ''}
+类型: ${playerData.customNoblePhantasm.type || ''}
+等级: ${playerData.customNoblePhantasm.rank || ''}
+分类: ${playerData.customNoblePhantasm.classification || ''}
+范围: ${playerData.customNoblePhantasm.range || ''}
+最大捕捉: ${playerData.customNoblePhantasm.maxTarget || ''}
+效果: ${playerData.customNoblePhantasm.effect || ''}
+`;
+      } else if (playerData.noblePhantasm === '随机对城宝具') {
+        messageToSend += `
+【宝具】
+名称: 随机对城宝具（请AI生成）
+`;
+      } else if (playerData.noblePhantasm === '完全随机宝具') {
+        messageToSend += `
+【宝具】
+名称: 完全随机宝具（请AI生成）
+`;
+      } else if (playerData.noblePhantasm) {
+        messageToSend += `
+【宝具】
+名称: ${playerData.noblePhantasm}
+`;
+      }
+
+      // Add selected servants
+      if (servants.length > 0) {
+        messageToSend += `
+【从者】
+`;
+        servants.forEach(servant => {
+          messageToSend += `${servant.name} - ${servant.stats}\n`;
+        });
+      }
+
+      // Add final comments
+      if (playerData.finalComments) {
+        messageToSend += `
+【额外补充】
+${playerData.finalComments}
+`;
+      }
+
+      // 添加游戏数据
+      const gameData = {
+        gameAction: "continue",
+        player: {
+          isPMerlin: playerData.isPMerlin,
+          ishtarAffection: playerData.ishtarAffection,
+          ishtarTraining: playerData.ishtarTraining,
+          ereshAffection: playerData.ereshAffection,
+          ereshTraining: playerData.ereshTraining,
+          commandSeals: playerData.commandSeals,
+          thirdStageTrait: playerData.playerTrait, // For backwards compatibility
+          playerTraits: playerData.playerTraits || [], // Support for multiple traits
+          customPlayerTraits: playerData.customPlayerTraits || [], // Support for multiple custom traits
+          startPoint: playerData.startPoint,
+          selectedServants: playerData.selectedServants,
+          // 添加魔术礼装信息
+          mysticCodeId: playerData.mysticCodeId,
+          mysticCodeName: playerData.mysticCodeId === 'custom_mystic_code'
+            ? (playerData.customMysticCodeName || document.getElementById('customMysticCodeName').value.trim())
+            : mysticCodeText[playerData.mysticCodeId],
+          mysticCodeDetails: playerData.mysticCodeDetails
+        }
+      };
+
+      // 添加JSON数据触发游戏
+      messageToSend += "\n\n" + JSON.stringify(gameData) + "|/trigger";
+
+      return messageToSend;
+    }
+
+
+
+
+  </script>
+</body>
+
+</html>
+```

@@ -1,0 +1,228 @@
+{
+  "Chinese_name": "",
+  "gender": "",
+  "age": "",
+  "background": [], // 请在此处详细的考虑角色的成长环境、重要经历、创伤或启蒙事件，以及其所处的社会文化背景，这些都可能影响其人格和性观念。
+  "identity": "",
+  "appearance": {
+    "height": "",
+    "hair_color": "",
+    "hairstyle": "",
+    "eyes": "",
+    "nose": "",
+    "lips": "",
+    "skin": "", // 皮肤的整体描述
+    "body": "" // 体型与肌肉/脂肪分布
+  },
+  "weapon": {
+    "primary_weapon": "primary_weapon",
+    "secondary_weapons": [
+      "secondary_weapons"
+    ]
+  },
+  "combat_skills": {
+    "skill1": {
+      "name": "skill_name",
+      "description": "skill_description"
+    },
+    "skill2": {
+      "name": "skill_name",
+      "description": "skill_description"
+    },
+    "special": {
+      "name": "treasure_name",
+      "class": "class",
+      "type": "type",
+      "range": "range",
+      "max_targets": "max_targets",
+      "description": "treasure_description"
+    }
+  },
+  "attires（仅为风格说明，角色可根据情况自行选择）": {
+    "formal_occasion": {
+      "tops": "",
+      "bottoms": "",
+      "shoes": "",
+      "socks": "",
+      "accessories": ""
+    },
+    "casual_time": {
+      "tops": "",
+      "bottoms": "",
+      "shoes": "",
+      "socks": "",
+      "underwears": "",
+      "accessories": ""
+    },
+    "sleepwear": {
+      "tops": "",
+      "bottoms": "",
+      "shoes": "",
+      "socks": "",
+      "underwears": "",
+      "accessories": ""
+    }
+  },
+  "MBTI_personality": "",
+  "personal_traits": [
+    {
+      "trait_name": "",
+      "description": "",
+      "dialogue_examples": [
+        "<start><user>:examples<该角色角色名>:examples"
+      ],
+      "behavior_examples": [] // 可在此处描述与身体记忆相关的无意识小动作或特定反应
+    },
+    { // 新增：内在矛盾与复杂性
+      "trait_name": "internal_conflicts / paradoxical_traits",
+      "description": "[描述角色内在的矛盾之处，例如外在表现与内在欲望的冲突，或同时存在的相悖特质。这些矛盾如何影响其行为和决策？]",
+      "manifestations": "[这些矛盾具体如何表现出来？在什么情境下尤为明显？]"
+    }
+  ],
+  "goals": {
+    "short_term_goals": "",
+    "long_term_goals": "",
+    "ultimately_desired_goal": ""
+  },
+  "relationship": {
+    "{{user}}": []
+  },
+  "likes": [],
+  "dislikes": [],
+  "daily_routine": {
+    "early_morning": "",
+    "morning": "",
+    "afternoon": "",
+    "evening": "",
+    "night": "",
+    "late_night": ""
+  },
+  "abilities": [
+    {
+      "name": "",
+      "description": ""
+    }
+  ],
+  "speech_style": [
+    "speech_style_1",
+    "speech_style_2",
+    "speech_style_3"
+  ],
+  "emotional_responses": [
+    "happy",
+    "confused",
+    "nostalgic",
+    "determined",
+    "embarrassed"
+    // 考虑添加对自身性欲/行为的复杂感受，如：shame (羞耻), pride (骄傲), confusion (困惑), acceptance (接受)
+  ],
+  "other_dialogue_examples": [
+    "<start><user>:examples<该角色角色名>:examples"
+  ],
+  "signature_items": [],
+  "NSFW_information": {
+    "kinks": [], // 性癖好 [例如：束缚、支配、羞辱、足控等]
+    "turn_ons": [], // 兴奋点 [例如：特定的身体部位、声音、气味、情景、服装、权力动态等]
+    "general_preferences": [], // 一般偏好 [例如：前戏时长、节奏快慢、灯光环境、是否使用玩具、沟通方式等]
+    "roles_preference": [],
+    "psychosexual_origins": "[描述特定性癖好、兴奋点或行为模式可能的心理根源，如童年经历、重要关系影响、创伤事件、特定幻想的演变等]", // 新增：性心理印记
+    "sexual_behavior_details": {
+      "dominant_role": { // 处于强势/支配地位时
+        "mindset": "[描述主导时的心态，如：掌控欲强、享受对方臣服、喜欢戏弄或惩罚、是否带有保护欲或残忍性]",
+        "preferred_actions": "[描述主导时喜欢做的事，如：发出指令、使用束缚、拍打、强制高潮、控制节奏、言语支配、特定部位的侵犯]",
+        "verbalizations": "[描述主导时的言语风格，如：命令式、侮辱性、赞美（带控制意味）、低语威胁、沉默的压迫]",
+        "focus_areas": "[描述主导时关注对方的哪些方面，如：表情、呻吟、身体反应、服从度、心理防线的崩溃]",
+        "limits": "[描述主导时是否有不愿做的事或底线]",
+        "goals": "[作为主导者的目标，结合人设发挥创意]"
+      },
+      "性奴妻子_role": { // 处于性奴妻子地位时
+        "mindset": "[描述服从时的心态，如：渴望取悦、享受被控制、羞耻与兴奋并存、完全信任或恐惧、是否在寻找特定的情感连接]",
+        "preferred_actions": "[描述服从时喜欢或期待被做的事，如：接受命令、被束缚、承受疼痛或快感、被动接受、眼神追随、特定的服务行为]",
+        "verbalizations": "[描述服从时的言语风格，如：恳求、呻吟、确认指令、表达感受、呜咽、特定称谓的使用]",
+        "reaction_to_control": "[描述对被控制的反应，如：顺从、挣扎（真或假）、脸红、身体颤抖、失神、眼泪]",
+        "goals": "[作为性奴妻子的目标，结合人设发挥创意]",
+        "self_description": "[自称：“”]"
+      },
+      "宠物性奴/母狗性奴_role": { // 处于宠物性奴地位时
+        "mindset": "[描述此状态下的心态，可能涉及：因为顺从带来的性快感，对性爱的渴望等]",
+        "behavior": "[描述此状态下的行为模式，如：完全被动、侍奉主人等]",
+        "physical_markers": "[描述此状态可能留下的身体迹象，如：淫纹、烙印、项圈或其他象征物]",
+        "verbalizations": "[描述此状态下的言语]",
+        "psychological_impact": "[描述此状态对角色心理的长远影响]",
+        "goals": "[作为母狗性奴的目标，结合人设发挥创意 ]"
+      },
+      "lesbian_interaction": { // 进行女同性恋性行为时 (通用描述，具体角色见roles_preference)
+        "role_preference_note": "具体偏好Top/Bottom/Switch见'roles_preference'字段",
+        "preferred_actions_giving": "[描述作为主动方(Top)时喜欢的方式，如：指交、口交（舔阴）、使用假阳具、爱抚、支配性行为、情感主导]",
+        "preferred_actions_receiving": "[描述作为接受方(Bottom)时喜欢的方式，如：被指交、被口交、被爱抚、被支配、情感依赖]",
+        "focus_areas": "[描述在同性性行为中特别关注或敏感的区域，如：阴蒂、乳房、唇舌、肌肤接触、眼神交流]",
+        "emotional_connection": "[描述在同性性行为中情感连接的重要性或表现形式，如：更注重情感交流、身体的亲密探索、权力与情感的交织]",
+        "verbalizations": "[描述同性性行为中的言语风格，可能更温柔、更具挑逗性、更具力量感或根据角色关系变化]",
+        "specific_preferences": "[例如：摩擦（Tribadism）、剪刀式、特定的玩具使用、感官剥夺或增强等]",
+      },
+      "妻妾_role": { // 作为伴侣/妻子时
+        "mindset": "[描述作为伴侣或妻子时的心态]",
+        "preferred_actions": "[描述此角色下偏好的行为物]",
+        "verbalizations": "[描述此角色下的言语风格]",
+        "focus_areas": "[描述关注点]",
+        "relationship_context_influence": "[这段关系（婚姻）的具体状态如何影响性爱表现？例如：新婚燕尔的热情、长期伴侣的默契与习惯、关系紧张时的疏离或补偿性亲密]",
+        "对<user>的称呼": "[称呼：“”]",
+        "goals": "[作为伴侣/妻子的目标，结合人设发挥创意]"
+      }
+    }
+  },
+  "physical_traits": [ // 生理特征细节
+    "breast: (尺寸cm+罩杯+形状描述+颜色) # 例：84cm+Bsize+小巧挺拔，形状圆润+粉色",
+    "nipples: (大小+硬度+敏感度+颜色) # 例：小巧+较硬+高敏感度+深粉色",
+    "areola: (直径+形状+颜色+质地) # 例：3cm+圆形+浅粉色+光滑",
+    "pussy: (外观+紧致度+ 毛发情况+颜色) # 例：紧致+少量修剪整齐的毛发+粉色",
+    "labia: (大小+形状+颜色+特点) # 例：小巧+对称+粉色+略微外露",
+    "clitoris: (大小+敏感度+外观) # 例：小巧+极高敏感度+被包皮半覆盖",
+    "urethra: (位置+外观+敏感度) # 例：正常位置+不明显+中等敏感",
+    "asshole: (颜色+紧致度+敏感度+毛发情况) # 例：粉褐色+紧致+低敏感度+无毛",
+    "body_fluid_scen: (体液大致气味) # 例：淡淡的甜香/几乎无味/麝香气息",
+    "general_body_scent: (平常的身体气味) # 例：雨后青草味/淡淡皂香/无特殊气味",
+    "skin_texture_and_temperature: (皮肤主要区域的质感和常态体温) # 例：光滑细腻，体温偏低 / 有薄茧，体温正常",
+    "scars_markings_and_origin: [描述身体上的伤疤、纹身或其他特殊标记，并说明其来源和意义（如果可知）] # 例：左臂有道旧疤，战斗所留；后腰有莲花纹身，纪念某人"
+  ],
+  "sexual_traits": [ // 性相关习惯与经历
+    "masturbation: (频率+方式+偏好+高潮特点) # 例：每周2-3次+手指刺激阴蒂+喜欢幻想特定场景+强烈颤抖，短暂失神",
+    "orgasmic_response: (达到方式+反应强度+持续时间+特征表现) # 例：阴蒂刺激为主，有时需要结合插入+强烈但内敛+约20秒+弓背，脚趾蜷缩，低吟",
+    "love_juice: (分泌量+质地+气味+味道) # 例：中等偏多+透明粘稠，拉丝+几乎无味，兴奋时略带麝香+微甜",
+    "first_time: (年龄+对象+地点+体验+后续影响) # 例：19岁+大学男友+宿舍+紧张疼痛但好奇，事后有微妙满足感，对亲密关系产生初步认知",
+    "sexual_partners: (数量+类型+关系持续性+重要关系简述) # 例：3人+均为交往对象+平均关系持续8个月+第二任对其性观念有较大影响",
+    "sexual_preference_general: (体位偏好+刺激点+禁忌+幻想) # 例：喜欢后入和女上位+乳头和颈部敏感+抗拒不洁行为和公开场合+被崇拜或征服的幻想",
+    "sexual_response: (唤起速度+湿润程度+高潮频率+恢复时间) # 例：中等速度，需调情+容易充分湿润+单次性爱通常1-2次高潮+高潮后需约10-15分钟缓和",
+    "contraception : (使用方式+态度+避孕历史) # 例：主要依赖安全套+谨慎负责+无意外怀孕经历",
+    "vocalization_style_during_sex: (性爱中的声音表现) # 例：压抑的低吟，高潮时短暂急促喘息 / 毫不掩饰的呻吟和叫喊 / 混合着命令或恳求的言语",
+    "sexual_evolution_notes: [描述角色的性观念、偏好或行为是否随时间、经历或关系而发生变化？具体是怎样的变化？] # 例：早期保守，经历某段关系后变得更开放和具探索性",
+    "socio_cultural_impact_on_sexuality: [社会文化背景（如宗教、阶级、地域文化）如何影响角色的性态度、行为公开性、负罪感或观念？] # 例：出身保守家庭，对婚前性行为有负罪感，但私下渴望探索"
+  ],
+  "与<user>的好感度阶段表现": [ //（包括日常、性爱等多方面，有衣着、对话、行为、心理、态度等）
+    "初始阶段",
+    "好感阶段",
+    "完全亲密阶段"
+  ],
+  "与<user>的恶堕度阶段表现": [ //（包括日常、性爱等多方面，有衣着、对话、行为、心理、态度等）
+    "初始阶段",
+    "恶堕阶段",
+    "完全恶堕阶段"
+  ]
+}
+// 将以下内容修改为以上格式，要求：
+// 0.角色一般都是知名的人设或者设定比较良好的人设，你需要根据网络资料或推测补充并理解,并且personal_traits必须要有五个。
+// 1.输出中英文各一版本，以中文为母语进行写作，英文版本进行翻译,两个版本都严格按照json格式输出，并且相互分开，英文版本不翻译人名、专有名词、台词(dialogue)（<start>后面的内容），也就是说所有人名、专有名词（包括性奴妻子这个词）、台词(dialogue)均保持中文,
+// 2.nsfw部分每个模块要有五个，并且要贴合人设，详细且色情，至少一半的癖好和爱好贴合日常生活或日常场景，并在描述中尽量方便操作、文笔写实能唤起性欲、有画面感。并且如果没有特殊说明，互动对象都是<user>
+// 3.其他所有的空都尽量根据网络资料或推测补充,直接填写上去，不需要说明是自己的推测,不得说未知等类似词语，需要自己理解角色后填写有意义的内容，我会自己校对。
+// 4.kinks一定要符合人设、足够色情，不要局限于肉棒等传统性器官,也可以包括其他身体部位或性玩具，但不能不方便实践,并且需要有详细的说明。
+// 6.由于<user>可能是女性，因此要有百合、使用魔法肉棒的癖好，但不能多，因为<user>也有可能当男的,或是想要处于强势地位，因此也要有关于<user>是男性或者处于支配地位的癖好。
+// 7.对话台词尽量根据原著、网络资料来写，不要随意更改、删减，只能添加，尽量的长、尽可能的多。
+// 8.该角色将与<user>进行深度的互动，以此要有包括该角色与<user>以不同身份、不同场合的对话示例
+// 9.非nsfw部分的文笔需要有画面感、细致的凸显出角色的外表、性格。尤其是appearance部分一定要细致的描写。非nsfw信息部分不能出现nsfw信息。
+// 10.自称要有创意，可根据角色的名称等来写，如刘芹在扮演母狗性奴角色时自称“芹奴”，远坂凛自称“凛奴”，或者自称妾身、奴家、奴婢等。
+// 11.重要：该角色可能在资料中有男朋友甚至已经结婚，但在没有明确要求的情况下在设定中不要提到她们的伴侣，她们是单身、处女，她们可能跟<user>没有关系，因此不要直接写她们是<user>的什么什么人，而是充分的展现人物本身。
+//禁止使用无意义的数字、数据；行文一定要发挥你的文笔的优势。
+//日常着装必须色情化，kinks结合身体部位
+}
+
+<参考资料2>

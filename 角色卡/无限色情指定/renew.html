@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>无限色情指定 - 选择你的体验</title>
+  <style>
+    :root {
+      --primary-color: #ff4d8f;
+      --secondary-color: #ff85a6;
+      --accent-color: #ff66a3;
+      --background-color: #fff0f5;
+      --text-color: #333333;
+      --card-bg: #ffffff;
+      --panel-bg: #ffe6f0;
+      --border-color: #ffb6c1;
+      --warning-color: #ff6b6b;
+      --success-color: #4ecdc4;
+      --shadow-color: rgba(255, 77, 143, 0.2);
+      --input-bg: #ffffff;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: var(--panel-bg);
+      border-radius: 8px;
+      border-bottom: 3px solid var(--accent-color);
+      box-shadow: 0 4px 10px var(--shadow-color);
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: var(--primary-color);
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-top: 30px;
+      border-bottom: 2px solid var(--accent-color);
+      padding-bottom: 10px;
+    }
+
+    .form-section {
+      background-color: var(--card-bg);
+      padding: 25px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary-color);
+      box-shadow: 0 4px 8px var(--shadow-color);
+      display: none;
+    }
+
+    .form-section.active {
+      display: block;
+    }
+
+    .selection-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .selection-option {
+      background-color: var(--input-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      padding: 15px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .selection-option:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px var(--shadow-color);
+      border-color: var(--accent-color);
+    }
+
+    .selection-option.selected {
+      border-color: var(--primary-color);
+      background-color: var(--panel-bg);
+      box-shadow: 0 0 15px var(--shadow-color);
+    }
+
+    .selection-option h3 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      display: none;
+    }
+
+    label {
+      display: block;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      margin: 30px auto;
+      box-shadow: 0 4px 8px var(--shadow-color);
+    }
+
+    button:hover {
+      background-color: var(--accent-color);
+      box-shadow: 0 6px 12px var(--shadow-color);
+      transform: translateY(-2px);
+    }
+
+    .navigation-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+
+    .nav-button {
+      max-width: 150px;
+    }
+
+    #summary-page {
+      background-color: var(--card-bg);
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px var(--shadow-color);
+      border-left: 4px solid var(--accent-color);
+    }
+
+    .summary-content {
+      margin: 20px 0;
+      padding: 15px;
+      background-color: rgba(255, 240, 245, 0.5);
+      border-radius: 8px;
+      box-shadow: inset 0 0 8px var(--shadow-color);
+    }
+
+    .summary-title {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .summary-item {
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .summary-item h3 {
+      margin-bottom: 5px;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+    }
+
+    .summary-item h3::before {
+      content: '•';
+      margin-right: 8px;
+      color: var(--accent-color);
+      font-size: 1.5em;
+    }
+
+    .summary-item p {
+      margin-left: 20px;
+      line-height: 1.5;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .confirmation-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    #start-experience {
+      background-color: var(--primary-color);
+      font-size: 1.2rem;
+      padding: 15px 40px;
+    }
+
+    #summary-prev {
+      background-color: var(--panel-bg);
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+    }
+
+    .category-title {
+      position: relative;
+      color: var(--primary-color);
+      font-weight: bold;
+      margin-top: 25px;
+      margin-bottom: 10px;
+      padding-left: 15px;
+      font-size: 1.2rem;
+    }
+
+    .category-title::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 20px;
+      background-color: var(--accent-color);
+      border-radius: 4px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background-color: var(--panel-bg);
+      border-radius: 5px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      background-color: var(--primary-color);
+      width: 20%;
+      transition: width 0.5s ease;
+    }
+
+    /* 滑块容器样式 */
+    .slider-container {
+      margin: 30px 0;
+      padding: 0 10px;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .slider-title {
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .slider-selection {
+      font-size: 0.9rem;
+      color: var(--accent-color);
+      max-width: 70%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* 滑块样式 */
+    .options-slider {
+      width: 100%;
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 10px 0;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-color) var(--panel-bg);
+    }
+
+    .options-slider::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .options-slider::-webkit-scrollbar-track {
+      background: var(--panel-bg);
+      border-radius: 10px;
+    }
+
+    .options-slider::-webkit-scrollbar-thumb {
+      background-color: var(--accent-color);
+      border-radius: 10px;
+    }
+
+    .slider-item {
+      flex: 0 0 auto;
+      width: 130px;
+      margin-right: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 2px solid var(--border-color);
+      background-color: var(--input-bg);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .slider-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px var(--shadow-color);
+      border-color: var(--accent-color);
+    }
+
+    .slider-item.selected {
+      border-color: var(--primary-color);
+      background-color: var(--panel-bg);
+      box-shadow: 0 0 15px var(--shadow-color);
+    }
+
+    .slider-item h4 {
+      margin: 5px 0;
+      color: var(--primary-color);
+      font-size: 1rem;
+    }
+
+    .slider-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .slider-nav button {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 5px var(--shadow-color);
+      margin: 0;
+      padding: 0;
+      transition: all 0.2s ease;
+    }
+
+    .slider-nav button:hover {
+      background-color: var(--primary-color);
+      transform: scale(1.1);
+    }
+
+    .slider-nav button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>无限色情指定</h1>
+      <p>通过几个简单的选择，创建你的专属体验</p>
+      <div class="progress-bar">
+        <div class="progress" id="progress-indicator"></div>
+      </div>
+    </header>
+
+    <div id="creation-form">
+      <!-- 第一阶段：选择性别 -->
+      <section id="section-gender" class="form-section active">
+        <h2>选择你的性别</h2>
+        <p>请选择你在故事中的性别</p>
+
+        <div class="selection-grid">
+          <div class="selection-option" data-value="男性">
+            <input type="radio" name="player-gender" id="gender-male" value="男性">
+            <label for="gender-male">
+              <h3>男性</h3>
+              <p>选择男性角色进行体验</p>
+            </label>
+          </div>
+
+          <div class="selection-option" data-value="女性">
+            <input type="radio" name="player-gender" id="gender-female" value="女性">
+            <label for="gender-female">
+              <h3>女性</h3>
+              <p>选择女性角色进行体验</p>
+            </label>
+          </div>
+        </div>
+
+        <div class="navigation-buttons">
+          <div></div>
+          <button id="gender-next" class="nav-button">下一步</button>
+        </div>
+      </section>
+
+      <!-- 第二阶段：选择角色 -->
+      <section id="section-player-character" class="form-section">
+        <h2>选择你的角色</h2>
+        <p>请为自己选择一个角色</p>
+
+        <div id="male-characters" class="selection-grid" style="display: none;">
+          <div class="selection-option" data-value="男性强奸犯">
+            <input type="radio" name="player-character" id="male-char1" value="男性强奸犯">
+            <label for="male-char1">
+              <h3>男性强奸犯</h3>
+            </label>
+          </div>
+
+          <div class="selection-option" data-value="男性教师">
+            <input type="radio" name="player-character" id="male-char2" value="男性教师">
+            <label for="male-char2">
+              <h3>男性教师</h3>
+            </label>
+          </div>
+
+          <div class="selection-option" data-value="男性老板">
+            <input type="radio" name="player-character" id="male-char3" value="男性老板">
+            <label for="male-char3">
+              <h3>男性老板</h3>
+            </label>
+          </div>
+
+          <div class="selection-option" data-value="男性冒险者">
+            <input type="radio" name="player-character" id="male-char4" value="男性冒险者">
+            <label for="male-char4">
+              <h3>男性冒险者</h3>
+            </label>
+          </div>
+        </div>
+
+        <div id="female-characters" class="selection-grid" style="display: none;">
+          <!-- 普通角色 -->
+          <div class="selection-option" data-value="女性学生">
+            <input type="radio" name="player-character" id="female-char1" value="女性学生">
+            <label for="female-char1">
+              <h3>女性学生</h3>
+            </label>
+          </div>
+
+          <div class="selection-option" data-value="女性护士">
+            <input type="radio" name="player-character" id="female-char2" value="女性护士">
+            <label for="female-char2">
+              <h3>女性护士</h3>
+            </label>
+          </div>
+
+          <div class="selection-option" data-value="女性秘书">
+            <input type="radio" name="player-character" id="female-char3" value="女性秘书">
+            <label for="female-char3">
+              <h3>女性秘书</h3>
+            </label>
+          </div>
+
+          <div class="selection-option" data-value="女性主妇">
+            <input type="radio" name="player-character" id="female-char4" value="女性主妇">
+            <label for="female-char4">
+              <h3>女性主妇</h3>
+            </label>
+          </div>
+        </div>
+
+        <div class="navigation-buttons">
+          <button id="player-character-prev" class="nav-button">上一步</button>
+          <button id="player-character-next" class="nav-button">下一步</button>
+        </div>
+      </section>
+
+      <!-- 第三阶段：选择互动角色 -->
+      <section id="section-interact-character" class="form-section">
+        <h2>选择互动角色</h2>
+        <p>请选择你想要互动的角色</p>
+
+        <div class="selection-grid" id="interact-character-grid">
+          <!-- 将由JS动态填充 -->
+        </div>
+
+        <div class="navigation-buttons">
+          <button id="interact-character-prev" class="nav-button">上一步</button>
+          <button id="interact-character-next" class="nav-button">下一步</button>
+        </div>
+      </section>
+
+      <!-- 第四阶段：选择主题、服装、行为、玩法（滑块版本） -->
+      <section id="section-options" class="form-section">
+        <h2>选择场景细节</h2>
+        <p>请选择你感兴趣的主题、服装、行为和玩法（可多选）</p>
+
+        <!-- 主题滑块 -->
+        <div class="category-title">主题</div>
+        <div class="slider-container">
+          <div class="slider-header">
+            <div class="slider-title">主题选择</div>
+            <div class="slider-selection" id="theme-selection">未选择</div>
+          </div>
+          <div class="options-slider" id="theme-slider">
+            <!-- 将由JS动态填充 -->
+          </div>
+          <div class="slider-nav">
+            <button id="theme-prev" aria-label="往前滚动">&lt;</button>
+            <button id="theme-next" aria-label="往后滚动">&gt;</button>
+          </div>
+        </div>
+
+        <!-- 服装滑块 -->
+        <div class="category-title">服装</div>
+        <div class="slider-container">
+          <div class="slider-header">
+            <div class="slider-title">服装选择</div>
+            <div class="slider-selection" id="clothing-selection">未选择</div>
+          </div>
+          <div class="options-slider" id="clothing-slider">
+            <!-- 将由JS动态填充 -->
+          </div>
+          <div class="slider-nav">
+            <button id="clothing-prev" aria-label="往前滚动">&lt;</button>
+            <button id="clothing-next" aria-label="往后滚动">&gt;</button>
+          </div>
+        </div>
+
+        <!-- 行为滑块 -->
+        <div class="category-title">行为</div>
+        <div class="slider-container">
+          <div class="slider-header">
+            <div class="slider-title">行为选择</div>
+            <div class="slider-selection" id="behavior-selection">未选择</div>
+          </div>
+          <div class="options-slider" id="behavior-slider">
+            <!-- 将由JS动态填充 -->
+          </div>
+          <div class="slider-nav">
+            <button id="behavior-prev" aria-label="往前滚动">&lt;</button>
+            <button id="behavior-next" aria-label="往后滚动">&gt;</button>
+          </div>
+        </div>
+
+        <!-- 玩法滑块 -->
+        <div class="category-title">玩法</div>
+        <div class="slider-container">
+          <div class="slider-header">
+            <div class="slider-title">玩法选择</div>
+            <div class="slider-selection" id="gameplay-selection">未选择</div>
+          </div>
+          <div class="options-slider" id="gameplay-slider">
+            <!-- 将由JS动态填充 -->
+          </div>
+          <div class="slider-nav">
+            <button id="gameplay-prev" aria-label="往前滚动">&lt;</button>
+            <button id="gameplay-next" aria-label="往后滚动">&gt;</button>
+          </div>
+        </div>
+
+        <div class="navigation-buttons">
+          <button id="options-prev" class="nav-button">上一步</button>
+          <button id="options-next" class="nav-button">下一步</button>
+        </div>
+      </section>
+
+      <!-- 第五阶段：总结 -->
+      <section id="summary-page" class="form-section">
+        <h2>你的选择</h2>
+        <p>以下是你的所有选择，确认无误后点击"开始体验"</p>
+
+        <div class="summary-title">选择摘要</div>
+        <div class="summary-content">
+          <!-- 将由JS动态填充 -->
+        </div>
+
+        <div class="confirmation-buttons">
+          <button id="summary-prev" class="nav-button">返回修改</button>
+          <button id="start-experience">开始体验</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // 数据定义
+    const characterData = {
+      "男性角色": [
+        "男性强奸犯", "男性教师", "男性老板", "男性冒险者"
+      ],
+      "女性角色": [
+        // 普通角色
+        "女性学生", "女性护士", "女性秘书", "女性主妇",
+
+        // Fate系列
+        "伊什塔尔", "艾蕾", "黑贞德", "远坂凛", "间桐樱",
+        "阿尔托莉雅(lancer)", "白贞德", "爱尔奎特·布伦史塔德",
+        "沙条爱歌", "布伦希尔德", "梅莉", "玛丽",
+        "埃列什基伽勒(Beast)", "太空伊什塔尔", "阿斯塔蒂",
+        "迦摩", "皇女", "阿尔托莉雅", "提亚马特", "杜尔迦",
+        "帕尔瓦蒂", "阿尔托莉雅(alter)", "斯卡哈",
+
+        // 其他游戏/动漫角色
+        "符玄", "云璃", "灵砂", "久远寺有珠", "阮梅",
+        "花火", "黑天鹅", "布洛妮娅", "希儿", "伊莉雅",
+        "美游", "虞美人", "蒂法", "爱丽丝", "摩根",
+        "苍崎青子", "苍崎橙子", "尼托克丽丝", "卡莲",
+        "两仪式", "葛饰北斋"
+      ]
+    };
+
+    const optionsData = {
+      "主题": [
+        "恋爱喜剧", "出轨", "强姦", "乱伦", "温泉", "女同性恋",
+        "企业", "相亲", "催眠", "洗澡", "其他动物", "虐恋",
+        "性爱", "学校作品", "安眠", "M男", "脱粪", "触手",
+        "乳头舔", "调教", "运输", "制作/専門", "冒险", "机器人",
+        "深海真実", "科幻小说", "SM", "汽车性爱", "学院作品",
+        "企划", "乱闘", "疑惑", "運動", "其他植物", "肉系",
+        "幻视", "矛盾", "男同性恋", "实录", "浪漫喜剧",
+        "动漫同人", "女同性爱", "3D", "流量", "人妻"
+      ],
+      "服装": [
+        // 眼镜与配饰
+        "眼镜", "猫耳", "身体链", "高跟鞋", "袜子", "绑腿",
+
+        // 角色扮演
+        "角色扮演", "COSPLAY制服", "女僕", "女战士", "女忍者",
+        "OL", "泳装模特", "空中小姐", "宪兵", "女祭司", "动漫人物",
+        "迷你裙警察", "福利彩色扮演", "女僕人派",
+
+        // 常规服装
+        "内衣", "制服", "水手服", "泳装", "和服", "围裙",
+        "连裤袜", "运动鞋", "制服外套", "絲襪連褲襪", "学校泳装",
+        "迷你裙", "浴衣", "紧身衣", "连衣裙", "校服", "水手套装",
+        "螺旋紧身衣", "紧身", "日本衣服和浴衣", "娃娃"
+      ],
+      "行为": [
+        // 性交类
+        "乳交", "中出", "多P", "69", "上位", "口交", "肛交",
+        "手指插入", "手淫", "深喉", "足交", "骑乘位", "二穴一同入",
+        "一男两女", "两男一女", "按摩", "侵入", "按摩棒", "跳蛋", "SM",
+
+        // 体液相关
+        "潮吹", "颜射", "飲尿", "排便", "放尿", "喷射/精液", "集體噴射",
+
+        // 亲密行为
+        "接吻", "舌吻", "亲吻", "亲父", "约会",
+
+        // 特殊状态
+        "自慰", "圣母", "母乳", "食事", "剃毛", "打屁股", "不穿内褲",
+        "不穿胸罩", "增加/健身", "白眼失神", "搔癢", "红門", "晚餐",
+        "禁欲", "灌肠", "潮射", "轮姦", "拘束", "吞嚥", "酒飲",
+        "捆绑/束缚", "差動", "骚手", "鞭责", "打手槍", "指导", "玩具"
+      ],
+      "玩法": [
+        // 主要玩法
+        "凌辱", "波霸", "捆绑", "監禁", "玩具", "SM", "户外",
+        "乳液", "羞辱", "女僕按摩棒", "拘束", "调教", "立刻口交",
+        "脱粪", "监禁", "被单", "插入異物", "灌腸", "露出", "汽車性愛",
+
+        // 特殊玩法
+        "催眠", "落語", "臭屎", "妹汁", "子宫颈", "骚婆", "暗黑",
+        "睡眠波", "乳汁喷溅", "乳头", "足球", "辅助自助", "木塞交叠",
+        "個器具", "自慰", "妊娠插入"
+      ]
+    };
+
+    // 初始化各阶段的交互角色列表
+    function initializeInteractCharacters() {
+      const interactCharGrid = document.getElementById('interact-character-grid');
+
+      // 清空现有内容
+      interactCharGrid.innerHTML = '';
+
+      // 显示所有角色（不再基于玩家性别过滤）
+      const allCharacters = [...characterData['男性角色'], ...characterData['女性角色']];
+
+      // 为每个角色创建选项
+      allCharacters.forEach((character, index) => {
+        const option = document.createElement('div');
+        option.className = 'selection-option';
+        option.dataset.value = character;
+
+        option.innerHTML = `
+          <input type="radio" name="interact-character" id="interact-char${index}" value="${character}">
+          <label for="interact-char${index}">
+            <h3>${character}</h3>
+          </label>
+        `;
+
+        interactCharGrid.appendChild(option);
+      });
+
+      // 添加事件监听器
+      document.querySelectorAll('#interact-character-grid .selection-option').forEach(option => {
+        option.addEventListener('click', function () {
+          selectOption(this, 'radio');
+        });
+      });
+    }
+
+    // 初始化选项（滑块版本）
+    function initializeOptions() {
+      const categories = ['theme', 'clothing', 'behavior', 'gameplay'];
+      const optionsKeys = ['主题', '服装', '行为', '玩法'];
+
+      categories.forEach((category, index) => {
+        const slider = document.getElementById(`${category}-slider`);
+        const options = optionsData[optionsKeys[index]];
+
+        // 清空现有内容
+        slider.innerHTML = '';
+
+        // 为每个选项创建滑块元素
+        options.forEach((option, optIndex) => {
+          const sliderItem = document.createElement('div');
+          sliderItem.className = 'slider-item';
+          sliderItem.dataset.value = option;
+          sliderItem.dataset.category = category;
+
+          sliderItem.innerHTML = `
+            <input type="checkbox" name="${category}" id="${category}-${optIndex}" value="${option}" style="display:none;">
+            <h4>${option}</h4>
+          `;
+
+          slider.appendChild(sliderItem);
+
+          // 添加点击事件
+          sliderItem.addEventListener('click', function () {
+            this.classList.toggle('selected');
+            const input = this.querySelector('input');
+            input.checked = !input.checked;
+            updateSelectionText(category);
+          });
+        });
+
+        // 设置滑块导航按钮
+        setupSliderNavigation(category);
+      });
+    }
+
+    // 设置滑块导航
+    function setupSliderNavigation(category) {
+      const slider = document.getElementById(`${category}-slider`);
+      const prevBtn = document.getElementById(`${category}-prev`);
+      const nextBtn = document.getElementById(`${category}-next`);
+
+      // 向前滚动
+      prevBtn.addEventListener('click', () => {
+        slider.scrollBy({ left: -400, behavior: 'smooth' });
+      });
+
+      // 向后滚动
+      nextBtn.addEventListener('click', () => {
+        slider.scrollBy({ left: 400, behavior: 'smooth' });
+      });
+    }
+
+    // 更新选择文本
+    function updateSelectionText(category) {
+      const selectedItems = Array.from(document.querySelectorAll(`#${category}-slider .slider-item.selected`))
+        .map(item => item.dataset.value);
+
+      const selectionText = document.getElementById(`${category}-selection`);
+      if (selectedItems.length > 0) {
+        selectionText.textContent = selectedItems.join('、');
+      } else {
+        selectionText.textContent = '未选择';
+      }
+    }
+
+    // 选择项目
+    function selectOption(option, type) {
+      const input = option.querySelector('input');
+
+      if (type === 'radio') {
+        // 单选
+        document.querySelectorAll(`input[name="${input.name}"]`).forEach(radio => {
+          radio.parentElement.classList.remove('selected');
+        });
+        option.classList.add('selected');
+        input.checked = true;
+      } else if (type === 'checkbox') {
+        // 多选
+        option.classList.toggle('selected');
+        input.checked = !input.checked;
+      }
+    }
+
+    // 更新进度条
+    function updateProgressBar(step) {
+      const progress = document.getElementById('progress-indicator');
+      const percentage = step * 20; // 5个步骤，每步20%
+      progress.style.width = `${percentage}%`;
+    }
+
+    // 显示某一阶段，隐藏其他阶段
+    function showSection(sectionId) {
+      // 记录当前的滚动位置
+      const scrollPosition = window.scrollY;
+
+      document.querySelectorAll('.form-section').forEach(section => {
+        section.classList.remove('active');
+      });
+
+      const targetSection = document.getElementById(sectionId);
+      targetSection.classList.add('active');
+
+      // 如果是最后一步，确保它正确显示
+      if (sectionId === 'summary-page') {
+        targetSection.style.display = 'block';
+        // 滚动到顶部以完整查看总结
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // 更新进度条
+      const steps = {
+        'section-gender': 1,
+        'section-player-character': 2,
+        'section-interact-character': 3,
+        'section-options': 4,
+        'summary-page': 5
+      };
+
+      updateProgressBar(steps[sectionId]);
+    }
+
+    // 生成总结内容
+    function generateSummary() {
+      const summaryContent = document.querySelector('.summary-content');
+
+      // 获取所有选择
+      const playerGender = document.querySelector('input[name="player-gender"]:checked').value;
+      const playerCharacter = document.querySelector('input[name="player-character"]:checked').value;
+      const interactCharacter = document.querySelector('input[name="interact-character"]:checked').value;
+
+      // 获取多选项（从滑块中）
+      const getSelectedOptions = (category) => {
+        const elements = document.querySelectorAll(`#${category}-slider .slider-item.selected`);
+        return Array.from(elements).map(el => el.dataset.value);
+      };
+
+      const themes = getSelectedOptions('theme');
+      const clothing = getSelectedOptions('clothing');
+      const behaviors = getSelectedOptions('behavior');
+      const gameplay = getSelectedOptions('gameplay');
+
+      // 创建总结HTML，添加延迟展示动画
+      summaryContent.innerHTML = ''; // 清空内容
+
+      const items = [
+        { title: '你的性别', content: playerGender },
+        { title: '你的角色', content: playerCharacter },
+        { title: '互动角色', content: interactCharacter },
+        { title: '主题', content: themes.length > 0 ? themes.join('、') : '未选择' },
+        { title: '服装', content: clothing.length > 0 ? clothing.join('、') : '未选择' },
+        { title: '行为', content: behaviors.length > 0 ? behaviors.join('、') : '未选择' },
+        { title: '玩法', content: gameplay.length > 0 ? gameplay.join('、') : '未选择' }
+      ];
+
+      // 分步添加每个选项，实现动态展示效果
+      items.forEach((item, index) => {
+        setTimeout(() => {
+          const element = document.createElement('div');
+          element.className = 'summary-item';
+          element.innerHTML = `
+            <h3>${item.title}</h3>
+            <p>${item.content}</p>
+          `;
+          summaryContent.appendChild(element);
+        }, index * 150); // 每个项目间隔150ms展示
+      });
+
+      // 保存选择用于发送
+      window.characterSelections = {
+        playerGender: playerGender,
+        playerCharacter: playerCharacter,
+        interactCharacter: interactCharacter,
+        themes: themes,
+        clothing: clothing,
+        behaviors: behaviors,
+        gameplay: gameplay
+      };
+    }
+
+    // 发送选择给AI
+    function sendSelectionsToAI() {
+      // 获取存储的选择
+      const selections = window.characterSelections;
+      if (!selections) return;
+
+      // 构建发送的消息
+      const messageContent = `我已经做好了角色设定的选择：
+
+**我的性别**: ${selections.playerGender}
+**我的角色**: ${selections.playerCharacter}
+**互动角色**: ${selections.interactCharacter}
+**主题**: ${selections.themes.length > 0 ? selections.themes.join('、') : '无特定主题'}
+**服装**: ${selections.clothing.length > 0 ? selections.clothing.join('、') : '无特定服装'}
+**行为**: ${selections.behaviors.length > 0 ? selections.behaviors.join('、') : '无特定行为'}
+**玩法**: ${selections.gameplay.length > 0 ? selections.gameplay.join('、') : '无特定玩法'}
+
+请根据我的选择，开始这个无限色情体验！`;
+
+      console.log("Sending message to AI:", messageContent);
+
+      // 使用slash命令发送消息并触发响应
+      try {
+        // 创建slash命令数组
+        const commands = [];
+
+        // 添加发送消息命令
+        commands.push(`/send ${messageContent}`);
+
+        // 添加触发AI回复命令
+        commands.push('/trigger await=true');
+
+        console.log("Prepared commands:", commands);
+
+        // 尝试关闭iframe
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ event_type: 'CLOSE_IFRAME' }, '*');
+        }
+
+        // 给予框架关闭的时间
+        setTimeout(function () {
+          if (typeof window.parent.triggerSlash === 'function') {
+            window.parent.triggerSlash(commands.join('|'));
+            console.log('通过父窗口triggerSlash发送了命令');
+          }
+          else if (typeof triggerSlash === 'function') {
+            triggerSlash(commands.join('|'));
+            console.log('通过triggerSlash发送了命令');
+          }
+          else if (typeof window.parent.executeSlashCommands === 'function') {
+            window.parent.executeSlashCommands(commands.join('|'));
+            console.log('通过父窗口executeSlashCommands发送了命令');
+          }
+          else if (typeof executeSlashCommands === 'function') {
+            executeSlashCommands(commands.join('|'));
+            console.log('通过executeSlashCommands发送了命令');
+          }
+          else if (typeof window.parent.eventEmit === 'function') {
+            window.parent.eventEmit('USER_MESSAGE_SENT', messageContent);
+            setTimeout(() => window.parent.eventEmit('GENERATE_CLICKED', {}), 100);
+            console.log('通过父窗口事件系统发送了消息');
+          }
+          else if (typeof eventEmit === 'function') {
+            eventEmit('USER_MESSAGE_SENT', messageContent);
+            setTimeout(() => eventEmit('GENERATE_CLICKED', {}), 100);
+            console.log('通过事件系统发送了消息');
+          }
+          else if (window.parent) {
+            window.parent.postMessage({
+              event_type: 'EXECUTE_SLASH_COMMANDS',
+              data: commands.join('|')
+            }, '*');
+            console.log('通过postMessage发送了命令');
+          }
+          else {
+            // 复制到剪贴板
+            const copyText = document.createElement('textarea');
+            copyText.value = messageContent;
+            document.body.appendChild(copyText);
+            copyText.select();
+            document.execCommand('copy');
+            document.body.removeChild(copyText);
+
+            alert('无法直接发送消息，已将内容复制到剪贴板，请手动粘贴到聊天窗口');
+          }
+        }, 100);
+      } catch (error) {
+        console.error('发送消息时出错:', error);
+        alert('发送消息失败，请重试或手动输入');
+      }
+    }
+
+    // 初始化事件监听器
+    document.addEventListener('DOMContentLoaded', function () {
+      // 为所有选项添加选择事件
+      document.querySelectorAll('.selection-option').forEach(option => {
+        option.addEventListener('click', function () {
+          const input = this.querySelector('input');
+          if (input.type === 'radio') {
+            selectOption(this, 'radio');
+          } else if (input.type === 'checkbox') {
+            selectOption(this, 'checkbox');
+          }
+        });
+      });
+
+      // 第一阶段：性别选择
+      document.getElementById('gender-next').addEventListener('click', function () {
+        const selectedGender = document.querySelector('input[name="player-gender"]:checked');
+        if (!selectedGender) {
+          alert('请选择你的性别');
+          return;
+        }
+
+        // 显示对应性别的角色选项
+        const gender = selectedGender.value;
+        if (gender === '男性') {
+          document.getElementById('male-characters').style.display = 'grid';
+          document.getElementById('female-characters').style.display = 'none';
+        } else {
+          document.getElementById('male-characters').style.display = 'none';
+          document.getElementById('female-characters').style.display = 'grid';
+        }
+
+        showSection('section-player-character');
+      });
+
+      // 第二阶段：角色选择
+      document.getElementById('player-character-prev').addEventListener('click', function () {
+        showSection('section-gender');
+      });
+
+      document.getElementById('player-character-next').addEventListener('click', function () {
+        if (!document.querySelector('input[name="player-character"]:checked')) {
+          alert('请选择你的角色');
+          return;
+        }
+
+        // 初始化互动角色列表
+        initializeInteractCharacters();
+        showSection('section-interact-character');
+      });
+
+      // 第三阶段：互动角色选择
+      document.getElementById('interact-character-prev').addEventListener('click', function () {
+        showSection('section-player-character');
+      });
+
+      document.getElementById('interact-character-next').addEventListener('click', function () {
+        if (!document.querySelector('input[name="interact-character"]:checked')) {
+          alert('请选择互动角色');
+          return;
+        }
+
+        // 初始化选项
+        initializeOptions();
+        showSection('section-options');
+      });
+
+      // 第四阶段：选项选择
+      document.getElementById('options-prev').addEventListener('click', function () {
+        showSection('section-interact-character');
+      });
+
+      document.getElementById('options-next').addEventListener('click', function () {
+        finalizeAndShowSummary();
+      });
+
+      // 第五阶段：总结
+      document.getElementById('summary-prev').addEventListener('click', function () {
+        showSection('section-options');
+      });
+
+      document.getElementById('start-experience').addEventListener('click', function () {
+        sendSelectionsToAI();
+      });
+    });
+
+    // 确保页面加载完成时初始化必要的事件和状态
+    window.addEventListener('load', function () {
+      // 检查URL参数中是否有调试模式
+      const urlParams = new URLSearchParams(window.location.search);
+      const debugMode = urlParams.get('debug') === 'true';
+
+      if (debugMode) {
+        console.log('Debug mode activated');
+        // 在控制台中输出一些有用的信息
+        console.log('Available functions:', {
+          triggerSlash: typeof triggerSlash !== 'undefined',
+          executeSlashCommands: typeof executeSlashCommands !== 'undefined',
+          eventEmit: typeof eventEmit !== 'undefined',
+          sendMessageAs: typeof sendMessageAs !== 'undefined',
+          Generate: typeof Generate !== 'undefined'
+        });
+
+        // 添加调试按钮
+        const debugBtn = document.createElement('button');
+        debugBtn.textContent = '测试消息发送';
+        debugBtn.style.backgroundColor = '#007bff';
+        debugBtn.style.marginTop = '10px';
+        document.querySelector('.summary-content').after(debugBtn);
+
+        debugBtn.addEventListener('click', function () {
+          const testMsg = "这是一条测试消息，用来验证消息发送功能。";
+          alert(`即将发送测试消息: ${testMsg}`);
+
+          setTimeout(() => {
+            // 创建slash命令数组
+            const commands = [`/send ${testMsg}`, '/trigger'];
+
+            if (window.parent && typeof window.parent.postMessage === 'function') {
+              window.parent.postMessage({
+                event_type: 'EXECUTE_SLASH_COMMANDS',
+                data: commands.join('|')
+              }, '*');
+              console.log('通过postMessage发送了测试命令');
+            }
+          }, 500);
+        });
+      }
+    });
+
+    // 添加一个专门用于处理摘要页面的函数
+    function finalizeAndShowSummary() {
+      // 生成选择摘要
+      generateSummary();
+
+      // 显示摘要页面
+      showSection('summary-page');
+
+      // 显示一个漂亮的提示，指导用户
+      const endMessage = document.createElement('div');
+      endMessage.className = 'completion-message';
+      endMessage.innerHTML = `
+        <div style="text-align: center; margin-top: 30px; color: var(--primary-color); font-style: italic;">
+          请仔细检查您的选择并点击"开始体验"来继续
+        </div>
+      `;
+
+      // 延迟添加此消息，让用户先看到选项
+      setTimeout(() => {
+        document.querySelector('.summary-content').after(endMessage);
+      }, 1500);
+
+      // 日志记录，用于调试
+      console.log('Summary page has been displayed');
+      console.log('User selections:', window.characterSelections);
+    }
+  </script>
+</body>
+
+</html>

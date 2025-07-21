@@ -1,0 +1,10 @@
+---
+description: sillytavern，在代码的前面加上```和代码类型，如```html 在代码
+globs: /Users/mac/Documents/frontend_writer 2/tsconfig.json
+alwaysApply: true
+---
+
+# Your rule content
+
+- You can @ files here
+- You can use markdown but dont have to

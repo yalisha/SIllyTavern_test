@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>异世界角色创建系统</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Microsoft YaHei', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      width: 100%;
+      min-width: 320px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      width: 100%;
+      aspect-ratio: 16/3;
+      background: linear-gradient(45deg, #1a1a2e, #16213e);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .header h1 {
+      color: #fff;
+      font-size: clamp(24px, 5vw, 48px);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    .points-display {
+      width: 100%;
+      aspect-ratio: 8/1;
+      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+    }
+
+    .points-text {
+      color: #fff;
+      font-size: clamp(20px, 4vw, 36px);
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 10px;
+    }
+
+    .nav-tab {
+      padding: 12px 24px;
+      margin: 0 5px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: clamp(14px, 2.5vw, 16px);
+    }
+
+    .nav-tab:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .nav-tab.active {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .section {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .section-title {
+      font-size: clamp(18px, 3vw, 28px);
+      color: #2c3e50;
+      margin-bottom: 20px;
+      text-align: center;
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 10px;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+      width: 100%;
+    }
+
+    .option-card {
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      border-radius: 10px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .option-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      border-color: #3498db;
+    }
+
+    .option-card.selected {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      color: #fff;
+      border-color: #2980b9;
+    }
+
+    .option-card.selected .option-points {
+      color: #fff;
+    }
+
+    .option-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .option-name {
+      font-size: clamp(14px, 2.5vw, 18px);
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    .option-card.selected .option-name {
+      color: #fff;
+    }
+
+    .option-points {
+      font-size: clamp(12px, 2vw, 16px);
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: #e74c3c;
+      color: #fff;
+      min-width: 50px;
+      text-align: center;
+    }
+
+    .option-points.positive {
+      background: #27ae60;
+    }
+
+    .option-points.zero {
+      background: #7f8c8d;
+    }
+
+    .option-description {
+      font-size: clamp(12px, 2vw, 14px);
+      color: #666;
+      line-height: 1.4;
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+
+    .option-card.selected .option-description {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .companion-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      width: 100%;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .companion-card {
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      aspect-ratio: 3/2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .companion-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-color: #3498db;
+    }
+
+    .companion-card.selected {
+      background: linear-gradient(135deg, #9b59b6, #8e44ad);
+      color: #fff;
+      border-color: #8e44ad;
+    }
+
+    .companion-name {
+      font-size: clamp(12px, 2.2vw, 14px);
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 5px;
+    }
+
+    .companion-card.selected .companion-name {
+      color: #fff;
+    }
+
+    .companion-desc {
+      font-size: clamp(10px, 1.8vw, 12px);
+      color: #666;
+      line-height: 1.3;
+      flex-grow: 1;
+    }
+
+    .companion-card.selected .companion-desc {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .dlc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 12px;
+      width: 100%;
+    }
+
+    .dlc-card {
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      aspect-ratio: 5/3;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .dlc-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-color: #3498db;
+    }
+
+    .dlc-card.selected {
+      background: linear-gradient(135deg, #9b59b6, #8e44ad);
+      color: #fff;
+      border-color: #8e44ad;
+    }
+
+    .dlc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .dlc-name {
+      font-size: clamp(12px, 2.2vw, 16px);
+      font-weight: bold;
+      color: #2c3e50;
+      flex-grow: 1;
+    }
+
+    .dlc-card.selected .dlc-name {
+      color: #fff;
+    }
+
+    .dlc-points {
+      font-size: clamp(11px, 1.8vw, 14px);
+      font-weight: bold;
+      padding: 3px 6px;
+      border-radius: 4px;
+      background: #e74c3c;
+      color: #fff;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    .dlc-points.positive {
+      background: #27ae60;
+    }
+
+    .dlc-points.zero {
+      background: #7f8c8d;
+    }
+
+    .dlc-desc {
+      font-size: clamp(10px, 1.8vw, 12px);
+      color: #666;
+      line-height: 1.3;
+      flex-grow: 1;
+    }
+
+    .dlc-card.selected .dlc-desc {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .summary {
+      width: 100%;
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      border-radius: 15px;
+      padding: 25px;
+      color: #fff;
+      margin-top: 30px;
+    }
+
+    .summary h3 {
+      font-size: clamp(18px, 3vw, 24px);
+      margin-bottom: 15px;
+      text-align: center;
+      color: #ecf0f1;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: clamp(14px, 2.5vw, 16px);
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .summary-points {
+      font-weight: bold;
+      color: #3498db;
+    }
+
+    .warning,
+    .success-message,
+    .error-message {
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      text-align: center;
+      font-weight: bold;
+      display: none;
+    }
+
+    .warning {
+      background: #e74c3c;
+      color: #fff;
+    }
+
+    .success-message {
+      background: #27ae60;
+      color: #fff;
+    }
+
+    .error-message {
+      background: #e74c3c;
+      color: #fff;
+    }
+
+    .submit-section {
+      width: 100%;
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .submit-button {
+      background: linear-gradient(135deg, #27ae60, #2ecc71);
+      color: #fff;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-size: clamp(16px, 3vw, 20px);
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+      min-width: 200px;
+    }
+
+    .submit-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+    }
+
+    .submit-button:disabled {
+      background: #95a5a6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .reset-button {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: #fff;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-size: clamp(16px, 3vw, 20px);
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+      min-width: 150px;
+    }
+
+    .reset-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+
+    .nav-button {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: clamp(14px, 2.5vw, 16px);
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 120px;
+    }
+
+    .nav-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    }
+
+    .nav-button:disabled {
+      background: #95a5a6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+
+      .option-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .companion-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      }
+
+      .dlc-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 20px;
+      }
+
+      .nav-tabs {
+        flex-wrap: wrap;
+      }
+
+      .submit-section {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 10px;
+      }
+
+      .section {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>异世界角色创建系统</h1>
+    </div>
+
+    <div class="points-display">
+      <div class="points-text">剩余点数: <span id="remainingPoints">250</span></div>
+    </div>
+
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showPage(0)">世界难度</button>
+      <button class="nav-tab" onclick="showPage(1)">体格优劣</button>
+      <button class="nav-tab" onclick="showPage(2)">魔法天赋</button>
+      <button class="nav-tab" onclick="showPage(3)">初始队友</button>
+      <button class="nav-tab" onclick="showPage(4)">扩展包</button>
+      <button class="nav-tab" onclick="showPage(5)">总结</button>
+    </div>
+
+    <div class="warning" id="warningMessage">
+      点数不足！请重新调整您的选择。
+    </div>
+
+    <div class="success-message" id="successMessage">
+      角色创建信息已成功发送到SillyTavern！
+    </div>
+
+    <div class="error-message" id="errorMessage">
+      发送失败，请检查SillyTavern连接状态。
+    </div>
+
+    <!-- Page 1: World Difficulty -->
+    <div class="page active" id="page0">
+      <div class="section">
+        <h2 class="section-title">1. 世界难度</h2>
+        <div class="option-grid" id="worldDifficulty">
+          <div class="option-card" data-points="50" data-name="黑暗剧场">
+            <div class="option-header">
+              <div class="option-name">黑暗剧场 (Dark Theater)</div>
+              <div class="option-points positive">+50</div>
+            </div>
+            <div class="option-description">在这个彻底狂乱的世界里，你经历了你所能想象的一切悲剧和不幸。似乎从某个角落里传来了库嘻嘻嘻的笑声。</div>
+          </div>
+          <div class="option-card" data-points="20" data-name="理智充沛">
+            <div class="option-header">
+              <div class="option-name">理智充沛 (Full of Sanity)</div>
+              <div class="option-points positive">+20</div>
+            </div>
+            <div class="option-description">你与这个发狂的世界格格不入，无法和原住民们交流。SAN值优良。</div>
+          </div>
+          <div class="option-card" data-points="0" data-name="失落帝国">
+            <div class="option-header">
+              <div class="option-name">失落帝国 (Lost Empire)</div>
+              <div class="option-points zero">0</div>
+            </div>
+            <div class="option-description">你在这个发狂的世界中没有任何不适应，但好在你有圣森这个亘古温暖的家，也许？</div>
+          </div>
+          <div class="option-card" data-points="-20" data-name="外面的世界">
+            <div class="option-header">
+              <div class="option-name">外面的世界 (The Outside World)</div>
+              <div class="option-points">-20</div>
+            </div>
+            <div class="option-description">外面的世界看起来充满危机，但同时也永远无法得到清醒。见到的一切人们都是扭曲不堪的魔兽。是不是忘了什么？</div>
+          </div>
+          <div class="option-card" data-points="-70" data-name="不思议之国">
+            <div class="option-header">
+              <div class="option-name">不思议之国 (Wonderland)</div>
+              <div class="option-points">-70</div>
+            </div>
+            <div class="option-description">这里的一切看起来都那么祥和美好，没有怪人和血腥的相杀，就像所有故事的开头那样。</div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-buttons">
+        <button class="nav-button" disabled>上一页</button>
+        <button class="nav-button" onclick="showPage(1)">下一页</button>
+      </div>
+    </div>
+
+    <!-- Page 2: Physical Status -->
+    <div class="page" id="page1">
+      <div class="section">
+        <h2 class="section-title">2. 体格优劣</h2>
+        <div class="option-grid" id="physicalStatus">
+          <div class="option-card" data-points="50" data-name="自限选手">
+            <div class="option-header">
+              <div class="option-name">自限选手 (Self-Limited Player)</div>
+              <div class="option-points positive">+50</div>
+            </div>
+            <div class="option-description">一切事物在你的眼中都无比高大，并且你无法强化自身的硬数值。极限挑战总是那么有意思，即使你只有一条命，不是吗？</div>
+          </div>
+          <div class="option-card" data-points="10" data-name="轮椅伴行">
+            <div class="option-header">
+              <div class="option-name">轮椅伴行 (Wheelchair Companion)</div>
+              <div class="option-points positive">+10</div>
+            </div>
+            <div class="option-description">你天生就是一个残疾人，身体虚弱，跟食尸兔打得有来有回。而且你既不会黄金回旋也没有打过职业。</div>
+          </div>
+          <div class="option-card" data-points="0" data-name="资质平平">
+            <div class="option-header">
+              <div class="option-name">资质平平 (Mediocre Aptitude)</div>
+              <div class="option-points zero">0</div>
+            </div>
+            <div class="option-description">和大多数居民不同的是，你可以用灵魂进行升级。</div>
+          </div>
+          <div class="option-card" data-points="-40" data-name="纯粹容器">
+            <div class="option-header">
+              <div class="option-name">纯粹容器 (Pure Vessel)</div>
+              <div class="option-points">-40</div>
+            </div>
+            <div class="option-description">你拥有极为高超的战斗技巧和意志。不知道为什么，他们都叫你为"格林"。</div>
+          </div>
+          <div class="option-card" data-points="-80" data-name="不死不灭">
+            <div class="option-header">
+              <div class="option-name">不死不灭 (Immortal)</div>
+              <div class="option-points">-80</div>
+            </div>
+            <div class="option-description">只要收集死后散落的灵魂就能保持生机，但隐隐约约地，你能感受到自己的上限。这可能是一个诅咒也说不定。</div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-buttons">
+        <button class="nav-button" onclick="showPage(0)">上一页</button>
+        <button class="nav-button" onclick="showPage(2)">下一页</button>
+      </div>
+    </div>
+
+    <!-- Page 3: Magic Talent -->
+    <div class="page" id="page2">
+      <div class="section">
+        <h2 class="section-title">3. 魔法天赋</h2>
+        <div class="option-grid" id="magicTalent">
+          <div class="option-card" data-points="40" data-name="迷失信徒">
+            <div class="option-header">
+              <div class="option-name">迷失信徒 (Lost Follower)</div>
+              <div class="option-points positive">+40</div>
+            </div>
+            <div class="option-description">成为拜月教徒的人，只能思考月球魔法直到死亡。活得就算胜利。</div>
+          </div>
+          <div class="option-card" data-points="20" data-name="唯物主义">
+            <div class="option-header">
+              <div class="option-name">唯物主义 (Materialist)</div>
+              <div class="option-points positive">+20</div>
+            </div>
+            <div class="option-description">这里的"魔法"都让你倍感头疼，对你的伤害是常人的两倍。你的大脑在抗拒这种东西的存在。</div>
+          </div>
+          <div class="option-card" data-points="-30" data-name="阅读困难">
+            <div class="option-header">
+              <div class="option-name">阅读困难 (Dyslexia)</div>
+              <div class="option-points">-30</div>
+            </div>
+            <div class="option-description">繁杂的文字让你难以理解，不过你仍然可以使用部分简单的魔术。"奈亚文学不懂啦"。</div>
+          </div>
+          <div class="option-card" data-points="-60" data-name="绝活咏唱">
+            <div class="option-header">
+              <div class="option-name">绝活咏唱 (Signature Chant)</div>
+              <div class="option-points">-60</div>
+            </div>
+            <div class="option-description">你学会了大部分的魔法，当然最重要的是你可以使用镇魂歌了。现已加入汉斯机关枪俱乐部。</div>
+          </div>
+          <div class="option-card" data-points="-80" data-name="圣级导师">
+            <div class="option-header">
+              <div class="option-name">圣级导师 (Saint-Tier Tutor)</div>
+              <div class="option-points">-80</div>
+            </div>
+            <div class="option-description">你精通了所有魔法，并习得了来自混沌迷宫的禁术。"就当是为了我，对古兰吉涅尔使用混沌爆炎吧。"</div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-buttons">
+        <button class="nav-button" onclick="showPage(1)">上一页</button>
+        <button class="nav-button" onclick="showPage(3)">下一页</button>
+      </div>
+    </div>
+
+    <!-- Page 4: Initial Companions -->
+    <div class="page" id="page3">
+      <div class="section">
+        <h2 class="section-title">4. 初始队友 (可多选，每个-30点)</h2>
+        <div class="companion-grid" id="initialCompanions">
+          <!-- 角色列表将通过JavaScript动态生成 -->
+        </div>
+      </div>
+      <div class="nav-buttons">
+        <button class="nav-button" onclick="showPage(2)">上一页</button>
+        <button class="nav-button" onclick="showPage(4)">下一页</button>
+      </div>
+    </div>
+
+    <!-- Page 5: DLC Options -->
+    <div class="page" id="page4">
+      <div class="section">
+        <h2 class="section-title">5. 扩展包 (DLC)</h2>
+        <div class="dlc-grid" id="dlcOptions">
+          <div class="dlc-card" data-points="20" data-name="外神危机" data-desc="从未见过的神灵自时计塔入侵。">
+            <div class="dlc-header">
+              <div class="dlc-name">外神危机 (Outer God Crisis)</div>
+              <div class="dlc-points positive">+20</div>
+            </div>
+            <div class="dlc-desc">从未见过的神灵自时计塔入侵。</div>
+          </div>
+          <div class="dlc-card" data-points="15" data-name="破碎地牢" data-desc="街市的角落出现了向下延伸的楼梯。">
+            <div class="dlc-header">
+              <div class="dlc-name">破碎地牢 (Shattered Dungeon)</div>
+              <div class="dlc-points positive">+15</div>
+            </div>
+            <div class="dlc-desc">街市的角落出现了向下延伸的楼梯。</div>
+          </div>
+          <div class="dlc-card" data-points="10" data-name="星辰之力" data-desc="不分敌我的三百颗坠星砸向你的世界。">
+            <div class="dlc-header">
+              <div class="dlc-name">星辰之力 (Power of Stars)</div>
+              <div class="dlc-points positive">+10</div>
+            </div>
+            <div class="dlc-desc">不分敌我的三百颗坠星砸向你的世界。</div>
+          </div>
+          <div class="dlc-card" data-points="10" data-name="疯狂派对" data-desc="每天都要杀一人才能维持生命。">
+            <div class="dlc-header">
+              <div class="dlc-name">疯狂派对 (Crazy Party)</div>
+              <div class="dlc-points positive">+10</div>
+            </div>
+            <div class="dlc-desc">每天都要杀一人才能维持生命。</div>
+          </div>
+          <div class="dlc-card" data-points="10" data-name="无比仇视" data-desc="你激怒了所有人！他们都想杀了你！">
+            <div class="dlc-header">
+              <div class="dlc-name">无比仇视 (Utmost Hatred)</div>
+              <div class="dlc-points positive">+10</div>
+            </div>
+            <div class="dlc-desc">你激怒了所有人！他们都想杀了你！</div>
+          </div>
+          <div class="dlc-card" data-points="5" data-name="坍缩视角" data-desc="整个世界被压缩了三倍，更加拥挤！">
+            <div class="dlc-header">
+              <div class="dlc-name">坍缩视角 (Collapsed Perspective)</div>
+              <div class="dlc-points positive">+5</div>
+            </div>
+            <div class="dlc-desc">整个世界被压缩了三倍，更加拥挤！</div>
+          </div>
+          <div class="dlc-card" data-points="5" data-name="审判时刻" data-desc="罪业超过五时直接死亡并减少一罪。">
+            <div class="dlc-header">
+              <div class="dlc-name">审判时刻 (Judgment Time)</div>
+              <div class="dlc-points positive">+5</div>
+            </div>
+            <div class="dlc-desc">罪业超过五时直接死亡并减少一罪。</div>
+          </div>
+          <div class="dlc-card" data-points="-10" data-name="忍者时代" data-desc="增加了许多可学习的忍术，吓我一跳！">
+            <div class="dlc-header">
+              <div class="dlc-name">忍者时代 (Ninja Era)</div>
+              <div class="dlc-points">-10</div>
+            </div>
+            <div class="dlc-desc">增加了许多可学习的忍术，吓我一跳！</div>
+          </div>
+          <div class="dlc-card" data-points="-10" data-name="灵魂盛宴" data-desc="你可以将灵魂做成美味的食物。">
+            <div class="dlc-header">
+              <div class="dlc-name">灵魂盛宴 (Soul Feast)</div>
+              <div class="dlc-points">-10</div>
+            </div>
+            <div class="dlc-desc">你可以将灵魂做成美味的食物。</div>
+          </div>
+          <div class="dlc-card" data-points="-10" data-name="动物朋友" data-desc="你可以与动物交流并让它们帮助你。">
+            <div class="dlc-header">
+              <div class="dlc-name">动物朋友 (Animal Friends)</div>
+              <div class="dlc-points">-10</div>
+            </div>
+            <div class="dlc-desc">你可以与动物交流并让它们帮助你。</div>
+          </div>
+          <div class="dlc-card" data-points="-10" data-name="别样语种" data-desc="你的母语被固定成了奈亚语。">
+            <div class="dlc-header">
+              <div class="dlc-name">别样语种 (Different Language)</div>
+              <div class="dlc-points">-10</div>
+            </div>
+            <div class="dlc-desc">你的母语被固定成了奈亚语。</div>
+          </div>
+          <div class="dlc-card" data-points="-20" data-name="梦醒时分" data-desc="这个发了狂的世界突然变得高度文明。">
+            <div class="dlc-header">
+              <div class="dlc-name">梦醒时分 (Time to Wake Up)</div>
+              <div class="dlc-points">-20</div>
+            </div>
+            <div class="dlc-desc">这个发了狂的世界突然变得高度文明。</div>
+          </div>
+          <div class="dlc-card" data-points="-30" data-name="辛苦奴隶" data-desc="被你打败的小怪都可以作为助战登场。">
+            <div class="dlc-header">
+              <div class="dlc-name">辛苦奴隶 (Hardworking Slave)</div>
+              <div class="dlc-points">-30</div>
+            </div>
+            <div class="dlc-desc">被你打败的小怪都可以作为助战登场。</div>
+          </div>
+          <div class="dlc-card" data-points="-40" data-name="银趴" data-desc="所有人都不可避免的陷入了发情模式。">
+            <div class="dlc-header">
+              <div class="dlc-name">银趴 (Silver Party)</div>
+              <div class="dlc-points">-40</div>
+            </div>
+            <div class="dlc-desc">所有人都不可避免的陷入了发情模式。</div>
+          </div>
+          <div class="dlc-card" data-points="50" data-name="箱庭战争" data-desc="箱庭战争，你被邀请参与其中。">
+            <div class="dlc-header">
+              <div class="dlc-name">箱庭战争 (Garden Box War)</div>
+              <div class="dlc-points positive">+50</div>
+            </div>
+            <div class="dlc-desc">箱庭战争，你被邀请参与其中。</div>
+          </div>
+          <div class="dlc-card" data-points="0" data-name="比尔世界" data-desc="所有的人都变成了伪娘，是好事吗？">
+            <div class="dlc-header">
+              <div class="dlc-name">比尔世界 (Bill's World)</div>
+              <div class="dlc-points zero">0</div>
+            </div>
+            <div class="dlc-desc">所有的人都变成了伪娘，是好事吗？</div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-buttons">
+        <button class="nav-button" onclick="showPage(3)">上一页</button>
+        <button class="nav-button" onclick="showPage(5)">下一页</button>
+      </div>
+    </div>
+
+    <!-- Page 6: Summary -->
+    <div class="page" id="page5">
+      <div class="summary">
+        <h3>角色创建总结</h3>
+        <div class="summary-item">
+          <span>世界难度:</span>
+          <span id="worldChoice">未选择</span>
+        </div>
+        <div class="summary-item">
+          <span>体格优劣:</span>
+          <span id="physicalChoice">未选择</span>
+        </div>
+        <div class="summary-item">
+          <span>魔法天赋:</span>
+          <span id="magicChoice">未选择</span>
+        </div>
+        <div class="summary-item">
+          <span>初始队友:</span>
+          <span id="companionChoice">未选择</span>
+        </div>
+        <div class="summary-item">
+          <span>已选择扩展包:</span>
+          <span id="dlcCount">0 个</span>
+        </div>
+        <div class="summary-item">
+          <span>总计点数消耗:</span>
+          <span class="summary-points" id="totalSpent">0</span>
+        </div>
+        <div class="summary-item">
+          <span>剩余点数:</span>
+          <span class="summary-points" id="finalPoints">250</span>
+        </div>
+      </div>
+
+      <div class="submit-section">
+        <button class="submit-button" id="submitButton" onclick="submitToSillyTavern()">
+          发送到SillyTavern
+        </button>
+        <button class="reset-button" id="resetButton" onclick="resetSelections()">
+          重置选择
+        </button>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-button" onclick="showPage(4)">上一页</button>
+        <button class="nav-button" disabled>下一页</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 游戏状态
+    let gameState = {
+      totalPoints: 250,
+      currentPage: 0,
+      selections: {
+        world: null,
+        physical: null,
+        magic: null,
+        companions: [],
+        dlc: []
+      }
+    };
+
+    // 角色列表 (完整的128位角色)
+    const characterList = [
+      { name: "CC", desc: "不老不死的魔女，拥有Geass能力和永恒的生命" },
+      { name: "Marie Antoinette Alter", desc: "法国末代王后的暗黑化身，高贵而残酷" },
+      { name: "三月七", desc: "活泼开朗的星穹列车乘务员，擅长冰系战斗" },
+      { name: "上杉绘梨衣", desc: "龙王血统的少女，纯真善良却拥有危险力量" },
+      { name: "两仪式", desc: "拥有直死之魔眼的神秘少女，冷酷而强大" },
+      { name: "久远寺有珠", desc: "魔术师家族的大小姐，傲慢却有着温柔内心" },
+      { name: "云璃", desc: "仙舟云骑将军，正义凛然的武者" },
+      { name: "亚丝娜", desc: "SAO的副团长，温柔坚强的剑士少女" },
+      { name: "伊什塔尔", desc: "美索不达米亚神话中美与战争的女神，司掌金星的傲娇存在，表面高贵强势实则关心他人" },
+      { name: "伊莉雅", desc: "天真可爱的魔法少女，拥有强大的魔术回路" },
+      { name: "伊蕾娜", desc: "灰之魔女，年轻的魔法使旅行者" },
+      { name: "克洛伊", desc: "从伊莉雅身上分裂出的活泼大胆的魔法少女，继承了英灵卫宫的战斗技巧，热爱通过恶作剧和亲昵行为表达感情。" },
+      { name: "刘芹", desc: "温柔贤淑的古代美女，善解人意" },
+      { name: "加藤惠", desc: "平凡却不平凡的少女，拥有治愈系的魅力" },
+      { name: "劳拉", desc: "勇敢的古墓丽影探险家，智勇双全" },
+      { name: "千织", desc: "优雅的大小姐，精通各种才艺" },
+      { name: "卡捷琳", desc: "俄罗斯女皇，威严而美丽的统治者" },
+      { name: "卡莲", desc: "天真烂漫的修女，拥有纯洁的心灵" },
+      { name: "司南秀", desc: "异界帝国的萝莉公主" },
+      { name: "唐雪见", desc: "蜀山仙剑传人，活泼可爱的少女剑客" },
+      { name: "埃列什基伽勒(Beast)", desc: "冥界女王的兽化形态，恐怖而强大" },
+      { name: "夏娜", desc: "炎发灼眼的讨伐者，冷酷的战斗少女" },
+      { name: "夏弥", desc: "龙族四大君主之一，美丽而危险" },
+      { name: "太空伊什塔尔", desc: "宇宙版本的女神，科幻风格的美丽存在" },
+      { name: "妙影", desc: "神秘的忍者少女，身手敏捷" },
+      { name: "妮露", desc: "须弥的舞蹈家，优雅美丽的水之舞者" },
+      { name: "安南秀", desc: "温婉的江南女子，才华横溢" },
+      { name: "安妮公主", desc: "皇室血统的高贵公主，优雅迷人" },
+      { name: "小龙女", desc: "古墓派传人，冰清玉洁的仙女" },
+      { name: "尼托克丽丝", desc: "埃及法老王，威严而神秘" },
+      { name: "尼禄", desc: "罗马皇帝，自信张扬的艺术家" },
+      { name: "布伦希尔德", desc: "北欧的女武神，高贵而悲壮" },
+      { name: "布洛妮娅", desc: "冷静理智的机甲驾驶员，科技天才" },
+      { name: "希儿", desc: "温柔腼腆的双重人格少女，内心坚强" },
+      { name: "帕尔瓦蒂", desc: "印度教的温柔女神，慈爱而强大" },
+      { name: "帝皇", desc: "人类帝国的永恒统治者与最强灵能者，以少女之躯承载着引导银河的无上伟力与万年孤独。" },
+      { name: "御坂美琴", desc: "学园都市的电击公主，元气满满的超能力者" },
+      { name: "心海", desc: "温柔体贴的巫女，拥有治愈人心的力量" },
+      { name: "慕容紫英", desc: "琼华派掌门，正义凛然的剑仙" },
+      { name: "提亚马特", desc: "原初之海的女神，母性而恐怖" },
+      { name: "摩根", desc: "不列颠的妖精女王，美丽而危险" },
+      { name: "斯卡哈", desc: "影之国女王，不死的武艺导师" },
+      { name: "星见雅", desc: "神秘的占星术师，优雅而智慧" },
+      { name: "李忆如", desc: "苗疆圣姑，善良纯真的治愈系少女" },
+      { name: "杜尔迦", desc: "印度的战斗女神，勇猛而正义" },
+      { name: "林月如", desc: "白河剑派千金，刁蛮可爱的大小姐" },
+      { name: "柳梦璃", desc: "幻璃境公主，温柔如水的梦幻美人" },
+      { name: "柳雪琴", desc: "端庄贤淑的古典美女，琴艺精湛" },
+      { name: "梅莉", desc: "阿瓦隆女士，梦之魔术师，以看似轻浮的言行守护着不列颠与心爱之人。" },
+      { name: "樱岛麻衣", desc: "青春猪头少年的学姐，成熟迷人的演员" },
+      { name: "沙条爱歌", desc: "根源涡旋的少女，神秘而危险" },
+      { name: "灵砂", desc: "神秘的术士，精通各种法术" },
+      { name: "爱丽丝", desc: "米德加贫民窟的卖花女，最后的古代种，以阳光开朗的笑容掩盖着沉重的宿命与守护星球的决心。" },
+      { name: "爱丽丝菲尔", desc: "人工生命体，温柔的妻子和母亲" },
+      { name: "爱尔奎特·布伦史塔德", desc: "真祖公主，高贵的吸血鬼" },
+      { name: "爱莉希雅", desc: "逐火十三英桀之一，『人性』的律者，一位优雅的引路人和迷人的舞者。" },
+      { name: "由比滨结衣", desc: "开朗活泼的现充少女，温暖如阳光" },
+      { name: "白井黑子", desc: "风纪委员的空间能力者，对姐姐大人忠诚" },
+      { name: "白贞德", desc: "法国救国圣女，纯洁而坚强" },
+      { name: "皇女", desc: "沙皇俄国最后的公主" },
+      { name: "神里绫华", desc: "稻妻的白鹭公主，温婉而坚强" },
+      { name: "符玄", desc: "仙舟「罗浮」太卜司之首，凭借第三法眼与穷观阵法，为仙舟占算航路，预卜事务吉凶。" },
+      { name: "美游", desc: "愿望圣杯，纯真可爱的魔法少女" },
+      { name: "艾莉莎", desc: "勇敢的战士少女，正义感强烈" },
+      { name: "艾蕾", desc: "冥界女王，威严而孤独" },
+      { name: "艾达·王", desc: "神秘的间谍美女，冷酷而性感" },
+      { name: "芙宁娜", desc: "枫丹的水神，戏剧性而华丽" },
+      { name: "芭芭拉", desc: "蒙德的偶像修女，治愈系的歌手" },
+      { name: "苍崎橙子", desc: "天才魔术师，知性而危险" },
+      { name: "苍崎青子", desc: "魔法使，开朗而强大" },
+      { name: "英莉莉", desc: "傲娇的金发双马尾，才华横溢的画师" },
+      { name: "茜特菈莉", desc: "烟雾缭绕之部落的大巫女，被称作『黑曜石老奶奶』，喜欢轻小说和美酒，在幕后守护着自己的部族。" },
+      { name: "茵蒂克丝", desc: "完全记忆能力者，天真的魔道书图书馆" },
+      { name: "葛饰北斋", desc: "浮世绘大师，艺术家的灵魂" },
+      { name: "蒂法", desc: "FF7的格斗家，温柔坚强的酒吧老板娘" },
+      { name: "藤丸立香", desc: "迦勒底的御主，拯救人理的平凡英雄" },
+      { name: "虞美人", desc: "项羽的爱妃，美丽而忠贞" },
+      { name: "赫敏", desc: "聪明的女巫，学识渊博的魔法师" },
+      { name: "赵灵儿", desc: "女娲后人，善良纯真的蛇妖公主" },
+      { name: "远坂凛", desc: "魔术师大小姐，傲娇而强大" },
+      { name: "迦摩", desc: "爱神，美丽而诱惑" },
+      { name: "遐蝶", desc: "承载死亡神权的温柔半神，前世为救妹妹而牺牲，如今掌握死亡权能却依然保持善良本性，是会为逝者写诗送行的诗人死神" },
+      { name: "间桐樱", desc: "温柔的紫发少女，内心坚强" },
+      { name: "阮梅", desc: "天才科学家，模拟宇宙项目的共同创始人之一，专注于生命起源的研究。" },
+      { name: "阿什莉", desc: "勇敢的总统女儿，坚强而独立" },
+      { name: "阿奴", desc: "来自白苗族的可爱少女，精通巫蛊之术，天真烂漫的外表下深藏着对心上人无悔的痴情与守护族人的决意。" },
+      { name: "阿尔托莉雅", desc: "不列颠之王，高贵的骑士王" },
+      { name: "阿尔托莉雅(alter)", desc: "黑化的骑士王，冷酷而强大" },
+      { name: "阿尔托莉雅(lancer)", desc: "枪兵版本的王，威严而美丽" },
+      { name: "阿蒂拉", desc: "匈奴大王，破坏与征服的化身" },
+      { name: "陈墨瞳", desc: "神秘的东方美女，深邃如墨的眼眸" },
+      { name: "雪之下雪乃", desc: "完美主义的冰山美人，才华出众" },
+      { name: "霞之丘诗羽", desc: "毒舌的学姐作家，成熟魅惑" },
+      { name: "韩菱纱", desc: "武林盟主之女，活泼可爱的侠女" },
+      { name: "食蜂操祈", desc: "心理掌握能力者，女王般的存在" },
+      { name: "黑塔", desc: "天才俱乐部#83号成员，黑塔空间站的主人，为了探寻宇宙的奥秘和满足自己的收藏癖而建造了空间站。" },
+      { name: "黑天鹅", desc: "『流光忆庭』的忆者，『记忆』命途的行者，为了收集和保存记忆而行动。" },
+      { name: "黑贞德", desc: "复仇的圣女，愤怒而强大" },
+      { name: "龙葵", desc: "古代公主，温柔而忧伤的幽灵" },
+      { name: "反田葉月", desc: "神秘的现代少女，冷静而理智" },
+      { name: "安娜", desc: "温柔的公主，善良而美丽" },
+      { name: "花火", desc: "烟花般绚烂的少女，热情而活泼" },
+      { name: "耀嘉音", desc: "优雅的音乐家，才华横溢" },
+      { name: "斯卡蒂", desc: "海洋猎人，孤独而强大的战士" },
+      { name: "多萝西", desc: "次元魔法的天才少女，自信张扬却渴望被真正理解的魔法师" },
+      { name: "伊内丝", desc: "行走于卡兹戴尔阴影中的萨卡兹佣兵，现为罗德岛的情报官，用冷漠与利刃武装自己，却在不经意间流露出对同伴的守护与温柔。" },
+      { name: "荧", desc: "为了寻找失散的哥哥而在提瓦特大陆旅行的旅行者，能够使用多种元素力，是荣誉骑士，也是潜在的坎瑞亚公主。" },
+      { name: "惠惠", desc: "爆裂魔法专家，中二病的天才魔法师" },
+      { name: "阿库娅", desc: "水之女神，天然呆的治愈系女神" },
+      { name: "悠悠", desc: "十字骑士，认真而可靠的防御专家" },
+      { name: "薇薇安", desc: "反舌鸟组织的成员，一名怪盗，也是法厄同的狂热粉丝，为了追随法厄同的脚步而行动。" },
+      { name: "长野原宵宫", desc: "稻妻的烟花专家，被誉为「夏祭的女王」，以绚烂烟花照亮人心的温暖职人" },
+      { name: "丝柯克", desc: "『深渊的虚星』，魔王『仆人』的弟子，深渊力量的使用者，为了寻找师父的故乡和渊源而来到提瓦特。" },
+      { name: "梦见月瑞希", desc: "秋泽温泉乡的大股东兼首席心理治疗师，食梦貘一族的成员，致力于用自己的能力帮助人们摆脱精神创伤。" },
+      { name: "镜流", desc: "仙舟「罗浮」前「云骑」剑首，因堕入「魔阴身」而自我放逐，眼覆白布，为赎罪而行。" },
+      { name: "红莲", desc: "朝圣者部队所属的流浪剑客，擅长饮酒与剑术，为了同伴而战。" },
+      { name: "桃乐丝", desc: "朝圣者部队伊甸园的队长，外表纯洁如天使，内心却隐藏着深不见底的黑暗。" },
+      { name: "长发公主", desc: "朝圣者公司先锋部队的黄金圣女，以神圣治愈力慰藉逝者灵魂，是部队不可或缺的精神支柱。" },
+      { name: "爱可菲", desc: "德波大饭店前任主厨，「技术菜」流派创始人，芙宁娜的专属「甜点上校」。" },
+      { name: "风堇", desc: "昏光庭院的温柔医师，守望「天空」火种的黄金裔，与天马小伊卡一同为末世带来治愈之光。" },
+      { name: "亚丽莎", desc: "森林守护者候补生，为了救出被掳走的挚友罗萨莉亚而踏上冒险旅程的纯真精灵少女。" },
+      { name: "安", desc: "玛娜利亚王国的公主，魔法学院的天才学生，拥有超凡的魔法天赋却内心孤独，与古蕾雅是挚友关系。" },
+      { name: "古蕾雅", desc: "龙之国雷格尼斯的混血公主，龙族与人类的混血，内向害羞但深情专一，炎术魔法的天才。" },
+      { name: "泰妮布里雅", desc: "恶魔使徒，幻象女王，表面玩闹可爱但内心残酷，拥有操控幻象和噩梦的强大能力，在权力关系中能够自如切换支配与被支配的角色。" },
+      { name: "维尔萝娜", desc: "埃泽拉贵族出身却拒绝包办婚姻的叛逆少女，现幻影CIC成员，以扇为武器的高雅战士，内心好战但保持贵族修养。" },
+      { name: "影心", desc: "背叛莎尔的前黑暗圣女，染成银发重新侍奉月之女神塞伦涅，在月光指引下寻求救赎与内心平静的温柔治愈者。" },
+      { name: "橘福福", desc: "云岿山修者门派的大师姐，外表娇小可爱但自称超级可怕的大老虎，拥有强烈责任感和保护欲的反差萌虎希人少女。" },
+      { name: "仪玄", desc: "云岿山第十三代门主，空洞调查协会虚狩级调查员，银发紫眸的超然术法师，外表高冷内心温柔，经历过生死别离后变得更加珍惜眼前人。" }
+    ];
+
+    // 初始化页面
+    function initializePage() {
+      generateCompanionCards();
+      setupEventListeners();
+      updateDisplay();
+    }
+
+    // 生成角色卡片
+    function generateCompanionCards() {
+      const companionGrid = document.getElementById('initialCompanions');
+      companionGrid.innerHTML = '';
+
+      characterList.forEach(character => {
+        const card = document.createElement('div');
+        card.className = 'companion-card';
+        card.dataset.name = character.name;
+        card.dataset.points = '-30';
+
+        card.innerHTML = `
+                    <div class="companion-name">${character.name}</div>
+                    <div class="companion-desc">${character.desc}</div>
+                `;
+
+        card.addEventListener('click', () => handleCompanionSelection(card));
+        companionGrid.appendChild(card);
+      });
+    }
+
+    // 设置事件监听器
+    function setupEventListeners() {
+      // 世界难度
+      document.querySelectorAll('#worldDifficulty .option-card').forEach(card => {
+        card.addEventListener('click', () => handleSingleSelection('world', card));
+      });
+
+      // 体格优劣
+      document.querySelectorAll('#physicalStatus .option-card').forEach(card => {
+        card.addEventListener('click', () => handleSingleSelection('physical', card));
+      });
+
+      // 魔法天赋
+      document.querySelectorAll('#magicTalent .option-card').forEach(card => {
+        card.addEventListener('click', () => handleSingleSelection('magic', card));
+      });
+
+      // DLC选项
+      document.querySelectorAll('#dlcOptions .dlc-card').forEach(card => {
+        card.addEventListener('click', () => handleMultipleSelection('dlc', card));
+      });
+    }
+
+    // 处理单选
+    function handleSingleSelection(category, selectedCard) {
+      const categoryMap = {
+        'world': '#worldDifficulty',
+        'physical': '#physicalStatus',
+        'magic': '#magicTalent'
+      };
+
+      const section = document.querySelector(categoryMap[category]);
+      const cards = section.querySelectorAll('.option-card');
+
+      // 移除其他选择
+      cards.forEach(card => {
+        card.classList.remove('selected');
+      });
+
+      // 选择当前卡片
+      selectedCard.classList.add('selected');
+      gameState.selections[category] = selectedCard.dataset.name;
+
+      updateDisplay();
+    }
+
+    // 处理同伴选择
+    function handleCompanionSelection(card) {
+      const companionName = card.dataset.name;
+      const isSelected = card.classList.contains('selected');
+
+      if (isSelected) {
+        card.classList.remove('selected');
+        gameState.selections.companions = gameState.selections.companions.filter(name => name !== companionName);
+      } else {
+        card.classList.add('selected');
+        gameState.selections.companions.push(companionName);
+      }
+
+      updateDisplay();
+    }
+
+    // 处理多选
+    function handleMultipleSelection(category, card) {
+      const itemName = card.dataset.name;
+      const isSelected = card.classList.contains('selected');
+
+      if (isSelected) {
+        card.classList.remove('selected');
+        gameState.selections[category] = gameState.selections[category].filter(name => name !== itemName);
+      } else {
+        card.classList.add('selected');
+        gameState.selections[category].push(itemName);
+      }
+
+      updateDisplay();
+    }
+
+    // 计算总点数
+    function calculateTotalPoints() {
+      let totalUsed = 0;
+
+      // 世界难度 (正数=奖励点数，负数=消耗点数)
+      if (gameState.selections.world) {
+        const worldCard = document.querySelector(`#worldDifficulty [data-name="${gameState.selections.world}"]`);
+        if (worldCard) totalUsed -= parseInt(worldCard.dataset.points); // 反转符号
+      }
+
+      // 体格优劣 (正数=奖励点数，负数=消耗点数)
+      if (gameState.selections.physical) {
+        const physicalCard = document.querySelector(`#physicalStatus [data-name="${gameState.selections.physical}"]`);
+        if (physicalCard) totalUsed -= parseInt(physicalCard.dataset.points); // 反转符号
+      }
+
+      // 魔法天赋 (正数=奖励点数，负数=消耗点数)
+      if (gameState.selections.magic) {
+        const magicCard = document.querySelector(`#magicTalent [data-name="${gameState.selections.magic}"]`);
+        if (magicCard) totalUsed -= parseInt(magicCard.dataset.points); // 反转符号
+      }
+
+      // 同伴（每个-30点，即消耗30点）
+      totalUsed += gameState.selections.companions.length * 30; // 30点消耗
+
+      // DLC (正数=奖励点数，负数=消耗点数)
+      gameState.selections.dlc.forEach(dlcName => {
+        const dlcCard = document.querySelector(`#dlcOptions [data-name="${dlcName}"]`);
+        if (dlcCard) totalUsed -= parseInt(dlcCard.dataset.points); // 反转符号
+      });
+
+      return totalUsed;
+    }
+
+    // 更新显示
+    function updateDisplay() {
+      const totalUsed = calculateTotalPoints();
+      const remaining = gameState.totalPoints - totalUsed;
+
+      // 更新点数显示
+      document.getElementById('remainingPoints').textContent = remaining;
+      document.getElementById('totalSpent').textContent = totalUsed;
+      document.getElementById('finalPoints').textContent = remaining;
+
+      // 更新总结
+      document.getElementById('worldChoice').textContent = gameState.selections.world || '未选择';
+      document.getElementById('physicalChoice').textContent = gameState.selections.physical || '未选择';
+      document.getElementById('magicChoice').textContent = gameState.selections.magic || '未选择';
+      document.getElementById('companionChoice').textContent =
+        gameState.selections.companions.length > 0 ? `${gameState.selections.companions.join('、')} (${gameState.selections.companions.length}人)` : '未选择';
+      document.getElementById('dlcCount').textContent = `${gameState.selections.dlc.length} 个`;
+
+      // 更新警告信息
+      const warningMessage = document.getElementById('warningMessage');
+      if (remaining < 0) {
+        warningMessage.style.display = 'block';
+        warningMessage.textContent = `点数超支 ${Math.abs(remaining)} 点！请重新调整您的选择。`;
+      } else {
+        warningMessage.style.display = 'none';
+      }
+
+      // 更新提交按钮状态
+      updateSubmitButton();
+    }
+
+    // 更新提交按钮
+    function updateSubmitButton() {
+      const submitButton = document.getElementById('submitButton');
+      const validation = validateSelections();
+
+      if (validation.valid) {
+        submitButton.disabled = false;
+        submitButton.textContent = '发送到SillyTavern';
+      } else {
+        submitButton.disabled = true;
+        submitButton.textContent = '请完成必要选择';
+      }
+    }
+
+    // 验证选择
+    function validateSelections() {
+      const totalUsed = calculateTotalPoints();
+      const remaining = gameState.totalPoints - totalUsed;
+
+      if (remaining < 0) {
+        return { valid: false, message: "点数超支！请重新调整选择。" };
+      }
+
+      if (!gameState.selections.world) {
+        return { valid: false, message: "请选择世界难度！" };
+      }
+
+      if (!gameState.selections.physical) {
+        return { valid: false, message: "请选择体格优劣！" };
+      }
+
+      if (!gameState.selections.magic) {
+        return { valid: false, message: "请选择魔法天赋！" };
+      }
+
+      return { valid: true, message: "" };
+    }
+
+    // 显示页面
+    function showPage(pageIndex) {
+      // 隐藏所有页面
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+
+      // 显示目标页面
+      document.getElementById(`page${pageIndex}`).classList.add('active');
+
+      // 更新标签状态
+      document.querySelectorAll('.nav-tab').forEach((tab, index) => {
+        tab.classList.toggle('active', index === pageIndex);
+      });
+
+      gameState.currentPage = pageIndex;
+    }
+
+    // 格式化输出文本
+    function formatSelectionText() {
+      const totalUsed = calculateTotalPoints();
+      const remaining = gameState.totalPoints - totalUsed;
+
+      let output = "🎮 **异世界角色创建完成！**\n\n";
+      output += `💎 **点数使用情况**\n`;
+      output += `- 初始点数: ${gameState.totalPoints}\n`;
+      output += `- 使用点数: ${totalUsed}\n`;
+      output += `- 剩余点数: ${remaining}\n\n`;
+
+      output += "🏆 **角色配置详情**\n\n";
+
+      // 世界难度 - 包含详细描述
+      if (gameState.selections.world) {
+        const worldCard = document.querySelector(`#worldDifficulty [data-name="${gameState.selections.world}"]`);
+        const worldPoints = worldCard ? worldCard.dataset.points : '0';
+        const worldDescElement = worldCard ? worldCard.querySelector('.option-description') : null;
+        const worldDesc = worldDescElement ? worldDescElement.textContent : '';
+        output += `🌍 **世界难度**: ${gameState.selections.world} (${worldPoints > 0 ? '+' : ''}${worldPoints}点)\n`;
+        output += `   ${worldDesc}\n\n`;
+      }
+
+      // 体格优劣 - 包含详细描述
+      if (gameState.selections.physical) {
+        const physicalCard = document.querySelector(`#physicalStatus [data-name="${gameState.selections.physical}"]`);
+        const physicalPoints = physicalCard ? physicalCard.dataset.points : '0';
+        const physicalDescElement = physicalCard ? physicalCard.querySelector('.option-description') : null;
+        const physicalDesc = physicalDescElement ? physicalDescElement.textContent : '';
+        output += `💪 **体格优劣**: ${gameState.selections.physical} (${physicalPoints > 0 ? '+' : ''}${physicalPoints}点)\n`;
+        output += `   ${physicalDesc}\n\n`;
+      }
+
+      // 魔法天赋 - 包含详细描述
+      if (gameState.selections.magic) {
+        const magicCard = document.querySelector(`#magicTalent [data-name="${gameState.selections.magic}"]`);
+        const magicPoints = magicCard ? magicCard.dataset.points : '0';
+        const magicDescElement = magicCard ? magicCard.querySelector('.option-description') : null;
+        const magicDesc = magicDescElement ? magicDescElement.textContent : '';
+        output += `✨ **魔法天赋**: ${gameState.selections.magic} (${magicPoints > 0 ? '+' : ''}${magicPoints}点)\n`;
+        output += `   ${magicDesc}\n\n`;
+      }
+
+      // 初始队友 - 包含详细描述
+      if (gameState.selections.companions.length > 0) {
+        output += `👥 **初始队友 (${gameState.selections.companions.length}人，每人消耗30点)**:\n`;
+        gameState.selections.companions.forEach(companion => {
+          const companionCard = document.querySelector(`#companionOptions [data-name="${companion}"]`);
+          const companionDescElement = companionCard ? companionCard.querySelector('.companion-description') : null;
+          const companionDesc = companionDescElement ? companionDescElement.textContent : '';
+          output += `  - **${companion}**: ${companionDesc}\n`;
+        });
+        output += '\n';
+      }
+
+      // 扩展包 - 包含详细描述
+      if (gameState.selections.dlc.length > 0) {
+        output += `🎯 **扩展包 (${gameState.selections.dlc.length}个)**:\n`;
+        gameState.selections.dlc.forEach(dlc => {
+          const dlcCard = document.querySelector(`#dlcOptions [data-name="${dlc}"]`);
+          const dlcPoints = dlcCard ? dlcCard.dataset.points : '0';
+          const dlcDescElement = dlcCard ? dlcCard.querySelector('.dlc-description') : null;
+          const dlcDesc = dlcDescElement ? dlcDescElement.textContent : '';
+          output += `  - **${dlc}** (${dlcPoints > 0 ? '+' : ''}${dlcPoints}点): ${dlcDesc}\n`;
+        });
+        output += '\n';
+      }
+
+      output += "🚀 **准备开始你的异世界冒险吧！**";
+
+      return output;
+    }
+
+    // 显示消息
+    function showMessage(type, message, duration = 3000) {
+      const messageElement = document.getElementById(type + 'Message');
+      messageElement.textContent = message;
+      messageElement.style.display = 'block';
+
+      setTimeout(() => {
+        messageElement.style.display = 'none';
+      }, duration);
+    }
+
+    // 发送到SillyTavern
+    function submitToSillyTavern() {
+      const validation = validateSelections();
+
+      if (!validation.valid) {
+        showMessage('error', validation.message);
+        return;
+      }
+
+      const formattedText = formatSelectionText();
+
+      try {
+        // 使用正确的格式调用triggerSlash
+        if (typeof triggerSlash === 'function') {
+          triggerSlash(`/send ${formattedText}|/trigger`);
+          showMessage('success', '角色创建信息已成功发送到SillyTavern！');
+        } else {
+          console.log('triggerSlash function not found, commands:', `/send ${formattedText}|/trigger`);
+          showMessage('error', '发送失败，请检查SillyTavern连接状态。');
+        }
+      } catch (error) {
+        console.error('Failed to send to SillyTavern:', error);
+        showMessage('error', '发送失败，请检查SillyTavern连接状态。');
+      }
+    }
+
+    // 重置选择
+    function resetSelections() {
+      if (confirm('确定要重置所有选择吗？')) {
+        gameState.selections = {
+          world: null,
+          physical: null,
+          magic: null,
+          companions: [],
+          dlc: []
+        };
+
+        // 移除所有选择状态
+        document.querySelectorAll('.option-card, .companion-card, .dlc-card').forEach(card => {
+          card.classList.remove('selected');
+        });
+
+        updateDisplay();
+        showMessage('success', '已重置所有选择！', 2000);
+      }
+    }
+
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', initializePage);
+  </script>
+</body>
+
+</html>

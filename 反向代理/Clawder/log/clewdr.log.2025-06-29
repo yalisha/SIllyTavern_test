@@ -1,0 +1,110 @@
+[2m22:57:13.910[0m [32m INFO[0m [2mclewdr::services::update[0m[2m:[0m Checking for updates...
+[2m22:57:14.602[0m [32m INFO[0m [2mclewdr::services::update[0m[2m:[0m Already at the latest version [32m0.9.22[0m
+[2m22:57:14.603[0m [32m INFO[0m [2mclewdr::services::key_manager[0m[2m:[0m Valid Keys: [32m0[0m
+[2m22:57:14.603[0m [32m INFO[0m [2mclewdr::services::cookie_manager[0m[2m:[0m Valid: [32m0[0m, Exhausted: [33m0[0m, Invalid: [31m0[0m
+[2m23:04:29.596[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Auth token accepted,
+[2m23:09:00.002[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key accepted: AIzaSyDkVI5ueXul8iT0qfgomxPXguCt17aAd-k
+[2m23:09:00.002[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key submitted successfully
+[2m23:09:00.003[0m [32m INFO[0m [2mclewdr::services::key_manager[0m[2m:[0m Valid Keys: [32m1[0m
+[2m23:09:00.007[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key accepted: AIzaSyBljDyDUTOHPLC0vIbsCrY_cPXD2Dh-b7E
+[2m23:09:00.007[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key submitted successfully
+[2m23:09:00.008[0m [32m INFO[0m [2mclewdr::services::key_manager[0m[2m:[0m Valid Keys: [32m2[0m
+[2m23:09:00.009[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key accepted: AIzaSyBrcxB7T3iiLg7EzLWnjrBJohqlsgHZ3bk
+[2m23:09:00.009[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key submitted successfully
+[2m23:09:00.010[0m [32m INFO[0m [2mclewdr::services::key_manager[0m[2m:[0m Valid Keys: [32m3[0m
+[2m23:09:00.010[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key accepted: AIzaSyAFc7rMOTvJVbDU4BCrCSWc7CAarI94SSc
+[2m23:09:00.010[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key submitted successfully
+[2m23:09:00.011[0m [32m INFO[0m [2mclewdr::services::key_manager[0m[2m:[0m Valid Keys: [32m4[0m
+[2m23:09:00.011[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key accepted: AIzaSyAxPlE-DCxOlOVaR5KPrZdtZJ00OluVMao
+[2m23:09:00.011[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key submitted successfully
+[2m23:09:00.012[0m [32m INFO[0m [2mclewdr::services::key_manager[0m[2m:[0m Valid Keys: [32m5[0m
+[2m23:09:00.012[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key accepted: AIzaSyBz5KkFSWbDQFcoXY5UtA4-2RVMZTkPA5I
+[2m23:09:00.012[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key submitted successfully
+[2m23:09:00.013[0m [32m INFO[0m [2mclewdr::services::key_manager[0m[2m:[0m Valid Keys: [32m6[0m
+[2m23:09:00.013[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key accepted: AIzaSyBgXIAhIQ4qdfXQFZo42nKszPmfSivnaNw
+[2m23:09:00.013[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key submitted successfully
+[2m23:09:00.014[0m [32m INFO[0m [2mclewdr::services::key_manager[0m[2m:[0m Valid Keys: [32m7[0m
+[2m23:09:00.014[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key accepted: AIzaSyCSMsL9rVoKZ1R9L3eH7vZENeeAuIicgDc
+[2m23:09:00.014[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key submitted successfully
+[2m23:09:00.015[0m [32m INFO[0m [2mclewdr::services::key_manager[0m[2m:[0m Valid Keys: [32m8[0m
+[2m23:09:00.016[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key accepted: AIzaSyBMk1eo4tquFYBGcZMPHMwiEdOqfuu7ek8
+[2m23:09:00.016[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key submitted successfully
+[2m23:09:00.016[0m [32m INFO[0m [2mclewdr::services::key_manager[0m[2m:[0m Valid Keys: [32m9[0m
+[2m23:09:00.017[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key accepted: AIzaSyCKdH5HhLUhSpNfJBdWIeTBJdDoeaATsaM
+[2m23:09:00.017[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key submitted successfully
+[2m23:09:00.017[0m [32m INFO[0m [2mclewdr::services::key_manager[0m[2m:[0m Valid Keys: [32m10[0m
+[2m23:09:00.018[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key accepted: AIzaSyAPJFBzC9L1TCHBtw3RyeVNDfN44Bti-Tk
+[2m23:09:00.018[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key submitted successfully
+[2m23:09:00.018[0m [32m INFO[0m [2mclewdr::services::key_manager[0m[2m:[0m Valid Keys: [32m11[0m
+[2m23:09:00.019[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key accepted: AIzaSyDDhDvGQ5wDwH2h6Z4hKdbSYCXGZR-U3Nk
+[2m23:09:00.019[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key submitted successfully
+[2m23:09:00.019[0m [32m INFO[0m [2mclewdr::services::key_manager[0m[2m:[0m Valid Keys: [32m12[0m
+[2m23:09:00.020[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key accepted: AIzaSyC2lRMscU3kodUbqaxedMf4OZ-ieJRNfx4
+[2m23:09:00.020[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key submitted successfully
+[2m23:09:00.021[0m [32m INFO[0m [2mclewdr::services::key_manager[0m[2m:[0m Valid Keys: [32m13[0m
+[2m23:09:00.021[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key accepted: AIzaSyAOZ65KAvBJTF5Ug2KHtOK3E9b40WmS6yg
+[2m23:09:00.021[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Key submitted successfully
+[2m23:09:00.022[0m [32m INFO[0m [2mclewdr::services::key_manager[0m[2m:[0m Valid Keys: [32m14[0m
+[2m23:25:17.185[0m [32m INFO[0m [2mclewdr::api::gemini[0m[2m:[0m [REQ] stream: [31mDisabled[0m, vertex: [32mEnabled[0m, format: [33mOpenAI[0m, model: [32m[PAY]gemini-2.5-pro-preview-06-05-encrypt[0m
+[2m23:25:18.674[0m [31mERROR[0m [2mclewdr::gemini_state[0m[2m:[0m Http error: code: [31m400 Bad Request[0m, body: [
+  {
+    "error": {
+      "code": 400,
+      "message": "Invalid publisher model: 'projects/1083804748206/locations/global/publishers/google/models/[PAY]gemini-2.5-pro-preview-06-05-encrypt'.",
+      "status": "INVALID_ARGUMENT"
+    }
+  }
+]
+[2m23:25:18.674[0m [32m INFO[0m [2mclewdr::gemini_state[0m[2m:[0m [RETRY] attempt: [32m1[0m
+[2m23:25:19.794[0m [31mERROR[0m [2mclewdr::gemini_state[0m[2m:[0m Http error: code: [31m400 Bad Request[0m, body: [
+  {
+    "error": {
+      "code": 400,
+      "message": "Invalid publisher model: 'projects/1083804748206/locations/global/publishers/google/models/[PAY]gemini-2.5-pro-preview-06-05-encrypt'.",
+      "status": "INVALID_ARGUMENT"
+    }
+  }
+]
+[2m23:25:19.794[0m [32m INFO[0m [2mclewdr::gemini_state[0m[2m:[0m [RETRY] attempt: [32m2[0m
+[2m23:25:20.940[0m [31mERROR[0m [2mclewdr::gemini_state[0m[2m:[0m Http error: code: [31m400 Bad Request[0m, body: [
+  {
+    "error": {
+      "code": 400,
+      "message": "Invalid publisher model: 'projects/1083804748206/locations/global/publishers/google/models/[PAY]gemini-2.5-pro-preview-06-05-encrypt'.",
+      "status": "INVALID_ARGUMENT"
+    }
+  }
+]
+[2m23:25:20.940[0m [32m INFO[0m [2mclewdr::gemini_state[0m[2m:[0m [RETRY] attempt: [32m3[0m
+[2m23:25:22.097[0m [31mERROR[0m [2mclewdr::gemini_state[0m[2m:[0m Http error: code: [31m400 Bad Request[0m, body: [
+  {
+    "error": {
+      "code": 400,
+      "message": "Invalid publisher model: 'projects/1083804748206/locations/global/publishers/google/models/[PAY]gemini-2.5-pro-preview-06-05-encrypt'.",
+      "status": "INVALID_ARGUMENT"
+    }
+  }
+]
+[2m23:25:22.097[0m [32m INFO[0m [2mclewdr::gemini_state[0m[2m:[0m [RETRY] attempt: [32m4[0m
+[2m23:25:23.241[0m [31mERROR[0m [2mclewdr::gemini_state[0m[2m:[0m Http error: code: [31m400 Bad Request[0m, body: [
+  {
+    "error": {
+      "code": 400,
+      "message": "Invalid publisher model: 'projects/1083804748206/locations/global/publishers/google/models/[PAY]gemini-2.5-pro-preview-06-05-encrypt'.",
+      "status": "INVALID_ARGUMENT"
+    }
+  }
+]
+[2m23:25:23.241[0m [32m INFO[0m [2mclewdr::gemini_state[0m[2m:[0m [RETRY] attempt: [32m5[0m
+[2m23:25:24.386[0m [31mERROR[0m [2mclewdr::gemini_state[0m[2m:[0m Http error: code: [31m400 Bad Request[0m, body: [
+  {
+    "error": {
+      "code": 400,
+      "message": "Invalid publisher model: 'projects/1083804748206/locations/global/publishers/google/models/[PAY]gemini-2.5-pro-preview-06-05-encrypt'.",
+      "status": "INVALID_ARGUMENT"
+    }
+  }
+]
+[2m23:25:24.386[0m [31mERROR[0m [2mclewdr::gemini_state[0m[2m:[0m Max retries exceeded
+[2m00:44:18.115[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Auth token accepted,
+[2m00:44:18.115[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Auth token accepted,

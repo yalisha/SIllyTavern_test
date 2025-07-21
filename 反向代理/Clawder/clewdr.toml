@@ -1,0 +1,120 @@
+cookie_array = []
+wasted_cookie = []
+ip = "127.0.0.1"
+port = 8484
+check_update = true
+auto_update = true
+password = "123456789"
+admin_password = "123456789"
+max_retries = 5
+preserve_chats = false
+web_search = false
+cache_response = 0
+not_hash_system = false
+not_hash_last_n = 0
+skip_first_warning = false
+skip_second_warning = false
+skip_restricted = false
+skip_non_pro = false
+skip_rate_limit = true
+skip_normal_pro = false
+use_real_roles = true
+custom_prompt = ""
+padtxt_len = 4000
+
+[vertex.credential]
+type = "service_account"
+project_id = "promising-idea-455819-s9"
+private_key_id = "e3d425d8d4bcc6c187e3bdc6ee38a54fa9a388ce"
+private_key = """
+-----BEGIN PRIVATE KEY-----
+MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxXjD/ic/9RUpt
+T9oybpXPTb132eUMVwqLfGu119cRQdl0BN9zDIvtbGoSH2SKbhh0vKf4CNvsxbiA
+NAKvZgVim/G2zt1dufUY5RVE834H/pyJT3CSpt060yBeXE5mZUMkXKlMZrgInFHe
+bOvXfIJh+L9CIYtegUMiD8QX7EfBiuvS56VlfCdnTK1HBAvgoZ4MbxSD3bcMjzI0
+fbqtInH8EVrbWmez4LA+5MB9vjXnoXE4nPBvyayEPmQ4WIwYpofMgemnU4ooqefX
+j0opoPQbgkZ2Nv3AKQKiwucMxC2+iSKTi79oElaSsE0FWGlHk2w4QwDdgXIzCR7L
+LQABdJkNAgMBAAECggEABV6UnSfO5Bv05NpGAMDYSC5STg6KoJUB/LcHi7m9CQi1
+TI3ZNeJrWgSuMV5B7O7oTqBndVrPTZuuujLY4fZ0s0eFScN5cBzxDo/g1PWKGzPa
+CU4eWlIy4FUD5ddliDQIlFE5ztZNO/V/hPxHJ37dc5nUMGxTi8jd/2n6xb6hbXp6
+PxZjbmOUff9AqOCjwLXTVjuTo/RN7hgrRen/2Vho4HdpFHXzTKCuM+LI9KmTtqbX
+ndxnh/8Ts+HRf17YK0G6Tn9spiO/mUWtxrawH9Kd5/K2loL67BZHVCJrgzc+Ktt1
+AYfsAiYpRXAngC2SUyXi/o+ZveeyR5Ns8tjqr0nhAQKBgQDes61AErOX/7RgsRQ6
+RbgvvaupZ8VPxoflYSsY9D5t7k7JL6NKFKl2rx0Of1WYK4E5t14ugbXb5YKkOWVY
+uyYL6Q4nP5YNGbSZVvG7QjSNQtP65UdWDq0WSsxIM1SsnAkzun3PqgDkT2ePPezy
+M3dbc2Rd4NK2FociYQGWX7otWwKBgQDL40Z1ORrE4OsNmeXuVYwBZZz7r7cgxT3V
+VLT8IR2JGhwtCs7je5r9GfmmtdLj5h5gMDXNv84tJDbtQwjv/1JYwzqURJeWN5FM
+50Pm1o26INvnR3GI2I4QKUk/J4gZo1KIAr285QOV7Ww7q+0069MDztuANk2twO7S
+UKN5FtEXtwKBgCTCv/xtmdujR+EWGeKsk4S96FIkYPuUJ+aDLZwG5S88QSEQjgGy
+e26t5Tv5ZOWjeMdQL2m5240ay3/UQZht/A/HPqDX7CrpbVhKc8iXWxleSKOHqUjZ
+T1T4r9PTNUzwzMwPIqlexJrrSIrqi+xG9pLP72dXrzCDc3cHUD3EO3U1AoGBAMBH
+BNJV2S3kYyd/hHzAhnlmx6X/7zbjbE28RbYk0MLUMdA0iim0DtU0YuDaRhkQkoLp
+1EPF5/1gUsBsYIhdA96btqnPChnrK4cX7kxK+HuYs2moUaTZfRg2p1H8yPhMsu97
+jk4Ot9PzhQe9OsWWxHip4w1FqPn8of0LeS8f2m5/AoGAauFIt3c9/HuhUbRI9pkJ
+FkOjRJx9pgjQiKoE7MN+JqUsLfxL/wdtLJ2yTzWNyu3+Yjag/0pGoiplLmNsnfcv
+55rS3owFrhuK3yEfJrpQKExHXWqae/lU2x/YnJ67CwhJSOlt4qvf3bOF5CGTbBnh
+jA2ojR+6KVBs3bweOdtdahw=
+-----END PRIVATE KEY-----
+"""
+client_email = "yzheng70@promising-idea-455819-s9.iam.gserviceaccount.com"
+client_id = "109126498941439133203"
+auth_uri = "https://accounts.google.com/o/oauth2/auth"
+token_uri = "https://oauth2.googleapis.com/token"
+auth_provider_x509_cert_url = "https://www.googleapis.com/oauth2/v1/certs"
+client_x509_cert_url = "https://www.googleapis.com/robot/v1/metadata/x509/yzheng70%40promising-idea-455819-s9.iam.gserviceaccount.com"
+
+[[gemini_keys]]
+key = "AIzaSyBMk1eo4tquFYBGcZMPHMwiEdOqfuu7ek8"
+count_403 = 0
+
+[[gemini_keys]]
+key = "AIzaSyCKdH5HhLUhSpNfJBdWIeTBJdDoeaATsaM"
+count_403 = 0
+
+[[gemini_keys]]
+key = "AIzaSyBljDyDUTOHPLC0vIbsCrY_cPXD2Dh-b7E"
+count_403 = 0
+
+[[gemini_keys]]
+key = "AIzaSyBgXIAhIQ4qdfXQFZo42nKszPmfSivnaNw"
+count_403 = 0
+
+[[gemini_keys]]
+key = "AIzaSyBz5KkFSWbDQFcoXY5UtA4-2RVMZTkPA5I"
+count_403 = 0
+
+[[gemini_keys]]
+key = "AIzaSyAOZ65KAvBJTF5Ug2KHtOK3E9b40WmS6yg"
+count_403 = 0
+
+[[gemini_keys]]
+key = "AIzaSyBrcxB7T3iiLg7EzLWnjrBJohqlsgHZ3bk"
+count_403 = 0
+
+[[gemini_keys]]
+key = "AIzaSyDkVI5ueXul8iT0qfgomxPXguCt17aAd-k"
+count_403 = 0
+
+[[gemini_keys]]
+key = "AIzaSyAFc7rMOTvJVbDU4BCrCSWc7CAarI94SSc"
+count_403 = 0
+
+[[gemini_keys]]
+key = "AIzaSyAxPlE-DCxOlOVaR5KPrZdtZJ00OluVMao"
+count_403 = 0
+
+[[gemini_keys]]
+key = "AIzaSyC2lRMscU3kodUbqaxedMf4OZ-ieJRNfx4"
+count_403 = 0
+
+[[gemini_keys]]
+key = "AIzaSyAPJFBzC9L1TCHBtw3RyeVNDfN44Bti-Tk"
+count_403 = 0
+
+[[gemini_keys]]
+key = "AIzaSyDDhDvGQ5wDwH2h6Z4hKdbSYCXGZR-U3Nk"
+count_403 = 0
+
+[[gemini_keys]]
+key = "AIzaSyCSMsL9rVoKZ1R9L3eH7vZENeeAuIicgDc"
+count_403 = 0

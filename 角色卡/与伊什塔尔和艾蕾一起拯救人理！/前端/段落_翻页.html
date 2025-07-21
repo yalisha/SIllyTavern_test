@@ -1,0 +1,976 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>与伊什塔尔和艾蕾一起拯救人理！</title>
+  <style>
+    /* 基本样式 */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f5f5f5;
+      min-height: 100vh;
+      transition: background-color 0.3s, color 0.3s;
+      overflow: hidden;
+      /* 防止页面滚动 */
+    }
+
+    /* 滚动条美化 */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(44, 51, 82, 0.3);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 64, 129, 0.5);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 64, 129, 0.8);
+    }
+
+    /* 主题颜色 */
+    .theme-blue {
+      --primary-color: #1a237e;
+      --secondary-color: #303f9f;
+      --background-color: #e8eaf6;
+      --text-color: #121212;
+      --card-background: #c5cae9;
+      --button-color: #3949ab;
+      --button-text: #ffffff;
+      --border-color: #7986cb;
+    }
+
+    .theme-pink {
+      --primary-color: #880e4f;
+      --secondary-color: #ad1457;
+      --background-color: #fce4ec;
+      --text-color: #121212;
+      --card-background: #f8bbd0;
+      --button-color: #d81b60;
+      --button-text: #ffffff;
+      --border-color: #f48fb1;
+    }
+
+    .theme-white {
+      --primary-color: #fafafa;
+      --secondary-color: #f5f5f5;
+      --background-color: #ffffff;
+      --text-color: #212121;
+      --card-background: #eeeeee;
+      --button-color: #bdbdbd;
+      --button-text: #212121;
+      --border-color: #e0e0e0;
+    }
+
+    /* 应用主题变量 */
+    body.theme-blue {
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+
+    body.theme-pink {
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+
+    body.theme-white {
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+
+    /* 页面主容器 */
+    .page-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      /* 使用视口高度 */
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+    }
+
+    /* 标签按钮 */
+    .tab-buttons {
+      display: flex;
+      background-color: #1a1a1a;
+      border-bottom: 1px solid #333;
+      flex-shrink: 0;
+      /* 防止按钮区域被压缩 */
+      z-index: 10;
+    }
+
+    body.theme-blue .tab-buttons {
+      background-color: var(--primary-color);
+    }
+
+    body.theme-pink .tab-buttons {
+      background-color: var(--primary-color);
+    }
+
+    body.theme-white .tab-buttons {
+      background-color: var(--primary-color);
+    }
+
+    .tab-button {
+      padding: 10px 20px;
+      background-color: white;
+      border: none;
+      cursor: pointer;
+      flex: 1;
+      text-align: center;
+      font-weight: bold;
+      border-right: 1px solid #ddd;
+    }
+
+    body.theme-blue .tab-button {
+      background-color: var(--secondary-color);
+      color: white;
+      border-right: 1px solid var(--border-color);
+    }
+
+    body.theme-pink .tab-button {
+      background-color: var(--secondary-color);
+      color: white;
+      border-right: 1px solid var(--border-color);
+    }
+
+    body.theme-white .tab-button {
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+      border-right: 1px solid var(--border-color);
+    }
+
+    .tab-button:last-child {
+      border-right: none;
+    }
+
+    .tab-button.active {
+      background-color: #f0f0f0;
+    }
+
+    body.theme-blue .tab-button.active {
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+
+    body.theme-pink .tab-button.active {
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+
+    body.theme-white .tab-button.active {
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+
+    /* 内容区域 */
+    .tab-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 15px;
+      display: none;
+      background-color: white;
+      height: calc(100vh - 41px);
+      /* 减去标签按钮的高度 */
+    }
+
+    body.theme-blue .tab-content {
+      background-color: var(--background-color);
+    }
+
+    body.theme-pink .tab-content {
+      background-color: var(--background-color);
+    }
+
+    body.theme-white .tab-content {
+      background-color: var(--background-color);
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* 内容样式 */
+    .section-heading {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    body.theme-blue .section-heading {
+      border-bottom: 1px solid var(--border-color);
+      color: var(--primary-color);
+    }
+
+    body.theme-pink .section-heading {
+      border-bottom: 1px solid var(--border-color);
+      color: var(--primary-color);
+    }
+
+    body.theme-white .section-heading {
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-color);
+    }
+
+    .info-card {
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    body.theme-blue .info-card {
+      background-color: var(--card-background);
+    }
+
+    body.theme-pink .info-card {
+      background-color: var(--card-background);
+    }
+
+    body.theme-white .info-card {
+      background-color: var(--card-background);
+    }
+
+    .servant-card {
+      border-left: 3px solid #ff9800;
+      padding-left: 10px;
+      margin-bottom: 15px;
+      background-color: #fff9f0;
+    }
+
+    body.theme-blue .servant-card {
+      border-left: 3px solid var(--secondary-color);
+      background-color: var(--card-background);
+    }
+
+    body.theme-pink .servant-card {
+      border-left: 3px solid var(--secondary-color);
+      background-color: var(--card-background);
+    }
+
+    body.theme-white .servant-card {
+      border-left: 3px solid var(--secondary-color);
+      background-color: var(--card-background);
+    }
+
+    .npc-item {
+      margin-bottom: 8px;
+      padding-left: 15px;
+      border-left: 2px solid #ccc;
+    }
+
+    body.theme-blue .npc-item {
+      border-left: 2px solid var(--secondary-color);
+    }
+
+    body.theme-pink .npc-item {
+      border-left: 2px solid var(--secondary-color);
+    }
+
+    body.theme-white .npc-item {
+      border-left: 2px solid var(--border-color);
+    }
+
+    .enemy-item {
+      margin-top: 10px;
+      padding: 8px;
+      background-color: #fff0f0;
+      border-radius: 4px;
+    }
+
+    body.theme-blue .enemy-item {
+      background-color: var(--card-background);
+    }
+
+    body.theme-pink .enemy-item {
+      background-color: var(--card-background);
+    }
+
+    body.theme-white .enemy-item {
+      background-color: var(--card-background);
+    }
+
+    .settings-option {
+      margin-bottom: 20px;
+    }
+
+    .settings-option label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .settings-option select,
+    .settings-option input,
+    .settings-option button {
+      width: 100%;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    body.theme-blue .settings-option select,
+    body.theme-blue .settings-option input {
+      border: 1px solid var(--border-color);
+    }
+
+    body.theme-pink .settings-option select,
+    body.theme-pink .settings-option input {
+      border: 1px solid var(--border-color);
+    }
+
+    body.theme-white .settings-option select,
+    body.theme-white .settings-option input {
+      border: 1px solid var(--border-color);
+    }
+
+    .settings-option button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 8px;
+      font-weight: bold;
+    }
+
+    body.theme-blue .settings-option button {
+      background-color: var(--button-color);
+      color: var(--button-text);
+    }
+
+    body.theme-pink .settings-option button {
+      background-color: var(--button-color);
+      color: var(--button-text);
+    }
+
+    body.theme-white .settings-option button {
+      background-color: var(--button-color);
+      color: var(--button-text);
+    }
+
+    .settings-option button:hover {
+      background-color: #45a049;
+    }
+
+    body.theme-blue .settings-option button:hover {
+      opacity: 0.9;
+    }
+
+    body.theme-pink .settings-option button:hover {
+      opacity: 0.9;
+    }
+
+    body.theme-white .settings-option button:hover {
+      opacity: 0.9;
+    }
+
+    /* 颜色选择区域 */
+    .color-scheme-options {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .color-option {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: transform 0.2s, border 0.2s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .color-option:hover {
+      transform: scale(1.1);
+    }
+
+    .color-option.active {
+      border: 3px solid #333;
+      transform: scale(1.1);
+    }
+
+    .color-blue {
+      background-color: #1a237e;
+    }
+
+    .color-pink {
+      background-color: #880e4f;
+    }
+
+    .color-white {
+      background-color: #fafafa;
+      border: 1px solid #e0e0e0;
+    }
+
+    /* 调试按钮 */
+    #debugButton {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      z-index: 9999;
+      padding: 10px 20px;
+      background: linear-gradient(to bottom, #ff4081, #c2185b);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      transition: all 0.2s ease;
+      font-weight: bold;
+    }
+
+    #debugButton:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+      background: linear-gradient(to bottom, #ff5b94, #d81b60);
+    }
+
+    #debugButton:active {
+      transform: translateY(1px);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    /* 响应式设计 */
+    @media screen and (max-width: 768px) {
+      .settings-option {
+        margin-bottom: 15px;
+      }
+
+      .tab-button {
+        padding: 8px 15px;
+      }
+
+      .tab-content {
+        padding: 12px;
+        height: calc(100vh - 37px);
+      }
+
+      .color-option {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .settings-option {
+        margin-bottom: 12px;
+      }
+
+      .tab-button {
+        padding: 8px 10px;
+        font-size: 14px;
+      }
+
+      .tab-content {
+        padding: 10px;
+        height: calc(100vh - 37px);
+      }
+
+      .color-option {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body class="theme-blue">
+  <!-- 在此处添加页面容器和标签页结构 -->
+  <div class="page-container">
+    <div class="tab-buttons">
+      <button class="tab-button active" data-tab="story">故事内容</button>
+      <button class="tab-button" data-tab="character">角色信息</button>
+      <button class="tab-button" data-tab="world">世界信息</button>
+      <button class="tab-button" data-tab="settings">设置</button>
+    </div>
+    <div class="tab-content active" id="story-content"></div>
+    <div class="tab-content" id="character-content"></div>
+    <div class="tab-content" id="world-content"></div>
+    <div class="tab-content" id="settings-content"></div>
+  </div>
+
+  <!-- 调试按钮 -->
+  <button id="debugButton">手动解析</button>
+
+  <!-- 用于存储原始内容的隐藏元素 -->
+  <article style="display:none;"></article>
+  <personstatus style="display:none;"></personstatus>
+  <servants style="display:none;"></servants>
+  <worlds style="display:none;"></worlds>
+  <darkline style="display:none;"></darkline>
+  <uiupdate style="display:none;"></uiupdate>
+
+  <script>
+    // 定义游戏文本模板
+    let gameText = `<outputcontent>$1</outputcontent>`;
+
+    // 数据提取器
+    const DataExtractor = {
+      extractContent(text) {
+        // 检查是否有outputcontent标签
+        const outputContentMatch = text.match(/<outputcontent>([\s\S]*?)<\/outputcontent>/);
+        const content = outputContentMatch ? outputContentMatch[1] : text;
+
+        // 匹配各个部分的内容
+        const articleMatch = content.match(/<article>([\s\S]*?)<\/article>/);
+        const personMatch = content.match(/<personstatus>([\s\S]*?)<\/personstatus>/);
+        const servantsMatch = content.match(/<servants>([\s\S]*?)<\/servants>/);
+        const worldsMatch = content.match(/<worlds>([\s\S]*?)<\/worlds>/);
+        const darklineMatch = content.match(/<darkline>([\s\S]*?)<\/darkline>/);
+        const uiupdateMatch = content.match(/<uiupdate>([\s\S]*?)<\/uiupdate>/);
+
+        // 更新隐藏的存储元素
+        if (articleMatch) document.querySelector('article').innerHTML = articleMatch[1].trim();
+        if (personMatch) document.querySelector('personstatus').innerHTML = personMatch[1].trim();
+        if (servantsMatch) document.querySelector('servants').innerHTML = servantsMatch[1].trim();
+        if (worldsMatch) document.querySelector('worlds').innerHTML = worldsMatch[1].trim();
+        if (darklineMatch) document.querySelector('darkline').innerHTML = darklineMatch[1].trim();
+        if (uiupdateMatch) document.querySelector('uiupdate').innerHTML = uiupdateMatch[1].trim();
+
+        return {
+          story: articleMatch ? articleMatch[1].trim() : '',
+          person: this.extractPersonInfo(personMatch ? personMatch[1] : ''),
+          servants: this.extractServantsInfo(servantsMatch ? servantsMatch[1] : ''),
+          world: this.extractWorldInfo(worldsMatch ? worldsMatch[1] : ''),
+          darkLine: this.extractDarkLineInfo(darklineMatch ? darklineMatch[1] : ''),
+          uiUpdate: uiupdateMatch ? uiupdateMatch[1].trim() : ''
+        };
+      },
+
+      extractPersonInfo(text) {
+        const info = {};
+        const lines = text.split('\n');
+        lines.forEach(line => {
+          const [key, value] = line.split('：').map(s => s.trim());
+          if (key && value) {
+            info[key] = value;
+          }
+        });
+        return info;
+      },
+
+      extractServantsInfo(text) {
+        const info = {};
+        const lines = text.split('\n');
+        lines.forEach(line => {
+          if (line.includes('好感度：')) {
+            // 从者格式，提取从者名和好感度
+            const servantName = line.split('好感度')[0].trim();
+            if (!info[servantName]) {
+              info[servantName] = {};
+            }
+            info[servantName]['好感度'] = line.split('好感度：')[1].trim();
+          } else if (line.trim() && Object.keys(info).length > 0) {
+            // 其他从者属性
+            const lastServant = Object.keys(info).pop();
+            if (lastServant) {
+              const [key, value] = line.split('：').map(s => s.trim());
+              if (key && value) {
+                info[lastServant][key] = value;
+              }
+            }
+          }
+        });
+        return info;
+      },
+
+      extractWorldInfo(text) {
+        const info = {};
+        const lines = text.split('\n');
+        let currentSection = null;
+        let npcs = [];
+
+        lines.forEach(line => {
+          if (line.startsWith('-')) {
+            // NPC列表
+            if (currentSection === 'NPC列表') {
+              npcs.push(line.trim());
+            }
+          } else if (line.includes('：')) {
+            const [key, value] = line.split('：').map(s => s.trim());
+            if (key && value) {
+              if (key === 'NPC列表') {
+                currentSection = 'NPC列表';
+              } else {
+                info[key] = value;
+              }
+            }
+          }
+        });
+
+        if (npcs.length > 0) {
+          info['NPC列表'] = npcs;
+        }
+
+        return info;
+      },
+
+      extractDarkLineInfo(text) {
+        return text.trim();
+      }
+    };
+
+    // UI更新器
+    const UIUpdater = {
+      updateContent(data) {
+        if (!data) return;
+        this.updateStory(data.story);
+        this.updateCharacterInfo(data.person, data.servants);
+        this.updateWorldInfo(data.world, data.darkLine);
+      },
+
+      updateStory(content) {
+        if (!content) return;
+
+        // 处理文本格式化：将*号转换为换行符
+        const formattedContent = content
+          .replace(/\*/g, '<br>') // 将*号转换为<br>标签
+          .replace(/\n/g, '<br>') // 将普通换行符也转换为<br>标签
+          .replace(/<br>\s*<br>/g, '<br><br>') // 规范化连续的换行
+          .replace(/(<br>){3,}/g, '<br><br>'); // 限制最多两个连续换行
+
+        // 添加更好的段落格式
+        const paragraphs = formattedContent.split('<br><br>');
+        let storyHtml = '';
+
+        if (paragraphs.length > 1) {
+          // 多段落模式
+          storyHtml = paragraphs
+            .filter(p => p.trim() !== '')
+            .map(p => `<p style="margin-bottom: 1em; text-indent: 2em;">${p.replace(/<br>/g, ' ')}</p>`)
+            .join('');
+        } else {
+          // 单段落或有单个<br>的情况
+          storyHtml = `<div style="line-height: 1.8;">${formattedContent}</div>`;
+        }
+
+        document.getElementById('story-content').innerHTML = storyHtml;
+      },
+
+      updateCharacterInfo(personData, servantsData) {
+        const characterContent = document.getElementById('character-content');
+        let characterHTML = `<div class="section-heading">御主状态</div>`;
+
+        if (personData && Object.keys(personData).length > 0) {
+          characterHTML += `<div class="info-card">`;
+          for (const [key, value] of Object.entries(personData)) {
+            characterHTML += `<div><strong>${key}：</strong>${value}</div>`;
+          }
+          characterHTML += `</div>`;
+        } else {
+          characterHTML += `<div class="info-card">暂无御主信息</div>`;
+        }
+
+        characterHTML += `<div class="section-heading">从者信息</div>`;
+
+        if (servantsData && Object.keys(servantsData).length > 0) {
+          for (const [servantName, servantInfo] of Object.entries(servantsData)) {
+            characterHTML += `<div class="servant-card">
+              <div><strong>${servantName}</strong></div>`;
+            for (const [key, value] of Object.entries(servantInfo)) {
+              characterHTML += `<div><strong>${key}：</strong>${value}</div>`;
+            }
+            characterHTML += `</div>`;
+          }
+        } else {
+          characterHTML += `<div class="info-card">暂无从者信息</div>`;
+        }
+
+        characterContent.innerHTML = characterHTML;
+      },
+
+      updateWorldInfo(worldData, darkLineData) {
+        const worldContent = document.getElementById('world-content');
+        let worldHTML = `<div class="section-heading">世界信息</div>`;
+
+        if (worldData && Object.keys(worldData).length > 0) {
+          worldHTML += `<div class="info-card">`;
+          for (const [key, value] of Object.entries(worldData)) {
+            if (key === 'NPC列表' && Array.isArray(value)) {
+              worldHTML += `<div><strong>${key}：</strong></div>`;
+              value.forEach(npc => {
+                worldHTML += `<div class="npc-item">${npc}</div>`;
+              });
+            } else {
+              worldHTML += `<div><strong>${key}：</strong>${value}</div>`;
+            }
+          }
+          worldHTML += `</div>`;
+        } else {
+          worldHTML += `<div class="info-card">暂无世界信息</div>`;
+        }
+
+        worldHTML += `<div class="section-heading">暗线行动</div>`;
+        if (darkLineData && darkLineData.trim()) {
+          // 处理暗线文本中的换行
+          const formattedDarkLine = darkLineData
+            .replace(/\*/g, '<br>') // 将*号转换为<br>标签
+            .replace(/\n/g, '<br>') // 将普通换行符也转换为<br>标签
+            .replace(/<br>\s*<br>/g, '<br><br>') // 规范化连续的换行
+            .replace(/(<br>){3,}/g, '<br><br>'); // 限制最多两个连续换行
+
+          worldHTML += `<div class="info-card">${formattedDarkLine}</div>`;
+        } else {
+          worldHTML += `<div class="info-card">暂无暗线行动</div>`;
+        }
+
+        worldContent.innerHTML = worldHTML;
+      }
+    };
+
+    // 初始化函数
+    function initializeContent() {
+      // 尝试从页面内容中提取数据
+      const content = document.body.innerHTML;
+      const data = DataExtractor.extractContent(content);
+      if (data) {
+        UIUpdater.updateContent(data);
+      }
+
+      // 设置页面配置
+      setupSettingsPage();
+
+      // 强制设置高度
+      setTimeout(() => {
+        resizeUI();
+      }, 200);
+    }
+
+    // 调整UI尺寸
+    function resizeUI() {
+      // 确保容器占满整个iframe
+      document.querySelector('.page-container').style.height = '100vh';
+
+      // 计算标签按钮的高度
+      const tabButtonsHeight = document.querySelector('.tab-buttons').offsetHeight;
+
+      // 设置内容区域高度
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.style.height = `calc(100vh - ${tabButtonsHeight}px)`;
+      });
+    }
+
+    // 设置页面配置
+    function setupSettingsPage() {
+      const settingsContent = document.getElementById('settings-content');
+      settingsContent.innerHTML = `
+        <div class="section-heading">设置选项</div>
+        
+        <div class="settings-option">
+          <label for="themeSelect">选择主题颜色</label>
+          <div class="color-scheme-options">
+            <div class="color-option color-blue active" data-theme="blue" title="深蓝主题"></div>
+            <div class="color-option color-pink" data-theme="pink" title="粉红主题"></div>
+            <div class="color-option color-white" data-theme="white" title="白色主题"></div>
+          </div>
+        </div>
+        
+        <div class="settings-option">
+          <label for="fontSizeSelect">字体大小</label>
+          <select id="fontSizeSelect">
+            <option value="small">小</option>
+            <option value="medium" selected>中</option>
+            <option value="large">大</option>
+          </select>
+        </div>
+        
+        <div class="settings-option">
+          <label for="customCommand">执行命令</label>
+          <input type="text" id="customCommand" placeholder="输入自定义命令">
+          <button id="executeCommand">执行</button>
+        </div>
+      `;
+
+      // 添加设置事件监听
+      setTimeout(() => {
+        // 颜色主题切换
+        document.querySelectorAll('.color-option').forEach(option => {
+          option.addEventListener('click', function () {
+            const theme = this.getAttribute('data-theme');
+            document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
+            this.classList.add('active');
+
+            document.body.className = '';
+            document.body.classList.add('theme-' + theme);
+
+            // 保存主题设置到localStorage
+            localStorage.setItem('fateTheme', theme);
+
+            // 强制立即应用样式
+            document.body.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--background-color');
+
+            // 更新所有内容区域的样式
+            document.querySelectorAll('.tab-content').forEach(content => {
+              content.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--background-color');
+            });
+          });
+        });
+
+        // 加载已保存的主题设置
+        const savedTheme = localStorage.getItem('fateTheme');
+        if (savedTheme) {
+          document.body.className = '';
+          document.body.classList.add('theme-' + savedTheme);
+
+          document.querySelectorAll('.color-option').forEach(opt => {
+            opt.classList.remove('active');
+            if (opt.getAttribute('data-theme') === savedTheme) {
+              opt.classList.add('active');
+            }
+          });
+
+          // 强制立即应用样式
+          document.body.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--background-color');
+
+          // 更新所有内容区域的样式
+          document.querySelectorAll('.tab-content').forEach(content => {
+            content.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--background-color');
+          });
+        }
+
+        document.getElementById('fontSizeSelect')?.addEventListener('change', function () {
+          const sizes = { small: '14px', medium: '16px', large: '18px' };
+          document.body.style.fontSize = sizes[this.value];
+          // 保存字体大小设置
+          localStorage.setItem('fateFontSize', this.value);
+        });
+
+        // 加载已保存的字体大小设置
+        const savedFontSize = localStorage.getItem('fateFontSize');
+        if (savedFontSize) {
+          const fontSizeSelect = document.getElementById('fontSizeSelect');
+          fontSizeSelect.value = savedFontSize;
+          const sizes = { small: '14px', medium: '16px', large: '18px' };
+          document.body.style.fontSize = sizes[savedFontSize];
+        }
+
+        document.getElementById('executeCommand')?.addEventListener('click', function () {
+          const command = document.getElementById('customCommand').value;
+          if (command) {
+            window.parent.postMessage({ type: 'executeSlashCommand', command }, '*');
+          }
+        });
+      }, 100);
+    }
+
+    // 切换标签页
+    function switchTab(tabId) {
+      // 更新按钮状态
+      document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.toggle('active', button.getAttribute('data-tab') === tabId);
+      });
+
+      // 更新内容显示
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      document.getElementById(tabId + '-content').classList.add('active');
+    }
+
+    // 监听 DOM 加载完成事件
+    document.addEventListener('DOMContentLoaded', function () {
+      // 绑定标签切换事件
+      document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', () => {
+          switchTab(button.getAttribute('data-tab'));
+        });
+      });
+
+      // 设置调试按钮事件
+      document.getElementById('debugButton').addEventListener('click', () => {
+        initializeContent();
+      });
+
+      // 初始化内容
+      initializeContent();
+
+      // 监听窗口大小变化
+      window.addEventListener('resize', resizeUI);
+    });
+
+    // 对外暴露更新方法（与霍格我子段落相同的名称）
+    window.updatePageContent = function (content) {
+      try {
+        const data = DataExtractor.extractContent(content);
+        if (data) {
+          UIUpdater.updateContent(data);
+
+          // 确保应用当前主题
+          const currentTheme = localStorage.getItem('fateTheme') || 'blue';
+          document.body.className = '';
+          document.body.classList.add('theme-' + currentTheme);
+
+          // 强制立即应用样式
+          document.body.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--background-color');
+
+          // 更新所有内容区域的样式
+          document.querySelectorAll('.tab-content').forEach(content => {
+            content.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--background-color');
+          });
+        }
+      } catch (error) {
+        console.error('更新内容时出错:', error);
+      }
+    };
+
+    // 设置消息监听，接收来自SillyTavern的消息
+    window.addEventListener('message', function (event) {
+      if (event.data && typeof event.data === 'string') {
+        window.updatePageContent(event.data);
+      } else if (event.data && event.data.type === 'updateContent') {
+        window.updatePageContent(event.data.content);
+      }
+    });
+
+    // 创建一个MutationObserver监视文档变化
+    const observer = new MutationObserver(function (mutations) {
+      // 检查是否有新内容被添加
+      for (const mutation of mutations) {
+        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+          for (const node of mutation.addedNodes) {
+            if (node.nodeType === Node.TEXT_NODE || node.nodeType === Node.ELEMENT_NODE) {
+              // 防止递归调用
+              setTimeout(() => {
+                initializeContent();
+              }, 100);
+              return;
+            }
+          }
+        }
+      }
+    });
+
+    // 开始观察文档变化
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // 为SillyTavern环境提供iframe通信
+    if (window.parent !== window) {
+      // 告知父窗口我们已准备好接收消息
+      window.parent.postMessage({ type: 'iframe-ready', source: 'fate-ui' }, '*');
+    }
+  </script>
+</body>
+
+</html>
+```

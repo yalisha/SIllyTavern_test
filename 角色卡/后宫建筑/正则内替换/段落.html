@@ -1,0 +1,264 @@
+```html
+<html>
+
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .page {
+      display: none;
+    }
+    
+    .page.active {
+      display: block;
+    }
+    
+    .section {
+      text-align: left;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #f3e5f5;
+      min-height: 100px;
+    }
+    
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    
+    .pagination-btn {
+      background-color: #e1bee7;
+      color: #333;
+      border: none;
+      padding: 5px 10px;
+      margin: 0 5px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    
+    .pagination-btn.active {
+      background-color: #9c27b0;
+      color: white;
+    }
+    
+    button {
+      background-color: #9c27b0;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin: 5px;
+    }
+    
+    button:hover {
+      background-color: #7b1fa2;
+    }
+    
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>段落模板系统</h1>
+    
+    <div class="pagination">
+      <button class="pagination-btn active" onclick="showPage(1)">页面1</button>
+      <button class="pagination-btn" onclick="showPage(2)">页面2</button>
+      <button class="pagination-btn" onclick="showPage(3)">页面3</button>
+      <button class="pagination-btn" onclick="showPage(4)">页面4</button>
+      <button class="pagination-btn" onclick="showPage(5)">页面5</button>
+    </div>
+    
+    <!-- 第一页 -->
+    <div id="page1" class="page active">
+      <h2>页面1</h2>
+      <div class="section">
+        <h3>&lt;article&gt;</h3>
+        <p id="article">这里是文章内容，可以通过按钮操作进行修改或互动。</p>
+      </div>
+      <div>
+        <button onclick="triggerCommand('/echo 已更新文章内容')">更新文章</button>
+        <button onclick="triggerCommand('/comment 文章已添加评论')">添加评论</button>
+      </div>
+    </div>
+    
+    <!-- 第二页 -->
+    <div id="page2" class="page">
+      <h2>页面2</h2>
+      <div class="section">
+        <h3>&lt;wiveslist&gt;</h3>
+        <p id="wiveslist">这里显示妻子列表内容。</p>
+      </div>
+      <div class="section">
+        <h3>&lt;slaveslist&gt;</h3>
+        <p id="slaveslist">这里显示奴隶列表内容。</p>
+      </div>
+      <div class="section">
+        <h3>&lt;petslist&gt;</h3>
+        <p id="petslist">这里显示宠物列表内容。</p>
+      </div>
+      <div>
+        <button onclick="triggerCommand('/echo 已更新人员列表')">更新列表</button>
+        <button onclick="triggerVarCommand('harem_count')">设置后宫数量</button>
+      </div>
+    </div>
+    
+    <!-- 第三页 -->
+    <div id="page3" class="page">
+      <h2>页面3</h2>
+      <div class="section">
+        <h3>&lt;shipstatus&gt;</h3>
+        <p id="shipstatus">这里显示船只状态信息。</p>
+      </div>
+      <div class="section">
+        <h3>&lt;events&gt;</h3>
+        <p id="events">这里显示事件信息。</p>
+      </div>
+      <div>
+        <button onclick="triggerCommand('/echo 已更新状态信息')">更新状态</button>
+        <button onclick="triggerCommand('/comment 添加了新事件')">添加事件</button>
+      </div>
+    </div>
+    
+    <!-- 第四页 -->
+    <div id="page4" class="page">
+      <h2>页面4</h2>
+      <div class="section">
+        <h3>&lt;traininginfo&gt;</h3>
+        <p id="traininginfo">这里显示训练信息内容。</p>
+      </div>
+      <div>
+        <button onclick="triggerCommand('/echo 已更新训练信息')">更新训练</button>
+        <button onclick="triggerAudioCommand()">添加训练音效</button>
+      </div>
+    </div>
+    
+    <!-- 第五页 -->
+    <div id="page5" class="page">
+      <h2>页面5</h2>
+      <div class="section">
+        <h3>&lt;storestatus&gt;</h3>
+        <p id="storestatus">这里显示商店状态信息。</p>
+      </div>
+      <div>
+        <button onclick="triggerCommand('/echo 已更新商店状态')">更新商店</button>
+        <button onclick="triggerVarCommand('gold_amount')">设置金币数量</button>
+      </div>
+    </div>
+    
+    <div class="navigation">
+      <button id="prevBtn" onclick="prevPage()" disabled>上一页</button>
+      <button id="nextBtn" onclick="nextPage()">下一页</button>
+    </div>
+  </div>
+
+  <script>
+    let currentPage = 1;
+    const totalPages = 5;
+    
+    // 显示指定页面
+    function showPage(pageNum) {
+      // 隐藏所有页面
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      // 显示当前页面
+      document.getElementById(`page${pageNum}`).classList.add('active');
+      
+      // 更新分页按钮状态
+      document.querySelectorAll('.pagination-btn').forEach((btn, index) => {
+        btn.classList.toggle('active', index + 1 === pageNum);
+      });
+      
+      // 更新导航按钮状态
+      document.getElementById('prevBtn').disabled = pageNum === 1;
+      document.getElementById('nextBtn').disabled = pageNum === totalPages;
+      
+      // 更新当前页面变量
+      currentPage = pageNum;
+      
+      // 发送页面变化事件
+      triggerCommand(`/echo 已切换到第${pageNum}页`);
+    }
+    
+    // 上一页
+    function prevPage() {
+      if (currentPage > 1) {
+        showPage(currentPage - 1);
+      }
+    }
+    
+    // 下一页
+    function nextPage() {
+      if (currentPage < totalPages) {
+        showPage(currentPage + 1);
+      }
+    }
+    
+    // 与SillyTavern通信的函数
+    function triggerCommand(command) {
+      if (window.parent && window.parent.SillyTavern) {
+        try {
+          const STContext = window.parent.SillyTavern.getContext();
+          STContext.runSlashCommand(command);
+          console.log('命令已执行:', command);
+        } catch (error) {
+          console.error('执行命令时出错:', error);
+          alert('执行命令失败，请检查控制台获取详细信息。');
+        }
+      } else {
+        alert('无法访问SillyTavern接口，请确保此页面在SillyTavern中运行。');
+      }
+    }
+    
+    function triggerAudioCommand() {
+      triggerCommand('/audioimport type=bgm https://example.com/music.mp3');
+    }
+    
+    function triggerVarCommand(defaultVar = 'myVar') {
+      const varName = prompt('请输入变量名称:', defaultVar);
+      if (varName) {
+        const varValue = prompt('请输入变量值:', '100');
+        if (varValue) {
+          triggerCommand(`/setvar key=${varName} ${varValue}`);
+        }
+      }
+    }
+    
+    // 页面加载时执行初始命令
+    window.onload = function() {
+      // 延迟执行以确保SillyTavern接口已加载
+      setTimeout(() => {
+        triggerCommand('/echo 段落模板已加载');
+      }, 1000);
+    };
+  </script>
+</body>
+
+</html>
+```

@@ -1,0 +1,21 @@
+# ^===变量开始===
+变量:
+  availability: only use variables listed below, don't fabricate new variables
+  name: consists of full path from root to leaf node that don't contain '变量', with no separators in between
+  type: numerical, boolean (its value must be '是' or '否'), enumeration or string
+# ^常驻变量
+常驻变量:
+  <user>:
+    <user>淫乱度: '{{getvar::<user>淫乱度}}'
+    <user>当前服装: '{{getvar::<user>当前服装}}'
+    <user>当前内衣: '{{getvar::<user>当前内衣}}'
+  墨铃儿:
+    双向好感度:  '{{getvar::双向好感度}}'
+    墨铃儿当前服装: '{{getvar::墨铃儿当前服装}}'
+    墨铃儿当前内衣: '{{getvar::墨铃儿当前内衣}}'
+  check list:
+    - Update variables suffixed with '双向好感度' according to characters' attitudes towards each other (±3~6; 双向好感度 must be capped in 0~100)
+    - Update variables '淫乱度' according to <user>'s behavior (±3~6; must be capped in 0~100)
+    - 双向好感度、淫乱度变化将影响角色阶段，并相应改变角色对彼此的态度和行为
+    - 当前服装将影响角色在状态栏中的描述，并且根据当前事件实时更新
+# ^===变量结束=== 

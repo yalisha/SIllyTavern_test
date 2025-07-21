@@ -1,0 +1,11 @@
+[2m15:51:25.744[0m [32m INFO[0m [2mclewdr::services::update[0m[2m:[0m Checking for updates...
+[2m15:51:26.319[0m [32m INFO[0m [2mclewdr::services::update[0m[2m:[0m Already at the latest version [32m0.9.22[0m
+[2m15:51:26.320[0m [32m INFO[0m [2mclewdr::services::key_manager[0m[2m:[0m Valid Keys: [32m14[0m
+[2m15:51:26.320[0m [32m INFO[0m [2mclewdr::services::cookie_manager[0m[2m:[0m Valid: [32m0[0m, Exhausted: [33m0[0m, Invalid: [31m0[0m
+[2m15:51:56.084[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Auth token accepted,
+[2m15:51:56.092[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Auth token accepted,
+[2m15:53:19.539[0m [32m INFO[0m [2mclewdr::api::misc[0m[2m:[0m Auth token accepted,
+[2m15:55:54.718[0m [32m INFO[0m [2mclewdr::api::gemini[0m[2m:[0m [REQ] stream: [31mDisabled[0m, vertex: [32mEnabled[0m, format: [32mGemini[0m, model: [32mgemini-2.5-pro[0m
+[2m15:56:27.999[0m [32m INFO[0m [2mclewdr::api::gemini[0m[2m:[0m [REQ] stream: [31mDisabled[0m, vertex: [32mEnabled[0m, format: [32mGemini[0m, model: [32mgemini-2.5-pro[0m
+[2m16:29:18.602[0m [32m INFO[0m [2mclewdr::api::gemini[0m[2m:[0m [REQ] stream: [31mDisabled[0m, vertex: [32mEnabled[0m, format: [32mGemini[0m, model: [32mgemini-2.5-pro[0m
+[2m16:29:35.295[0m [32m INFO[0m [2mclewdr::api::gemini[0m[2m:[0m [REQ] stream: [31mDisabled[0m, vertex: [32mEnabled[0m, format: [32mGemini[0m, model: [32mgemini-2.5-pro[0m

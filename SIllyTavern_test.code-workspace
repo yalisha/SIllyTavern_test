@@ -1,0 +1,38 @@
+{
+  "folders": [
+    {
+      "name": "SIllyTavern_test",
+      "path": "."
+    },
+    {
+      "name": "frontend_writer 2",
+      "path": "../frontend_writer 2"
+    },
+    {
+      "name": "computerscience",
+      "path": "../computerscience"
+    },
+    {
+      "name": "YOUChat_Proxy",
+      "path": "../../YOUChat_Proxy"
+    },
+    {
+      "name": "Desktop",
+      "path": "../../Desktop"
+    },
+    {
+      "name": "pdf2zh_zetro",
+      "path": "../../pdf2zh_zetro"
+    },
+    {
+      "path": "../SillyTavern"
+    },
+    {
+      "path": "../博士学习"
+    }
+  ],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "computerscience",
+    "git.ignoreLimitWarning": true
+  },
+}

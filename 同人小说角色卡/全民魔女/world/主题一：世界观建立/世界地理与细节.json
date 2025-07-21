@@ -1,0 +1,28 @@
+{
+  "world_geography_and_details": [
+    {
+      "title": "主要舞台 (Main Stage)",
+      "description": "The story primarily takes place in China, specifically centering around the city where the protagonist 江涵 resides (e.g., 岑城) and its surrounding areas. Cityscapes and landmarks (like the protagonist's home, school, 魔女之家 bases) have era-specific characteristics."
+    },
+    {
+      "title": "隐藏空间 (Hidden Spaces)",
+      "description": "There exist '异常空间' and '魔女领域' that overlap with or are separate from the real world. These places might be created by powerful 魔女, formed by 魔力 leaks, or are inherently supernatural areas. They often have unique rules and dangers."
+    },
+    {
+      "title": "交通与通讯 (Transportation and Communication)",
+      "description": "Transportation and communication methods (like landlines, pagers, early internet) align with 1994 technology levels. 魔女 may have special communication methods (e.g., through 巨猫 senses, specific magic)."
+    },
+    {
+      "title": "地标 (Landmarks)",
+      "description": "岑城, as a typical southern Chinese city, has common locations like pedestrian streets, old factory districts, schools, parks, etc. However, these places might hide traces of 魔女 activity or become sites of 异常事件."
+    },
+    {
+      "title": "魔女之家 (Mowu Zhi Jia - House of Witches)",
+      "description": "As an official or semi-official 魔女 management organization, its bases might be established in hidden locations within the city, disguised as ordinary companies, clubs, or research institutes."
+    },
+    {
+      "title": "自然环境 (Natural Environment)",
+      "description": "Surrounding natural environments (mountains, forests, rivers) may contain points rich in 魔力 or hide special creatures/resources, serving as places for 魔女 training or adventure."
+    }
+  ]
+}
